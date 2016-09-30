@@ -61,7 +61,7 @@
                     		</table>
                     	</li>
                          <li class="active" id="con"><a href="about-us.html">임대</a></li>
-                        <li id="con"><a href="about-us.html">커뮤니티</a></li>i
+                        <li id="con"><a href="about-us.html">커뮤니티</a></li>
                         <li class="dropdown" id="con">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">고객센터 <i class="icon-angle-down"></i></a>
                             <ul class="dropdown-menu">
@@ -72,8 +72,8 @@
                         </li>
                         <li id="con"><a href="blog.html">소개</a></li> 
                         <li id="con">
-                        	<a href="#">
-                        	<img src="<%=request.getContextPath() %>/images/login/login.png" alt="" />
+                        	<a data-toggle="modal" href="#loginForm">
+                        		<i class="icon-lock"></i>
                         	</a>
                         </li>
                     </ul>        
