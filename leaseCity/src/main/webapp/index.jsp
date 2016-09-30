@@ -70,7 +70,7 @@
                                 <li><a href="terms.html">Q&A</a></li>
                             </ul>
                         </li>
-                        <li id="con"><a href="blog.html">소개</a></li> 
+                        <li id="con"><a href="blog.html">소와 개</a></li> 
                         <li id="con">
                         	<a data-toggle="modal" href="#loginForm">
                         		<i class="icon-lock"></i>
