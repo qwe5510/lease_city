@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- configuration file for LogBack (slf4J implementation)
-See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/ -->
-<configuration scan="true" scanPeriod="30 seconds">
+<configuration>
+   <!-- 콘솔 로그 -->
+   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+      <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+         by default -->
+      <encoder>
+         <!-- <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern> -->
+         <pattern>[%d{yy-MM-dd HH:mm:ss}] [%5p] [%c{1}.%M-%3L] %m %n</pattern>
+      </encoder>
+   </appender>
 
-    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
-        <resetJUL>true</resetJUL>
-    </contextListener>
+   <!-- 날짜별 로그 -->
+   <property name="DEV_HOME" value="c:/temp" />
+   <appender name="dailyout"
+      class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${DEV_HOME}/logFile.log</file>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+         <!-- daily rollover -->
+         <fileNamePattern>/log/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+         <!-- keep 30 days' worth of history -->
+         <maxHistory>30</maxHistory>
+      </rollingPolicy>
+      <encoder>
+         <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+         </pattern>
+      </encoder>
+   </appender>
 
-    <!-- To enable JMX Management -->
-    <jmxConfigurator/>
+   
+   <logger name="org.springframework" level="warn"></logger>
 
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%-5level %logger{0} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-	<!--<logger name="org.hibernate" level="debug"/> -->
-   <!-- Uncomment and add your logger here:
-    <logger name="org.springframework.samples.service.service" level="debug"/> -->
-         
-    <root level="info">
-        <appender-ref ref="console"/>
-    </root>
-</configuration>
+   <!-- root 로거 기본 설정 -->
+   <root level="trace">
+      <appender-ref ref="STDOUT" />
+      <!-- <appender-ref ref="dailyout" /> -->
+   </root>
+</configuration> 
