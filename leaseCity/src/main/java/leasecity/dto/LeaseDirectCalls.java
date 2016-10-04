@@ -1,10 +1,10 @@
 package leasecity.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
  * @version $Id$
  */
 @Data
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeaseDirectCalls implements Serializable {
@@ -21,20 +22,17 @@ public class LeaseDirectCalls implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 임대 직접 신청 번호. */
+	/** 임대 직접 요청 번호. */
 	private Integer leaseDirectNo;
 
 	/** 회원. */
-	private Users constructIdusers;
+	private User constructionIdusers;
 
 	/** 회원. */
-	private Users users;
+	private User equipmentIdusers;
 
 	/** 임대요청. */
 	private LeaseCalls leaseCalls;
-
-	/** 요청 제목. */
-	private String callName;
 
 	/** 직접요청 내용. */
 	private String directCallContent;

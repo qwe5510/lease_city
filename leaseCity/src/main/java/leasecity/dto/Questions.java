@@ -1,13 +1,13 @@
 package leasecity.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 /**
  * 질문 모델 클래스.
@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Questions implements Serializable {
 
 	/** serialVersionUID. */
@@ -26,7 +27,7 @@ public class Questions implements Serializable {
 	private Integer questionNo;
 
 	/** 회원. */
-	private Users users;
+	private String userId;
 
 	/** 질문글 제목. */
 	private String questionTitle;
@@ -37,16 +38,20 @@ public class Questions implements Serializable {
 	/** 질문글 내용. */
 	private String questionContent;
 
+	/** 조회 수. */
+	private Integer hits;
+
 	/** 질문 등록 날짜. */
 	private Date regDate;
 
 	/** 답변 목록. */
-	private Set<Answers> answersSet;
+	private List<Answers> answersList;
 
 	/**
 	 * 생성자.
 	 */
 	public Questions() {
-		this.answersSet = new HashSet<Answers>();
+		this.answersList = new ArrayList<Answers>();
 	}
+
 }

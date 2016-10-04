@@ -1,8 +1,8 @@
 package leasecity.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,27 +24,22 @@ public class HeavyEquipment implements Serializable {
 	private String idNumber;
 
 	/** 회원. */
-	private Users users;
+	private User users;
 
 	/** 중장비 종류. */
 	private String equipmentCategory;
 
 	/** 임대신청 목록. */
-	private Set<LeaseRequests> leaseRequestsSet;
+	private List<LeaseRequests> leaseRequestsList;
 
 	/** 임대양도 목록. */
-	private Set<LeaseTransfer> leaseTransferSet;
-
-	/** 작업 내역 목록. */
-	private Set<WorkLog> workLogSet;
+	private List<LeaseTransfer> leaseTransferList;
 
 	/**
 	 * 생성자.
 	 */
 	public HeavyEquipment() {
-		this.leaseRequestsSet = new HashSet<LeaseRequests>();
-		this.leaseTransferSet = new HashSet<LeaseTransfer>();
-		this.workLogSet = new HashSet<WorkLog>();
+		this.leaseRequestsList = new ArrayList<LeaseRequests>();
+		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
-
 }

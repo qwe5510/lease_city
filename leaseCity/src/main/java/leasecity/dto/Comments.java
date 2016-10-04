@@ -1,12 +1,13 @@
 package leasecity.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 커뮤니티 게시글 모델 클래스.
@@ -15,6 +16,7 @@ import lombok.Data;
  * @version $Id$
  */
 @Data
+@EqualsAndHashCode
 @AllArgsConstructor
 public class Comments implements Serializable {
 
@@ -25,7 +27,7 @@ public class Comments implements Serializable {
 	private Integer commentNo;
 
 	/** 회원. */
-	private Users users;
+	private String userId;
 
 	/** 게시글 제목. */
 	private String commentTitle;
@@ -36,16 +38,20 @@ public class Comments implements Serializable {
 	/** 게시글 내용. */
 	private String commentContent;
 
+	/** 조회 수. */
+	private Integer hits;
+
 	/** 게시글 날짜. */
 	private Date regDate;
 
 	/** 커뮤니티 댓글 목록. */
-	private Set<Replys> replysSet;
+	private List<Replys> replysList;
 
 	/**
 	 * 생성자.
 	 */
 	public Comments() {
-		this.replysSet = new HashSet<Replys>();
+		this.replysList = new ArrayList<Replys>();
 	}
+
 }

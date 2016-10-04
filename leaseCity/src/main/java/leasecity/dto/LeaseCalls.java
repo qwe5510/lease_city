@@ -2,11 +2,12 @@ package leasecity.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 임대요청 모델 클래스.
@@ -15,6 +16,7 @@ import lombok.Data;
  * @version $Id$
  */
 @Data
+@EqualsAndHashCode
 @AllArgsConstructor
 public class LeaseCalls implements Serializable {
 
@@ -24,8 +26,8 @@ public class LeaseCalls implements Serializable {
 	/** 임대 요청 번호. */
 	private Integer leaseCallNo;
 
-	/** 회원. */
-	private Users users;
+	/** 회원ID. */
+	private String userId;
 
 	/** 임대 분류. */
 	private String leaseCategory;
@@ -42,6 +44,9 @@ public class LeaseCalls implements Serializable {
 	/** 임대 요청글 내용. */
 	private String leaseCommentContent;
 
+	/** 조회 수. */
+	private Integer hits;
+
 	/** 시작 날짜 (~부터). */
 	private Date fromDate;
 
@@ -52,301 +57,17 @@ public class LeaseCalls implements Serializable {
 	private Date regDate;
 
 	/** 임대 직접신청 목록. */
-	private Set<LeaseDirectCalls> leaseDirectCallsSet;
+	private List<LeaseDirectCalls> leaseDirectCallsList;
 
 	/** 임대신청 목록. */
-	private Set<LeaseRequests> leaseRequestsSet;
+	private List<LeaseRequests> leaseRequestsList;
 
 	/**
 	 * 생성자.
 	 */
 	public LeaseCalls() {
-		this.leaseDirectCallsSet = new HashSet<LeaseDirectCalls>();
-		this.leaseRequestsSet = new HashSet<LeaseRequests>();
-	}
-
-	/**
-	 * 임대 요청 번호을 설정합니다..
-	 * 
-	 * @param leaseCallNo
-	 *            임대 요청 번호
-	 */
-	public void setLeaseCallNo(Integer leaseCallNo) {
-		this.leaseCallNo = leaseCallNo;
-	}
-
-	/**
-	 * 임대 요청 번호을 가져옵니다..
-	 * 
-	 * @return 임대 요청 번호
-	 */
-	public Integer getLeaseCallNo() {
-		return this.leaseCallNo;
-	}
-
-	/**
-	 * 회원을 설정합니다..
-	 * 
-	 * @param users
-	 *            회원
-	 */
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-
-	/**
-	 * 회원을 가져옵니다..
-	 * 
-	 * @return 회원
-	 */
-	public Users getUsers() {
-		return this.users;
-	}
-
-	/**
-	 * 임대 분류을 설정합니다..
-	 * 
-	 * @param leaseCategory
-	 *            임대 분류
-	 */
-	public void setLeaseCategory(String leaseCategory) {
-		this.leaseCategory = leaseCategory;
-	}
-
-	/**
-	 * 임대 분류을 가져옵니다..
-	 * 
-	 * @return 임대 분류
-	 */
-	public String getLeaseCategory() {
-		return this.leaseCategory;
-	}
-
-	/**
-	 * 중장비 종류을 설정합니다..
-	 * 
-	 * @param equipmentCategory
-	 *            중장비 종류
-	 */
-	public void setEquipmentCategory(String equipmentCategory) {
-		this.equipmentCategory = equipmentCategory;
-	}
-
-	/**
-	 * 중장비 종류을 가져옵니다..
-	 * 
-	 * @return 중장비 종류
-	 */
-	public String getEquipmentCategory() {
-		return this.equipmentCategory;
-	}
-
-	/**
-	 * 작업 장소을 설정합니다..
-	 * 
-	 * @param address
-	 *            작업 장소
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
-	 * 작업 장소을 가져옵니다..
-	 * 
-	 * @return 작업 장소
-	 */
-	public String getAddress() {
-		return this.address;
-	}
-
-	/**
-	 * 임대 요청글 제목을 설정합니다..
-	 * 
-	 * @param leaseCommentTitle
-	 *            임대 요청글 제목
-	 */
-	public void setLeaseCommentTitle(String leaseCommentTitle) {
-		this.leaseCommentTitle = leaseCommentTitle;
-	}
-
-	/**
-	 * 임대 요청글 제목을 가져옵니다..
-	 * 
-	 * @return 임대 요청글 제목
-	 */
-	public String getLeaseCommentTitle() {
-		return this.leaseCommentTitle;
-	}
-
-	/**
-	 * 임대 요청글 내용을 설정합니다..
-	 * 
-	 * @param leaseCommentContent
-	 *            임대 요청글 내용
-	 */
-	public void setLeaseCommentContent(String leaseCommentContent) {
-		this.leaseCommentContent = leaseCommentContent;
-	}
-
-	/**
-	 * 임대 요청글 내용을 가져옵니다..
-	 * 
-	 * @return 임대 요청글 내용
-	 */
-	public String getLeaseCommentContent() {
-		return this.leaseCommentContent;
-	}
-
-	/**
-	 * 시작 날짜 (~부터)을 설정합니다..
-	 * 
-	 * @param fromDate
-	 *            시작 날짜 (~부터)
-	 */
-	public void setFromDate(Date fromDate) {
-		this.fromDate = fromDate;
-	}
-
-	/**
-	 * 시작 날짜 (~부터)을 가져옵니다..
-	 * 
-	 * @return 시작 날짜 (~부터)
-	 */
-	public Date getFromDate() {
-		return this.fromDate;
-	}
-
-	/**
-	 * 종료 날짜 (~까지)을 설정합니다..
-	 * 
-	 * @param toDate
-	 *            종료 날짜 (~까지)
-	 */
-	public void setToDate(Date toDate) {
-		this.toDate = toDate;
-	}
-
-	/**
-	 * 종료 날짜 (~까지)을 가져옵니다..
-	 * 
-	 * @return 종료 날짜 (~까지)
-	 */
-	public Date getToDate() {
-		return this.toDate;
-	}
-
-	/**
-	 * 요청글 등록날짜을 설정합니다..
-	 * 
-	 * @param regDate
-	 *            요청글 등록날짜
-	 */
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-
-	/**
-	 * 요청글 등록날짜을 가져옵니다..
-	 * 
-	 * @return 요청글 등록날짜
-	 */
-	public Date getRegDate() {
-		return this.regDate;
-	}
-
-	/**
-	 * 임대 직접신청 목록을 설정합니다..
-	 * 
-	 * @param leaseDirectCallsSet
-	 *            임대 직접신청 목록
-	 */
-	public void setLeaseDirectCallsSet(Set<LeaseDirectCalls> leaseDirectCallsSet) {
-		this.leaseDirectCallsSet = leaseDirectCallsSet;
-	}
-
-	/**
-	 * 임대 직접신청를 추가합니다..
-	 * 
-	 * @param leaseDirectCalls
-	 *            임대 직접신청
-	 */
-	public void addLeaseDirectCalls(LeaseDirectCalls leaseDirectCalls) {
-		this.leaseDirectCallsSet.add(leaseDirectCalls);
-	}
-
-	/**
-	 * 임대 직접신청 목록을 가져옵니다..
-	 * 
-	 * @return 임대 직접신청 목록
-	 */
-	public Set<LeaseDirectCalls> getLeaseDirectCallsSet() {
-		return this.leaseDirectCallsSet;
-	}
-
-	/**
-	 * 임대신청 목록을 설정합니다..
-	 * 
-	 * @param leaseRequestsSet
-	 *            임대신청 목록
-	 */
-	public void setLeaseRequestsSet(Set<LeaseRequests> leaseRequestsSet) {
-		this.leaseRequestsSet = leaseRequestsSet;
-	}
-
-	/**
-	 * 임대신청를 추가합니다..
-	 * 
-	 * @param leaseRequests
-	 *            임대신청
-	 */
-	public void addLeaseRequests(LeaseRequests leaseRequests) {
-		this.leaseRequestsSet.add(leaseRequests);
-	}
-
-	/**
-	 * 임대신청 목록을 가져옵니다..
-	 * 
-	 * @return 임대신청 목록
-	 */
-	public Set<LeaseRequests> getLeaseRequestsSet() {
-		return this.leaseRequestsSet;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((leaseCallNo == null) ? 0 : leaseCallNo.hashCode());
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		LeaseCalls other = (LeaseCalls) obj;
-		if (leaseCallNo == null) {
-			if (other.leaseCallNo != null) {
-				return false;
-			}
-		} else if (!leaseCallNo.equals(other.leaseCallNo)) {
-			return false;
-		}
-		return true;
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCalls>();
+		this.leaseRequestsList = new ArrayList<LeaseRequests>();
 	}
 
 }

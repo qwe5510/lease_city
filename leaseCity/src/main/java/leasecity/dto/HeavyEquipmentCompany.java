@@ -1,11 +1,12 @@
 package leasecity.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 중기업체 모델 클래스.
@@ -14,40 +15,38 @@ import lombok.Data;
  * @version $Id$
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 @AllArgsConstructor
-public class HeavyEquipmentCompany implements Serializable {
+public class HeavyEquipmentCompany extends User  implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 회원. */
-	private Users users;
-
-	/** 도움요청 여부. */
+	/** 업무대기 여부. */
 	private String helpOnOff;
 
 	/** 정보공개 여부. */
 	private String infoOnOff;
 
 	/** 중장비 목록. */
-	private Set<HeavyEquipment> heavyEquipmentSet;
+	private List<HeavyEquipment> heavyEquipmentList;
 
 	/** 임대 직접신청 목록. */
-	private Set<LeaseDirectCalls> leaseDirectCallsSet;
+	private List<LeaseDirectCalls> leaseDirectCallsList;
 
 	/** 임대신청 목록. */
-	private Set<LeaseRequests> leaseRequestsSet;
+	private List<LeaseRequests> leaseRequestsList;
 
 	/** 임대양도 목록. */
-	private Set<LeaseTransfer> leaseTransferSet;
+	private List<LeaseTransfer> leaseTransferList;
 
 	/**
 	 * 생성자.
 	 */
 	public HeavyEquipmentCompany() {
-		this.heavyEquipmentSet = new HashSet<HeavyEquipment>();
-		this.leaseDirectCallsSet = new HashSet<LeaseDirectCalls>();
-		this.leaseRequestsSet = new HashSet<LeaseRequests>();
-		this.leaseTransferSet = new HashSet<LeaseTransfer>();
+		this.heavyEquipmentList = new ArrayList<HeavyEquipment>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCalls>();
+		this.leaseRequestsList = new ArrayList<LeaseRequests>();
+		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
 }

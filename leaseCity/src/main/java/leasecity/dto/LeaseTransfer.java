@@ -2,10 +2,10 @@ package leasecity.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
  * @version $Id$
  */
 @Data
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeaseTransfer implements Serializable {
@@ -26,16 +27,19 @@ public class LeaseTransfer implements Serializable {
 	private Integer leaseTransferNo;
 
 	/** 회원. */
-	private Users users;
+	private String userId;
 
 	/** 중장비. */
-	private HeavyEquipment heavyEquipment;
+	private String id_number;
 
 	/** 중장비 종류. */
 	private String equipmentCategory;
 
 	/** 작업 장소. */
 	private String address;
+
+	/** 양도 내용. */
+	private String content;
 
 	/** 시작 날짜 (~부터). */
 	private Date fromDate;
@@ -45,5 +49,4 @@ public class LeaseTransfer implements Serializable {
 
 	/** 비용. */
 	private Integer price;
-
 }

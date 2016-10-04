@@ -2,10 +2,10 @@ package leasecity.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -15,8 +15,10 @@ import lombok.NoArgsConstructor;
  * @version $Id$
  */
 @Data
-@AllArgsConstructor
+@EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
+
 public class Replys implements Serializable {
 
 	/** serialVersionUID. */
@@ -26,10 +28,10 @@ public class Replys implements Serializable {
 	private Integer replyNo;
 
 	/** 커뮤니티 게시글. */
-	private Comments comments;
+	private Integer commentNo;
 
 	/** 회원. */
-	private Users users;
+	private String userId;
 
 	/** 댓글 내용. */
 	private String replyContent;
