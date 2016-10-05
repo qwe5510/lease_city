@@ -5,6 +5,8 @@
 <configuration>
 	<!-- DTO에 대한 축약형 등록 -->
 	
+	<!-- UnderScore방식 <-> CamelCase 변환 setting-->
+	<!-- xxx_yyy <-> xxxYyy -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
@@ -32,7 +34,6 @@
 		<typeAlias type="leasecity.dto.LeasecityAdmin" alias="leasecityAdmin" />
 		<typeAlias type="leasecity.dto.Question" alias="question" />
 		<typeAlias type="leasecity.dto.Answer" alias="answer" />
-		
 		<typeAlias type="leasecity.dto.Notify" alias="notify" />
 		<typeAlias type="leasecity.dto.StandByUser" alias="standByUser" />
 		<typeAlias type="leasecity.dto.WorkLog" alias="workLog" />
