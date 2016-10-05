@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Replys implements Serializable {
+public class Reply implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
