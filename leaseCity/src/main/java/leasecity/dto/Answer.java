@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
-public class Answers implements Serializable {
+public class Answer implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;

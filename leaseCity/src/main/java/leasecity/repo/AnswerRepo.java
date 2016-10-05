@@ -1,5 +1,5 @@
 package leasecity.repo;
 
-public interface AnswersRepo {
+public interface AnswerRepo {
 
 }

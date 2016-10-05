@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
-public class Comments implements Serializable {
+public class Comment implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -50,7 +50,7 @@ public class Comments implements Serializable {
 	/**
 	 * 생성자.
 	 */
-	public Comments() {
+	public Comment() {
 		this.replysList = new ArrayList<Replys>();
 	}
 

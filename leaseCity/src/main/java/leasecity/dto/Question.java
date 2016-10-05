@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Questions implements Serializable {
+public class Question implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -45,13 +45,13 @@ public class Questions implements Serializable {
 	private Date regDate;
 
 	/** 답변 목록. */
-	private List<Answers> answersList;
+	private List<Answer> answersList;
 
 	/**
 	 * 생성자.
 	 */
-	public Questions() {
-		this.answersList = new ArrayList<Answers>();
+	public Question() {
+		this.answersList = new ArrayList<Answer>();
 	}
 
 }

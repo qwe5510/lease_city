@@ -3,6 +3,6 @@ package leasecity.repo;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LeaseDirectCallsRepoImpl implements LeaseDirectCallsRepo{
+public class LeaseCallRepoImpl implements LeaseCallRepo {
 
 }

@@ -61,7 +61,7 @@ public class User implements Serializable {
 	private Float evaluation;
 
 	/** 커뮤니티 게시글 목록. */
-	private List<Comments> commentsList;
+	private List<Comment> commentsList;
 
 	/** 건설업체 목록. */
 	private List<ConstructionCompany> constructionCompanyList;
@@ -70,7 +70,7 @@ public class User implements Serializable {
 	private List<HeavyEquipmentCompany> heavyEquipmentCompanyList;
 
 	/** 질문 목록. */
-	private List<Questions> questionsList;
+	private List<Question> questionsList;
 
 	/** 커뮤니티 댓글 목록. */
 	private List<Replys> replysList;
@@ -82,10 +82,10 @@ public class User implements Serializable {
 	 * 생성자.
 	 */
 	public User() {
-		this.commentsList = new ArrayList<Comments>();
+		this.commentsList = new ArrayList<Comment>();
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
 		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
-		this.questionsList = new ArrayList<Questions>();
+		this.questionsList = new ArrayList<Question>();
 		this.replysList = new ArrayList<Replys>();
 		this.workLogList = new ArrayList<WorkLog>();
 	}

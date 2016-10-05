@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class LeaseDirectCalls implements Serializable {
+public class LeaseDirectCall implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class LeaseDirectCalls implements Serializable {
 	private User equipmentIdusers;
 
 	/** 임대요청. */
-	private LeaseCalls leaseCalls;
+	private LeaseCall leaseCalls;
 
 	/** 직접요청 내용. */
 	private String directCallContent;

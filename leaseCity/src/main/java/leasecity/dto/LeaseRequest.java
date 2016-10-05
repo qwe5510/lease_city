@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class LeaseRequests implements Serializable {
+public class LeaseRequest implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class LeaseRequests implements Serializable {
 	private Integer leaseRequestNo;
 
 	/** 임대요청. */
-	private LeaseCalls leaseCalls;
+	private LeaseCall leaseCalls;
 
 	/** 중장비. */
 	private HeavyEquipment heavyEquipment;

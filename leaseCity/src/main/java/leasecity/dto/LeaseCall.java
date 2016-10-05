@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
-public class LeaseCalls implements Serializable {
+public class LeaseCall implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -57,17 +57,17 @@ public class LeaseCalls implements Serializable {
 	private Date regDate;
 
 	/** 임대 직접신청 목록. */
-	private List<LeaseDirectCalls> leaseDirectCallsList;
+	private List<LeaseDirectCall> leaseDirectCallsList;
 
 	/** 임대신청 목록. */
-	private List<LeaseRequests> leaseRequestsList;
+	private List<LeaseRequest> leaseRequestsList;
 
 	/**
 	 * 생성자.
 	 */
-	public LeaseCalls() {
-		this.leaseDirectCallsList = new ArrayList<LeaseDirectCalls>();
-		this.leaseRequestsList = new ArrayList<LeaseRequests>();
+	public LeaseCall() {
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 	}
 
 }

@@ -32,10 +32,10 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 	private List<HeavyEquipment> heavyEquipmentList;
 
 	/** 임대 직접신청 목록. */
-	private List<LeaseDirectCalls> leaseDirectCallsList;
+	private List<LeaseDirectCall> leaseDirectCallsList;
 
 	/** 임대신청 목록. */
-	private List<LeaseRequests> leaseRequestsList;
+	private List<LeaseRequest> leaseRequestsList;
 
 	/** 임대양도 목록. */
 	private List<LeaseTransfer> leaseTransferList;
@@ -45,8 +45,8 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 	 */
 	public HeavyEquipmentCompany() {
 		this.heavyEquipmentList = new ArrayList<HeavyEquipment>();
-		this.leaseDirectCallsList = new ArrayList<LeaseDirectCalls>();
-		this.leaseRequestsList = new ArrayList<LeaseRequests>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
 }

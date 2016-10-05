@@ -30,7 +30,7 @@ public class HeavyEquipment implements Serializable {
 	private String equipmentCategory;
 
 	/** 임대신청 목록. */
-	private List<LeaseRequests> leaseRequestsList;
+	private List<LeaseRequest> leaseRequestsList;
 
 	/** 임대양도 목록. */
 	private List<LeaseTransfer> leaseTransferList;
@@ -39,7 +39,7 @@ public class HeavyEquipment implements Serializable {
 	 * 생성자.
 	 */
 	public HeavyEquipment() {
-		this.leaseRequestsList = new ArrayList<LeaseRequests>();
+		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
 }

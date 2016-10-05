@@ -35,10 +35,10 @@ public class ConstructionCompany extends User implements Serializable {
 	private String companyCategory;
 
 	/** 임대요청 목록. */
-	private List<LeaseCalls> leaseCallsList;
+	private List<LeaseCall> leaseCallsList;
 
 	/** 임대 직접신청 목록. */
-	private List<LeaseDirectCalls> leaseDirectCallsList;
+	private List<LeaseDirectCall> leaseDirectCallsList;
 
 	/** 자격증 목록. */
 	private List<License> licenseList;
@@ -47,8 +47,8 @@ public class ConstructionCompany extends User implements Serializable {
 	 * 생성자.
 	 */
 	public ConstructionCompany() {
-		this.leaseCallsList = new ArrayList<LeaseCalls>();
-		this.leaseDirectCallsList = new ArrayList<LeaseDirectCalls>();
+		this.leaseCallsList = new ArrayList<LeaseCall>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
 		this.licenseList = new ArrayList<License>();
 	}
 
