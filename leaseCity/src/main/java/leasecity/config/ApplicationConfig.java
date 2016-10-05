@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class ApplicationConfig {
 	
-	/*@Bean
+	@Bean
 	public PlatformTransactionManager transactionManager(DataSource ds){
 		PlatformTransactionManager tm = new DataSourceTransactionManager(ds);
 		return tm;
@@ -76,5 +76,5 @@ public class ApplicationConfig {
 		ms.setBasename("classpath:/message/error/binding");
 		return ms;
 	}//error시 문구 작성
-*/
+
 }
