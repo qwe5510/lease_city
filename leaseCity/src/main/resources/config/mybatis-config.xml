@@ -23,6 +23,17 @@
 		<typeAlias type="leasecity.dto.LeaseRequest" alias="leaseRequest" />
 		<typeAlias type="leasecity.dto.LeaseTransfer" alias="leaseTransfer" />
 		<typeAlias type="leasecity.dto.LeaseSelection" alias="leaseSelection" />
+		
+		<!--  3.커뮤니티 (게시글, 댓글) -->
+		<typeAlias type="leasecity.dto.Comment" alias="comment" />
+		<typeAlias type="leasecity.dto.Reply" alias="reply" />
+		
+		<!--  4.질문과 답변 -->
+		<typeAlias type="leasecity.dto.Question" alias="reply" />
+		<typeAlias type="leasecity.dto.Reply" alias="reply" />
+		
+		
+		
 	</typeAliases>
 	
 	<mappers>
