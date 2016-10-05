@@ -6,15 +6,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+import leasecity.dto.user.User;
 
 @Controller
+@SessionAttributes({"user"})
 public class LoginController {
 	static Logger logger = LoggerFactory.getLogger(LoginController.class);
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String sayHello(Model model){
-		model.addAttribute("message", "Good Morning");
+		User user = new User();
+		model.addAttribute("user",user);
 		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
-		return "login";
+		return "join/login";
 	}
 }
