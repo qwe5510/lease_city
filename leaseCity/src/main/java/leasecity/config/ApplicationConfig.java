@@ -20,9 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(basePackages={
 		"leasecity.dto", 
-		"leasecity.repo", 
-		"leasecity.config"
-		})
+		"leasecity.repo"})
 @PropertySource("classpath:/config/dbconfig.properties")
 @EnableTransactionManagement
 public class ApplicationConfig {
@@ -67,7 +65,6 @@ public class ApplicationConfig {
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactoryBean sfb) throws Exception{
 		SqlSessionTemplate template = new SqlSessionTemplate(sfb.getObject());
-		
 		return template;
 	} // mybatis연동으로 SQLSession생성
 	

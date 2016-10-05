@@ -45,13 +45,13 @@ public class Comment implements Serializable {
 	private Date regDate;
 
 	/** 커뮤니티 댓글 목록. */
-	private List<Replys> replysList;
+	private List<Reply> replysList;
 
 	/**
 	 * 생성자.
 	 */
 	public Comment() {
-		this.replysList = new ArrayList<Replys>();
+		this.replysList = new ArrayList<Reply>();
 	}
 
 }
