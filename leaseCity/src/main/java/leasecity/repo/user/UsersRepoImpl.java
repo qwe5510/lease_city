@@ -21,4 +21,5 @@ public class UsersRepoImpl implements UsersRepo{
 		String stmt = USER_NS + "getAllSelectUser";
 		return session.selectList(stmt);
 	}
+	
 }

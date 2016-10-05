@@ -44,8 +44,6 @@ public class PsTest {
 		assertThat(users, is(notNullValue()));
 		logger.trace("User : {}",users);
 		
-		System.out.println("END");
-				
 	}
 
 }
