@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
 
 @Controller
@@ -17,7 +18,9 @@ public class LoginController {
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String sayHello(Model model){
 		User user = new User();
+		StandByUser standByUser = new StandByUser();
 		model.addAttribute("user",user);
+		model.addAttribute("standByUser",standByUser);
 		logger.trace("컨트롤러!!");
 		return "join/login";
 	}

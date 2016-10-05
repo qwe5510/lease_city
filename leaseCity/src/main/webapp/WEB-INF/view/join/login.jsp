@@ -28,7 +28,7 @@
 						</tr>
 					</table>
 					<div class="inner1">
-						<a>회원가입인증</a> <a>아이디찾기</a> <a>비밀번호찾기</a>
+						<a data-toggle="modal" href="#loginForm">회원가입인증</a> <a>아이디찾기</a> <a>비밀번호찾기</a>
 					</div>
 				</fieldset>
 			</sform:form>
@@ -45,7 +45,7 @@
 				<div class="span3">
 					<ul class="unstyled address">
 						<li><img
-							src="<%=request.getContextPath() %>/images/logo/logo2.png" /></li>
+							src="<%=request.getContextPath()%>/images/logo/logo2.png" /></li>
 					</ul>
 				</div>
 				<!--End Contact Form-->
@@ -83,32 +83,32 @@
 					<div class="row-fluid first">
 						<ul class="thumbnails">
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build1.png"
+								src="<%=request.getContextPath()%>/images/building/build1.png"
 								alt="" /></li>
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build2.png"
+								src="<%=request.getContextPath()%>/images/building/build2.png"
 								alt="" /></li>
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build3.png"
+								src="<%=request.getContextPath()%>/images/building/build3.png"
 								alt="" /></li>
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build4.png"
+								src="<%=request.getContextPath()%>/images/building/build4.png"
 								alt="" /></li>
 						</ul>
 					</div>
 					<div class="row-fluid">
 						<ul class="thumbnails">
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build5.png"
+								src="<%=request.getContextPath()%>/images/building/build5.png"
 								alt="" /></li>
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build6.png"
+								src="<%=request.getContextPath()%>/images/building/build6.png"
 								alt="" /></li>
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build7.png"
+								src="<%=request.getContextPath()%>/images/building/build7.png"
 								alt="" /></li>
 							<li class="span3"><img
-								src="<%=request.getContextPath() %>/images/building/build8.png"
+								src="<%=request.getContextPath()%>/images/building/build8.png"
 								alt="" /></li>
 						</ul>
 					</div>
@@ -119,5 +119,33 @@
 			<!--/row-fluid-->
 		</div>
 		<jsp:include page="../layout/footer.jsp"></jsp:include>
+		<!--  Login form -->
+		<div class="modal hide fade in" id="loginForm" aria-hidden="false">
+			<div class="modal-header">
+				<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+				<h4>회원가입 인증</h4>
+			</div>
+			<!--Modal Body-->
+			<div class="modal-body">
+			<sform:form class="form-inline" method="post" modelAttribute="user" action="#">
+				<sform:label path="representName">업체명</sform:label>
+				<sform:input path="representName" type="text"/><br>
+				<sform:label path="companyName">대표자명</sform:label>
+				<sform:input class="pop" path="companyName" type="text" /><br>
+				<sform:label path="email">Email</sform:label>
+				<sform:input  class="pop" path="email" type="email" /><br>
+				<sform:button>가입 요청</sform:button>
+			</sform:form>
+			</div>
+			<!--/Modal Body-->
+		</div>
+		<!--  /Login form -->
+		<script src="js/vendor/jquery-1.9.1.min.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/main.js"></script>
+		<!-- Required javascript files for Slider -->
+		<script src="js/jquery.ba-cond.min.js"></script>
+		<script src="js/jquery.slitslider.js"></script>
+		<!-- /Required javascript files for Slider -->
 </body>
 </html>
