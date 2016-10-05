@@ -28,16 +28,18 @@
 		<typeAlias type="leasecity.dto.Comment" alias="comment" />
 		<typeAlias type="leasecity.dto.Reply" alias="reply" />
 		
-		<!--  4.질문과 답변 -->
-		<typeAlias type="leasecity.dto.Question" alias="reply" />
-		<typeAlias type="leasecity.dto.Reply" alias="reply" />
+		<!--  4.관리자 기능(Q&A, 알림, 대기유저, 작업기록, 관리자 -->
+		<typeAlias type="leasecity.dto.LeasecityAdmin" alias="leasecityAdmin" />
+		<typeAlias type="leasecity.dto.Question" alias="question" />
+		<typeAlias type="leasecity.dto.Answer" alias="answer" />
 		
-		
+		<typeAlias type="leasecity.dto.Notify" alias="notify" />
+		<typeAlias type="leasecity.dto.StandByUser" alias="standByUser" />
+		<typeAlias type="leasecity.dto.WorkLog" alias="workLog" />
 		
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="mybatis/mapper/commentRepo.xml" />
 		<mapper resource="mybatis/mapper/userRepo.xml" />
 	</mappers>
 	
