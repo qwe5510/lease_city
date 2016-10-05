@@ -8,7 +8,7 @@ import java.util.List;
 import leasecity.dto.adminwork.Question;
 import leasecity.dto.adminwork.WorkLog;
 import leasecity.dto.community.Comment;
-import leasecity.dto.community.Replys;
+import leasecity.dto.community.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -77,7 +77,7 @@ public class User implements Serializable {
 	private List<Question> questionsList;
 
 	/** 커뮤니티 댓글 목록. */
-	private List<Replys> replysList;
+	private List<Reply> replysList;
 
 	/** 작업 내역 목록. */
 	private List<WorkLog> workLogList;
@@ -90,7 +90,7 @@ public class User implements Serializable {
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
 		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
 		this.questionsList = new ArrayList<Question>();
-		this.replysList = new ArrayList<Replys>();
+		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 	}
 }

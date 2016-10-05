@@ -13,30 +13,30 @@
 	
 	<typeAliases>
 	    <!-- 1.유저 (건설업체 - 자격증 / 중기업체 - 중장비)-->
-		<typeAlias type="leasecity.dto.User" alias="user"/>
-		<typeAlias type="leasecity.dto.ConstructionCompany" alias="constructionCompany"/>
-		<typeAlias type="leasecity.dto.License " alias="license" />
-		<typeAlias type="leasecity.dto.HeavyEquipmentCompany" alias="heavyEquipmentCompany"/>
-		<typeAlias type="leasecity.dto.HeavyEquipment" alias="heavyEquipment" />
+		<typeAlias type="leasecity.dto.user.User" alias="user"/>
+		<typeAlias type="leasecity.dto.user.ConstructionCompany" alias="constructionCompany"/>
+		<typeAlias type="leasecity.dto.user.License" alias="license" />
+		<typeAlias type="leasecity.dto.user.HeavyEquipmentCompany" alias="heavyEquipmentCompany"/>
+		<typeAlias type="leasecity.dto.user.HeavyEquipment" alias="heavyEquipment" />
 		
 		<!-- 2.임대 업무(임대요청 / 직접요청 / 신청 / 양도 /  -->
-		<typeAlias type="leasecity.dto.LeaseCall" alias="leaseCall" />
-		<typeAlias type="leasecity.dto.LeaseDirectCall" alias="leaseDirectCall" />
-		<typeAlias type="leasecity.dto.LeaseRequest" alias="leaseRequest" />
-		<typeAlias type="leasecity.dto.LeaseTransfer" alias="leaseTransfer" />
-		<typeAlias type="leasecity.dto.LeaseSelection" alias="leaseSelection" />
+		<typeAlias type="leasecity.dto.lease.LeaseCall" alias="leaseCall" />
+		<typeAlias type="leasecity.dto.lease.LeaseDirectCall" alias="leaseDirectCall" />
+		<typeAlias type="leasecity.dto.lease.LeaseRequest" alias="leaseRequest" />
+		<typeAlias type="leasecity.dto.lease.LeaseTransfer" alias="leaseTransfer" />
+		<typeAlias type="leasecity.dto.lease.LeaseSelection" alias="leaseSelection" />
 		
 		<!--  3.커뮤니티 (게시글, 댓글) -->
-		<typeAlias type="leasecity.dto.Comment" alias="comment" />
-		<typeAlias type="leasecity.dto.Reply" alias="reply" />
+		<typeAlias type="leasecity.dto.community.Comment" alias="comment" />
+		<typeAlias type="leasecity.dto.community.Reply" alias="reply" />
 		
 		<!--  4.관리자 기능(Q&A, 알림, 대기유저, 작업기록, 관리자 -->
-		<typeAlias type="leasecity.dto.LeasecityAdmin" alias="leasecityAdmin" />
-		<typeAlias type="leasecity.dto.Question" alias="question" />
-		<typeAlias type="leasecity.dto.Answer" alias="answer" />
-		<typeAlias type="leasecity.dto.Notify" alias="notify" />
-		<typeAlias type="leasecity.dto.StandByUser" alias="standByUser" />
-		<typeAlias type="leasecity.dto.WorkLog" alias="workLog" />
+		<typeAlias type="leasecity.dto.adminwork.LeasecityAdmin" alias="leasecityAdmin" />
+		<typeAlias type="leasecity.dto.adminwork.Question" alias="question" />
+		<typeAlias type="leasecity.dto.adminwork.Answer" alias="answer" />
+		<typeAlias type="leasecity.dto.adminwork.Notify" alias="notify" />
+		<typeAlias type="leasecity.dto.adminwork.StandByUser" alias="standByUser" />
+		<typeAlias type="leasecity.dto.adminwork.WorkLog" alias="workLog" />
 		
 	</typeAliases>
 	

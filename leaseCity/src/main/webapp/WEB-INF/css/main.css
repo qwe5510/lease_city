@@ -289,7 +289,7 @@ header.navbar .nav {
 header.navbar .nav>li {
 	margin-left: 1px
 }
-//Çì´õ ÆùÆ®Á¶Á¤
+//í—¤ë” í°íŠ¸ì¡°ì •
 header.navbar .nav>li>a {
 	
 	color: #333;
@@ -951,15 +951,42 @@ input[type="text"]{
 	width : 200px;
 	height: 35px;
 }
+input[type="password"]{
+	margin-top: 15px;
+	width : 200px;
+	height: 35px;
+}
 input[type="button"] {
 	margin-top: 15px;
 	height: 38px;
 	margin-right: 20px;
 	margin-bottom: 8px;
 }
+label{
+	display: inline-block;
+	width: 100px;
+}
 #con{
 	font-size: 15px;
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
 	margin-top: 15px;
+}
+.login{
+	margin-top: 80px;
+}
+.inner{
+	margin-top : 25px;
+	margin-bottom : 100px;
+	margin : auto;
+	display:inline-block
+	width: 1000px;
+}
+.inner2{
+	display:inline-block
+	width: 600px;
+}
+.inner3{
+	display:inline-block
+	width: 200px;
 }
