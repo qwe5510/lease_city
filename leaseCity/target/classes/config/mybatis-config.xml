@@ -42,6 +42,8 @@
 	
 	<mappers>
 		<mapper resource="mybatis/mapper/userRepo.xml" />
+		<mapper resource="mybatis/mapper/heavyEquipmentCompanyRepo.xml" />
+		<mapper resource="mybatis/mapper/constructionCompanyRepo.xml" />
 	</mappers>
 	
 	

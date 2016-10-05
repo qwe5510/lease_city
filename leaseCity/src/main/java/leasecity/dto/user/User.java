@@ -53,7 +53,7 @@ public class User implements Serializable {
 	private String address;
 
 	/** 알림여부. */
-	private String notificationOnOff;
+	private String notifyOnOff;
 
 	/** 보유 사이트 / URL. */
 	private String url;
@@ -86,6 +86,25 @@ public class User implements Serializable {
 	 * 생성자.
 	 */
 	public User() {
+		this.commentsList = new ArrayList<Comment>();
+		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
+		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
+		this.questionsList = new ArrayList<Question>();
+		this.replysList = new ArrayList<Reply>();
+		this.workLogList = new ArrayList<WorkLog>();
+	}
+	
+	public User(User user){
+		this.userId = user.getUserId();
+		this.password = user.getPassword();
+		this.companyName = user.getCompanyName();
+		this.representName = user.getRepresentName();
+		this.representPhone = user.getRepresentPhone();
+		this.notifyOnOff = user.getNotifyOnOff();
+		this.url = user.getUrl();
+		this.regDate = user.getRegDate();
+		this.evaluation = user.getEvaluation();
+		
 		this.commentsList = new ArrayList<Comment>();
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
 		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();

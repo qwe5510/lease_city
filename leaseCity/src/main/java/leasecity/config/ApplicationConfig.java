@@ -29,7 +29,7 @@ public class ApplicationConfig {
 	public PlatformTransactionManager transactionManager(DataSource ds){
 		PlatformTransactionManager tm = new DataSourceTransactionManager(ds);
 		return tm;
-	}// 트랜잭션 매니저 설정
+	}// 트랜잭션 처리 설정
 	
 	@Bean
 	public DataSource dataSource(

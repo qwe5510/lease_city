@@ -53,5 +53,21 @@ public class ConstructionCompany extends User implements Serializable {
 		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
 		this.licenseList = new ArrayList<License>();
 	}
+	
+	public ConstructionCompany
+			(	User user,
+				Float yearlySale, Integer yearlyAoor,
+				String companySize, String companyCategory){
+		super(user);
+		
+		this.yearlySale = yearlySale;
+		this.yearlyAoor = yearlyAoor;
+		this.companySize = companySize;
+		this.companyCategory = companyCategory;
+		
+		this.leaseCallsList = new ArrayList<LeaseCall>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.licenseList = new ArrayList<License>();
+	}
 
 }

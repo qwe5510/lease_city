@@ -1,12 +1,6 @@
 package leasecity.test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,38 +13,43 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
+import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
+import leasecity.repo.user.HeavyEquipmentCompanyRepo;
 import leasecity.repo.user.UserRepo;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ApplicationConfig.class})
-@Transactional //자동 롤백 설정
-public class PsTest {
 
-	static Logger logger = LoggerFactory.getLogger(PsTest.class);
+public class HECTest {
+
+	static Logger logger = LoggerFactory.getLogger(HECTest.class);
 	
 	@Autowired
 	SqlSessionTemplate session;
 	
 	@Autowired
 	UserRepo repo;
+	
+	@Autowired
+	HeavyEquipmentCompanyRepo HECrepo;
 
 	@Test
-	public void passwordTest() throws NoSuchAlgorithmException {
+	public void HECTest(){
 		
 		logger.trace("session : {}", session);
-	
-		List<User> users = repo.getAllUsers();
-		assertThat(users.size(), is(3));
-		logger.trace("User list : {}",users);
 		
 		User user = repo.getUser("ysh5586");
-		assertThat(user, is(notNullValue()));
-		logger.trace("User : {}",user);
+		logger.trace("유저 검색 : {}", user);
 		
-		int delete = repo.deleteUser(user);
-		logger.trace("user 삭제 : {}", delete);
+		HeavyEquipmentCompany HEC = 
+				new HeavyEquipmentCompany(user, "ON", "ON");
+		
+		System.out.println(HEC);
+		
+		int result = HECrepo.insertHeavyEquipmentCompany(HEC);		
+		logger.trace("중기업체 추가 : {}",result);
 	
 	}
 

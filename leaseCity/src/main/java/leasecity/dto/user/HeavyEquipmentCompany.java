@@ -52,4 +52,17 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
+	
+	public HeavyEquipmentCompany
+			(User user, String helpOnOff, String infoOnOff){
+		super(user);
+		
+		this.helpOnOff = helpOnOff;
+		this.infoOnOff = infoOnOff;
+		
+		this.heavyEquipmentList = new ArrayList<HeavyEquipment>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.leaseRequestsList = new ArrayList<LeaseRequest>();
+		this.leaseTransferList = new ArrayList<LeaseTransfer>();
+	}
 }
