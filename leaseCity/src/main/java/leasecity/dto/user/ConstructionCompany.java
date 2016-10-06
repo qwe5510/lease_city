@@ -25,7 +25,7 @@ public class ConstructionCompany extends User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 연매출. */
-	private Float yearlySale;
+	private Double yearlySale;
 
 	/** 연 수주량. */
 	private Integer yearlyAoor;
@@ -53,5 +53,48 @@ public class ConstructionCompany extends User implements Serializable {
 		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
 		this.licenseList = new ArrayList<License>();
 	}
+	
+	public ConstructionCompany
+			(	User user,
+				Double yearlySale, Integer yearlyAoor,
+				String companySize, String companyCategory){
+		super(user);
+		
+		this.yearlySale = yearlySale;
+		this.yearlyAoor = yearlyAoor;
+		this.companySize = companySize;
+		this.companyCategory = companyCategory;
+		
+		this.leaseCallsList = new ArrayList<LeaseCall>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.licenseList = new ArrayList<License>();
+	}
+	
+	/*public ConstructionCompany(ConstructionCompany CC) {
+		super(CC);
+
+		this.yearlySale = CC.yearlySale;
+		this.yearlyAoor = CC.yearlyAoor;
+		this.companySize = CC.companySize;
+		this.companyCategory = CC.companyCategory;
+
+		this.leaseCallsList = new ArrayList<LeaseCall>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.licenseList = new ArrayList<License>();
+	}*/
+
+	
+	/**
+	 * UserId도 같이 출력되게 임의 설정
+	 */
+	@Override
+	public String toString() {
+		return "ConstructionCompany(userId="+ getUserId() +", yearlySale=" + yearlySale + ", yearlyAoor=" + yearlyAoor + ", companySize="
+				+ companySize + ", companyCategory=" + companyCategory + ")";
+	}
+	
+	
+	
+			
 
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.constructionCompanyRepo">
+ 	
+ 	<!-- 건설업체 전체 조회  -->
+ 	<select id="getAllSelectCC" resultType="constructionCompany">
+ 		SELECT * FROM construction_company
+ 	</select>
+ 	
+ 	<!-- 건설업체 아이디로 검색 -->
+ 	<select id="getSelectCC" parameterType="String"
+ 			 resultType="constructionCompany">
+ 		SELECT * FROM construction_company
+ 		WHERE user_id = #{userId}
+ 	</select>
+ 	
+ 	
+ 	<!-- 건설업체 회원 추가 -->
+ 	<insert id="insertCC" parameterType="constructionCompany">
+ 		INSERT INTO construction_company VALUES(
+ 		#{userId},#{yearlySale},#{yearlyAoor},
+ 		#{companySize},#{companyCategory})
+ 	</insert>
+ 	
+ 	<!-- 건설업체 회원 삭제 -->
+ 	<delete id="deleteCC" parameterType="constructionCompany">
+ 		DELETE FROM construction_company
+ 		WHERE user_id = #{userId} 
+ 	</delete>
+ 
+ </mapper>

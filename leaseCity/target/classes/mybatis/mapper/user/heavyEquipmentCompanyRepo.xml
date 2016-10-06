@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.heavyEquipmentCompanyRepo">
+ 	
+ 	<!-- 중기업체 전체 조회 -->
+ 	<select id="getAllSelectHECs" resultType="heavyEquipmentCompany">
+ 		SELECT * 
+ 		FROM heavy_equipment_company
+ 	</select>
+ 	
+ 	<!-- 중기업체 검색 -->
+ 	<select id="getSelectHEC" parameterType="String" 
+ 					resultType="heavyEquipmentCompany">
+ 		SELECT * 
+ 		FROM heavy_equipment_company
+ 		WHERE user_id = #{userId}
+ 	</select>
+ 	
+ 	<!-- 중기업체 보유한 중장비와 함께 검색 -->
+ 	<!-- <select id="getSelectHECAndHE" parameterType="String"
+ 							 resultType="heavyEquipmentCompany">
+ 		SELECT heavy_equipment_company.*, heavy_equipment.* 
+ 		FROM heavy_equipment_company
+ 		JOIN heavy_equipment HAVING(user_id)
+ 		WHERE user_id = #{userId}
+ 	</select> -->
+ 	
+ 	<!-- 중기업체 추가 -->
+ 	<insert id="insertHEC" parameterType="heavyEquipmentCompany">
+ 		INSERT INTO heavy_equipment_company VALUES(
+ 		#{userId},#{helpOnOff},#{infoOnOff})	
+ 	</insert>
+ 	
+ 	<!-- 중기업체 삭제 -->
+ 	<delete id="deleteHEC" parameterType="heavyEquipmentCompany">
+ 		DELETE FROM heavy_equipment_company
+ 		WHERE user_id = #{userId} 
+ 	</delete>
+ 
+ </mapper>

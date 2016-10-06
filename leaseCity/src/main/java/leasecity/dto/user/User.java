@@ -53,7 +53,7 @@ public class User implements Serializable {
 	private String address;
 
 	/** 알림여부. */
-	private String notificationOnOff;
+	private String notifyOnOff;
 
 	/** 보유 사이트 / URL. */
 	private String url;
@@ -62,7 +62,10 @@ public class User implements Serializable {
 	private Date regDate;
 
 	/** 평가점수. */
-	private Float evaluation;
+	private Double evaluation;
+	
+	/** 회원탈퇴 날짜. */
+	private Date withdrawDate;
 
 	/** 커뮤니티 게시글 목록. */
 	private List<Comment> commentsList;
@@ -86,6 +89,64 @@ public class User implements Serializable {
 	 * 생성자.
 	 */
 	public User() {
+		this.commentsList = new ArrayList<Comment>();
+		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
+		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
+		this.questionsList = new ArrayList<Question>();
+		this.replysList = new ArrayList<Reply>();
+		this.workLogList = new ArrayList<WorkLog>();
+	}
+
+	/**
+	 * 파라미터를 이용한 생성자.
+	 */
+	public User(
+			String userId, String password, 
+			String companyName, String representName,
+			String representPhone, String handPhone,
+			String email, String address,
+			String notifyOnOff, String url,
+			Date regDate, Double evaluation,
+			Date withdrawDate){	
+		this.userId = userId;
+		this.password = password;
+		this.companyName = companyName;
+		this.representName = representName;
+		this.representPhone = representPhone;
+		this.handPhone = handPhone;
+		this.email = email;
+		this.address = address;
+		this.notifyOnOff = notifyOnOff;
+		this.url = url;
+		this.regDate = regDate;
+		this.evaluation = evaluation;
+		this.withdrawDate = withdrawDate;
+		
+		this.commentsList = new ArrayList<Comment>();
+		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
+		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
+		this.questionsList = new ArrayList<Question>();
+		this.replysList = new ArrayList<Reply>();
+		this.workLogList = new ArrayList<WorkLog>();
+		
+	}
+	
+	//다른 User 를 이용한 생성자
+	public User(User user){
+		this.userId = user.userId;
+		this.password = user.password;
+		this.companyName = user.companyName;
+		this.representName = user.representName;
+		this.representPhone = user.representPhone;
+		this.handPhone = user.handPhone;
+		this.email = user.email;
+		this.address = user.address;
+		this.notifyOnOff = user.notifyOnOff;
+		this.url = user.url;
+		this.regDate = user.regDate;
+		this.evaluation = user.evaluation;
+		this.withdrawDate = user.withdrawDate;
+		
 		this.commentsList = new ArrayList<Comment>();
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
 		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();

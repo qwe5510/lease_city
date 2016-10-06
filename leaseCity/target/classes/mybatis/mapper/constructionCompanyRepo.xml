@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.constructionCompanyRepo">
+ 	
+ 	<select id="getAllSelectCC" resultType="constructionCompany">
+ 		SELECT * FROM heavy_equipment_company
+ 	</select>
+ 	
+ 	<select id="getSelectCC" resultType="constructionCompany">
+ 		SELECT * FROM heavy_equipment_company
+ 	</select>
+ 	
+ 	<insert id="insertCC" parameterType="constructionCompany">
+ 		INSERT INTO users VALUES(
+ 		#{userId},#{yearlySale},#{yearlyAoor},
+ 		#{companySize},#{companyCategory})	
+ 	</insert>
+ 
+ </mapper>
