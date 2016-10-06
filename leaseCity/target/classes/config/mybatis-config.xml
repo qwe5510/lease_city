@@ -41,9 +41,9 @@
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="mybatis/mapper/userRepo.xml" />
-		<mapper resource="mybatis/mapper/heavyEquipmentCompanyRepo.xml" />
-		<mapper resource="mybatis/mapper/constructionCompanyRepo.xml" />
+		<mapper resource="mybatis/mapper/user/userRepo.xml" />
+		<mapper resource="mybatis/mapper/user/heavyEquipmentCompanyRepo.xml" />
+		<mapper resource="mybatis/mapper/user/constructionCompanyRepo.xml" />
 	</mappers>
 	
 	
