@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.commentRepo">
+ 	
+ 	<!-- 게시물 전체조회 -->
+ 	<select id="getAllSelectComments" resultType="comment">
+ 		SELECT * FROM comments;
+ 	</select>
+ 	
+ 	<!-- 게시물 조회 -->
+ 	<select id="getSelectComment" parameterType="String" 
+ 					resultType="comment">
+ 		SELECT * FROM comments
+ 		WHERE user_id = #{userId};
+ 	</select> 	
+ 	
+ 	
+ 	<!-- 게시물 추가 -->
+ 	<!-- comment_no는 TRIGGER로 AUTO_INCREMENT취급 받음 -->
+ 	<insert id="insertComment" parameterType="comment">
+ 		INSERT INTO comments 
+ 		(user_id, comment_title, 
+ 		comment_category, comment_content)
+ 		VALUES(
+ 		#{userId}, #{commentTitle},
+ 		#{commentCategory},#{commentContent}) 
+ 	</insert>
+ 
+ </mapper>

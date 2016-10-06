@@ -1,5 +1,7 @@
 package leasecity.repo.community;
 
-public interface CommentRepo {
+import leasecity.dto.community.Comment;
 
+public interface CommentRepo {
+	public int insertComment(Comment comment);
 }

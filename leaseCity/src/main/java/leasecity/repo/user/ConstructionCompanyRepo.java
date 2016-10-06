@@ -7,14 +7,16 @@ import leasecity.dto.user.HeavyEquipmentCompany;
 
 public interface ConstructionCompanyRepo {
 	// 모든 건설업체 검색
-	public List<ConstructionCompany> 
-			getAllConstructionCompanys();
+	public List<ConstructionCompany> getAllConstructionCompanys();
 
 	// 건설업체 검색
-	public ConstructionCompany 
-			getConstructionCompany(String userId);
+	public ConstructionCompany getConstructionCompany(String userId);
 
 	// 건설업체 추가
 	public int 
-		addConstructionCompany(ConstructionCompany CC);
+		insertConstructionCompany(ConstructionCompany CC);
+
+	// 건설업체 삭제
+	public int 
+		deleteConstructionCompany(ConstructionCompany CC);
 }

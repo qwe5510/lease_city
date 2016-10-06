@@ -4,18 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="leasecity.repo.constructionCompanyRepo">
  	
+ 	<!-- 건설업체 전체 조회  -->
  	<select id="getAllSelectCC" resultType="constructionCompany">
- 		SELECT * FROM heavy_equipment_company
+ 		SELECT * FROM construction_company
  	</select>
  	
- 	<select id="getSelectCC" resultType="constructionCompany">
- 		SELECT * FROM heavy_equipment_company
+ 	<!-- 건설업체 아이디로 검색 -->
+ 	<select id="getSelectCC" parameterType="String"
+ 			 resultType="constructionCompany">
+ 		SELECT * FROM construction_company
+ 		WHERE user_id = #{userId}
  	</select>
  	
+ 	
+ 	<!-- 건설업체 회원 추가 -->
  	<insert id="insertCC" parameterType="constructionCompany">
- 		INSERT INTO users VALUES(
+ 		INSERT INTO construction_company VALUES(
  		#{userId},#{yearlySale},#{yearlyAoor},
- 		#{companySize},#{companyCategory})	
+ 		#{companySize},#{companyCategory})
  	</insert>
+ 	
+ 	<!-- 건설업체 회원 삭제 -->
+ 	<delete id="deleteCC" parameterType="constructionCompany">
+ 		DELETE FROM construction_company
+ 		WHERE user_id = #{userId} 
+ 	</delete>
  
  </mapper>

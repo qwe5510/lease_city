@@ -11,24 +11,39 @@ public class HashingUtil {
 
 	//입력한 String값을 해싱시켜서 리턴
 	public static String hashingString(String str){
-		String md5Str = "";
+		String result = "";
+		byte byteData[]; //암호화에 사용할 바이트 배열
+		StringBuffer sb; //스트링 버퍼
 
 		try {
+			//MD5로 해싱
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			md.update(str.getBytes());
-			byte byteData[] = md.digest();
-			StringBuffer sb = new StringBuffer();
+			byteData = md.digest();
+			sb = new StringBuffer();
 
 			for (int i = 0; i < byteData.length; i++) {
-				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+				sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
 			}
-			md5Str = sb.toString();
+			
+			//SHA-256로 해싱
+			MessageDigest sh = MessageDigest.getInstance("SHA-256");
+			sh.update(sb.toString().getBytes());
+			byteData = sh.digest();
+		
+			sb.setLength(0); // StringBuffer 초기화
+			
+			for(int i=0; i< byteData.length; i++){
+				sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
+			}
+			
+			result = sb.toString();
 
 		} catch (NoSuchAlgorithmException e) {
 			logger.trace("비밀번호 해싱 실패, ", e);
-			md5Str = null;
+			result = null;
 		} 
-		return md5Str;
+		return result;
 	}
 
 }

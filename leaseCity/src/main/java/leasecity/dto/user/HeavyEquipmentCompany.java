@@ -65,4 +65,16 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
+
+	
+	/**
+	 * UserId도 같이 출력되게 임의 설정
+	 */
+	@Override
+	public String toString() {
+		return "HeavyEquipmentCompany(userId="+ getUserId() +", helpOnOff=" + helpOnOff + ", infoOnOff=" + infoOnOff + ")";
+	}
+	
+	
+	
 }

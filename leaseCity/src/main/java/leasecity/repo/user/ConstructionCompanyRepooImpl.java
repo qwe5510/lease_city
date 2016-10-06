@@ -2,6 +2,8 @@ package leasecity.repo.user;
 
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import leasecity.dto.user.ConstructionCompany;
@@ -9,27 +11,41 @@ import leasecity.dto.user.ConstructionCompany;
 @Repository
 public class ConstructionCompanyRepooImpl implements ConstructionCompanyRepo{
 
-	private final String CC_NS = "";
+	private final String CC_NS = "leasecity.repo.constructionCompanyRepo.";
 	
+	@Autowired
+	SqlSessionTemplate session;
+	
+	//건설업체 회원 전체 조회
 	@Override
 	public List<ConstructionCompany> 
 			getAllConstructionCompanys() {
-		
-		return null;
+		String stmt = CC_NS + "getAllSelectCC";
+		return session.selectList(stmt);
 	}
 
+	//건설업체 회원 ID로 검색
 	@Override
 	public ConstructionCompany 
 			getConstructionCompany(String userId) {
-		
-		return null;
+		String stmt = CC_NS + "getSelectCC";
+		return session.selectOne(stmt, userId);
 	}
 
+	
+	//건설업체 회원 추가
 	@Override
 	public int 
-		addConstructionCompany(ConstructionCompany CC) {
-		
-		return 0;
+		insertConstructionCompany(ConstructionCompany CC) {
+		String stmt = CC_NS + "insertCC";		
+		return session.insert(stmt, CC);
+	}
+	
+	//건설업체 회원 삭제
+	@Override
+	public int deleteConstructionCompany(ConstructionCompany CC) {
+		String stmt = CC_NS + "deleteCC";
+		return session.delete(stmt, CC);
 	}
 
 }

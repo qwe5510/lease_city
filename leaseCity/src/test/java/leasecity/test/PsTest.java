@@ -15,15 +15,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
 import leasecity.dto.user.User;
 import leasecity.repo.user.UserRepo;
-import leasecity.util.HashingUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ApplicationConfig.class })
-// @Transactional //자동 롤백 설정
+@Transactional //자동 롤백 설정
 public class PsTest {
 
 	static Logger logger = LoggerFactory.getLogger(PsTest.class);
@@ -52,7 +52,14 @@ public class PsTest {
 		
 		user = repo.getUser("ysh5586");
 		logger.trace("해싱된 비밀번호 : {}", user.getPassword());
-
+		
+		//session.commit();
+	}
+	
+	
+	@Test
+	public void commentTest(){
+		
 	}
 
 }
