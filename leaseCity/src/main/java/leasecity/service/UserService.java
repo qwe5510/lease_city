@@ -4,5 +4,5 @@ import leasecity.dto.user.User;
 
 public interface UserService {
 
-	public void join(User user, String kind);
+	public void join(User user);
 }
