@@ -30,11 +30,12 @@ public class UserRepoImpl implements UserRepo{
 	}
 	
 	@Override
-	public int addUsers(User user) {
+	public int insertUsers(User user) {
 		String stmt = USER_NS + "insertUser";		
 		return session.insert(stmt, user);
 	}
 	
+	//회원 삭제 (중기업체, 건설업체 전부 가능)
 	@Override
 	public int deleteUser(User user) {
 		String stmt = USER_NS + "deleteUser";

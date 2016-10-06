@@ -17,8 +17,4 @@ public interface HeavyEquipmentCompanyRepo {
 	public int
 		insertHeavyEquipmentCompany(HeavyEquipmentCompany HEC);
 	
-	//중기업체 삭제
-	public int
-		deleteHeavyEquipmentCompany(HeavyEquipmentCompany HEC);
-	
 }

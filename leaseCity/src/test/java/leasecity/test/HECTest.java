@@ -67,12 +67,11 @@ public class HECTest {
 		HeavyEquipmentCompany HEC_One = HECrepo.getHeavyEquipmentCompany("ysh5586");
 		logger.trace("중기업체 : {}",HEC_One);
 		
-		result = HECrepo.deleteHeavyEquipmentCompany(HEC_One);
+		result = repo.deleteUser(HEC_One);
 		logger.trace("중기업체 삭제 : {}", result);
 		
 		HECList = HECrepo.getAllHeavyEquipmentCompanys();
 		logger.trace("중기업체 리스트 : {}", HECList);
-		
 		
 	}
 

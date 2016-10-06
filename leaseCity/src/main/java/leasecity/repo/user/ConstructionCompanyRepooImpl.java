@@ -41,11 +41,4 @@ public class ConstructionCompanyRepooImpl implements ConstructionCompanyRepo{
 		return session.insert(stmt, CC);
 	}
 	
-	//건설업체 회원 삭제
-	@Override
-	public int deleteConstructionCompany(ConstructionCompany CC) {
-		String stmt = CC_NS + "deleteCC";
-		return session.delete(stmt, CC);
-	}
-
 }

@@ -13,9 +13,9 @@ public interface UserRepo {
 	public User getUser(String userId);
 	
 	//유저 추가
-	public int addUsers(User user);
+	public int insertUsers(User user);
 	
-	//유저 삭제
+	//회원 삭제 (중기업체, 건설업체 전부 가능)
 	public int deleteUser(User user);
 	
 	//비밀번호 해싱
