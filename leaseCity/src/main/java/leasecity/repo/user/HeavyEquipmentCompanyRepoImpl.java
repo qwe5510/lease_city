@@ -38,10 +38,4 @@ public class HeavyEquipmentCompanyRepoImpl implements HeavyEquipmentCompanyRepo 
 		return session.insert(stmt, HEC);
 	}
 	
-	@Override
-	public int deleteHeavyEquipmentCompany(HeavyEquipmentCompany HEC) {
-		String stmt = HEC_NS + "deleteHEC";
-		return session.delete(stmt, HEC);
-	}
-	
 }

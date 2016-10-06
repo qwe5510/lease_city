@@ -15,8 +15,4 @@ public interface ConstructionCompanyRepo {
 	// 건설업체 추가
 	public int 
 		insertConstructionCompany(ConstructionCompany CC);
-
-	// 건설업체 삭제
-	public int 
-		deleteConstructionCompany(ConstructionCompany CC);
 }

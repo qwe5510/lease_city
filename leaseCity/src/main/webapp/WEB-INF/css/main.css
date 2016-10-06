@@ -974,19 +974,24 @@ label{
 }
 .login{
 	margin-top: 80px;
+	left:50%;
+	margin-left: 350px;
 }
-.inner{
-	margin-top : 25px;
-	margin-bottom : 100px;
-	margin : auto;
-	display:inline-block
-	width: 1000px;
+.inner1{
+	margin-top : 20px;
+	margin-left : 60px;
+	font-size : 18px;
+	word-spacing: 35px;
 }
-.inner2{
-	display:inline-block
-	width: 600px;
+ .loginBtn{
+ 	 background: #8FBC8F;
+ 	font-size : 20px;
+	height: 105px;
+	width : 100px;
+	margin-left: 20px;
 }
-.inner3{
-	display:inline-block
-	width: 200px;
+.pop{
+	margin-top: 15px;
+	width : 450px;
+	height: 35px;
 }
