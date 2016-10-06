@@ -17,4 +17,7 @@ public interface UserRepo {
 	
 	//유저 삭제
 	public int deleteUser(User user);
+	
+	//비밀번호 해싱
+	public int hashingPassword(User user);
 }

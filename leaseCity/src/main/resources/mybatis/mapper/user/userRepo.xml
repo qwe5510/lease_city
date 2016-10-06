@@ -40,7 +40,14 @@
  	<!-- 유저 삭제 -->
  	<delete id="deleteUser" parameterType="user">
  		DELETE FROM users
- 		WHERE user_id=#{userId}
+ 		WHERE user_id = #{userId}
  	</delete>
+ 	
+ 	<!-- 유저 비밀번호 해싱 -->
+ 	<update id="hashingPassword" parameterType="user">
+ 		UPDATE users
+ 		SET password = #{password}
+ 		WHERE user_id = #{userId}
+ 	</update>
  
  </mapper>

@@ -1,8 +1,5 @@
 package leasecity.test;
 
-import java.security.NoSuchAlgorithmException;
-
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,18 +11,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
-import leasecity.dto.user.HeavyEquipmentCompany;
-import leasecity.dto.user.User;
-import leasecity.repo.user.HeavyEquipmentCompanyRepo;
+import leasecity.repo.user.ConstructionCompanyRepo;
 import leasecity.repo.user.UserRepo;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ApplicationConfig.class})
 @Transactional
-public class HECTest {
+public class CCTest {
 
-	static Logger logger = LoggerFactory.getLogger(HECTest.class);
+	static Logger logger = LoggerFactory.getLogger(CCTest.class);
 	
 	@Autowired
 	SqlSessionTemplate session;
@@ -34,26 +29,11 @@ public class HECTest {
 	UserRepo repo;
 	
 	@Autowired
-	HeavyEquipmentCompanyRepo HECrepo;
+	ConstructionCompanyRepo CCrepo;
 
 	@Test
 	public void HECTest(){
 		logger.trace("session : {}", session);
-		
-		User user = repo.getUser("ysh5586");
-		logger.trace("유저 검색 : {}", user);
-		
-		HeavyEquipmentCompany HEC = 
-				new HeavyEquipmentCompany(user, "ON", "ON");
-		
-		System.out.println(HEC);
-
-		
-		int result = HECrepo.insertHeavyEquipmentCompany(HEC);		
-		logger.trace("중기업체 추가 : {}",result);
-		
-		HeavyEquipmentCompany HEC2 = HECrepo.getHeavyEquipmentCompany("ysh5586");
-		System.out.println(HEC2);
 		
 	}
 

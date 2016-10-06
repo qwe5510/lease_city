@@ -1,14 +1,13 @@
 package leasecity.repo.user;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import leasecity.dto.user.User;
+import leasecity.util.HashingUtil;
 
 @Repository
 public class UserRepoImpl implements UserRepo{
@@ -40,6 +39,13 @@ public class UserRepoImpl implements UserRepo{
 	public int deleteUser(User user) {
 		String stmt = USER_NS + "deleteUser";
 		return session.delete(stmt, user);
+	}
+	
+	@Override
+	public int hashingPassword(User user) {
+		String stmt = USER_NS + "hashingPassword";
+		user.setPassword(HashingUtil.hashingString(user.getPassword()));		
+		return session.update(stmt, user);
 	}
 	
 }
