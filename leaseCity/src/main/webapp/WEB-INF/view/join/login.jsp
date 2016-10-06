@@ -134,7 +134,7 @@
 				<sform:input class="pop" path="companyName" type="text" /><br>
 				<sform:label path="email">Email</sform:label>
 				<sform:input  class="pop" path="email" type="email" /><br>
-				<sform:button>가입 요청</sform:button>
+				<sform:button>가입 요청하는거야</sform:button>
 			</sform:form>
 			</div>
 			<!--/Modal Body-->
