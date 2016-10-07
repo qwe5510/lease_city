@@ -14,6 +14,7 @@ import leasecity.exception.JoinFailException;
 import leasecity.exception.LoginFailException;
 import leasecity.repo.user.ConstructionCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentCompanyRepo;
+import leasecity.repo.user.HeavyEquipmentRepo;
 import leasecity.repo.user.UserRepo;
 import leasecity.util.HashingUtil;
 
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	HeavyEquipmentCompanyRepo HECRepo;
+	
+	@Autowired
+	HeavyEquipmentRepo HERepo;
 	
 	
 	//유저 회원가입
@@ -84,6 +88,10 @@ public class UserServiceImpl implements UserService {
 		}else if(HEC != null){
 			HEC = HECRepo.getHECUser(userId);
 			List<HeavyEquipment> HECList = HEC.getHeavyEquipmentList();
+			
+			//중기업체 중장비 리스트 넣기
+			HECList = HERepo.getUserHeavyEquipments(userId);
+			HEC.setHeavyEquipmentList(HECList);
 			
 			return HEC;
 		}else{
