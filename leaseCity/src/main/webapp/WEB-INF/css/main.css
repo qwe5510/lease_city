@@ -393,35 +393,59 @@ header .dropdown-menu:before {
 	border: 0
 }
 
-.modal#loginForm {
-	width: 600px;
-	margin-left: -300px
+.modal#loginForm{
+	width: 350px;
+	margin-left: -200px;
+	background: #EEE8AA;
 }
-
+.modal#idSearch{
+	width: 350px;
+	margin-left: -200px;
+	background: #EEE8AA;
+}
 .modal .modal-header {
 	border: 0;
 	padding: 20px 20px 0
 }
 
-.modal .modal-header>h4 {
+.modal .modal-header>h3 {
 	font-weight: 300;
-	font-size: 14px;
+	font-size: 20px;
 	color: #848484;
 	text-transform: uppercase;
-	margin: 0
+	margin: 0;
+	margin-left: 90px;
+	margin-bottom: 15px;
+}
+.modal .modalImg{
+	margin-left: 70px;
+	margin-bottom: 15px;
 }
 
 .modal .modal-body {
-	padding: 20px
+	padding: 0px;
 }
 
-.modal input[type="text"], .modal input[type="password"] {
+.modal input[type="text"], .modal input[type="password"], 
+.modal input[type="email"]{
 	padding: 5px 10px;
 	/* min-height: 30px; */
-	width: 130px;
-	margin-right: 10px
+	width: 210px;
+	margin-right: 10px;
+	margin-left: 60px;
 }
-
+.modal#passSearch{
+	width: 350px;
+	margin-left: -200px;
+	background: #EEE8AA;
+}
+#passSearch input[type="email"]{
+	padding: 5px 10px;
+	/* min-height: 30px; */
+	width: 150px;
+	margin-right: 10px;
+	margin-left: 60px;
+}
 .modal .icon-remove {
 	color: #848484;
 	position: absolute;
@@ -440,8 +464,13 @@ header .dropdown-menu:before {
 }
 
 .modal button {
-	margin-left: 10px;
-	border: 0
+	border: 0;
+	margin-top : 20px;
+	margin-bottom : 0px;
+	margin-left : 80px;
+	width: 200px;
+	height: 30px;
+	background: #E6E6FA;
 }
 .bot{
 	padding-bottom: 10px
@@ -956,6 +985,13 @@ input[type="password"]{
 	width : 200px;
 	height: 35px;
 }
+input[type="email"]{
+	margin-top: 15px;
+	width : 200px;
+	height: 35px;
+	display: block;
+	float: left;
+}
 input[type="button"] {
 	margin-top: 15px;
 	height: 38px;
@@ -989,9 +1025,4 @@ label{
 	height: 105px;
 	width : 100px;
 	margin-left: 20px;
-}
-.pop{
-	margin-top: 15px;
-	width : 450px;
-	height: 35px;
 }

@@ -16,13 +16,29 @@ public class LoginController {
 	static Logger logger = LoggerFactory.getLogger(LoginController.class);
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String sayHello(Model model){
-
 		User user = new User();
 		StandByUser standByUser = new StandByUser();
 		model.addAttribute("user",user);
 		model.addAttribute("standByUser",standByUser);
 		logger.trace("컨트롤러!!");
 		System.out.println("컨틀롤러들어옴!");
-		return "login";
+		return "join/login";
+		
+	}
+	
+	@RequestMapping(value="/join_agree",method=RequestMethod.GET)
+	public String join_agree(Model model){
+		model.addAttribute("message", "Good Morning");
+		logger.trace("컨트롤러!!");
+		System.out.println("컨틀롤러들어옴!");
+		return "join/join_agree";
+	}
+	
+	@RequestMapping(value="/join_input",method=RequestMethod.GET)
+	public String join_input(Model model){
+		model.addAttribute("message", "Good Morning");
+		logger.trace("컨트롤러!!");
+		System.out.println("컨틀롤러들어옴!");
+		return "join/join_input";
 	}
 }

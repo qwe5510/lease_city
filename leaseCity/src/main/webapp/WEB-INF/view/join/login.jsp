@@ -28,7 +28,9 @@
 						</tr>
 					</table>
 					<div class="inner1">
-						<a data-toggle="modal" href="#loginForm">회원가입인증</a> <a>아이디찾기</a> <a>비밀번호찾기</a>
+						<a data-toggle="modal" href="#loginForm">회원가입인증</a>
+						<a data-toggle="modal" href="#idSearch">아이디찾기</a> 
+						<a data-toggle="modal" href="#passSearch">비밀번호찾기</a>
 					</div>
 				</fieldset>
 			</sform:form>
@@ -123,23 +125,62 @@
 		<div class="modal hide fade in" id="loginForm" aria-hidden="false">
 			<div class="modal-header">
 				<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
-				<h4>회원가입 인증</h4>
+				<img class="modalImg" src="<%=request.getContextPath() %>/images/pop/join.png"/>
 			</div>
 			<!--Modal Body-->
 			<div class="modal-body">
 			<sform:form class="form-inline" method="post" modelAttribute="user" action="#">
-				<sform:label path="representName">업체명</sform:label>
-				<sform:input path="representName" type="text"/><br>
-				<sform:label path="companyName">대표자명</sform:label>
-				<sform:input class="pop" path="companyName" type="text" /><br>
-				<sform:label path="email">Email</sform:label>
-				<sform:input  class="pop" path="email" type="email" /><br>
-				<sform:button>가입 요청하는거야</sform:button>
+				<sform:input path="representName" type="text" placeholder="업체명" /><br>
+				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
+				<sform:input path="email" type="email" placeholder="Email"/><br>
+				<sform:button class="pop">가입 요청</sform:button>
 			</sform:form>
 			</div>
 			<!--/Modal Body-->
-		</div>
-		<!--  /Login form -->
+			</div>
+			<!--  Login form -->
+		<!--  Login form -->
+		<div class="modal hide fade in" id="idSearch" aria-hidden="false">
+			<div class="modal-header">
+				<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+				<img class="modalImg" src="<%=request.getContextPath() %>/images/pop/id.png"/>
+			</div>
+			<!--Modal Body-->
+			<div class="modal-body">
+			<sform:form class="form-inline" method="post" modelAttribute="user" action="#">
+				<sform:input path="representName" type="text" placeholder="업체명" /><br>
+				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
+				<sform:input path="email" type="email" placeholder="Email"/><br>
+				<sform:button class="pop">아이디 찾기</sform:button>
+			</sform:form>
+			</div>
+			<!--/Modal Body-->
+			</div>
+			<!--  Login form -->
+			
+			<!--  Login form -->
+		<div class="modal hide fade in" id="passSearch" aria-hidden="false">
+			<div class="modal-header">
+				<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+				<img class="modalImg" src="<%=request.getContextPath() %>/images/pop/pass.png"/>
+			</div>
+			<!--Modal Body-->
+			<div class="modal-body">
+			<sform:form class="form-inline" method="post" modelAttribute="user" action="#">
+			<sform:input path="representName" type="text" placeholder="아이디" /><br>
+				<sform:input path="representName" type="text" placeholder="업체명" /><br>
+				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
+				<sform:input path="email" type="email" placeholder="Email"/>
+				<button></button><br>
+				<sform:input path="companyName" type="number" placeholder="인증번호"/>
+				<br>
+				<sform:button class="pop">비밀번호찾기</sform:button>
+			</sform:form>
+			</div>
+			<!--/Modal Body-->
+			</div>
+			<!--  Login form -->
+
 		<script src="js/vendor/jquery-1.9.1.min.js"></script>
 		<script src="js/vendor/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
