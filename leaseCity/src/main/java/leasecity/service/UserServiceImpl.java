@@ -1,10 +1,13 @@
 package leasecity.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import leasecity.dto.user.ConstructionCompany;
+import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
 import leasecity.exception.JoinFailException;
@@ -80,6 +83,8 @@ public class UserServiceImpl implements UserService {
 			return CC;
 		}else if(HEC != null){
 			HEC = HECRepo.getHECUser(userId);
+			List<HeavyEquipment> HECList = HEC.getHeavyEquipmentList();
+			
 			return HEC;
 		}else{
 			//User테이블에는 있으나 건설업체,중기업체 속성이 아닌 dto

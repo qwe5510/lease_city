@@ -172,12 +172,12 @@ public class User implements Serializable {
 				.append(", address="+address)
 				.append(", notifyOnOff="+notifyOnOff)
 				.append(", url="+url)
-				.append(", regDate="+DateUtil.getDateString(regDate))
+				.append(", regDate="+
+				DateUtil.getDateString(regDate))
 				.append(", evaluation="+evaluation)
-				.append(", withdrawDate="+DateUtil.getDateString(withdrawDate));
+				.append(", withdrawDate="+DateUtil.getDateString(withdrawDate))
+				.append(")");
 				
-		
-		
 		return sb.toString();
 	}
 }

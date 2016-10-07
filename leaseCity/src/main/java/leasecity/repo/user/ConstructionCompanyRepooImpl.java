@@ -11,8 +11,10 @@ import leasecity.dto.user.ConstructionCompany;
 @Repository
 public class ConstructionCompanyRepooImpl implements ConstructionCompanyRepo{
 
+	//mapper연동용 문자열 코드 - 건설업체
 	private final String CC_NS = "leasecity.repo.constructionCompanyRepo.";
 	
+	//Sql쿼리를 작동시키는 SessionTemplate Bean
 	@Autowired
 	SqlSessionTemplate session;
 	

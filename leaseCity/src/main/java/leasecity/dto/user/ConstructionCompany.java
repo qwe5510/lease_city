@@ -49,6 +49,7 @@ public class ConstructionCompany extends User implements Serializable {
 	 * 생성자.
 	 */
 	public ConstructionCompany() {
+		super();
 		this.leaseCallsList = new ArrayList<LeaseCall>();
 		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
 		this.licenseList = new ArrayList<License>();

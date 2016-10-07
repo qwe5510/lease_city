@@ -47,6 +47,7 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 	 * 생성자.
 	 */
 	public HeavyEquipmentCompany() {
+		super();
 		this.heavyEquipmentList = new ArrayList<HeavyEquipment>();
 		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
 		this.leaseRequestsList = new ArrayList<LeaseRequest>();

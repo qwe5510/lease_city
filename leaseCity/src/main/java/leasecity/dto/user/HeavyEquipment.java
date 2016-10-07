@@ -26,7 +26,7 @@ public class HeavyEquipment implements Serializable {
 	private String idNumber;
 
 	/** 회원. */
-	private User users;
+	private String userId;
 
 	/** 중장비 종류. */
 	private String equipmentCategory;
@@ -41,6 +41,19 @@ public class HeavyEquipment implements Serializable {
 	 * 생성자.
 	 */
 	public HeavyEquipment() {
+		this.leaseRequestsList = new ArrayList<LeaseRequest>();
+		this.leaseTransferList = new ArrayList<LeaseTransfer>();
+	}
+	
+	public HeavyEquipment(
+			String idNumber, 
+			String userId, 
+			String equipmentCategory){
+		
+		this.idNumber = idNumber;
+		this.userId = userId;
+		this.equipmentCategory = equipmentCategory;
+		
 		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}

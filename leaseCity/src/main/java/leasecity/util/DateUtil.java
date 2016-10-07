@@ -21,22 +21,37 @@ public class DateUtil {
 	
 	//java.util.Date의 날짜를 String으로 전환.
 	public static String getDateString(Date date){
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar;
 		
-		return calendar.get(Calendar.YEAR) + "-"
-				+ (calendar.get(Calendar.MONTH)+1) + "-"
-				+ calendar.get(Calendar.DAY_OF_MONTH); 
+		if(date==null){ // date가 null일때 null반환
+			return null;
+		}else{
+			calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			//Date가 null이 아니면
+			return calendar.get(Calendar.YEAR) + "-"
+					+ (calendar.get(Calendar.MONTH)+1) + "-"
+					+ calendar.get(Calendar.DAY_OF_MONTH);
+		}
+		
+		 
 	}
 	
 	//java.util.Date의 시간을 String으로 전환.
 	public static String getTimeString(Date date){
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		Calendar calendar;
 		
-		return calendar.get(Calendar.HOUR_OF_DAY) + ":"
-				+ calendar.get(Calendar.MINUTE) + ":"
-				+ calendar.get(Calendar.SECOND); 
+		if(date==null){ // date가 null일때 null반환
+			return null;
+		}else{
+			calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			//Date가 null이 아니면
+			return calendar.get(Calendar.HOUR_OF_DAY) + ":"
+					+ calendar.get(Calendar.MINUTE) + ":"
+					+ calendar.get(Calendar.SECOND); 
+		}
+		
 	}
 
 }
