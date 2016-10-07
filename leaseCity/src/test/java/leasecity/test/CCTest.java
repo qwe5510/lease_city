@@ -42,17 +42,13 @@ public class CCTest {
 		logger.trace("session : {}", session);
 		
 		User user = repo.getUser("raven92");
-		int result = repo.hashingPassword(user);
-		logger.trace("유저 암호 해싱 : {}", result);
-		
-		user = repo.getUser("raven92");
 		logger.trace("유저 검색 : {}", user);
 		
 		ConstructionCompany CC = 
 				new ConstructionCompany(user, 2500.0, 240, "소", "건축/토목");
 		System.out.println(CC);
 		
-		result = CCrepo.insertConstructionCompany(CC);
+		int result = CCrepo.insertConstructionCompany(CC);
 		logger.trace("건설업체 추가 : {}", result);
 		
 		user = repo.getUser("ysh5586");
@@ -66,7 +62,9 @@ public class CCTest {
 		logger.trace("건설업체2 추가 : {}", result);
 		
 		ConstructionCompany CC_One = 
-				CCrepo.getConstructionCompany(user.getUserId());
+				CCrepo.getCCUser(user.getUserId());
+		System.out.println(CC_One.getRepresentName());
+		
 		logger.trace("건설업체 검색 : {}", CC_One);
 		
 		CCList = CCrepo.getAllConstructionCompanys();

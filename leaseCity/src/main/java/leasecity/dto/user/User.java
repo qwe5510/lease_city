@@ -2,13 +2,16 @@ package leasecity.dto.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import leasecity.dto.adminwork.Question;
 import leasecity.dto.adminwork.WorkLog;
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
+import leasecity.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -62,7 +65,10 @@ public class User implements Serializable {
 	private Date regDate;
 
 	/** 평가점수. */
-	private Float evaluation;
+	private Double evaluation;
+	
+	/** 회원탈퇴 날짜. */
+	private Date withdrawDate;
 
 	/** 커뮤니티 게시글 목록. */
 	private List<Comment> commentsList;
@@ -93,17 +99,31 @@ public class User implements Serializable {
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 	}
-	
-	public User(User user){
-		this.userId = user.getUserId();
-		this.password = user.getPassword();
-		this.companyName = user.getCompanyName();
-		this.representName = user.getRepresentName();
-		this.representPhone = user.getRepresentPhone();
-		this.notifyOnOff = user.getNotifyOnOff();
-		this.url = user.getUrl();
-		this.regDate = user.getRegDate();
-		this.evaluation = user.getEvaluation();
+
+	/**
+	 * 파라미터를 이용한 생성자.
+	 */
+	public User(
+			String userId, String password, 
+			String companyName, String representName,
+			String representPhone, String handPhone,
+			String email, String address,
+			String notifyOnOff, String url,
+			Date regDate, Double evaluation,
+			Date withdrawDate){	
+		this.userId = userId;
+		this.password = password;
+		this.companyName = companyName;
+		this.representName = representName;
+		this.representPhone = representPhone;
+		this.handPhone = handPhone;
+		this.email = email;
+		this.address = address;
+		this.notifyOnOff = notifyOnOff;
+		this.url = url;
+		this.regDate = regDate;
+		this.evaluation = evaluation;
+		this.withdrawDate = withdrawDate;
 		
 		this.commentsList = new ArrayList<Comment>();
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
@@ -111,5 +131,53 @@ public class User implements Serializable {
 		this.questionsList = new ArrayList<Question>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
+		
+	}
+	
+	//다른 User 를 이용한 생성자
+	public User(User user){
+		this.userId = user.userId;
+		this.password = user.password;
+		this.companyName = user.companyName;
+		this.representName = user.representName;
+		this.representPhone = user.representPhone;
+		this.handPhone = user.handPhone;
+		this.email = user.email;
+		this.address = user.address;
+		this.notifyOnOff = user.notifyOnOff;
+		this.url = user.url;
+		this.regDate = user.regDate;
+		this.evaluation = user.evaluation;
+		this.withdrawDate = user.withdrawDate;
+		
+		this.commentsList = new ArrayList<Comment>();
+		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
+		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
+		this.questionsList = new ArrayList<Question>();
+		this.replysList = new ArrayList<Reply>();
+		this.workLogList = new ArrayList<WorkLog>();
+	}
+	
+	public String userInfo(){
+		
+		StringBuffer sb = new StringBuffer()
+		.append(this.getClass().getSimpleName() + " : (")
+				.append("userId="+userId)
+				.append(", password="+password)
+				.append(", companyName="+companyName)
+				.append(", representName="+representName)
+				.append(", representPhone="+representPhone)
+				.append(", handPhone="+handPhone)
+				.append(", email="+email)
+				.append(", address="+address)
+				.append(", notifyOnOff="+notifyOnOff)
+				.append(", url="+url)
+				.append(", regDate="+DateUtil.getDateString(regDate))
+				.append(", evaluation="+evaluation)
+				.append(", withdrawDate="+DateUtil.getDateString(withdrawDate));
+				
+		
+		
+		return sb.toString();
 	}
 }

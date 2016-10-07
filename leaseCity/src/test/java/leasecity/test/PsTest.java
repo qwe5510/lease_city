@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -38,9 +39,20 @@ public class PsTest {
 	public void passwordTest() throws NoSuchAlgorithmException {
 
 		logger.trace("session : {}", session);
+		
+		User new_user = new User("test1","testpass",
+				"테스트", "김시험",
+				"032)331-2314", "010-3239-2031",
+				"whgdkfk12@gmail.com", "경기도 포천시",
+				"ON", "www.test.def", null, 4.2, null);
+		
+		System.out.println(new_user);
+		
+		int result = repo.insertUser(new_user);
+		logger.trace("User 생성 : {}", result);
 
 		List<User> users = repo.getAllUsers();
-		assertThat(users.size(), is(3));
+		assertThat(users.size(), is(4));
 		logger.trace("User list : {}", users);
 
 		User user = repo.getUser("ysh5586");
@@ -48,12 +60,11 @@ public class PsTest {
 		logger.trace("User : {}", user);
 
 		logger.trace("원래 비밀번호 : {}", user.getPassword());
-		repo.hashingPassword(user);
+		//repo.hashingPassword(user);
 		
 		user = repo.getUser("ysh5586");
 		logger.trace("해싱된 비밀번호 : {}", user.getPassword());
-		
-		//session.commit();
+
 	}
 	
 	

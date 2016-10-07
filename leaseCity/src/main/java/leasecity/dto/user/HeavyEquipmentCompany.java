@@ -53,6 +53,7 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
 	
+	//User를 파라미터로 받는 생성자.
 	public HeavyEquipmentCompany
 			(User user, String helpOnOff, String infoOnOff){
 		super(user);
@@ -65,6 +66,18 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
+	
+	/*public HeavyEquipmentCompany(HeavyEquipmentCompany HEC){
+		super(HEC);
+		
+		this.helpOnOff = HEC.helpOnOff;
+		this.infoOnOff = HEC.infoOnOff;
+		
+		this.heavyEquipmentList = new ArrayList<HeavyEquipment>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.leaseRequestsList = new ArrayList<LeaseRequest>();
+		this.leaseTransferList = new ArrayList<LeaseTransfer>();
+	}*/
 
 	
 	/**
@@ -74,7 +87,5 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 	public String toString() {
 		return "HeavyEquipmentCompany(userId="+ getUserId() +", helpOnOff=" + helpOnOff + ", infoOnOff=" + infoOnOff + ")";
 	}
-	
-	
 	
 }

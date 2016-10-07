@@ -69,6 +69,19 @@ public class ConstructionCompany extends User implements Serializable {
 		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
 		this.licenseList = new ArrayList<License>();
 	}
+	
+	/*public ConstructionCompany(ConstructionCompany CC) {
+		super(CC);
+
+		this.yearlySale = CC.yearlySale;
+		this.yearlyAoor = CC.yearlyAoor;
+		this.companySize = CC.companySize;
+		this.companyCategory = CC.companyCategory;
+
+		this.leaseCallsList = new ArrayList<LeaseCall>();
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.licenseList = new ArrayList<License>();
+	}*/
 
 	
 	/**
@@ -78,10 +91,6 @@ public class ConstructionCompany extends User implements Serializable {
 	public String toString() {
 		return "ConstructionCompany(userId="+ getUserId() +", yearlySale=" + yearlySale + ", yearlyAoor=" + yearlyAoor + ", companySize="
 				+ companySize + ", companyCategory=" + companyCategory + ")";
-	}
-	
-	
-	
-			
+	}	
 
 }

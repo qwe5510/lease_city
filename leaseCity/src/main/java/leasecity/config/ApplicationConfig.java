@@ -3,6 +3,7 @@ package leasecity.config;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,14 +18,17 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import leasecity.util.HashingUtil;
+
 @Configuration
 @ComponentScan(basePackages={
 		"leasecity.dto", 
-		"leasecity.repo"})
+		"leasecity.repo",
+		"leasecity.service"})
 @PropertySource("classpath:/config/dbconfig.properties")
 @EnableTransactionManagement
 public class ApplicationConfig {
-	
+
 	@Bean
 	public PlatformTransactionManager transactionManager(DataSource ds){
 		PlatformTransactionManager tm = new DataSourceTransactionManager(ds);
@@ -48,7 +52,6 @@ public class ApplicationConfig {
 		ds.setMaxTotal(maxTotal);
 		ds.setInitialSize(initialSize);
 		ds.setMaxIdle(maxIdle);
-		
 		return ds;
 	}// 데이터소스 연결
 	

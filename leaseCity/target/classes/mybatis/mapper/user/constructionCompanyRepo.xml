@@ -16,6 +16,14 @@
  		WHERE user_id = #{userId}
  	</select>
  	
+ 	<!-- 건설업체 유저정보와 함께 리턴 -->
+ 	<select id="getSelectCCAndUser" resultType="constructionCompany">
+ 		SELECT *
+ 		FROM construction_company
+ 		JOIN users USING(user_id)
+ 		WHERE user_id = #{userId}
+ 	</select>
+ 	
  	
  	<!-- 건설업체 회원 추가 -->
  	<insert id="insertCC" parameterType="constructionCompany">

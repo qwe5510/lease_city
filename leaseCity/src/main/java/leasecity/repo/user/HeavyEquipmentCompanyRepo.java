@@ -12,13 +12,12 @@ public interface HeavyEquipmentCompanyRepo {
 	//중기업체 검색
 	public HeavyEquipmentCompany
 		getHeavyEquipmentCompany(String userId);
+	//중기업체 유저정보와 함께 검색
+	public HeavyEquipmentCompany
+		getHECUser(String userId);
 	
 	//중기업체 추가
 	public int
 		insertHeavyEquipmentCompany(HeavyEquipmentCompany HEC);
-	
-	//중기업체 삭제
-	public int
-		deleteHeavyEquipmentCompany(HeavyEquipmentCompany HEC);
 	
 }

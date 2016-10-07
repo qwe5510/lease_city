@@ -17,6 +17,8 @@ public class HeavyEquipmentCompanyRepoImpl implements HeavyEquipmentCompanyRepo 
 
 	private final String HEC_NS = "leasecity.repo.heavyEquipmentCompanyRepo.";
 	
+	
+	//모든 중기업체 검색
 	@Override
 	public List<HeavyEquipmentCompany> 
 			getAllHeavyEquipmentCompanys() {
@@ -24,24 +26,28 @@ public class HeavyEquipmentCompanyRepoImpl implements HeavyEquipmentCompanyRepo 
 		return session.selectList(stmt);
 	}
 
+	
+	//중기업체 검색
 	@Override
 	public HeavyEquipmentCompany 
 		getHeavyEquipmentCompany(String userId) {
 		String stmt = HEC_NS+"getSelectHEC";
 		return session.selectOne(stmt, userId);
 	}
-
+	
+	@Override
+	public HeavyEquipmentCompany 
+		getHECUser(String userId) {
+		String stmt = HEC_NS + "getSelectHECAndUser";
+		return session.selectOne(stmt, userId);
+	}
+	
+	//중기업체 추가
 	@Override
 	public int 
 		insertHeavyEquipmentCompany(HeavyEquipmentCompany HEC) {
 		String stmt = HEC_NS + "insertHEC";
 		return session.insert(stmt, HEC);
-	}
-	
-	@Override
-	public int deleteHeavyEquipmentCompany(HeavyEquipmentCompany HEC) {
-		String stmt = HEC_NS + "deleteHEC";
-		return session.delete(stmt, HEC);
 	}
 	
 }
