@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
 
-
-
-
 @Controller
 public class LoginController {
 	static Logger logger = LoggerFactory.getLogger(LoginController.class);
