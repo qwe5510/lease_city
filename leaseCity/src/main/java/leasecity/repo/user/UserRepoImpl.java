@@ -1,6 +1,8 @@
 package leasecity.repo.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +19,33 @@ public class UserRepoImpl implements UserRepo{
 	
 	private final String USER_NS = "leasecity.repo.userRepo.";
 	
+	//모든 유저 검색
 	@Override
 	public List<User> getAllUsers() {
 		String stmt = USER_NS + "getAllSelectUsers";
 		return session.selectList(stmt);
 	}
 	
+	//유저 검색 - id 
 	@Override
 	public User getUser(String userId) {
 		String stmt = USER_NS + "getSelectUser";
 		return session.selectOne(stmt, userId);
 	}
 	
+	//유저 검색 - id,password
 	@Override
-	public int insertUsers(User user) {
-		String stmt = USER_NS + "insertUser";		
+	public User getUserIdAndPassword(String userId, String password) {
+		Map<String, String> idAndPassword = new HashMap<>();
+		String stmt = USER_NS + "getSelectUserIdAndPassword";
+		idAndPassword.put("userId", userId);
+		idAndPassword.put("password", password);
+		return session.selectOne(stmt, idAndPassword);
+	}
+	
+	@Override
+	public int insertUser(User user) {
+		String stmt = USER_NS + "insertUser";
 		return session.insert(stmt, user);
 	}
 	
@@ -41,12 +55,6 @@ public class UserRepoImpl implements UserRepo{
 		String stmt = USER_NS + "deleteUser";
 		return session.delete(stmt, user);
 	}
-	
-	@Override
-	public int hashingPassword(User user) {
-		String stmt = USER_NS + "hashingPassword";
-		user.setPassword(HashingUtil.hashingString(user.getPassword()));		
-		return session.update(stmt, user);
-	}
+
 	
 }

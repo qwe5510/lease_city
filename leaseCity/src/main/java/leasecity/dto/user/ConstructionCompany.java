@@ -91,10 +91,6 @@ public class ConstructionCompany extends User implements Serializable {
 	public String toString() {
 		return "ConstructionCompany(userId="+ getUserId() +", yearlySale=" + yearlySale + ", yearlyAoor=" + yearlyAoor + ", companySize="
 				+ companySize + ", companyCategory=" + companyCategory + ")";
-	}
-	
-	
-	
-			
+	}	
 
 }

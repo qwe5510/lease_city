@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class HashingUtil {
 	static Logger logger = LoggerFactory.getLogger(HashingUtil.class);
-
+	
 	//입력한 String값을 해싱시켜서 리턴
 	public static String hashingString(String str){
 		String result = "";

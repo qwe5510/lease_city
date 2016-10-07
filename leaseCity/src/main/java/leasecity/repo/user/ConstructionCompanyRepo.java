@@ -11,6 +11,8 @@ public interface ConstructionCompanyRepo {
 
 	// 건설업체 검색
 	public ConstructionCompany getConstructionCompany(String userId);
+	// 건설업체 유저정보와 함께 검색
+	public ConstructionCompany getCCUser(String userId);
 
 	// 건설업체 추가
 	public int 

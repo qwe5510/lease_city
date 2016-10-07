@@ -2,13 +2,16 @@ package leasecity.dto.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import leasecity.dto.adminwork.Question;
 import leasecity.dto.adminwork.WorkLog;
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
+import leasecity.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -153,5 +156,28 @@ public class User implements Serializable {
 		this.questionsList = new ArrayList<Question>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
+	}
+	
+	public String userInfo(){
+		
+		StringBuffer sb = new StringBuffer()
+		.append(this.getClass().getSimpleName() + " : (")
+				.append("userId="+userId)
+				.append(", password="+password)
+				.append(", companyName="+companyName)
+				.append(", representName="+representName)
+				.append(", representPhone="+representPhone)
+				.append(", handPhone="+handPhone)
+				.append(", email="+email)
+				.append(", address="+address)
+				.append(", notifyOnOff="+notifyOnOff)
+				.append(", url="+url)
+				.append(", regDate="+DateUtil.getDateString(regDate))
+				.append(", evaluation="+evaluation)
+				.append(", withdrawDate="+DateUtil.getDateString(withdrawDate));
+				
+		
+		
+		return sb.toString();
 	}
 }

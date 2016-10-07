@@ -88,6 +88,4 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 		return "HeavyEquipmentCompany(userId="+ getUserId() +", helpOnOff=" + helpOnOff + ", infoOnOff=" + infoOnOff + ")";
 	}
 	
-	
-	
 }

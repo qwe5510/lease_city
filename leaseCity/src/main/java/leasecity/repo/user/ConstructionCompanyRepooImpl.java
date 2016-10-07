@@ -32,6 +32,12 @@ public class ConstructionCompanyRepooImpl implements ConstructionCompanyRepo{
 		return session.selectOne(stmt, userId);
 	}
 
+	@Override
+	public ConstructionCompany getCCUser(String userId) {
+		String stmt = CC_NS + "getSelectCCAndUser";
+		return session.selectOne(stmt, userId);
+	}
+
 	
 	//건설업체 회원 추가
 	@Override

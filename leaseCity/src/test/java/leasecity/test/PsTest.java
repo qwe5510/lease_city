@@ -48,7 +48,7 @@ public class PsTest {
 		
 		System.out.println(new_user);
 		
-		int result = repo.insertUsers(new_user);
+		int result = repo.insertUser(new_user);
 		logger.trace("User 생성 : {}", result);
 
 		List<User> users = repo.getAllUsers();
@@ -60,7 +60,7 @@ public class PsTest {
 		logger.trace("User : {}", user);
 
 		logger.trace("원래 비밀번호 : {}", user.getPassword());
-		repo.hashingPassword(user);
+		//repo.hashingPassword(user);
 		
 		user = repo.getUser("ysh5586");
 		logger.trace("해싱된 비밀번호 : {}", user.getPassword());

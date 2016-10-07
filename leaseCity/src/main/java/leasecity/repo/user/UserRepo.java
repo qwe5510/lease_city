@@ -9,15 +9,14 @@ public interface UserRepo {
 	//모든 유저 검색
 	public List<User> getAllUsers();
 	
-	//유저 검색
+	//유저 검색 - Id / Id,Password
 	public User getUser(String userId);
+	public User getUserIdAndPassword(String userId, String password);
 	
 	//유저 추가
-	public int insertUsers(User user);
+	public int insertUser(User user);
 	
 	//회원 삭제 (중기업체, 건설업체 전부 가능)
 	public int deleteUser(User user);
-	
-	//비밀번호 해싱
-	public int hashingPassword(User user);
+
 }

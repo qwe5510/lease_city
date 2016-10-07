@@ -38,6 +38,8 @@ public class HECTest {
 	
 	@Test
 	public void HECTest(){
+		int result;
+		
 		logger.trace("session : {}", session);
 		List<HeavyEquipmentCompany> HECList = new ArrayList<>();
 		
@@ -56,10 +58,26 @@ public class HECTest {
 		System.out.println(HEC);
 		System.out.println(HEC2);
 		
-		int result = HECrepo.insertHeavyEquipmentCompany(HEC);		
+		User new_user = new User("test1","testpass",
+				"테스트", "김시험",
+				"032)331-2314", "010-3239-2031",
+				"whgdkfk12@gmail.com", "경기도 포천시",
+				"ON", "www.test.def", null, 4.2, null);
+		HeavyEquipmentCompany HEC3 =
+				new HeavyEquipmentCompany(new_user, "ON", "ON");
+		
+		result = repo.insertUser(HEC3);
+		logger.trace("회원 추가 : {}", result);
+		
+		List<User> list = repo.getAllUsers();
+		logger.trace("회원 리스트 : {}", list);
+		
+		result = HECrepo.insertHeavyEquipmentCompany(HEC);		
 		logger.trace("중기업체1 추가 : {}",result);
 		result = HECrepo.insertHeavyEquipmentCompany(HEC2);		
 		logger.trace("중기업체2 추가 : {}",result);
+		result = HECrepo.insertHeavyEquipmentCompany(HEC3);
+		logger.trace("중기업체3 추가 : {}",result);
 
 		HECList = HECrepo.getAllHeavyEquipmentCompanys();
 		logger.trace("중기업체 리스트 : {}", HECList);
@@ -72,6 +90,12 @@ public class HECTest {
 		
 		HECList = HECrepo.getAllHeavyEquipmentCompanys();
 		logger.trace("중기업체 리스트 : {}", HECList);
+		
+		HeavyEquipmentCompany testHEC
+			= HECrepo.getHECUser("raven92");
+		
+		logger.trace("raven92 중기업체 검색 : {}", testHEC);
+		logger.trace("raven92 유저 검색 : {}", testHEC.userInfo());
 		
 	}
 

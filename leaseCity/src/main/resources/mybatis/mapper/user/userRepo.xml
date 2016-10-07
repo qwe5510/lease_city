@@ -15,6 +15,12 @@
  		SELECT * FROM users WHERE user_id = #{userId}
  	</select>
  	
+ 	<select id="getSelectUserIdAndPassword" parameterType="Map" 
+ 								resultType="user">
+ 		SELECT * FROM users 
+ 		WHERE user_id = #{userId} AND password= #{password}
+ 	</select>
+ 	
  	<!-- 유저 추가 -->
  	<insert id="insertUser" parameterType="user">
  		INSERT INTO users 
@@ -52,11 +58,6 @@
  		WHERE user_id = #{userId}
  	</delete>
  	
- 	<!-- 유저 비밀번호 해싱 -->
- 	<update id="hashingPassword" parameterType="user">
- 		UPDATE users
- 		SET password = #{password}
- 		WHERE user_id = #{userId}
- 	</update>
+ 	
  
  </mapper>

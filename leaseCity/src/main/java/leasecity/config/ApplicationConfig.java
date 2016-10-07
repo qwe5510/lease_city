@@ -17,6 +17,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import leasecity.util.HashingUtil;
+
 @Configuration
 @ComponentScan(basePackages={
 		"leasecity.dto", 
@@ -24,7 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:/config/dbconfig.properties")
 @EnableTransactionManagement
 public class ApplicationConfig {
-	
+
 	@Bean
 	public PlatformTransactionManager transactionManager(DataSource ds){
 		PlatformTransactionManager tm = new DataSourceTransactionManager(ds);
