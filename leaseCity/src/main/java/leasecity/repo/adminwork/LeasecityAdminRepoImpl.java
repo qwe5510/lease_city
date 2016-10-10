@@ -33,7 +33,7 @@ public class LeasecityAdminRepoImpl implements LeasecityAdminRepo{
 	@Override
 	public int updateLeasecityAdmin(LeasecityAdmin leasecityAdmin) {
 		String stmt = ADMIN_NS + "updateLeasecityAdmin";
-		return 0;
+		return session.update(stmt, leasecityAdmin);
 	}
 	
 	

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
+import leasecity.exception.DuplicateValueException;
+import leasecity.service.StandByUserService;
 import leasecity.service.UserService;
 import leasecity.util.SendMailUtil;
 
@@ -23,7 +25,7 @@ public class LoginController {
 	static Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Autowired
-	UserService us;
+	StandByUserService SBUService;
 	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String sayHello(Model model){
@@ -60,6 +62,11 @@ public class LoginController {
 		model.addAttribute("message", user.getEmail());
 		
 		// 1. db에 저장
+		try {
+			SBUService.addStandByUser(new StandByUser());
+		} catch (DuplicateValueException e) {
+			return "error/serviceFail"; //추후 변경 요망@
+		}
 		
 		// 2. 요청 완료 메시지 후, login 창으로 이동
 		

@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import leasecity.dto.adminwork.LeasecityAdmin;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
@@ -17,6 +16,7 @@ import leasecity.exception.LoginFailException;
 import leasecity.repo.user.ConstructionCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentRepo;
+import leasecity.repo.user.LicenseRepo;
 import leasecity.repo.user.UserRepo;
 import leasecity.util.HashingUtil;
 
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	HeavyEquipmentRepo HeavyEquipmentRepo;
 	
 	@Autowired
-	License licenseRepo;
+	LicenseRepo licenseRepo;
 	
 	
 	//유저 회원가입

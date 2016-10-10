@@ -3,11 +3,13 @@ package leasecity.service;
 import java.util.List;
 
 import leasecity.dto.adminwork.StandByUser;
+import leasecity.exception.DuplicateValueException;
 
 public interface StandByUserService {
 	
 	//대기유저 추가
-	public int addStandByUser(StandByUser standByUser);
+	public int addStandByUser(StandByUser standByUser) 
+				throws DuplicateValueException;
 	
 	//대기유저 전체 리스트 조회
 	public List<StandByUser> getAllStandByUser();

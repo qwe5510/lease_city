@@ -42,7 +42,7 @@
  	</update>
  	
  	<!-- 대기유저 삭제 : 관리자가 거절을 했을 경우. -->
- 	<delete id="deleteStandByUserRequest">
+ 	<delete id="deleteStandByUser">
  		DELETE FROM stand_by_user
  		WHERE stand_by_no = #{standByNo}
  	</delete>
