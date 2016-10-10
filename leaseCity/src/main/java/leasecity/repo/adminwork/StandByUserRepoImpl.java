@@ -64,6 +64,13 @@ public class StandByUserRepoImpl implements StandByUserRepo {
 		return session.update(stmt, standByUser);
 	}
 
+	// 대기 유저 삭제 - 거절
+	@Override
+	public int deleteStandByUser(StandByUser standByUser) {
+		String stmt = SBU_NS + "deleteStandByUser";
+		return session.delete(stmt, standByUser);
+	}
+	
 	// 대기유저 삭제 - 요청한지 30일 경과된 유저대상
 	@Override
 	public int deleteStandByUserRequest() {
