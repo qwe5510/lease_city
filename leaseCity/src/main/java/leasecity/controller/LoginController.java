@@ -10,11 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
 import leasecity.service.UserService;
-import leasecity.util.HashingUtil;
 import leasecity.util.SendMailUtil;
 
 
@@ -34,12 +32,19 @@ public class LoginController {
 		model.addAttribute("user",user);
 		model.addAttribute("standByUser",standByUser);
 		return "join/login";
-		
+
 	}
 	
 	@RequestMapping(value="/join_input",method=RequestMethod.GET)
 	public String join_input(Model model){
+
 		model.addAttribute("message", "Good Morning");
+
+		User user = new User();
+		model.addAttribute("user",user);
+		logger.trace("컨트롤러!!");
+		System.out.println("컨틀롤러들어옴!");
+
 		return "join/join_input";
 	}
 	
