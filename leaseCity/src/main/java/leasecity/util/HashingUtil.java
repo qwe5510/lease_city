@@ -64,5 +64,13 @@ public class HashingUtil {
 		
 		return code;
 	}
+	
+	public static void main(String[] args) {
+		
+		String str = permissionCodeProvide();
+		
+		System.out.println(str);
+		System.out.println(str.length());
+	}
 
 }
