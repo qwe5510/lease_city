@@ -6,6 +6,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.exception.DuplicateValueException;
@@ -13,6 +14,7 @@ import leasecity.exception.NotFoundDataException;
 import leasecity.repo.adminwork.StandByUserRepo;
 import leasecity.util.HashingUtil;
 
+@Service
 public class StandByUserServiceImpl implements StandByUserService {
 
 	@Autowired
