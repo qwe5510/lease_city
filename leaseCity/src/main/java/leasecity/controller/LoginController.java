@@ -14,6 +14,7 @@ import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
 import leasecity.exception.DuplicateValueException;
 import leasecity.service.StandByUserService;
+import leasecity.service.StandByUserServiceImpl;
 import leasecity.service.UserService;
 import leasecity.util.SendMailUtil;
 
@@ -57,13 +58,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/popup_join_request",method=RequestMethod.POST)
-	public String popup_join_request(Model model, HttpServletRequest request, User user){
-		
-		model.addAttribute("message", user.getEmail());
+	public String popup_join_request(Model model, HttpServletRequest request, StandByUser sbu){
 		
 		// 1. db에 저장
 		try {
-			SBUService.addStandByUser(new StandByUser());
+			SBUService.addStandByUser(sbu);
+			logger.trace("저장된 임시 유저 : {}", sbu);
 		} catch (DuplicateValueException e) {
 			return "error/serviceFail"; //추후 변경 요망@
 		}
