@@ -57,10 +57,10 @@ public class StandByUserRepoImpl implements StandByUserRepo {
 		return session.insert(stmt, standByUser);
 	}
 
-	// 대기유저 발급코드 부여
+	// 대기유저 수정 - 발급코드 부여
 	@Override
-	public int providePermissionCodeStandByUser(StandByUser standByUser) {
-		String stmt = SBU_NS + "providePermissionCodeStandByUser";
+	public int updateStandByUser(StandByUser standByUser) {
+		String stmt = SBU_NS + "updateStandByUser";
 		return session.update(stmt, standByUser);
 	}
 

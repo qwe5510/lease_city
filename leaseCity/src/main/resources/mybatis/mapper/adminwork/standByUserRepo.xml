@@ -32,14 +32,20 @@
  		VALUES(#{companyName}, #{representName}, #{email}, SYSDATE)
  	</insert>
  	
- 	<!-- 대기유저 발급코드 부여 -->
- 	<update id="providePermissionCodeStandByUser" parameterType="standByUser">
+ 	<!-- 대기유저 수정 - 발급코드 부여 -->
+ 	<update id="updateStandByUser" parameterType="standByUser">
  		UPDATE stand_by_user
  		SET 
  			permission_no = #{permissionNo},
  			reg_date = SYSDATE
  		WHERE stand_by_no = #{standByNo}
  	</update>
+ 	
+ 	<!-- 대기유저 삭제 : 관리자가 거절을 했을 경우. -->
+ 	<delete id="deleteStandByUserRequest">
+ 		DELETE FROM stand_by_user
+ 		WHERE stand_by_no = #{standByNo}
+ 	</delete>
  	
  	<!-- 대기유저 삭제 : 요청한지 30일경과된 유저대상 -->
  	<delete id="deleteStandByUserRequest">
@@ -52,5 +58,6 @@
  		DELETE FROM stand_by_user
  		WHERE SYSDATE - reg_date &gt;= 3
  	</delete>
+ 	<!-- &gt;='>' -->
  
  </mapper>

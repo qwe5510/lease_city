@@ -20,8 +20,8 @@ public interface StandByUserRepo {
 	// 대기유저 추가
 	public int insertStandByUser(StandByUser standByUser);
 	
-	// 대기유저 수정
-	public int providePermissionCodeStandByUser(StandByUser standByUser);
+	// 대기유저 수정 - 발급코드 부여
+	public int updateStandByUser(StandByUser standByUser);
 	
 	// 대기유저 삭제 - 요청한지 30일 경과된 유저대상
 	public int deleteStandByUserRequest();
