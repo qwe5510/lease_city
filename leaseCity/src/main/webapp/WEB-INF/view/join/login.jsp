@@ -119,6 +119,7 @@
 			</div>
 			<!--/row-fluid-->
 		</div>
+		</section>
 		<jsp:include page="../layout/footer.jsp"></jsp:include>
 		<!--  Login form -->
 		<div class="modal hide fade in" id="loginForm" aria-hidden="false">
@@ -165,11 +166,10 @@
 			</div>
 			<!--Modal Body-->
 			<div class="modal-body">
-			<sform:form class="form-inline" method="post" modelAttribute="user" action="#">
+			<sform:form class="form-inline" method="post" modelAttribute="standByUser" action="#">
 			<sform:input path="representName" type="text" placeholder="아이디" /><br>
 				<sform:input path="representName" type="text" placeholder="업체명" /><br>
 				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
-				<table>
 				<sform:input path="email" type="email" placeholder="Email"/>
 				<button class="btn1" value="발급">발급</button><br>
 				<sform:input path="companyName" type="number" placeholder="인증번호"/>
@@ -180,6 +180,8 @@
 			</div>
 			<!--/Modal Body-->
 			</div>
+			
+			
 			<!--  Login form -->
 
 		<script src="js/vendor/jquery-1.9.1.min.js"></script>
