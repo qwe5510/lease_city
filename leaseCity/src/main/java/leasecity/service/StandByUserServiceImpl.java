@@ -34,14 +34,20 @@ public class StandByUserServiceImpl implements StandByUserService{
 
 	@Override
 	public List<StandByUser> getAllStandByUser() {
-		// TODO Auto-generated method stub
-		return null;
+		List<StandByUser> list = SBUrepo.getAllStandByUser();
+		return list;
 	}
 
 	@Override
 	public StandByUser getStandByUser(String companyName, String representName, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		StandByUser standByUser =
+				SBUrepo.getStandByUser(
+						companyName, 
+						representName, 
+						email);
+		
+		return standByUser;
 	}
 
 	@Override

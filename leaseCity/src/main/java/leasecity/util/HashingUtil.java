@@ -2,6 +2,7 @@ package leasecity.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,23 @@ public class HashingUtil {
 			result = null;
 		} 
 		return result;
+	}
+	
+	
+	public static String permissionCodeProvide(){
+		
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer();
+		
+		for(int i=0; i<20; i++){
+			sb.append(random.nextInt(10));
+		}
+		
+		System.out.println(sb);
+		
+		String code = hashingString(sb.toString());
+		
+		return code;
 	}
 
 }
