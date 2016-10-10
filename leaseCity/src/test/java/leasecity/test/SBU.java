@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
 import leasecity.dto.adminwork.StandByUser;
+import leasecity.exception.DuplicateValueException;
 import leasecity.repo.adminwork.StandByUserRepo;
+import leasecity.service.StandByUserService;
 import leasecity.util.HashingUtil;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ApplicationConfig.class})
@@ -22,6 +24,9 @@ public class SBU {
 	
 	@Autowired
 	StandByUserRepo repo;
+	
+	@Autowired
+	StandByUserService s;
 	
 	@Test
 	public void test() throws InterruptedException {
@@ -40,7 +45,7 @@ public class SBU {
 		
 		
 		resultTest.setPermissionNo(HashingUtil.hashingString("1234"));
-		result = repo.providePermissionCodeStandByUser(resultTest);
+		result = repo.updateStandByUser(resultTest);
 		logger.trace("result : {}", result);
 		
 		resultTest = repo.getStandByUser(
@@ -64,5 +69,24 @@ public class SBU {
 		
 		
 	}
+	
+	@Test
+	public void test2() {
+		
+		StandByUser test = new StandByUser(
+				"한국건설", "윤현준", "yhj@naver.com");
+		
+		//int result = repo.insertStandByUser(test);
+		
+		try {
+			s.addStandByUser(test);
+		} catch (DuplicateValueException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 }

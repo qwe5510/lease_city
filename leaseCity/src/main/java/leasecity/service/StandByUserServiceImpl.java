@@ -15,7 +15,8 @@ import leasecity.repo.adminwork.StandByUserRepo;
 import leasecity.util.HashingUtil;
 
 @Service
-public class StandByUserServiceImpl implements StandByUserService {
+public class StandByUserServiceImpl implements StandByUserService{
+	
 
 	@Autowired
 	StandByUserRepo SBUrepo;
