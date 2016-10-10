@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import leasecity.dto.adminwork.LeasecityAdmin;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
+import leasecity.dto.user.License;
 import leasecity.dto.user.User;
 import leasecity.exception.JoinFailException;
 import leasecity.exception.LoginFailException;
@@ -39,8 +41,7 @@ public class UserServiceImpl implements UserService {
 	public void join(User user) throws JoinFailException{		
 		int result=-1; // 가입결과 리턴
 		
-		if(user!=null){
-			
+		if(user!=null){		
 			// 유저의 비밀번호 암호화
 			user.setPassword(HashingUtil.hashingString(user.getPassword()));
 			result = userRepo.insertUser(user);
@@ -50,9 +51,15 @@ public class UserServiceImpl implements UserService {
 		// 건설업체일경우.
 		if (user!=null && user instanceof ConstructionCompany) {
 			ConstructionCompany CC = (ConstructionCompany) user;
-
 			result = CCRepo.insertConstructionCompany(CC);
 			logger.trace("건설업체 회원 배정 완료 : {}", result);
+			
+			List<License> list = CC.getLicenseList();
+			
+			for(License license : list){
+				
+			}
+			
 
 			// 중기업체일경우
 		} else if (user!=null && user instanceof HeavyEquipmentCompany) {
@@ -69,6 +76,7 @@ public class UserServiceImpl implements UserService {
 
 	}
 	
+	
 	@Override
 	public User login(String userId, String password) throws LoginFailException{
 		
@@ -83,9 +91,11 @@ public class UserServiceImpl implements UserService {
 			logger.error("로그인 실패 - 없는 id 혹은 패스워드");
 			throw new LoginFailException();
 		}else if(CC != null){
-			//CC = CCRepo.getCCUser(userId);
+			CC = null; // 데이터 초기화
+			CC = CCRepo.getCCUser(userId);
 			return CC;
 		}else if(HEC != null){
+			HEC = null; // 데이터 초기화
 			HEC = HECRepo.getHECUser(userId);
 			List<HeavyEquipment> HECList = HEC.getHeavyEquipmentList();
 			

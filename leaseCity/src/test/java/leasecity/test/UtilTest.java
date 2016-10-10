@@ -13,28 +13,13 @@ public class UtilTest {
 
 	@Test
 	public void test() {
+		Date date = new Date();
 		
-		Date testDate = new Date();
+		String test = DateUtil.getDateString(date);
+		logger.trace("날짜 String : {}", test);
 		
-		String dateString = 
-			DateUtil.getDateString(testDate);
+		test = DateUtil.getTimeString(date);
 		
-		logger.trace("{}",dateString);
-		logger.trace("{}", dateString.getClass());
-		
-		java.sql.Date sqlDate = DateUtil.utilToSqlDate(testDate);		
-		
-		logger.trace("sqlDate : {}", sqlDate);
-		logger.trace("sqlDate : {}", sqlDate.getClass());
-		
-		Date utilDate = DateUtil.sqlToUtilDate(sqlDate);
-
-		logger.trace("utilDate : {}", utilDate);
-		logger.trace("utilate : {}", utilDate.getClass());
-		
-		String timeString = DateUtil.getTimeString(utilDate);
-		logger.trace("{}", timeString);
-		logger.trace("{}", timeString.getClass());
 		
 	}
 

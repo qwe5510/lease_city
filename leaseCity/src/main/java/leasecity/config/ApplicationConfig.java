@@ -69,7 +69,7 @@ public class ApplicationConfig {
 	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactoryBean sfb) throws Exception{
 		SqlSessionTemplate template = new SqlSessionTemplate(sfb.getObject());
 		return template;
-	} // mybatis연동으로 SQLSession생성
+	}// mybatis연동으로 SQLSession생성
 	
 	
 	@Bean
@@ -78,6 +78,6 @@ public class ApplicationConfig {
 		ms.setCacheSeconds(0);
 		ms.setBasename("classpath:/message/error/binding");
 		return ms;
-	}//error시 문구 작성
+	}// error시 문구 작성
 
 }
