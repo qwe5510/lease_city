@@ -32,11 +32,12 @@
  		#{idNumber},#{userId},#{equipmentCategory})	
  	</insert>
  	
+ 	<!-- 중장비 수정 -->
  	<update id="updateHE" parameterType="heavyEquipment">
  		UPDATE heavy_equipment SET
  				id_number = #{idNumber}, 
  				equipment_category=#{equipmentCategory}
- 		WHERE user_id = #{userId}
+ 		WHERE id_number = #{id_number}
  	</update>
  	
  	<!-- 중장비 삭제 -->

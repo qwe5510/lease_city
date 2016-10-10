@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.standByUserRepo">
+ 	
+ 	<!-- 대기유저 전체 조회-->
+ 	<select id="getAllSelectStandByUsers" resultType="standByUser">
+ 		SELECT * FROM stand_by_user
+ 	</select>
+ 	
+ 	<!-- 대기유저 업체명, 대표자명, 이메일로 조회 -->
+ 	<select id="getSelectStandByUser" parameterType="Map" 
+ 								resultType="standByUser">
+ 		SELECT * FROM stand_by_user
+ 		WHERE 
+ 			company_name = #{companyName} AND
+ 			represent_name = #{representName} AND
+ 			email = #{email}
+ 	</select>
+ 	
+ 	<!-- 대기유저 발급코드로 조회 -->
+ 	<select id="getSelectAgreeStandByUser" parameterType="String" 
+ 								resultType="standByUser">
+ 		SELECT * FROM stand_by_user
+ 		WHERE permission_no = #{permissionNo}
+ 	</select>
+ 	 	
+ 	<!-- 대기유저 추가 -->
+ 	<insert id="insertStandByUser" parameterType="standByUser">
+ 		INSERT INTO stand_by_user(company_name, represent_name, email, request_date)
+ 		VALUES(#{companyName}, #{representName}, #{email}, SYSDATE)
+ 	</insert>
+ 	
+ 	<!-- 대기유저 발급코드 부여 -->
+ 	<update id="providePermissionCodeStandByUser" parameterType="standByUser">
+ 		UPDATE stand_by_user
+ 		SET 
+ 			permission_no = #{permissionNo},
+ 			reg_date = SYSDATE
+ 		WHERE stand_by_no = #{standByNo}
+ 	</update>
+ 	
+ 	<!-- 대기유저 삭제 : 요청한지 30일경과된 유저대상 -->
+ 	<delete id="deleteStandByUserRequest">
+ 		DELETE FROM stand_by_user
+ 		WHERE SYSDATE - request_date &gt;= 30
+ 	</delete>
+ 	
+ 	<!-- 대기유저 삭제 : 발급코드 받은지 3일경과된 유저대상 -->
+ 	<delete id="deleteStandByUserRegistry">
+ 		DELETE FROM stand_by_user
+ 		WHERE SYSDATE - reg_date &gt;= 3
+ 	</delete>
+ 
+ </mapper>

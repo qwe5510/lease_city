@@ -40,9 +40,19 @@ public class StandByUser implements Serializable {
 	private Date requestDate;
 
 	/** 발급코드. */
-	private Integer permissionNo;
+	private String permissionNo;
 
 	/** 발급 날짜(관리자 수락 기준). */
 	private Date regDate;
+	
+	
+	public StandByUser(
+			String companyName,
+			String representName,
+			String email){
+		this.companyName = companyName;
+		this.representName = representName;
+		this.email = email;
+	}
 
 }

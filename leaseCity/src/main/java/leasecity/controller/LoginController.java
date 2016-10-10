@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
+import leasecity.util.SendMailUtil;
+
+
 
 @Controller
 public class LoginController {
@@ -25,12 +28,12 @@ public class LoginController {
 		return "join/login";
 	}
 	
-	@RequestMapping(value="/join_agree",method=RequestMethod.GET)
-	public String join_agree(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
-		return "join/join_agree";
+	@RequestMapping(value="/popup_join_request",method=RequestMethod.POST)
+	public String join_agree(Model model, User user){
+		model.addAttribute("message", user.getEmail());
+		SendMailUtil util = new SendMailUtil();
+		util.sendMail(user);
+		return "";
 	}
 	
 	@RequestMapping(value="/join_input",method=RequestMethod.GET)

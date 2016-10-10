@@ -128,7 +128,7 @@
 			</div>
 			<!--Modal Body-->
 			<div class="modal-body">
-			<sform:form class="form-inline" method="post" modelAttribute="user" action="#">
+			<sform:form class="form-inline" method="post" modelAttribute="user" action="popup_join_request">
 				<sform:input path="representName" type="text" placeholder="업체명" /><br>
 				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
 				<sform:input path="email" type="email" placeholder="Email"/><br>
@@ -146,7 +146,7 @@
 			</div>
 			<!--Modal Body-->
 			<div class="modal-body">
-			<sform:form class="form-inline" method="post" modelAttribute="user" action="#">
+			<sform:form class="form-inline" method="post" modelAttribute="user" action="popup_join_request">
 				<sform:input path="representName" type="text" placeholder="업체명" /><br>
 				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
 				<sform:input path="email" type="email" placeholder="Email"/><br>
