@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//문자열 해싱 유틸 (비밀번호 해싱화에 사용)
 public class HashingUtil {
 	static Logger logger = LoggerFactory.getLogger(HashingUtil.class);
 	

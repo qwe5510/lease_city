@@ -1,5 +1,8 @@
 package leasecity.service;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import leasecity.dto.adminwork.LeasecityAdmin;
 
 public class AdminServiceImpl implements AdminService{

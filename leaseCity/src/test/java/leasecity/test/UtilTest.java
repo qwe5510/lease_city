@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import leasecity.util.DateUtil;
+import leasecity.util.HashingUtil;
 
 public class UtilTest {
 	static Logger logger = LoggerFactory.getLogger(UtilTest.class);
@@ -19,6 +20,9 @@ public class UtilTest {
 		logger.trace("날짜 String : {}", test);
 		
 		test = DateUtil.getTimeString(date);
+		
+		System.out.println(HashingUtil.hashingString("1234"));
+		
 		
 		
 	}
