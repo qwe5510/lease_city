@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="login">
 		<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
@@ -170,11 +169,13 @@
 			<sform:input path="representName" type="text" placeholder="아이디" /><br>
 				<sform:input path="representName" type="text" placeholder="업체명" /><br>
 				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
+				<table>
 				<sform:input path="email" type="email" placeholder="Email"/>
-				<button></button><br>
+				<button class="btn1" value="발급">발급</button><br>
 				<sform:input path="companyName" type="number" placeholder="인증번호"/>
+				<button class="btn1" value="인증">인증</button>
 				<br>
-				<sform:button class="pop">비밀번호찾기</sform:button>
+				<sform:button>비밀번호찾기</sform:button>
 			</sform:form>
 			</div>
 			<!--/Modal Body-->

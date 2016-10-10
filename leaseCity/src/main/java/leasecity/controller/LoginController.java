@@ -23,7 +23,6 @@ public class LoginController {
 		logger.trace("컨트롤러!!");
 		System.out.println("컨틀롤러들어옴!");
 		return "join/login";
-		
 	}
 	
 	@RequestMapping(value="/join_agree",method=RequestMethod.GET)
@@ -36,7 +35,8 @@ public class LoginController {
 	
 	@RequestMapping(value="/join_input",method=RequestMethod.GET)
 	public String join_input(Model model){
-		model.addAttribute("message", "Good Morning");
+		User user = new User();
+		model.addAttribute("user",user);
 		logger.trace("컨트롤러!!");
 		System.out.println("컨틀롤러들어옴!");
 		return "join/join_input";
