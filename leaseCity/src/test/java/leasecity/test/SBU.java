@@ -40,7 +40,7 @@ public class SBU {
 		
 		
 		resultTest.setPermissionNo(HashingUtil.hashingString("1234"));
-		result = repo.updateStandByUser(resultTest);
+		result = repo.providePermissionCodeStandByUser(resultTest);
 		logger.trace("result : {}", result);
 		
 		resultTest = repo.getStandByUser(

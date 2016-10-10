@@ -2,12 +2,10 @@ package leasecity.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//문자열 해싱 유틸 (비밀번호 해싱화에 사용)
 public class HashingUtil {
 	static Logger logger = LoggerFactory.getLogger(HashingUtil.class);
 	
@@ -47,20 +45,5 @@ public class HashingUtil {
 		} 
 		return result;
 	}
-	
-	
-	public static String permissionCodeProvide(){
-		
-		Random random = new Random();
-		StringBuffer sb = new StringBuffer();
-		
-		for(int i=0; i<20; i++){
-			sb.append(random.nextInt(10));
-		}
 
-		String code = hashingString(sb.toString());
-		
-		return code;
-	}
-	
 }

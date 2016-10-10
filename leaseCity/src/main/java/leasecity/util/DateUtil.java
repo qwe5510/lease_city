@@ -3,7 +3,6 @@ package leasecity.util;
 import java.util.Calendar;
 import java.util.Date;
 
-//날짜를 문자열로 리턴
 public class DateUtil {
 	
 	//Date의 날짜를 String으로 전환.

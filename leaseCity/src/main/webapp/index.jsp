@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
 <html class="no-js">
 <!--<![endif]-->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -341,7 +337,6 @@
 				<div class="span5 cp">Kongju National University Jang Pil Sik
 					Yoon Hyun Joon Yang suo Ho CopyRighter</div>
 				<!--/Copyright-->
-
 				<div class="span6">
 					<ul class="social pull-right">
 						<li><a href="#"><i class="icon-facebook"></i></a></li>
@@ -390,7 +385,6 @@
 		<!--/Modal Body-->
 	</div>
 	<!--  /Login form -->
-
 	<script src="js/vendor/jquery-1.9.1.min.js"></script>
 	<script src="js/vendor/bootstrap.min.js"></script>
 	<script src="js/main.js"></script>
@@ -427,7 +421,6 @@ $(function() {
         return { init : init };
 
     })();
-
     Page.init();
 });
 </script>

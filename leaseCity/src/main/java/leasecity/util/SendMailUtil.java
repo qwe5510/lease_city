@@ -1,43 +1,50 @@
 package leasecity.util;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
-import java.util.Properties;
-import java.util.Random;
-
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.PasswordAuthentication;
 import javax.mail.internet.MimeUtility;
-import javax.swing.JOptionPane;
+import java.util.Date;
+import java.util.Random;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
+import leasecity.util.*;
+import javax.mail.Transport;
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.Address;
+import javax.mail.internet.MimeMessage;
+import javax.mail.Session;
+import javax.mail.Authenticator;
+import java.util.Properties;
 
 public class SendMailUtil extends javax.mail.Authenticator {
 	
-	static Logger logger = LoggerFactory.getLogger(SendMailUtil.class);
 	
-	public void sendMail(StandByUser sbu, String src) {
+	public void sendMail(User user) {
+		
+		
+		Random randomGenerator = new Random();
+		int num = randomGenerator.nextInt(10000) + 1000;
+		if (num > 10000) {
+			num -= 1000;
+		}
+		
+		// 해쉬 클래스 선언
+		HashingUtil hs = new HashingUtil();
 		
 		String host = "smtp.naver.com";
-		String subject = "LeaseCity 가입 인증";
+		String subject = "네이버를 이용한 메일발송";
 		String from = "djsdir159@naver.com"; //보내는 메일
-		String fromName = "LeaseCity 관리자";
-		String to = "" + sbu.getEmail();
+		String fromName = "Test";
+		String to = "" + user.getEmail();
 		StringBuffer sb = new StringBuffer();
 		
-		logger.trace("다음 링크 : {}", src);
+		String numStr = hs.hashingString(""+num);
+		String src = "\"<%=request.getContextPath() %>/view/join/join_agree.jsp>\"";
 		
-		
-		sb.append("<a href= " + src + ">회원가입 페이지로 이동</a> <br/>")
+		sb.append("<a href=" + src + ">회원가입 페이지로 이동</a> <br/>")
+		.append("테스트 해쉬코드 : /" + numStr + "<br/>")
 		.append("본 메일은 LeaseCity 에 회원가입을 요청하시려는 고객님께 본인 확인을 위해 자동으로 발송됩니다.<br/><br/>")
 		.append("■ 본 메일이 고객님의 정보가 아닐 경우<br/>")
 		.append("본 메일은 LeaseCity 에 회원가입을 요청하시려는 분께 발송되는 확인 메일입니다.<br/>")

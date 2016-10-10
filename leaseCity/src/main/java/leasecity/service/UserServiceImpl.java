@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import leasecity.dto.adminwork.LeasecityAdmin;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
@@ -16,7 +17,6 @@ import leasecity.exception.LoginFailException;
 import leasecity.repo.user.ConstructionCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentRepo;
-import leasecity.repo.user.LicenseRepo;
 import leasecity.repo.user.UserRepo;
 import leasecity.util.HashingUtil;
 
@@ -28,16 +28,13 @@ public class UserServiceImpl implements UserService {
 	UserRepo userRepo;
 	
 	@Autowired
-	ConstructionCompanyRepo constructionCompanyRepo;
+	ConstructionCompanyRepo CCRepo;
 	
 	@Autowired
-	HeavyEquipmentCompanyRepo heavyEquipmentCompanyRepo;
+	HeavyEquipmentCompanyRepo HECRepo;
 	
 	@Autowired
-	HeavyEquipmentRepo HeavyEquipmentRepo;
-	
-	@Autowired
-	LicenseRepo licenseRepo;
+	HeavyEquipmentRepo HERepo;
 	
 	
 	//유저 회원가입
@@ -54,7 +51,7 @@ public class UserServiceImpl implements UserService {
 		// 건설업체일경우.
 		if (user!=null && user instanceof ConstructionCompany) {
 			ConstructionCompany CC = (ConstructionCompany) user;
-			result = constructionCompanyRepo.insertConstructionCompany(CC);
+			result = CCRepo.insertConstructionCompany(CC);
 			logger.trace("건설업체 회원 배정 완료 : {}", result);
 			
 			List<License> list = CC.getLicenseList();
@@ -68,7 +65,7 @@ public class UserServiceImpl implements UserService {
 		} else if (user!=null && user instanceof HeavyEquipmentCompany) {
 			HeavyEquipmentCompany HEC = (HeavyEquipmentCompany) user;
 
-			result = heavyEquipmentCompanyRepo.insertHeavyEquipmentCompany(HEC);
+			result = HECRepo.insertHeavyEquipmentCompany(HEC);
 			logger.trace("중기업체 회원 배정 완료 : {}", result);
 
 			// 어느 속성도 아니면 가입실패예외로 이동.
@@ -87,23 +84,23 @@ public class UserServiceImpl implements UserService {
 		String hashPass = HashingUtil.hashingString(password);
 		User user = userRepo.getUserIdAndPassword(userId, hashPass);
 		
-		ConstructionCompany CC = constructionCompanyRepo.getConstructionCompany(userId);
-		HeavyEquipmentCompany HEC = heavyEquipmentCompanyRepo.getHeavyEquipmentCompany(userId);
+		ConstructionCompany CC = CCRepo.getConstructionCompany(userId);
+		HeavyEquipmentCompany HEC = HECRepo.getHeavyEquipmentCompany(userId);
 		
 		if(user==null){
 			logger.error("로그인 실패 - 없는 id 혹은 패스워드");
 			throw new LoginFailException();
 		}else if(CC != null){
 			CC = null; // 데이터 초기화
-			CC = constructionCompanyRepo.getCCUser(userId);
+			CC = CCRepo.getCCUser(userId);
 			return CC;
 		}else if(HEC != null){
 			HEC = null; // 데이터 초기화
-			HEC = heavyEquipmentCompanyRepo.getHECUser(userId);
+			HEC = HECRepo.getHECUser(userId);
 			List<HeavyEquipment> HECList = HEC.getHeavyEquipmentList();
 			
 			//중기업체 중장비 리스트 넣기
-			HECList = HeavyEquipmentRepo.getUserHeavyEquipments(userId);
+			HECList = HERepo.getUserHeavyEquipments(userId);
 			HEC.setHeavyEquipmentList(HECList);
 			
 			return HEC;

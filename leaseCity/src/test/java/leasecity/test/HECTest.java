@@ -109,4 +109,12 @@ public class HECTest {
 		logger.trace("중장비 리스트 : {}", HEList);
 	}
 	
+	@Autowired
+	UserService userService;
+	
+	@Test
+	public void HECServiceTest(){
+		
+	}
+	
 }

@@ -53,7 +53,6 @@
 		<mapper resource="mybatis/mapper/community/commentRepo.xml" />
 		
 		<!-- 3.관리자작업 mapping -->
-		<mapper resource="mybatis/mapper/adminwork/leasecityAdminRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/standByUserRepo.xml" />
 	</mappers>
 	

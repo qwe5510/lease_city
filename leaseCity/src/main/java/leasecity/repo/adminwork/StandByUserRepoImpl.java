@@ -57,20 +57,13 @@ public class StandByUserRepoImpl implements StandByUserRepo {
 		return session.insert(stmt, standByUser);
 	}
 
-	// 대기유저 수정 - 발급코드 부여
+	// 대기유저 발급코드 부여
 	@Override
-	public int updateStandByUser(StandByUser standByUser) {
-		String stmt = SBU_NS + "updateStandByUser";
+	public int providePermissionCodeStandByUser(StandByUser standByUser) {
+		String stmt = SBU_NS + "providePermissionCodeStandByUser";
 		return session.update(stmt, standByUser);
 	}
 
-	// 대기 유저 삭제 - 거절
-	@Override
-	public int deleteStandByUser(StandByUser standByUser) {
-		String stmt = SBU_NS + "deleteStandByUser";
-		return session.delete(stmt, standByUser);
-	}
-	
 	// 대기유저 삭제 - 요청한지 30일 경과된 유저대상
 	@Override
 	public int deleteStandByUserRequest() {

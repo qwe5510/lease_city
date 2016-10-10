@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -56,33 +56,33 @@
 						<table>
 							<tr>
 								<th><select>
-										<option>юс╢К</option>
-										<option>д©╧б╢оф╪</option>
+										<option>Л·└К▄─</option>
+										<option>Л╩╓К╝╓К▀┬М▀╟</option>
 										<option>Q&A</option>
-										<option>аъ╠Б╬Вц╪</option>
+										<option>Л╓▒Й╦╟Л≈┘Л╡╢</option>
 								</select></th>
-								<th><input type="text" placeholder="╟к╩Ж╬Н╦╕ ют╥бгьаж╪╪©Д."></th>
-								<th><input type="button" value="╟к╩Ж"></th>
+								<th><input type="text" placeholder="Й╡─Л┐┴Л√╢К╔╪ Л·┘К═╔М∙╢Лё╪Л└╦Л ■."></th>
+								<th><input type="button" value="Й╡─Л┐┴"></th>
 							</tr>
 						</table>
 					</li>
 					<li class="dropdown" id="con"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown">юс╢К <i
+						class="dropdown-toggle" data-toggle="dropdown">Л·└К▄─ <i
 							class="icon-angle-down"></i></a>
 						<ul class="dropdown-menu">
-							<li><a href="career.html">юс╢К ╫ец╩/а╤х╦</a></li>
-							<li><a href="registration.html">аъ╠Б╬Вц╪а╤х╦</a></li>
+							<li><a href="career.html">Л·└К▄─ Л▀═Л╡╜/Л║╟М ▄</a></li>
+							<li><a href="registration.html">Л╓▒Й╦╟Л≈┘Л╡╢Л║╟М ▄</a></li>
 						</ul></li>
-					<li id="con"><a href="about-us.html">д©╧б╢оф╪</a></li>
+					<li id="con"><a href="about-us.html">Л╩╓К╝╓К▀┬М▀╟</a></li>
 					<li class="dropdown" id="con"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown">╟М╟╢╪╬ем <i
+						class="dropdown-toggle" data-toggle="dropdown">ЙЁ═Й╟²Л└╪М└╟ <i
 							class="icon-angle-down"></i></a>
 						<ul class="dropdown-menu">
-							<li><a href="career.html">юзаж ╧╞╢б аЗ╧╝</a></li>
-							<li><a href="registration.html">╣╣©Р╦╩</a></li>
+							<li><a href="career.html">Л·░Лё╪ К╛╩К┼■ Л╖┬К╛╦</a></li>
+							<li><a href="registration.html">К▐└Л⌡─К╖░</a></li>
 							<li><a href="terms.html">Q&A</a></li>
 						</ul></li>
-					<li id="con"><a href="blog.html">╪р╟Ё</a></li>
+					<li id="con"><a href="blog.html">Л├▄Й╟°</a></li>
 					<c:url value="/login" var="login"></c:url>
 					<li id="con"><a href=${login }> <i class="icon-lock"></i>
 					</a></li>
