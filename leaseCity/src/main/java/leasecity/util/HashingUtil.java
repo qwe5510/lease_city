@@ -57,20 +57,10 @@ public class HashingUtil {
 		for(int i=0; i<20; i++){
 			sb.append(random.nextInt(10));
 		}
-		
-		System.out.println(sb);
-		
+
 		String code = hashingString(sb.toString());
 		
 		return code;
 	}
 	
-	public static void main(String[] args) {
-		
-		String str = permissionCodeProvide();
-		
-		System.out.println(str);
-		System.out.println(str.length());
-	}
-
 }
