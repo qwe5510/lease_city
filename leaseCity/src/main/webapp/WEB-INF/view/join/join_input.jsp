@@ -64,10 +64,6 @@
 						</tr>
 					</table>
 				</fieldset>
-<<<<<<< HEAD
-				
-=======
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 				<br>
 				<fieldset>
 					<legend>상세정보 입력</legend>
