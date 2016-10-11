@@ -44,8 +44,8 @@
 			</div>
 	</div>
 	<form class="agree_input">
-		<input type="submit" formaction="<%=request.getContextPath() %>/join_input" formmethod="" value="동의">
-		<input type="submit" formaction="index.jsp" formmethod="" value="비동의">
+		<input type="submit" formaction="<%=request.getContextPath() %>/join_input" formmethod="post" value="동의">
+		<input type="submit" formaction="<%=request.getContextPath() %>/index" formmethod="get" value="비동의">
 	</form>
 	</div>
 	<!--Bottom-->
