@@ -65,7 +65,7 @@
 						</tr>
 					</table>
 				</fieldset>
-				</form>
+				
 				<br>
 				<fieldset>
 					<legend>상세정보 입력</legend>
@@ -76,7 +76,7 @@
 				<br>
 				<button>가입</button>
 				<button>취소</button>
-			
+			</form>
 		</div>
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
@@ -99,10 +99,21 @@
 		.html("<input type='text' placeholder='차량 종류'>" +
 		"<input type='text' placeholder='차량 크기'>"+
 		"</th><th><input type='text' placeholder='차량 번호'>"+
-		"<button id='btn1'>추가</button><br>");
+		"<button id='btn1' >추가</button><br>");
 	});	
 	
- 	<c:url value="/heavy_equipment_list" var="HEL"></c:url>
+	
+	function add(e){
+		e.preventDefault();
+		console.log("add called");
+	}
+	
+	$(document).on("click", "#btn1", function(e){
+		e.preventDefault();
+		console.log("Hello");
+	})
+	
+/*  	<c:url value="/heavy_equipment_list" var="HEL"></c:url>
  	$("button").on("click",function(){ 	
 		$.ajax({
 			type: "get",
@@ -117,7 +128,7 @@
 				alert(error);
 			}
 		});
-	});
+	}); */
 	
 </script>
 </html>
