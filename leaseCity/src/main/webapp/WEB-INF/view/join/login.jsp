@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +10,13 @@
 <title>Insert title here</title>
 </head>
 
-<%-- <!-- 가입 절차 설명 메시지 -->
+<!-- 가입 절차 설명 메시지 -->
 <c:if test="${!empty join_message }">
 		<script type="text/javascript">
 			var msg = '${join_message }'
 			alert(msg);
 		</script>
-</c:if> --%>
+</c:if>
 
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <div class="login">

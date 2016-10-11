@@ -1177,3 +1177,17 @@ label {
 .license_add{
 	margin-left: 100px;
 }
+.checked{
+	margin-top:20px;
+	margin-left: 90px;
+	font-size: 15px;
+}
+.heavy input{
+	width: 25px;
+	margin-right: 30px;
+}
+.heavy{
+	margin-left: 100px;
+	margin-bottom: 10px;
+	font-size: 20px;
+}
