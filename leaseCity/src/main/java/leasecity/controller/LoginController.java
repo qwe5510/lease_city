@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
@@ -46,8 +48,8 @@ public class LoginController {
       return "join/login";
    }
    
-   @RequestMapping(value = "/join_input", method = RequestMethod.GET)
-	public String join_input(Model model) {
+   @RequestMapping(value = "/join_input", method = RequestMethod.POST)
+	public String join_input(Model model, HttpSession session) {
 
 		model.addAttribute("message", "Good Morning");
 
@@ -59,15 +61,42 @@ public class LoginController {
 		return "join/join_input";
 	}
 
-	@RequestMapping(value = "/join_agree", method = RequestMethod.GET)
-	public String join_agree(Model model) {
-		model.addAttribute("message", "Good Morning");
+	@RequestMapping(value = "/join_agree", method = RequestMethod.GET, params={"permissionNo"})
+	public String join_agree(Model model, HttpServletRequest req, HttpSession session) {
+		
+		// 대기 비회원을 저장할 객체
+		StandByUser sbu = new StandByUser();
+		
+		// 코드 받기
+		String permissionNoStr = req.getParameter("permissionNo");
+		logger.trace("들어온 permissionNo : {}", req);
+		
+		// 코드를 DB와 비교하여 대기 비회원 검색
+		try {
+			sbu = SBUService.getAgreeStandByUser(permissionNoStr);
+			logger.trace("permission 값이 같은 객체 : {}", sbu);
+		} catch (NotFoundDataException e) {
+			model.addAttribute("join_message", "가입 승낙 기간이 만료되었습니다.");
+			return "index";
+		}
+		
+		// model에 객체 저장하여 보내기
+		/*model.addAttribute("representName", sbu.getRepresentName());
+		model.addAttribute("companyName", sbu.getCompanyName());
+		model.addAttribute("email", sbu.getEmail());*/
+		
+		// session에 객체 저장하여 보내기
+		session.setAttribute("representName", sbu.getRepresentName());
+		session.setAttribute("companyName", sbu.getCompanyName());
+		session.setAttribute("email", sbu.getEmail());;
+		
 		return "join/join_agree";
+		
 	}
    
 	//회원가입 요청
 	@RequestMapping(value = "/popup_join_request", method = RequestMethod.POST)
-	public String popup_join_request(Model model, HttpServletRequest request) {
+	public String popup_join_request(Model model, HttpServletRequest request, RedirectAttributes redir) {
       
 		// 메일 유틸
 		SendMailUtil mUtil = new SendMailUtil(); 
@@ -106,7 +135,7 @@ public class LoginController {
 
    		// 3. 응답 성공 메시지 후, 관리페이지
 
-      return "index";
+      return "redirect:/index";
    }
 	
 
