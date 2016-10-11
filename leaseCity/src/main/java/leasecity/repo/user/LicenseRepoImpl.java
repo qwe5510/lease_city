@@ -43,9 +43,9 @@ public class LicenseRepoImpl implements LicenseRepo{
 	}
 
 	@Override
-	public int updateLicense(License license) {
+	public int updateLicense(License prev, License next) {
 		String stmt = LICENSE_NS + "updateLicense";
-		return session.update(stmt, license);
+		return session.update(stmt);
 	}
 
 	@Override

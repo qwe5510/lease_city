@@ -1,5 +1,8 @@
 package leasecity.service;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class LeaseServiceImpl implements LeaseService {
 	
 }

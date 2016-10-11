@@ -21,6 +21,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 	@Autowired
 	StandByUserRepo SBUrepo;
 
+	//logger
 	static Logger logger = LoggerFactory.getLogger(StandByUserServiceImpl.class);
 
 	@Override
@@ -68,7 +69,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 	
 	//대기유저 수락 - 발급코드 생성
 	@Override
-	public void providePermissionCode(StandByUser standByUser) 
+	public StandByUser providePermissionCode(StandByUser standByUser) 
 				throws NotFoundDataException {
 		
 		String companyName = standByUser.getCompanyName();
@@ -85,6 +86,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 			SBU.setPermissionNo(code);
 			int result = SBUrepo.updateStandByUser(SBU);
 			logger.trace("대기 유저 발급코드 지급 : {}", result);
+			return SBU;
 		}
 	}
 	

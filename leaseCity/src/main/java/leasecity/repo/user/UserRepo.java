@@ -18,5 +18,10 @@ public interface UserRepo {
 	
 	//회원 삭제 (중기업체, 건설업체 전부 가능)
 	public int deleteUser(User user);
+	
+	//유저 수정 - 정보변경(업체명, 대표자명, 이메일 제외)
+	public int updateUser(User user);
+	//유저 수정 - 비밀번호 변경
+	public int updatePasswordUser(User user);
 
 }

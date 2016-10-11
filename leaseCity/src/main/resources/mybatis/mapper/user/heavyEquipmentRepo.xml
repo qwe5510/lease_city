@@ -29,7 +29,11 @@
  	<!-- 중장비 추가 -->
  	<insert id="insertHE" parameterType="heavyEquipment">
  		INSERT INTO heavy_equipment VALUES(
- 		#{idNumber},#{userId},#{equipmentCategory})	
+ 		#{idNumber},#{userId},#{equipmentCategory}
+ 		<choose>
+ 		<when test="heavyEquipmentUri != null">, #{heavyEquipmentUri}</when>
+ 		<otherwise>, null)</otherwise>
+ 		</choose>
  	</insert>
  	
  	<!-- 중장비 수정 -->
