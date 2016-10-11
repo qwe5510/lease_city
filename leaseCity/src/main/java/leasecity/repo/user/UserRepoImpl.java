@@ -55,6 +55,21 @@ public class UserRepoImpl implements UserRepo{
 		String stmt = USER_NS + "deleteUser";
 		return session.delete(stmt, user);
 	}
+	
+	//회원 수정 - 정보변경.(업체명, 대표자명, 이메일 제외)
+	@Override
+	public int updateUser(User user) {
+		String stmt = USER_NS + "updateInfoUser";
+		return session.update(stmt, user);
+	}
+	
+	//회원 수정 - 비밀번호 변경
+	@Override
+	public int updatePasswordUser(User user) {
+		String stmt = USER_NS + "updatePasswordUser";
+		return session.update(stmt, user);
+	}
+
 
 	
 }

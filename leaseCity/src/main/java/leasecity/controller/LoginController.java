@@ -65,46 +65,45 @@ public class LoginController {
 		return "join/join_agree";
 	}
    
-   @RequestMapping(value="/popup_join_request",method=RequestMethod.POST)
-   public String popup_join_request(Model model, HttpServletRequest request){
+	//회원가입 요청
+	@RequestMapping(value = "/popup_join_request", method = RequestMethod.POST)
+	public String popup_join_request(Model model, HttpServletRequest request) {
       
-	  // 메일 유틸
-	  SendMailUtil mUtil = new SendMailUtil(); 
+		// 메일 유틸
+		SendMailUtil mUtil = new SendMailUtil(); 
 	  
-	  // 폼에서 값 받기
-	  StandByUser sbu = new StandByUser();
-	  sbu.setCompanyName(request.getParameter("companyName"));
-	  sbu.setRepresentName(request.getParameter("representName"));
-	  sbu.setEmail(request.getParameter("email"));
-	  logger.trace("받은 임시 회원 : {}", sbu);
-	  
-      // 1. db에 저장 후, 메시지
-      try {
-         SBUService.addStandByUser(sbu);
-         logger.trace("저장된 임시 유저 : {}", sbu);
-         model.addAttribute("join_message", "회원가입 요청 성공");
-      } catch (DuplicateValueException e) {
-    	 model.addAttribute("join_message", "회원가입 요청 실패");
-         return "join/login"; //추후 변경 요망@
-      }
+		// 폼에서 값 받기
+		StandByUser sbu = new StandByUser();
+		sbu.setCompanyName(request.getParameter("companyName"));
+		sbu.setRepresentName(request.getParameter("representName"));
+		sbu.setEmail(request.getParameter("email"));
+		logger.trace("받은 임시 회원 : {}", sbu);
+
+		// 1. db에 저장 후, 메시지
+		try {
+			SBUService.addStandByUser(sbu);
+			logger.trace("저장된 임시 유저 : {}", sbu);
+			model.addAttribute("join_message", "회원가입 요청 성공");
+		} catch (DuplicateValueException e) {
+			model.addAttribute("join_message", "회원가입 요청 실패 - 동일한 업체명, 이메일로 된 대기 유저가 존재합니다.");
+			return "join/login"; // 추후 변경 요망@
+		}
       
-      // 3. db에 수정하기
-   		try {
-   			SBUService.providePermissionCode(sbu);
-   			logger.trace("관리자의 승인을 받은 임시회원 : {}", sbu);
-   			logger.trace("가입승인 승낙 성공");
-   		} catch (NotFoundDataException e) {
-   			model.addAttribute("join_message", "회원가입 요청 실패");
-            return "join/login"; //추후 변경 요망@
-   		}
+		// 3. 관리자 수락 후 처리할 서비스 - db에 수정하기
+		try {
+			sbu = SBUService.providePermissionCode(sbu);
+			logger.trace("관리자의 승인을 받은 임시회원 : {}", sbu);
+			logger.trace("가입승인 승낙 성공");
+		} catch (NotFoundDataException e) {
+			model.addAttribute("join_message", "회원가입 요청 실패");
+			return "join/login"; // 추후 변경 요망@
+		}
 
-   		// 4. 메일 발송하기
+		// 4. 메일 발송하기
+		String src = "http://localhost:9090/leaseCity/join_input" + "?permissionNo=" + sbu.getPermissionNo();
+		mUtil.sendMail(sbu, src);
 
-   		String src = "http://localhost:9090/leaseCity/join_input" 
-   					+ "?permissionNo=" + sbu.getPermissionNo();
-   		mUtil.sendMail(sbu, src);
-
-   		// 3. 응답 성공 메시지 후, 관리페이지
+		// 3. 응답 성공 메시지 후, 관리페이지
       
       return "index";
    }
