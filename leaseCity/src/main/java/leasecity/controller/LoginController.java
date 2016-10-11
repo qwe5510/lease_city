@@ -99,8 +99,7 @@ public class LoginController {
    		}
 
    		// 4. 메일 발송하기
-
-   		String src = "http://localhost:9090/leaseCity/join_input" 
+   		String src = "http://localhost:9090/leaseCity/join_agree" 
    					+ "?permissionNo=" + sbu.getPermissionNo();
    		mUtil.sendMail(sbu, src);
 
