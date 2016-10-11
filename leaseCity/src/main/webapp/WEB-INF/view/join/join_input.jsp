@@ -65,7 +65,10 @@
 						</tr>
 					</table>
 				</fieldset>
-				</form>
+				
+
+				</fieldset>
+
 				<br>
 				<fieldset>
 					<legend>상세정보 입력</legend>
@@ -76,7 +79,7 @@
 				<br>
 				<button>가입</button>
 				<button>취소</button>
-			
+			</form>
 		</div>
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
@@ -101,31 +104,17 @@
 		"</th><th><input type='text' placeholder='차량 번호'>"+
 		"<button id='btn1'>추가</button><br>");
 	});	
-	
-
-	function add(e){
+		$(".companySelector")
+		.html("<input type='text' placeholder='차량 종류'>" +
+		"<input type='text' placeholder='차량 크기'>"+
+		"</th><th><input type='text' placeholder='차량 번호'>"+
+		"<button id='btn1' >추가</button><br>");
+	});	
+	$(document).on("click", "#btn1", function(e){
 		e.preventDefault();
 		$(".companySelector")
 		.append("<input type='text' placeholder='차량 종류'><input type='text' placeholder='차량 크기'></th><th><input type='text' placeholder='차량 번호'><br>");
-	}
-	
-
- 	<c:url value="/heavy_equipment_list" var="HEL"></c:url>
- 	$("button").on("click",function(){ 	
-		$.ajax({
-			type: "get",
-			url: "${HEL}",
-			data: {
-				"data":$(".companySelector").html()},
-			success:function(res){
-				alert(res);
-				$(".companySelector").html(res);				
-			},
-			error: function(xhr, status, error){
-				alert(error);
-			}
-		});
-	});
+	})
 
 	
 </script>

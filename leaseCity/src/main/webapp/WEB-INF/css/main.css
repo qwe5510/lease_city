@@ -393,7 +393,7 @@ header .dropdown-menu:before {
 	border: 0
 }
 
-.modal#loginForm{
+.modal#joinRequest{
 	width: 350px;
 	margin-left: -200px;
 	background: #EEE8AA;

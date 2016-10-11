@@ -1,231 +1,204 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+pageEncoding="UTF-8"%> <%@ taglib prefix="sform"
+uri="http://www.springframework.org/tags/form"%> <%@ taglib prefix="fmt"
+uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<div class="login">
-		<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
-		<div class="inner">
-			<sform:form method="post" modelAttribute="user" action="#">
-				<fieldset>
-					<legend>로그인</legend>
-					<table>
-						<tr>
-							<th><sform:label path="userId">아이디</sform:label></th>
-							<th><sform:input path="userId" type="text" /></th>
-							<th rowspan="2"><sform:button class="loginBtn">로그인</sform:button>
-						</tr>
-						<tr>
-							<th><sform:label path="password">비밀번호</sform:label></th>
-							<th><sform:input path="password" type="password" /></th>
-						</tr>
-					</table>
-					<div class="inner1">
-						<a data-toggle="modal" href="#loginForm">회원가입인증</a> <a
-							data-toggle="modal" href="#idSearch">아이디찾기</a> <a
-							data-toggle="modal" href="#passSearch">비밀번호찾기</a>
-					</div>
-				</fieldset>
-			</sform:form>
-		</div>
+<jsp:include page="../layout/header.jsp"></jsp:include>
+<div class="login">
+	<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
+	<div class="inner">
+		<sform:form method="post" modelAttribute="user" action="#">
+			<fieldset>
+				<legend>로그인</legend>
+				<table>
+					<tr>
+						<th><sform:label path="userId">아이디</sform:label></th>
+						<th><sform:input path="userId" type="text" /></th>
+						<th rowspan="2"><sform:button class="loginBtn">로그인</sform:button>
+					</tr>
+					<tr>
+						<th><sform:label path="password">비밀번호</sform:label></th>
+						<th><sform:input path="password" type="password" /></th>
+					</tr>
+				</table>
+				<div class="inner1">
+					<a data-toggle="modal" href="#joinRequest">회원가입인증</a> <a
+						data-toggle="modal" href="#idSearch">아이디찾기</a> <a
+						data-toggle="modal" href="#passSearch">비밀번호찾기</a>
+				</div>
+			</fieldset>
+		</sform:form>
 	</div>
-	<section id="bottom" class="main">
-		<!--Container-->
-		<div class="container">
+</div>
+<section id="bottom" class="main">
+	<!--Container-->
+	<div class="container">
 
-			<!--row-fluids-->
-			<div class="row-fluid">
+		<!--row-fluids-->
+		<div class="row-fluid">
 
-				<!--Contact Form-->
-				<div class="span3">
-					<ul class="unstyled address">
-						<li><img
-							src="<%=request.getContextPath()%>/images/logo/logo2.png" /></li>
+			<!--Contact Form-->
+			<div class="span3">
+				<ul class="unstyled address">
+					<li><img
+						src="<%=request.getContextPath()%>/images/logo/logo2.png" /></li>
+				</ul>
+			</div>
+			<!--End Contact Form-->
+
+			<!--Important Links-->
+			<div id="tweets" class="span3">
+				<h4>CopyRighter</h4>
+				<div>
+					<ul class="arrow">
+						<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
+							wkdvlftlr123@gmail.com</li>
+						<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
+							wkdvlftlr123@gmail.com</li>
+						<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
+							wkdvlftlr123@gmail.com</li>
 					</ul>
 				</div>
-				<!--End Contact Form-->
+			</div>
+			<!--Important Links-->
 
-				<!--Important Links-->
-				<div id="tweets" class="span3">
-					<h4>CopyRighter</h4>
-					<div>
-						<ul class="arrow">
-							<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
-								wkdvlftlr123@gmail.com</li>
-							<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
-								wkdvlftlr123@gmail.com</li>
-							<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
-								wkdvlftlr123@gmail.com</li>
-						</ul>
-					</div>
+			<!--Archives-->
+			<div id="archives" class="span3">
+				<h4>Our Company's</h4>
+				<div>
+					<ul class="arrow">
+						<li>construction company's</li>
+						<li>heavy equipment company's</li>
+					</ul>
 				</div>
-				<!--Important Links-->
+			</div>
+			<!--End Archives-->
 
-				<!--Archives-->
-				<div id="archives" class="span3">
-					<h4>Our Company's</h4>
-					<div>
-						<ul class="arrow">
-							<li>construction company's</li>
-							<li>heavy equipment company's</li>
-						</ul>
-					</div>
+			<div class="span3">
+				<h4>Building</h4>
+				<div class="row-fluid first">
+					<ul class="thumbnails">
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build1.png"
+							alt="" /></li>
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build2.png"
+							alt="" /></li>
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build3.png"
+							alt="" /></li>
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build4.png"
+							alt="" /></li>
+					</ul>
 				</div>
-				<!--End Archives-->
-
-				<div class="span3">
-					<h4>Building</h4>
-					<div class="row-fluid first">
-						<ul class="thumbnails">
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build1.png"
-								alt="" /></li>
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build2.png"
-								alt="" /></li>
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build3.png"
-								alt="" /></li>
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build4.png"
-								alt="" /></li>
-						</ul>
-					</div>
-					<div class="row-fluid">
-						<ul class="thumbnails">
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build5.png"
-								alt="" /></li>
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build6.png"
-								alt="" /></li>
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build7.png"
-								alt="" /></li>
-							<li class="span3"><img
-								src="<%=request.getContextPath()%>/images/building/build8.png"
-								alt="" /></li>
-						</ul>
-					</div>
-
+				<div class="row-fluid">
+					<ul class="thumbnails">
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build5.png"
+							alt="" /></li>
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build6.png"
+							alt="" /></li>
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build7.png"
+							alt="" /></li>
+						<li class="span3"><img
+							src="<%=request.getContextPath()%>/images/building/build8.png"
+							alt="" /></li>
+					</ul>
 				</div>
 
 			</div>
-			<!--/row-fluid-->
-		</div>
-		</section>
-		<jsp:include page="../layout/footer.jsp"></jsp:include>
-		<!--  Login form -->
-		<div class="modal hide fade in" id="loginForm" aria-hidden="false">
-			<div class="modal-header">
-				<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
-				<img class="modalImg"
-					src="<%=request.getContextPath()%>/images/pop/join.png" />
-			</div>
-			<!--Modal Body-->
-			<div class="modal-body">
-				<sform:form class="form-inline" method="post" modelAttribute="standByUser"
-					action="popup_join_request">
-					<sform:input path="representName" type="text" placeholder="업체명" />
-					<br>
-					<sform:input path="companyName" type="text" placeholder="대표자명" />
-					<br>
-					<sform:input path="email" type="email" placeholder="Email" />
-					<br>
-					<sform:button class="pop">가입 요청</sform:button>
-				</sform:form>
-			</div>
-			<!--/Modal Body-->
-		</div>
-		<!--  Login form -->
-		<!--  Login form -->
-		<div class="modal hide fade in" id="idSearch" aria-hidden="false">
-			<div class="modal-header">
-				<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
-				<img class="modalImg"
-					src="<%=request.getContextPath()%>/images/pop/id.png" />
-			</div>
-			<!--Modal Body-->
-			<div class="modal-body">
-				<sform:form class="form-inline" method="post" modelAttribute="user"
-					action="popup_join_request">
-					<sform:input path="representName" type="text" placeholder="업체명" />
-					<br>
-					<sform:input path="companyName" type="text" placeholder="대표자명" />
-					<br>
-					<sform:input path="email" type="email" placeholder="Email" />
-					<br>
-					<sform:button class="pop">아이디 찾기</sform:button>
-				</sform:form>
-			</div>
-			<!--/Modal Body-->
-		</div>
-		<!--  Login form -->
 
-		<!--  Login form -->
-		<div class="modal hide fade in" id="passSearch" aria-hidden="false">
-			<div class="modal-header">
-				<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i>
-				<img class="modalImg"
-					src="<%=request.getContextPath()%>/images/pop/pass.png" />
-			</div>
-			<!--Modal Body-->
-			<div class="modal-body">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-				<sform:form class="form-inline" method="post" modelAttribute="user"
-					action="#">
-					<sform:input path="representName" type="text" placeholder="아이디" />
-					<br>
-					<sform:input path="representName" type="text" placeholder="업체명" />
-					<br>
-					<sform:input path="companyName" type="text" placeholder="대표자명" />
-					<br>
-					<sform:input path="email" type="email" placeholder="Email" />
-					<button></button>
-					<br>
-					<sform:input path="companyName" type="number" placeholder="인증번호" />
-					<br>
-					<sform:button class="pop">비밀번호찾기</sform:button>
-				</sform:form>
-
->>>>>>> 20b01fa6ec48211d93a7eacd7c1ba016f4709eda
-			<sform:form class="form-inline" method="post" modelAttribute="standByUser" action="#">
-			<sform:input path="representName" type="text" placeholder="아이디" /><br>
-				<sform:input path="representName" type="text" placeholder="업체명" /><br>
-				<sform:input path="companyName" type="text" placeholder="대표자명"/><br>
-				<sform:input path="email" type="email" placeholder="Email"/>
-				<button class="btn1" value="발급">발급</button><br>
-				<sform:input path="companyName" type="number" placeholder="인증번호"/>
-				<button class="btn1" value="인증">인증</button>
-				<br>
-				<sform:button>비밀번호찾기</sform:button>
-			</sform:form>
-			</div>
-			<!--/Modal Body-->
-<<<<<<< HEAD
-			</div>
-			
-			
-			<!--  Login form -->
-=======
 		</div>
-		<!--  Login form -->
->>>>>>> 20b01fa6ec48211d93a7eacd7c1ba016f4709eda
+		<!--/row-fluid-->
+	</div>
+</section>
+<jsp:include page="../layout/footer.jsp"></jsp:include>
+<!--  가입요청 -->
+<div class="modal hide fade in" id="joinRequest" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
+			class="modalImg"
+			src="<%=request.getContextPath()%>/images/pop/join.png" />
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<sform:form class="form-inline" method="post"
+			modelAttribute="standByUser" action="popup_join_request">
+			<sform:input path="representName" type="text" placeholder="업체명" />
+			<br>
+			<sform:input path="companyName" type="text" placeholder="대표자명" />
+			<br>
+			<sform:input path="email" type="email" placeholder="Email" />
+			<br>
+			<sform:button class="pop">가입 요청</sform:button>
+		</sform:form>
+	</div>
+</div>
 
-		<script src="js/vendor/jquery-1.9.1.min.js"></script>
-		<script src="js/vendor/bootstrap.min.js"></script>
-		<script src="js/main.js"></script>
-		<!-- Required javascript files for Slider -->
-		<script src="js/jquery.ba-cond.min.js"></script>
-		<script src="js/jquery.slitslider.js"></script>
-		<!-- /Required javascript files for Slider -->
+<!--  아이디찾기 -->
+<div class="modal hide fade in" id="idSearch" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
+			class="modalImg"
+			src="<%=request.getContextPath()%>/images/pop/id.png" />
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<sform:form class="form-inline" method="post" modelAttribute="user"
+			action="popup_join_request">
+			<sform:input path="representName" type="text" placeholder="업체명" />
+			<br>
+			<sform:input path="companyName" type="text" placeholder="대표자명" />
+			<br>
+			<sform:input path="email" type="email" placeholder="Email" />
+			<br>
+			<sform:button class="pop">아이디 찾기</sform:button>
+		</sform:form>
+	</div>
+</div>
+
+<!--  비밀번호찾기 -->
+<div class="modal hide fade in" id="passSearch" aria-hidden="false">
+	<div class="modal-header">
+		<i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
+			class="modalImg"
+			src="<%=request.getContextPath()%>/images/pop/pass.png" />
+	</div>
+	<!--Modal Body-->
+	<div class="modal-body">
+		<sform:form class="form-inline" method="post" modelAttribute="user"
+			action="#">
+			<sform:input path="representName" type="text" placeholder="아이디" />
+			<br>
+			<sform:input path="representName" type="text" placeholder="업체명" />
+			<br>
+			<sform:input path="companyName" type="text" placeholder="대표자명" />
+			<br>
+			<sform:input path="email" type="email" placeholder="Email" />
+			<button></button>
+			<br>
+			<sform:input path="companyName" type="number" placeholder="인증번호" />
+			<br>
+			<sform:button class="pop">비밀번호찾기</sform:button>
+		</sform:form>
+	</div>
+</div>
+
+
+<script src="js/vendor/jquery-1.9.1.min.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<!-- Required javascript files for Slider -->
+<script src="js/jquery.ba-cond.min.js"></script>
+<script src="js/jquery.slitslider.js"></script>
+<!-- /Required javascript files for Slider -->
 </body>
 </html>
