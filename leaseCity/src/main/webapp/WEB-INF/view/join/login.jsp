@@ -1,13 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ taglib prefix="sform"
-uri="http://www.springframework.org/tags/form"%> <%@ taglib prefix="fmt"
-uri="http://java.sun.com/jsp/jstl/fmt"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %> --%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+
+<%-- <!-- 가입 절차 설명 메시지 -->
+<c:if test="${!empty join_message }">
+		<script type="text/javascript">
+			var msg = '${join_message }'
+			alert(msg);
+		</script>
+</c:if> --%>
+
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <div class="login">
 	<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
@@ -17,13 +27,13 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 				<legend>로그인</legend>
 				<table>
 					<tr>
-						<th><label path="userId">아이디</label></th>
-						<th><input path="userId" type="text" /></th>
+						<th><label name="userId">아이디</label></th>
+						<th><input name="userId" type="text" /></th>
 						<th rowspan="2"><button class="loginBtn">로그인</button>
 					</tr>
 					<tr>
-						<th><label path="password">비밀번호</label></th>
-						<th><input path="password" type="password" /></th>
+						<th><label name="password">비밀번호</label></th>
+						<th><input name="password" type="password" /></th>
 					</tr>
 				</table>
 				<div class="inner1">
@@ -131,9 +141,9 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 	<!--Modal Body-->
 	<div class="modal-body">
 		<form class="form-inline" method="post" action="popup_join_request">
-			<input path="representName" type="text" placeholder="업체명" /> <br>
-			<input path="companyName" type="text" placeholder="대표자명" /> <br>
-			<input path="email" type="email" placeholder="Email" /> <br>
+			<input name="representName" type="text" placeholder="업체명" /> <br>
+			<input name="companyName" type="text" placeholder="대표자명" /> <br>
+			<input name="email" type="email" placeholder="Email" /> <br>
 			<button class="pop">가입 요청</button>
 		</form>
 	</div>
@@ -149,9 +159,9 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 	<!--Modal Body-->
 	<div class="modal-body">
 		<form class="form-inline" method="post" action="popup_join_request">
-			<input path="representName" type="text" placeholder="업체명" /> <br>
-			<input path="companyName" type="text" placeholder="대표자명" /> <br>
-			<input path="email" type="email" placeholder="Email" /> <br>
+			<input name="representName" type="text" placeholder="업체명" /> <br>
+			<input name="companyName" type="text" placeholder="대표자명" /> <br>
+			<input name="email" type="email" placeholder="Email" /> <br>
 			<button class="pop">아이디 찾기</button>
 		</form>
 	</div>
@@ -167,10 +177,10 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 	<!--Modal Body-->
 	<div class="modal-body">
 		<form class="form-inline" method="post" action="#">
-			<input path="representName" type="text" placeholder="아이디" /><br>
-			<input path="representName" type="text" placeholder="업체명" /><br>
-			<input path="companyName" type="text" placeholder="대표자명" /><br>
-			<input path="email" type="email" placeholder="Email" />
+			<input name="representName" type="text" placeholder="아이디" /><br>
+			<input name="representName" type="text" placeholder="업체명" /><br>
+			<input name="companyName" type="text" placeholder="대표자명" /><br>
+			<input name="email" type="email" placeholder="Email" />
 			<button class="btn1" value="발급">발급</button>
 			<br> <input path="companyName" type="number" placeholder="인증번호" />
 			<button class="btn1" value="인증">인증</button>

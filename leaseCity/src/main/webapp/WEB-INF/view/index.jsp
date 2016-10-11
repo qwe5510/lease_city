@@ -3,8 +3,8 @@
 <!--<![endif]-->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <head>
 <meta charset="utf-8">
@@ -16,35 +16,35 @@
 
 <!-- <!-- <link rel="stylesheet" href="css/reset.css"> -->
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/bootstrap.min.css">
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/bootstrap-responsive.min.css">
+	href="<%=request.getContextPath()%>/css/bootstrap-responsive.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/font-awesome.min.css">
+	href="<%=request.getContextPath()%>/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/main.css">
+	href="<%=request.getContextPath()%>/css/main.css">
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath() %>/css/sl-slide.css">
+	href="<%=request.getContextPath()%>/css/sl-slide.css">
 
 
 <script
-	src="<%=request.getContextPath() %>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	src="<%=request.getContextPath()%>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon"
-	href="<%=request.getContextPath() %>/images/ico/favicon.ico">
+	href="<%=request.getContextPath()%>/images/ico/favicon.ico">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="<%=request.getContextPath() %>/images/ico/apple-touch-icon-144-precomposed.png">
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="<%=request.getContextPath() %>/images/ico/apple-touch-icon-114-precomposed.png">
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-114-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="<%=request.getContextPath() %>/images/ico/apple-touch-icon-72-precomposed.png">
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed"
-	href="<%=request.getContextPath() %>/images/ico/apple-touch-icon-57-precomposed.png">
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
 <body>
-	
+
 	<!-- 가입 절차 설명 메시지 -->
 	<c:if test="${!empty join_message }">
 		<script type="text/javascript">
@@ -97,8 +97,7 @@
 							</ul></li>
 						<li id="con"><a href="blog.html">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
-						<li id="con"><a href=${login }> <i
-								class="icon-lock"></i>
+						<li id="con"><a href=${login }> <i class="icon-lock"></i>
 						</a></li>
 					</ul>
 				</div>
@@ -119,7 +118,7 @@
 					<div class="sl-slide-inner">
 						<div class="container">
 							<img class="pull-right"
-								src="<%=request.getContextPath() %>/images/slider/경복궁.png"
+								src="<%=request.getContextPath()%>/images/slider/경복궁.png"
 								alt="" />
 							<h2>경복궁</h2>
 							<h4 class="gap">규모 43만 2702.87</h4>
@@ -135,7 +134,7 @@
 					<div class="sl-slide-inner">
 						<div class="container">
 							<img class="pull-right"
-								src="<%=request.getContextPath() %>/images/slider/카사밀라.png"
+								src="<%=request.getContextPath()%>/images/slider/카사밀라.png"
 								alt="" />
 							<h2>Casa Mila</h2>
 							<h4 class="gap">규모 1만 2000</h4>
@@ -152,7 +151,7 @@
 					<div class="sl-slide-inner">
 						<div class="container">
 							<img class="pull-right"
-								src="<%=request.getContextPath() %>/images/slider/피사의사탑.png"
+								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
 								alt="" />
 							<h2>Tower at Pisa</h2>
 							<h4 class="gap">건축가 보나노 피사노</h4>
@@ -188,7 +187,8 @@
 								class="icon-angle-right icon-large"></i></a>
 						</div>
 					</div>
-					<p>website that is able to be a function of medium between construction company's and heavy equipment company's</p>
+					<p>website that is able to be a function of medium between
+						construction company's and heavy equipment company's</p>
 				</div>
 				<div class="span10">
 					<div id="myCarousel" class="carousel slide clients">
@@ -198,13 +198,13 @@
 								<div class="row-fluid">
 									<ul class="thumbnails">
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/임대.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/커뮤니티.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/Q&A.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/소개.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
 									</ul>
 								</div>
 							</div>
@@ -213,13 +213,13 @@
 								<div class="row-fluid">
 									<ul class="thumbnails">
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/소개.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/Q&A.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/커뮤니티.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/소개.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
 									</ul>
 								</div>
 							</div>
@@ -228,13 +228,13 @@
 								<div class="row-fluid">
 									<ul class="thumbnails">
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/임대.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/커뮤니티.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/Q&A.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="#"><img
-												src="<%=request.getContextPath() %>/images/menu/소개.PNG"></a></li>
+												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
 									</ul>
 								</div>
 							</div>
@@ -258,9 +258,8 @@
 				<!--Contact Form-->
 				<div class="span3">
 					<ul class="unstyled address">
-					<li>
-					<img src="<%=request.getContextPath() %>/images/logo/logo2.png"/>
-					</li>
+						<li><img
+							src="<%=request.getContextPath()%>/images/logo/logo2.png" /></li>
 					</ul>
 				</div>
 				<!--End Contact Form-->
@@ -270,12 +269,12 @@
 					<h4>CopyRighter</h4>
 					<div>
 						<ul class="arrow">
-						<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> 
-						<br>Email: wkdvlftlr123@gmail.com</li>
-						<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> 
-						<br>Email: wkdvlftlr123@gmail.com</li>
-						<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> 
-						<br>Email: wkdvlftlr123@gmail.com</li>
+							<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
+								wkdvlftlr123@gmail.com</li>
+							<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
+								wkdvlftlr123@gmail.com</li>
+							<li><i class="icon-home"></i><strong>Jang Pil Sik</strong> <br>Email:
+								wkdvlftlr123@gmail.com</li>
 						</ul>
 					</div>
 				</div>
@@ -297,35 +296,34 @@
 					<h4>Building</h4>
 					<div class="row-fluid first">
 						<ul class="thumbnails">
-							<li class="span3">
-							
-							<img src="<%=request.getContextPath() %>/images/building/build1.png"
-								 alt="" /></li>
-							<li class="span3">
-							<img src="<%=request.getContextPath() %>/images/building/build2.png"
-								 alt="" /></li>
-							<li class="span3">
-							<img src="<%=request.getContextPath() %>/images/building/build3.png"
-								 alt="" /></li>
-							<li class="span3">
-							<img src="<%=request.getContextPath() %>/images/building/build4.png"
-								 alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build1.png"
+								alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build2.png"
+								alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build3.png"
+								alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build4.png"
+								alt="" /></li>
 						</ul>
 					</div>
 					<div class="row-fluid">
 						<ul class="thumbnails">
-							<li class="span3">
-							<img src="<%=request.getContextPath() %>/images/building/build5.png"
-								 alt="" /></li>
-							<li class="span3">
-							<img src="<%=request.getContextPath() %>/images/building/build6.png"
-								 alt="" /></li>
-							<li class="span3">
-							<img src="<%=request.getContextPath() %>/images/building/build7.png"
-								 alt="" /></li>
-							<li class="span3">
-							<img src="<%=request.getContextPath() %>/images/building/build8.png"
-								 alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build5.png"
+								alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build6.png"
+								alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build7.png"
+								alt="" /></li>
+							<li class="span3"><img
+								src="<%=request.getContextPath()%>/images/building/build8.png"
+								alt="" /></li>
 						</ul>
 					</div>
 
