@@ -17,27 +17,45 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
 import leasecity.exception.DuplicateValueException;
+
 import leasecity.exception.NotFoundDataException;
 import leasecity.service.StandByUserService;
 import leasecity.util.SendMailUtil;
 
 @Controller
 public class LoginController {
+   
+   static Logger logger = LoggerFactory.getLogger(LoginController.class);
+   
+   @Autowired
+   StandByUserService SBUService;
+   
+   @RequestMapping(value="/login",method=RequestMethod.GET)
+   public String sayHello(Model model){
+      User user = new User();
+      StandByUser standByUser = new StandByUser();
+      model.addAttribute("user",user);
+      model.addAttribute("standByUser",standByUser);
+      return "join/login";
+   }
 
-	@Autowired
-	StandByUserService SBUService;
-
-	static Logger logger = LoggerFactory.getLogger(LoginController.class);
-
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String sayHello(Model model) {
-		User user = new User();
-		StandByUser standByUser = new StandByUser();
-		model.addAttribute("user", user);
-		model.addAttribute("standByUser", standByUser);
-		return "join/login";
-
-	}
+   
+   @RequestMapping(value="/popup_join_request",method=RequestMethod.POST)
+   public String popup_join_request(Model model, HttpServletRequest request, StandByUser sbu){
+      
+      // 1. db에 저장
+      try {
+         SBUService.addStandByUser(sbu);
+         logger.trace("저장된 임시 유저 : {}", sbu);
+      } catch (DuplicateValueException e) {
+         return "error/serviceFail"; //추후 변경 요망@
+      }
+      
+      // 2. 요청 완료 메시지 후, login 창으로 이동
+      
+      return "join/login";
+   }
+  
 
 	@RequestMapping(value = "/join_input", method = RequestMethod.GET)
 	public String join_input(Model model) {
@@ -59,25 +77,6 @@ public class LoginController {
 	}
 	
 	//@RequestMapping(value="/index", method = RequestMethod.)
-	
-	@RequestMapping(value = "/popup_join_request", method = RequestMethod.POST)
-	public String popup_join_request(Model model, HttpServletRequest request, StandByUser sbu) {
-
-		model.addAttribute("message", sbu.getEmail());
-
-		SendMailUtil mUtil = new SendMailUtil();
-
-		// 1. db에 삽입하기
-		try {
-			SBUService.addStandByUser(sbu);
-			logger.trace("비회원의 승인 요청 정보 : {}", sbu);
-		} catch (DuplicateValueException e) {
-			return "error/serviceFail";
-		}
-
-		// 3. 응답 성공 메시지 후, 관리페이지
-		return "join/login";
-	}
 
 	@RequestMapping(value = "/popup_join_response", method = RequestMethod.POST)
 	public String popup_join_response(Model model, HttpServletRequest request, StandByUser sbu) {
