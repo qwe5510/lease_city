@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
@@ -12,7 +11,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" method="post" action="#">
+			<form method="post" action="#">
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table width="75%" cellpadding="0" cellspacing="0" align=center>
@@ -65,7 +64,10 @@
 						</tr>
 					</table>
 				</fieldset>
+<<<<<<< HEAD
 				
+=======
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 				<br>
 				<fieldset>
 					<legend>상세정보 입력</legend>
@@ -93,7 +95,6 @@
 		+"<tr><th><label class='join_input'>"+"회사분야"+"</label></th><th><input type='text'placeholder='회사 분야'></th></tr>"
 		+"</table>");
 	});
-
 	$("#HEC").on("click",function(){
 		$(".companySelector")
 		.html("<input type='text' placeholder='차량 종류'>" +
@@ -110,25 +111,10 @@
 	
 	$(document).on("click", "#btn1", function(e){
 		e.preventDefault();
-		console.log("Hello");
+		$(".companySelector")
+		.append("<input type='text' placeholder='차량 종류'><input type='text' placeholder='차량 크기'></th><th><input type='text' placeholder='차량 번호'><br>");
 	})
 	
-/*  	<c:url value="/heavy_equipment_list" var="HEL"></c:url>
- 	$("button").on("click",function(){ 	
-		$.ajax({
-			type: "get",
-			url: "${HEL}",
-			data: {
-				"data":$(".companySelector").html()},
-			success:function(res){
-				alert(res);
-				$(".companySelector").html(res);				
-			},
-			error: function(xhr, status, error){
-				alert(error);
-			}
-		});
-	}); */
 	
 </script>
 </html>
