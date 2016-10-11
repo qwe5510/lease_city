@@ -101,11 +101,7 @@
 		$(".companySelector")
 		.append("<input type='text' placeholder='차량 종류'><input type='text' placeholder='차량 크기'></th><th><input type='text' placeholder='차량 번호'><br>");
 	}
-	$("#btn1").on("submit",function(e){
-		e.preventDefault();
-		$(".companySelector")
-		.append("<input type='text' placeholder='차량 종류'><input type='text' placeholder='차량 크기'></th><th><input type='text' placeholder='차량 번호'><br>");
-	})
+	
 	
 </script>
 </html>
