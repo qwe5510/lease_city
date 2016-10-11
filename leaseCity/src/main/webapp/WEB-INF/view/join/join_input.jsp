@@ -66,9 +66,11 @@
 				<br>
 				<fieldset>
 					<legend>상세정보 입력</legend>
+					<div class="heavy"></div>
 					<div class="companySelector">
 						<h2>업체를 선택해주세요.</h2>
 					</div>
+					<div class="checked"></div>
 				</fieldset>
 				<br>
 				<button class="join_input_push">가입</button>
@@ -80,125 +82,95 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
-	$("#CSC")
-			.on("click",function() {$(".companySelector")
-								.html("<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>"
-									+ "<br><label class='join_input'>"+ "연수주량"+"</label><input type='text'placeholder='연 수주량'>"
-									+ "<br><div class='license'><label class='join_input'>"+"자격증"+"</label><input type='text'placeholder='자격증 명칭'>"
-									+ "<input type='text'placeholder='발급처'>"+"<input type='date'placeholder='발급시기'><button id='btn2'>"+"추가"+"</button></div>"
-									+ "<br><label class='join_input'>"+"회사규모"+"</label><input type='text'placeholder='회사 규모'>"
-									+ "<br><label class='join_input'>"+"회사분야"+"</label><br>"
-									+ "<input type='checkbox' name='category' value='토건'>"
-									+ "<label class='category_input'>토건</label>"
-									+ "<input type='checkbox' name='category' value='토목'>"
-									+ "<label class='category_input'>토목</label>"
-									+ "<input type='checkbox' name='category' value='건축'>"
-									+ "<label class='category_input'>건축</label>"
-									+ "<input type='checkbox' name='category' value='산업설비'>"
-									+ "<label class='category_input'>산업설비</label>"
-									+ "<input type='checkbox' name='category' value='토공'>"
-									+ "<label class='category_input'>토공</label>"
-									+ "<input type='checkbox' name='category' value='철콘'>"
-									+ "<label class='category_input'>철콘</label>"
-									+ "<input type='checkbox' name='category' value='금속구조'>"
-									+ "<label class='category_input'>금속구조</label>"
-									+ "<input type='checkbox' name='category' value='철강'>"
-									+ "<label class='category_input'>철강</label>"
-									+ "<input type='checkbox' name='category' value='시설물'>"
-									+ "<label class='category_input'>시설물</label>"
-									+ "<input type='checkbox' name='category' value='주택건설'>"
-									+ "<label class='category_input'>주택건설</label>"
-									+ "<input type='checkbox' name='category' value='문화재'>"
-									+ "<label class='category_input'>문화재</label>"
-									+ "<input type='checkbox' name='category' value='해외'>"
-									+ "<label class='category_input'>해외</label>"
-									+ "<input type='checkbox' name='category' value='기타'>"
-									+ "<label class='category_input'>기타</label>"
-									);
-					});
+	$("#CSC").on("click",function(){
+		var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
+		var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input type='text'placeholder='연 수주량'>";
+		var str3 ="<br><div class='license'><label class='join_input'>"+"자격증"+"</label><input type='text'placeholder='자격증 명칭'>";
+		var str4 ="<input type='text'placeholder='발급처'>"+"<input type='date'placeholder='발급시기'><button id='btn2'>"+"추가"+"</button></div>";
+		var str5 ="<br><label class='join_input'>"+"회사규모"+"</label><input type='text'placeholder='회사 규모'>";
+		var str6 ="<br><label class='join_input'>"+"회사분야"+"</label><br>";
+		var str7 ="";
+		var str8 ="";
+		var arr = ["토건","토목","건축","산업설비","토공","철콘","금속구조","철강","시설물","주택건설","문화재","해외","기타"];
+		for(var i of arr){
+			str6+="<input type='checkbox' name='category' value='"+i+"'>"
+				  +"<label class='category_input'>"+i+"</label>";
+		}
+		$(".heavy").html();
+		$(".companySelector").html(str1+str2+str3+str4+str5+str6);
+	});
 
 	$("#HEC").on("click",function() {
-		$(".companySelector")
-			.html("<div class='companyHeavy'><select id='type' name='type'><option value=''>차량선택</option>"
-					+"<option value='트럭'>트럭</option>"
-					+"<option value='로더'>로더</option>"
-					+"<option value='그레이더'>그레이더</option>"
-					+"<option value='트랙'>트랙</option>"
-					+"<option value='스크레이퍼'>스크레이퍼</option>"
-					+"<option value='스키더'>스키더</option>"
-					+"<option value='물질핸들러'>물질 핸들러</option>"
-					+"<option value='벌목용장비'>벌목용 장비</option>"
-					+"<option value='휠도저'>휠 도저</option>"
-					+"<option value='굴삭기'>굴삭기</option>"
-					+"<option value='펌프카'>펌프카</option></select>"
-					+ "<select id='size' name='size'><option value=''>차량 크기</option>"
-					+"<option value='소'>소</option>"
-					+"<option value='중'>중</option>"
-					+"<option value='대'>대</option></select>"
-					+ "<input type='text' placeholder='차량 번호'>"
-					+ "<button id='btn1'>추가</button></div>");
+		var str1 = "<select id='type' name='type'>";
+		var str2  = "<select id='size' name='size'>";
+		var str3 = "<div class='companyHeavy'>";
+		var str4 = "<button id='btn1'>추가</button></div>";
+		var arr= ["차량선택","트럭","로더","그레이더","트랙","스크레이퍼","스키더","물질핸들러","벌목용장비","휠도저","굴삭기","펌프카"];
+		var arr2= ["차량크기","소형","중형","대형"];
+		for(var i of arr){
+			str1+="<option value='"+i+"'>"+i+"</option>";
+		}
+		 for(var i of arr2){
+			str2+="<option value='"+i+"'>"+i+"</option>";
+		} 
+		str1+="</select>";
+		str2+="</select>";
+		var text = "<input type='text' id='num' name='num' placeholder='차량 번호'>";
+		
+		var srt5 ="<lable clas='alarm'>알람여부 </lable>"
+					+"<label class='help_input'>도움여부</label>"	
+					+"<input type='checkbox' id='help' name='help' value='help'>";
+		var str6 = "<label class='help_input'>정보공개</label>"	
+					+"<input type='checkbox' id='help' name='help' value='help'>";	
+		$(".heavy").html(srt5+str6);
+		$(".companySelector").html(str3+str1+str2+text+str4);
 	});
-
 	$(document).on("click","#btn1",	function(e) {
 		e.preventDefault();
-		$(".companySelector").append(
-				"<div class='companyHeavy'><select id='type' name='type'><option value=''>차량선택</option>"
-				+"<option value='트럭'>트럭</option>"
-				+"<option value='로더'>로더</option>"
-				+"<option value='그레이더'>그레이더</option>"
-				+"<option value='트랙'>트랙</option>"
-				+"<option value='스크레이퍼'>스크레이퍼</option>"
-				+"<option value='스키더'>스키더</option>"
-				+"<option value='물질핸들러'>물질 핸들러</option>"
-				+"<option value='벌목용장비'>벌목용 장비</option>"
-				+"<option value='휠도저'>휠 도저</option>"
-				+"<option value='굴삭기'>굴삭기</option>"
-				+"<option value='펌프카'>펌프카</option></select>"
-				+"<select id='size' name='size'><option value=''>차량 크기</option>"
-				+"<option value='소형'>소형</option>"
-				+"<option value='중형'>중형</option>"
-				+"<option value='대형'>대형</option></select>"
-				+"<input type='text' placeholder='차량 번호'></div>");
+		var type = $("#type").val();
+		var size = $("#size").val();
+		var num = $("#num").val();
+		$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>");
+		
 	});
+	
 	$(document).on("click","#btn2",	function(e) {
 		e.preventDefault();
 		$(".license").append("<div class='license_add'>"
 		+"<input type='text'placeholder='자격증 명칭'><input type='text'placeholder='발급처'><input type='date'placeholder='발급시기'>"
 		+"</div>");
 	});
-	
-	$(document).on("click","#type",	function(){
+	var s = 0;
+	$(document).on("click","#type",function(){
 		var type = $("#type").val();
-		console.log("들어옴!");
+		var arr1 = ["장비크기","26m","32m","37m","43m","52m","58m","기타"];
+		var arr2 = ["장비크기","10톤","20톤","30톤","40톤","기타"];
+		var arr3 = ["장비크기","소형굴삭기","농용굴삭기","백호굴삭기","브레이커굴삭기","기타"];
+		var arr4 = ["장비크기","소형","중형","대형"];
+		var str1="";
+		var str2="";
+		var str3="";
+		var str4="";
+		for(var i of arr1){
+			str1+="<option value='"+i+"'>"+i+"</option>";
+		}
+		for(var i of arr2){
+			str2+="<option value='"+i+"'>"+i+"</option>";
+		}
+		for(var i of arr3){
+			str3+="<option value='"+i+"'>"+i+"</option>";
+		}
+		for(var i of arr4){
+			str4+="<option value='"+i+"'>"+i+"</option>";
+		}
 		if(type=="펌프카"){
-			$("#size").html("<option value=''>"+"장비크기"+"</option>"
-					+"<option value='26m'>"+"26m"+"</option>"
-					+"<option value='32m'>"+"32m"+"</option>"
-					+"<option value='37m'>"+"37m"+"</option>"
-					+"<option value='43m'>"+"43m"+"</option>"
-					+"<option value='52m'>"+"52m"+"</option>"
-					+"<option value='58m'>"+"58m"+"</option>"
-					+"<option value='기타'>"+"기타"+"</option>");
+			$("#size").html(str1);
 		}else if(type=="트럭"){
-			$("#size").html("<option value=''>"+"장비크기"+"</option>"
-					+"<option value='10톤'>"+"10톤이상"+"</option>"
-					+"<option value='20톤'>"+"20톤이상"+"</option>"
-					+"<option value='30톤'>"+"30톤이상"+"</option>"
-					+"<option value='40톤'>"+"40톤이상"+"</option>"
-					+"<option value='기타'>"+"기타"+"</option>");
+			$("#size").html(str2);
 		}else if(type=="굴삭기"){
-			$("#size").html("<option value=''>"+"장비크기"+"</option>"
-					+"<option value='소형굴삭기'>"+"소형굴삭기"+"</option>"
-					+"<option value='농용굴삭기'>"+"농용굴삭기"+"</option>"
-					+"<option value='백호굴삭기'>"+"백호굴삭기"+"</option>"
-					+"<option value='브레이커굴삭기'>"+"브레이커 굴삭기"+"</option>"
-					+"<option value='기타'>"+"기타"+"</option>");
+			$("#size").html(str3);
 		}else{
-			$("#size").html("<option value=''>"+"장비크기"+"</option>"
-					+"<option value='소형'>"+"소형"+"</option>"
-					+"<option value='중령'>"+"중형"+"</option>"
-					+"<option value='대형'>"+"대형"+"</option>"
-					+"<option value='기타'>"+"기타"+"</option>");
+			$("#size").html(str4);
 		}
 	});
 	
