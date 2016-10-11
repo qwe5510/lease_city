@@ -12,18 +12,18 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="login">
 	<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
 	<div class="inner">
-		<sform:form method="post" modelAttribute="user" action="#">
+		<form method="post" action="#">
 			<fieldset>
 				<legend>로그인</legend>
 				<table>
 					<tr>
-						<th><sform:label path="userId">아이디</sform:label></th>
-						<th><sform:input path="userId" type="text" /></th>
-						<th rowspan="2"><sform:button class="loginBtn">로그인</sform:button>
+						<th><label path="userId">아이디</label></th>
+						<th><input path="userId" type="text" /></th>
+						<th rowspan="2"><button class="loginBtn">로그인</button>
 					</tr>
 					<tr>
-						<th><sform:label path="password">비밀번호</sform:label></th>
-						<th><sform:input path="password" type="password" /></th>
+						<th><label path="password">비밀번호</label></th>
+						<th><input path="password" type="password" /></th>
 					</tr>
 				</table>
 				<div class="inner1">
@@ -32,7 +32,7 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 						data-toggle="modal" href="#passSearch">비밀번호찾기</a>
 				</div>
 			</fieldset>
-		</sform:form>
+		</form>
 	</div>
 </div>
 <section id="bottom" class="main">
@@ -130,16 +130,12 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 	</div>
 	<!--Modal Body-->
 	<div class="modal-body">
-		<sform:form class="form-inline" method="post"
-			modelAttribute="standByUser" action="popup_join_request">
-			<sform:input path="representName" type="text" placeholder="업체명" />
-			<br>
-			<sform:input path="companyName" type="text" placeholder="대표자명" />
-			<br>
-			<sform:input path="email" type="email" placeholder="Email" />
-			<br>
-			<sform:button class="pop">가입 요청</sform:button>
-		</sform:form>
+		<form class="form-inline" method="post" action="popup_join_request">
+			<input path="representName" type="text" placeholder="업체명" /> <br>
+			<input path="companyName" type="text" placeholder="대표자명" /> <br>
+			<input path="email" type="email" placeholder="Email" /> <br>
+			<button class="pop">가입 요청</button>
+		</form>
 	</div>
 </div>
 
@@ -152,16 +148,12 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 	</div>
 	<!--Modal Body-->
 	<div class="modal-body">
-		<sform:form class="form-inline" method="post" modelAttribute="user"
-			action="popup_join_request">
-			<sform:input path="representName" type="text" placeholder="업체명" />
-			<br>
-			<sform:input path="companyName" type="text" placeholder="대표자명" />
-			<br>
-			<sform:input path="email" type="email" placeholder="Email" />
-			<br>
-			<sform:button class="pop">아이디 찾기</sform:button>
-		</sform:form>
+		<form class="form-inline" method="post" action="popup_join_request">
+			<input path="representName" type="text" placeholder="업체명" /> <br>
+			<input path="companyName" type="text" placeholder="대표자명" /> <br>
+			<input path="email" type="email" placeholder="Email" /> <br>
+			<button class="pop">아이디 찾기</button>
+		</form>
 	</div>
 </div>
 
@@ -174,21 +166,17 @@ uri="http://java.sun.com/jsp/jstl/fmt"%>
 	</div>
 	<!--Modal Body-->
 	<div class="modal-body">
-		<sform:form class="form-inline" method="post" modelAttribute="user"
-			action="#">
-			<sform:input path="representName" type="text" placeholder="아이디" />
+		<form class="form-inline" method="post" action="#">
+			<input path="representName" type="text" placeholder="아이디" /><br>
+			<input path="representName" type="text" placeholder="업체명" /><br>
+			<input path="companyName" type="text" placeholder="대표자명" /><br>
+			<input path="email" type="email" placeholder="Email" />
+			<button class="btn1" value="발급">발급</button>
+			<br> <input path="companyName" type="number" placeholder="인증번호" />
+			<button class="btn1" value="인증">인증</button>
 			<br>
-			<sform:input path="representName" type="text" placeholder="업체명" />
-			<br>
-			<sform:input path="companyName" type="text" placeholder="대표자명" />
-			<br>
-			<sform:input path="email" type="email" placeholder="Email" />
-			<button></button>
-			<br>
-			<sform:input path="companyName" type="number" placeholder="인증번호" />
-			<br>
-			<sform:button class="pop">비밀번호찾기</sform:button>
-		</sform:form>
+			<button>비밀번호찾기</button>
+		</form>
 	</div>
 </div>
 

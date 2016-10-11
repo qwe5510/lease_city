@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
+import leasecity.exception.DuplicateValueException;
+import leasecity.service.StandByUserService;
 import leasecity.util.SendMailUtil;
 
 
@@ -23,6 +26,9 @@ import leasecity.util.SendMailUtil;
 public class LoginController {
    
    static Logger logger = LoggerFactory.getLogger(LoginController.class);
+   
+   @Autowired
+   StandByUserService SBUService;
    
    @RequestMapping(value="/login",method=RequestMethod.GET)
    public String sayHello(Model model){
@@ -53,7 +59,7 @@ public class LoginController {
       return "join/join_agree";
    }
    
-   /*@RequestMapping(value="/popup_join_request",method=RequestMethod.POST)
+   @RequestMapping(value="/popup_join_request",method=RequestMethod.POST)
    public String popup_join_request(Model model, HttpServletRequest request, StandByUser sbu){
       
       // 1. db에 저장
@@ -67,7 +73,7 @@ public class LoginController {
       // 2. 요청 완료 메시지 후, login 창으로 이동
       
       return "join/login";
-   }*/
+   }
    
    
    @RequestMapping(value="/popup_join_response",method=RequestMethod.POST)
