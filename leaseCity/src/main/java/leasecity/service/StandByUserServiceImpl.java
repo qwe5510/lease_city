@@ -127,6 +127,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 		logger.trace("삭제 : 요청 30일 경과 대기유저  : {}", requestResult);
 		logger.trace("삭제 : 인증코드 발급 3일 경과 대기유저  : {}", registryResult);
 		
+		//시간 확인용 출력문
 		System.out.println("Time : " + System.currentTimeMillis());
 	}
 

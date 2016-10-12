@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
 			ConstructionCompany CC = (ConstructionCompany) user;
 			result = constructionCompanyRepo.insertConstructionCompany(CC);
 			logger.trace("건설업체 회원 테이블 추가 : {}", result);
-
 			List<License> list = CC.getLicenseList();
 			// 자격증 있을 시 DB에 추가.
 			for (License license : list) {
@@ -70,13 +69,11 @@ public class UserServiceImpl implements UserService {
 			HeavyEquipmentCompany HEC = (HeavyEquipmentCompany) user;
 			result = heavyEquipmentCompanyRepo.insertHeavyEquipmentCompany(HEC);
 			logger.trace("중기업체 회원 테이블 추가 : {}", result);
-
 			List<HeavyEquipment> list = HEC.getHeavyEquipmentList();
-			// 중장비 있을 시 DB에 추가
-			for (HeavyEquipment heavyEquipment : list) {
+			//중장비 있을 시 DB에 추가
+			for(HeavyEquipment heavyEquipment : list){
 				heavyEquipmentRepo.insertHeavyEquipment(heavyEquipment);
 			}
-
 		} else {// 어느 속성도 아니면 가입실패예외로 이동.
 			logger.error("ERROR!! : 회원가입 실패");
 			throw new JoinFailException();
@@ -93,31 +90,31 @@ public class UserServiceImpl implements UserService {
 
 		ConstructionCompany CC = constructionCompanyRepo.getConstructionCompany(userId);
 		HeavyEquipmentCompany HEC = heavyEquipmentCompanyRepo.getHeavyEquipmentCompany(userId);
-
+		
 		if (user == null) {
 			logger.error("ERROR!! - 로그인 실패 (없는 id 혹은 패스워드)");
 			throw new LoginFailException();
 		} else if (CC != null) {
 			CC = null; // 데이터 초기화
 			CC = constructionCompanyRepo.getCCUser(userId);
-			// userId회원이 가지는 자격증 리스트 넣기
+			//userId회원이 가지는 자격증 리스트 넣기
 			CC.setLicenseList(licenseRepo.getUserLicense(userId));
 
 			return CC;
 		} else if (HEC != null) {
 			HEC = null; // 데이터 초기화
 			HEC = heavyEquipmentCompanyRepo.getHECUser(userId);
-			// 중기업체에 중장비 리스트 넣기
-			HEC.setHeavyEquipmentList(heavyEquipmentRepo.getUserHeavyEquipments(userId));
-
+			//중기업체에 중장비 리스트 넣기
+			HEC.setHeavyEquipmentList(
+					heavyEquipmentRepo.getUserHeavyEquipments(userId));
 			return HEC;
-		} else {
-			// User테이블에는 있으나 건설업체,중기업체 속성이 아닌 dto
+		}else{
+			//User테이블에는 있으나 건설업체,중기업체 속성이 아닌 dto
 			logger.error("ERROR!! - 로그인 실패 (유효하지 않는 회원)");
 			throw new LoginFailException();
 		}
 	}
-	
+
 	//이미 존재하는 아이디인지 중복여부 확인. -> 중복 시 true, 아니면 false
 	@Override
 	public boolean isUserId(String userId) {
@@ -127,7 +124,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void changeInfo(String keyword, User user) throws ServiceFailException {
+	public void changeInfo(String keyword, User user) 
+								throws ServiceFailException {
 		int result = -1;
 
 		if (keyword.equals("password")) {
