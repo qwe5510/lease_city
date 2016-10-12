@@ -19,6 +19,8 @@ public interface UserService {
 	public boolean isUserId(String userId);
 	
 	//유저정보변경, keyword를 통해 비밀번호, 정보 중 하나 변경 
+
 	public void changeInfo(String keyword, User user)
 								throws ServiceFailException;
+
 }

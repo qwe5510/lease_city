@@ -84,17 +84,6 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	// 이미 존재하는 아이디인지 중복여부 확인. -> 중복 시 true, 아니면 false
-	@Override
-	public boolean isUserId(String userId) {
-		User user = userRepo.getUser(userId);
-		if (user != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	@Override
 	public User login(String userId, String password) throws LoginFailException {
 
@@ -128,7 +117,15 @@ public class UserServiceImpl implements UserService {
 			throw new LoginFailException();
 		}
 	}
-
+	
+	//이미 존재하는 아이디인지 중복여부 확인. -> 중복 시 true, 아니면 false
+	@Override
+	public boolean isUserId(String userId) {
+		User user = userRepo.getUser(userId);
+		if(user != null){return true;}
+		else{return false;}
+	}
+	
 	@Override
 	public void changeInfo(String keyword, User user) throws ServiceFailException {
 		int result = -1;

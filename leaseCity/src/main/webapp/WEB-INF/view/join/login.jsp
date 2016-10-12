@@ -10,7 +10,6 @@
 <title>Insert title here</title>
 </head>
 
-
 <body>
 
 	<!-- 가입 절차 설명 메시지 -->
@@ -20,7 +19,6 @@
 			alert(msg);
 		</script>
 	</c:if>
-
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="login">
@@ -223,7 +221,6 @@
 				alert("업체명을 기입하세요!");
 				return false;
 			}
-
 			if (email == null || representName == "") {
 				alert("이메일을 기입하세요!");
 				return false;
@@ -238,6 +235,7 @@
 			return re.test(email);
 		}
 	</script>
+
 </body>
 
 </html>
