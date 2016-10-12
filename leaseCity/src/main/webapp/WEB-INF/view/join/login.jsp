@@ -12,10 +12,10 @@
 
 <!-- 가입 절차 설명 메시지 -->
 <c:if test="${!empty join_message }">
-		<script type="text/javascript">
-			var msg = '${join_message }'
-			alert(msg);
-		</script>
+	<script type="text/javascript">
+		var msg = '${join_message }'
+		alert(msg);
+	</script>
 </c:if>
 
 <jsp:include page="../layout/header.jsp"></jsp:include>
@@ -197,6 +197,40 @@
 <!-- Required javascript files for Slider -->
 <script src="js/jquery.ba-cond.min.js"></script>
 <script src="js/jquery.slitslider.js"></script>
+<script src="js/validation/lib/jquery.js"></script>
+<script src="js/validation/dist/jquery.validate.js"></script>
+<script>
+	function validateform() {
+		var representName = document.joinForm.representName.value;
+		var companyName = document.joinForm.companyName.value;
+		var email = document.joinForm.email.value;
+
+		if (representName == null || representName == "") {
+			alert("대표자 성명을 기입하세요!");
+			return false;
+		} else if (representName.length > 16) {
+			alert("대표자 성명은 16자 까지 입니다.");
+			return false;
+		}
+
+		if (companyName == null || companyName == "") {
+			alert("업체명을 기입하세요!");
+			return false;
+		}
+		if (email == null || representName == "") {
+			alert("이메일을 기입하세요!");
+			return false;
+		} else if (!validateEmail(email)) {
+			alert("이메일 형식에 맞춰 기입하세요!")
+			return false;
+		}
+	}
+
+	function validateEmail(email) {
+		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
+</script>
 <!-- /Required javascript files for Slider -->
 </body>
 </html>

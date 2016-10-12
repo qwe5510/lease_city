@@ -12,7 +12,8 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login">
+			<form id="joinForm" method="post"
+				action="<%=request.getContextPath()%>/login">
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table width="75%" cellpadding="0" cellspacing="0" align=center>
@@ -31,11 +32,13 @@
 						</tr>
 						<tr>
 							<th><label class="join_input">업체명</label></th>
-							<th><input type="text" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></th>
+							<th><input type="text" placeholder="업체명"
+								value="<%=session.getAttribute("companyName")%>" readonly /></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">대표자명</label></th>
-							<th><input type="text" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></th>
+							<th><input type="text" placeholder="대표자명"
+								value="<%=session.getAttribute("representName")%>" readonly /></th>
 						</tr>
 						<tr>
 						</tr>
@@ -49,7 +52,8 @@
 						</tr>
 						<tr>
 							<th><label class="join_input">Email</label></th>
-							<th><input type="email" placeholder="Email" value="<%=session.getAttribute("email") %>" readonly></th>
+							<th><input type="email" placeholder="Email"
+								value="<%=session.getAttribute("email")%>" readonly></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">주소</label></th>
@@ -177,6 +181,15 @@
 	$(document).on("click","#help",	function(e) {
 		var help = $("#help").val();
 		console.log(help);
+	});
+	
+	$("#myForm").validate({
+		  rules: {
+		    name: "required"
+		  },
+		  messages: {
+		    name: "Please specify your name"
+		  }
 	});
 	
 </script>
