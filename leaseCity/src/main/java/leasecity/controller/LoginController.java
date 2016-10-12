@@ -74,7 +74,7 @@ public class LoginController {
    @RequestMapping(value = "/join", method = RequestMethod.POST)
    public String join(Model model, RedirectAttributes redir, HttpServletRequest request) {
 
-      // 1-1. join_input 폼에서 입력한 '기본' 회원정보 -> 갖고 오기
+      /*// 1-1. join_input 폼에서 입력한 '기본' 회원정보 -> 갖고 오기
 	   String userId = request.getParameter("userId");
 	   String password = request.getParameter("password");
 	   String comapanyName = request.getParameter("comapanyName");
@@ -131,7 +131,8 @@ public class LoginController {
 				return "join/join_input";
 			}
 		   
-	   }
+	   }*/
+	   logger.trace("조인 들어옴");
 
       return "redirect:/index";
    }

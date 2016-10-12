@@ -12,7 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login" onsubmit="return validateform()">
+			<form id="joinForm" onsubmit="return validateform()">
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table>
@@ -358,8 +358,6 @@ function passvali(){
 			}
 	    });
 	});
-
-
 
 	
 	$(document).on("click","#addressSearch",function(e) {
