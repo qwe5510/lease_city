@@ -12,54 +12,77 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login">
+			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login" onsubmit="return validateform()">
 				<fieldset>
 					<legend>기본정보 입력</legend>
-					<table width="75%" cellpadding="0" cellspacing="0" align=center>
+					<table>
 						<tr>
-							<th><label class="join_input">아이디</label></th>
-							<th><input type="text" placeholder="아이디" name="userId"/></th>
+							<td><label class="join_input">아이디</label></td>
+							<td><input type="text" placeholder="아이디" name="userId" id="userId"/>
+							<span id= "vali" class="userId">영어 숫자 혼용 최대 15글자 </span>
+							</td>
 						</tr>
 						<tr>
-							<th><label class="join_input">비밀번호</label></th>
-							<th><input class="join_input" type="password"
-								placeholder="패스워드" name="password"/></th>
+							<td><label class="join_input">비밀번호</label></td>
+							<td><input class="join_input" type="password"
+								placeholder="패스워드" name="password" id="password"/>
+								<span id= "vali" class="password">영어 숫자 특수문자 혼용 최대 16글자</span>
+								</td>
+							
 						</tr>
 						<tr>
-							<th><label class="join_input">비밀번호확인</label></th>
-							<th><input type="password" placeholder="패스워드 확인" name="password2"/></th>
+							<td><label class="join_input">비밀번호확인</label></td>
+							<td><input type="password" placeholder="패스워드 확인" name="password2"/>
+							<span id= "vali" class="password2"></span>
+							</td>
 						</tr>
 						<tr>
-							<th><label class="join_input">업체명</label></th>
-							<th><input type="text" name="companyName" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></th>
+							<td><label class="join_input">업체명</label></td>
+							<td><input type="text" name="companyName" id="companyName" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></td>
 						</tr>
 						<tr>
-							<th><label class="join_input">대표자명</label></th>
-							<th><input type="text" name="representName" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></th>
+							<td><label class="join_input">대표자명</label></td>
+							<td><input type="text" name="representName" id="representName" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></td>
 						</tr>
 						<tr>
 						</tr>
 						<tr>
-							<th><label class="join_input">대표자연락처</label></th>
-							<th><input type="text" name="representPhone" placeholder="대표자 연락처"></th>
+							<td><label class="join_input">대표자연락처</label></td>
+							<td><input type="text" name="representPhone" id="representPhone" placeholder="대표자 연락처">
+							<span id= "vali" class="representPhone">ex)031471xxxx</span>
+							</td>
 						</tr>
 						<tr>
-							<th><label class="join_input">휴대폰연락처</label></th>
-							<th><input type="text" placeholder="휴대폰 연락처"></th>
+							<td><label class="join_input">휴대폰연락처</label></td>
+							<td><input type="text" name="handPhone" id="handPhone" placeholder="휴대폰 연락처">
+							<span id= "vali" class="handPhone">ex)010xxxxxxxx</span>
+							</td>
 						</tr>
 						<tr>
-							<th><label class="join_input">Email</label></th>
-							<th><input type="email" placeholder="Email" value="<%=session.getAttribute("email") %>" readonly></th>
+							<td><label class="join_input">Email</label></td>
+							<td><input type="email" name="email" id="email" placeholder="Email" value="<%=session.getAttribute("email") %>" readonly></td>
 						</tr>
 						<tr>
-							<th><label class="join_input">주소</label></th>
-							<th><input type="text" placeholder="주소"></th>
+							<td><label class="join_input">주소</label></td>
+							<td><input type="text" name="zipNumber" id="zipNumber" placeholder="우편번호" readonly="readonly">
+							<button onclick="addressSearch()">주소검색</button></td>
 						</tr>
 						<tr>
-							<th><label class="join_input">업체선택</label></th>
-							<th><label for="company">건설업체</label> <input type="radio"
-								name="company" id="CSC" value="건설업체" /> <label for="중기업체">중기업체</label>
-								<input type="radio" name="company" id="HEC" value="중기업체" /></th>
+							<td><label class="join_input"> </label></td>
+							<td><div class="address"><input type="text" name="address" id="address" placeholder="주소" readonly="readonly"></div></td>
+						</tr>
+						<tr>
+							<td><label class="join_input">URL</label></td>
+							<td><input type="text" name="url" id="url" placeholder="홈페이지 주소">
+							<span id= "vali" class="url"></span>
+							</td>
+						</tr>
+						<tr>
+							<td><label class="join_input">업체선택</label></td>
+							<td><label for="company">건설업체</label> <input type="radio"
+								name="company" id="CSC" value="건설업체" checked="checked"/> <label for="중기업체">중기업체</label>
+								<input type="radio" name="company" id="HEC" value="중기업체" /></td>
+								<td><div id="vali" class="company"></div></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -81,9 +104,52 @@
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/validation/lib/jquery.js"></script>
-<script src="js/validation/dist/jquery.validate.js"></script>
 <script>
+function validateform() {
+	var password = $("#password").val();
+	var password2 = $("#password2").val();
+	var userId = $("#userId").val();
+	var representPhone = $("#representPhone").val();
+	var handPhone =$("#handPhone").val();
+	var url = $("#url").val();
+	var phoneRegExp = /^(01[016789]{1})[0-9]{7,8}$/;
+	var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+	var repreRegExp = /^(02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
+	var idRegExp = /^[a-zA-Z0-9_]{4,10}$/; 
+	var urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w_\.-]*)*\/?$/;
+
+	
+	
+	if(!idRegExp.test(userId)){
+		$(".userId").html("아이디 조건 불일치 ");
+		return false;
+	}
+	else if(password==null || password==''){
+		$(".password").html("패스워드 조건 불일치");
+		return false;
+	}
+	else if(!passRegExp.text(password)){
+		$(".password").html("패스워드 조건 불일치");
+		return false;
+	}
+	else if(!repreRegExp.test(representPhone)){
+		$(".representPhone").html("연락처 조건 불일치");
+		return false;
+	}
+	else if(!phoneRegExp.test(handPhone)){
+		$(".handPhone").html("연락처 조건 불일치");
+		return false;
+	}
+	else if(!password==password2){
+		$(".password2").html("패스워드 조건 불일치");
+		return false;
+	}
+	else if(url!=null){
+		if(!urlRegExp.test(url)){
+			$(".url").html("url 형식 불일치");
+		}
+	}
+}
 	$("#CSC").on("click",function(){
 		var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
 		var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input type='text'placeholder='연 수주량'>";
@@ -178,6 +244,12 @@
 		var help = $("#help").val();
 		console.log(help);
 	});
-	
+	function addressSearch(){
+		var result = window.open("<%=request.getContextPath()%>/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes")
+	}
+	function jusoCallBack(roadFullAddr,zipNo){
+		$("#address").val(roadFullAddr);
+		$("#zipNumber").val(zipNo);
+	}
 </script>
 </html>

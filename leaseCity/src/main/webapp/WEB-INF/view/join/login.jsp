@@ -210,7 +210,7 @@
 			var representName = document.joinForm.representName.value;
 			var companyName = document.joinForm.companyName.value;
 			var email = document.joinForm.email.value;
-
+			console.log("ggggg");
 			if (representName == null || representName == "") {
 				alert("대표자 성명을 기입하세요!");
 				return false;

@@ -30,6 +30,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 		
 		registry.addResourceHandler("/js/**")
 		.addResourceLocations("/WEB-INF/js/");
+		
+		registry.addResourceHandler("/font/**")
+		.addResourceLocations("/WEB-INF/font/");
 	}
 	
 	@Bean

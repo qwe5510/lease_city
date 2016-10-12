@@ -75,7 +75,7 @@ public class LoginController {
 
 		return "join/join_input";
 	}
-
+   	
 	@RequestMapping(value = "/join_agree", method = RequestMethod.GET, params={"permissionNo"})
 	public String join_agree(Model model, HttpServletRequest req, HttpSession session) {
 		
@@ -187,4 +187,15 @@ public class LoginController {
 
 		return sb.toString();
 	}*/
+	@RequestMapping(value="/sample")
+	public String address(Model model) {
+		logger.trace("sample check");
+		return "join/sample";
+	}
+	
+	@RequestMapping(value="/jusoPopup")
+	public String address_input(Model model) {
+		logger.trace("jusoPopup check");
+		return "join/jusoPopup";
+	}
 }
