@@ -2,7 +2,6 @@ package leasecity.service;
 
 import java.util.List;
 
-import org.apache.ibatis.exceptions.PersistenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,17 +120,14 @@ public class StandByUserServiceImpl implements StandByUserService{
 	}
 	
 	@Override
-	public void cleanStandByUser() throws NotFoundDataException{
+	public void cleanStandByUser(){
 		// 대기유저 발급코드 발급된지 3일이상, 요청한지 30일이상 유저 일괄제거
-		int registryResult=-1, requestResult=-1;
-		registryResult = SBUrepo.deleteStandByUserRegistry();
-		requestResult = SBUrepo.deleteStandByUserRequest();
+		int registryResult = SBUrepo.deleteStandByUserRegistry();
+		int requestResult = SBUrepo.deleteStandByUserRequest();
+		logger.trace("삭제 : 요청 30일 경과 대기유저  : {}", requestResult);
+		logger.trace("삭제 : 인증코드 발급 3일 경과 대기유저  : {}", registryResult);
 		
-		if(registryResult==0 && requestResult==0){
-			logger.error("ERROR!! : 삭제 대상인 대기유저가 없습니다.");
-			throw new NotFoundDataException("삭제 대상인 대기 유저");
-		}
-		
+		System.out.println("Time : " + System.currentTimeMillis());
 	}
 
 }

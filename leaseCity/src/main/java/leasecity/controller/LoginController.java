@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
 import leasecity.exception.DuplicateValueException;
-
 import leasecity.exception.NotFoundDataException;
 import leasecity.repo.user.UserRepo;
 import leasecity.service.StandByUserService;
@@ -113,7 +111,10 @@ public class LoginController {
    
 	//회원가입 요청
 	@RequestMapping(value = "/popup_join_request", method = RequestMethod.POST)
-	public String popup_join_request(Model model, HttpServletRequest request, RedirectAttributes redir) {
+	public String popup_join_request(
+			Model model, 
+			HttpServletRequest request, 
+			RedirectAttributes redir) {
       
 		// 메일 유틸
 		SendMailUtil mUtil = new SendMailUtil(); 
@@ -132,6 +133,7 @@ public class LoginController {
 			redir.addFlashAttribute("join_message", "회원가입 요청 성공");
 		} catch (DuplicateValueException e) {
 			redir.addFlashAttribute("join_message", "회원가입 요청 실패 - 동일한 업체명, 이메일로 된 대기 유저가 존재합니다.");
+			logger.error("회원가입 요청실패");
 			return "redirect:/login"; // 추후 변경 요망@
 		}
       
