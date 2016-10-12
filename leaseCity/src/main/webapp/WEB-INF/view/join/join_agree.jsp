@@ -45,7 +45,7 @@
 	</div>
 	<form class="agree_input">
 		<input type="submit" formaction="<%=request.getContextPath() %>/join_input" formmethod="post" value="동의">
-		<input type="submit" formaction="<%=request.getContextPath() %>/index" formmethod="get" value="비동의">
+		<input type="submit" formaction="<%=request.getContextPath() %>/join_cancle" formmethod="get" value="비동의">
 	</form>
 	</div>
 	<!--Bottom-->

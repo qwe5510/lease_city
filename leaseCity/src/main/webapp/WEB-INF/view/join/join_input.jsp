@@ -19,32 +19,31 @@
 					<table width="75%" cellpadding="0" cellspacing="0" align=center>
 						<tr>
 							<th><label class="join_input">아이디</label></th>
-							<th><input type="text" placeholder="아이디" /></th>
+							<th><input type="text" placeholder="아이디" name="userId"/></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">비밀번호</label></th>
 							<th><input class="join_input" type="password"
-								placeholder="패스워드" /></th>
+								placeholder="패스워드" name="password"/></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">비밀번호확인</label></th>
-							<th><input type="password" placeholder="패스워드 확인" /></th>
+							<th><input type="password" placeholder="패스워드 확인" name="password2"/></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">업체명</label></th>
-							<th><input type="text" placeholder="업체명"
-								value="<%=session.getAttribute("companyName")%>" readonly /></th>
+							<th><input type="text" name="companyName" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">대표자명</label></th>
-							<th><input type="text" placeholder="대표자명"
-								value="<%=session.getAttribute("representName")%>" readonly /></th>
+							<th><input type="text" name="representName" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></th>
+
 						</tr>
 						<tr>
 						</tr>
 						<tr>
 							<th><label class="join_input">대표자연락처</label></th>
-							<th><input type="text" placeholder="대표자 연락처"></th>
+							<th><input type="text" name="representPhone" placeholder="대표자 연락처"></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">휴대폰연락처</label></th>
