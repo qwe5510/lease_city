@@ -87,9 +87,8 @@
 				<br>
 				<fieldset>
 					<legend>상세정보 입력</legend>
-					<div class="heavy"></div>
+					<div class="heavy" ></div>
 					<div class="companySelector">
-						<h2>업체를 선택해주세요.</h2>
 					</div>
 					<div class="checked"></div>
 				</fieldset>
@@ -104,7 +103,60 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 
+//====================================================================================================================================================================================
+//건설업체 상세정보 추가
+function cscInfoOutput(){
+	var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
+	var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input type='text'placeholder='연 수주량'>";
+	var str3 ="<br><div class='license'><label class='join_input'>"+"자격증"+"</label><input type='text'placeholder='자격증 명칭'>";
+	var str4 ="<input type='text'placeholder='발급처'>"+"<input type='date'placeholder='발급시기'><button id='btn2'>"+"추가"+"</button></div>";
+	var str5 ="<br><label class='join_input'>"+"회사규모"+"</label><input type='text'placeholder='회사 규모'>";
+	var str6 ="<br><label class='join_input'>"+"회사분야"+"</label><br>";
+	var str7 ="";
+	var str8 ="";
+	var arr = ["토건","토목","건축","산업설비","토공","철콘","금속구조","철강","시설물","주택건설","문화재","해외","기타"];
+	for(var i of arr){
+		str6+="<input type='checkbox' name='category' value='"+i+"'>"
+			  +"<label class='category_input'>"+i+"</label>";
+	}
+	$(".heavy").html("");
+	$(".companySelector").html(str1+str2+str3+str4+str5+str6);
+}
 
+//중기업체 상세정보 추가
+function hecInfoOutput(){
+	var str1 = "<select id='type' name='type'>";
+	var str2  = "<select id='size' name='size'>";
+	var str3 = "<div class='companyHeavy'>";
+	var str4 = "<button id='btn1'>추가</button></div>";
+	var arr= ["차량선택","트럭","로더","그레이더","트랙","스크레이퍼","스키더","물질핸들러","벌목용장비","휠도저","굴삭기","펌프카"];
+	var arr2= ["차량크기","소형","중형","대형"];
+	for(var i of arr){
+		str1+="<option value='"+i+"'>"+i+"</option>";
+	}
+	 for(var i of arr2){
+		str2+="<option value='"+i+"'>"+i+"</option>";
+	} 
+	str1+="</select>";
+	str2+="</select>";
+	var text = "<input type='text' id='num' name='num' placeholder='차량 번호'>";
+	
+	var srt5 ="<lable clas='alarm'>알람여부 </lable>"
+				+"<label class='help_input'>도움여부</label>"	
+				+"<input type='checkbox' id='help' name='help' value='help'>";
+	var str6 = "<label class='help_input'>정보공개</label>"	
+				+"<input type='checkbox' id='info' name='info' value='info'>";	
+	$(".heavy").html(srt5+str6);
+	$(".companySelector").html(str3+str1+str2+text+str4);
+}
+//====================================================================================================================================================================================
+
+	//건설업체, 중기업체에 대한 이벤트 처리.
+	$("#CSC").on("click", cscInfoOutput);
+	$("#HEC").on("click", hecInfoOutput);
+	$(document).on("ready", cscInfoOutput);
+	
+//회원가입 양식검사.
 function validateform() {
 	var password = $("#password").val();
 	var password2 = $("#password2").val();
@@ -171,49 +223,10 @@ function validateform() {
 	}
 	
 }
-	$("#CSC").on("click",function(){
-		var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
-		var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input type='text'placeholder='연 수주량'>";
-		var str3 ="<br><div class='license'><label class='join_input'>"+"자격증"+"</label><input type='text'placeholder='자격증 명칭'>";
-		var str4 ="<input type='text'placeholder='발급처'>"+"<input type='date'placeholder='발급시기'><button id='btn2'>"+"추가"+"</button></div>";
-		var str5 ="<br><label class='join_input'>"+"회사규모"+"</label><input type='text'placeholder='회사 규모'>";
-		var str6 ="<br><label class='join_input'>"+"회사분야"+"</label><br>";
-		var str7 ="";
-		var str8 ="";
-		var arr = ["토건","토목","건축","산업설비","토공","철콘","금속구조","철강","시설물","주택건설","문화재","해외","기타"];
-		for(var i of arr){
-			str6+="<input type='checkbox' name='category' value='"+i+"'>"
-				  +"<label class='category_input'>"+i+"</label>";
-		}
-		$(".heavy").html("");
-		$(".companySelector").html(str1+str2+str3+str4+str5+str6);
-	});
 
-	$("#HEC").on("click",function() {
-		var str1 = "<select id='type' name='type'>";
-		var str2  = "<select id='size' name='size'>";
-		var str3 = "<div class='companyHeavy'>";
-		var str4 = "<button id='btn1'>추가</button></div>";
-		var arr= ["차량선택","트럭","로더","그레이더","트랙","스크레이퍼","스키더","물질핸들러","벌목용장비","휠도저","굴삭기","펌프카"];
-		var arr2= ["차량크기","소형","중형","대형"];
-		for(var i of arr){
-			str1+="<option value='"+i+"'>"+i+"</option>";
-		}
-		 for(var i of arr2){
-			str2+="<option value='"+i+"'>"+i+"</option>";
-		} 
-		str1+="</select>";
-		str2+="</select>";
-		var text = "<input type='text' id='num' name='num' placeholder='차량 번호'>";
-		
-		var srt5 ="<lable clas='alarm'>알람여부 </lable>"
-					+"<label class='help_input'>도움여부</label>"	
-					+"<input type='checkbox' id='help' name='help' value='help'>";
-		var str6 = "<label class='help_input'>정보공개</label>"	
-					+"<input type='checkbox' id='info' name='info' value='info'>";	
-		$(".heavy").html(srt5+str6);
-		$(".companySelector").html(str3+str1+str2+text+str4);
-	});
+
+
+	
 	$(document).on("click","#btn1",	function(e) {
 		e.preventDefault();
 		var type = $("#type").val();
