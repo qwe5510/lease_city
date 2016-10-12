@@ -28,8 +28,8 @@
  	<!-- 건설업체 회원 추가 -->
  	<insert id="insertCC" parameterType="constructionCompany">
  		INSERT INTO construction_company VALUES(
- 		#{userId},#{yearlySale},#{yearlyAoor},
- 		#{companySize},#{companyCategory})
+ 		#{userId},#{yearlySale},
+ 		#{yearlyAoor},#{companyCategory})
  	</insert>
  	
  	<!-- 건설업체 회원 삭제 -->

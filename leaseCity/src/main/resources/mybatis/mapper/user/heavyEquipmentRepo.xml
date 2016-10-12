@@ -32,8 +32,8 @@
  		#{idNumber},#{userId},#{equipmentCategory}
  		<choose>
  		<when test="heavyEquipmentUri != null">, #{heavyEquipmentUri}</when>
- 		<otherwise>, null)</otherwise>
- 		</choose>
+ 		<otherwise>, null</otherwise>
+ 		</choose>, #{usedOnOff})
  	</insert>
  	
  	<!-- 중장비 수정 -->

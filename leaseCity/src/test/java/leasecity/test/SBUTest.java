@@ -10,6 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
+import leasecity.dto.adminwork.StandByUser;
+import leasecity.exception.DuplicateValueException;
 import leasecity.service.StandByUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,8 +25,14 @@ public class SBUTest {
 	static Logger logger = LoggerFactory.getLogger(SBUTest.class);
 	
 	@Test
-	public void test(){
+	public void test() throws DuplicateValueException{
 		logger.trace("service : {}", service);
+		
+		StandByUser standByUser =
+				new StandByUser("EST","TEST", "ysh5586@naver.com");
+		
+		service.addStandByUser(standByUser);
+		
 	}
 	
 	

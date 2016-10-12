@@ -43,7 +43,7 @@ public class PsTest {
 		User new_user = new User("test1","testpass",
 				"테스트", "김시험",
 				"032)331-2314", "010-3239-2031",
-				"whgdkfk12@gmail.com", "경기도 포천시",
+				"whgdkfk12@gmail.com", "112", "경기도 포천시",
 				"ON", "www.test.def", null, 4.2, null);
 		
 		System.out.println(new_user);
@@ -52,7 +52,7 @@ public class PsTest {
 		logger.trace("User 생성 : {}", result);
 
 		List<User> users = repo.getAllUsers();
-		assertThat(users.size(), is(4));
+		assertThat(users.size(), is(3));
 		logger.trace("User list : {}", users);
 
 		User user = repo.getUser("ysh5586");

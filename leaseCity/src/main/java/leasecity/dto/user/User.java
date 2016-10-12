@@ -51,6 +51,9 @@ public class User implements Serializable {
 
 	/** 이메일 주소. */
 	private String email;
+	
+	/** 우편 번호. */
+	private String zipNo;
 
 	/** 주소. */
 	private String address;
@@ -107,10 +110,10 @@ public class User implements Serializable {
 			String userId, String password, 
 			String companyName, String representName,
 			String representPhone, String handPhone,
-			String email, String address,
-			String notifyOnOff, String url,
-			Date regDate, Double evaluation,
-			Date withdrawDate){	
+			String email, String zipNo,
+			String address,	String notifyOnOff, 
+			String url,	Date regDate, 
+			Double evaluation, Date withdrawDate){	
 		this.userId = userId;
 		this.password = password;
 		this.companyName = companyName;
@@ -118,6 +121,7 @@ public class User implements Serializable {
 		this.representPhone = representPhone;
 		this.handPhone = handPhone;
 		this.email = email;
+		this.zipNo = zipNo;
 		this.address = address;
 		this.notifyOnOff = notifyOnOff;
 		this.url = url;

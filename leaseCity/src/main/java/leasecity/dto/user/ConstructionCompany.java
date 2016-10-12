@@ -25,13 +25,10 @@ public class ConstructionCompany extends User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 연매출. */
-	private Double yearlySale;
+	private Integer yearlySale;
 
 	/** 연 수주량. */
 	private Integer yearlyAoor;
-
-	/** 회사 규모. */
-	private String companySize;
 
 	/** 회사 분야. */
 	private String companyCategory;
@@ -57,13 +54,12 @@ public class ConstructionCompany extends User implements Serializable {
 	
 	public ConstructionCompany
 			(	User user,
-				Double yearlySale, Integer yearlyAoor,
-				String companySize, String companyCategory){
+				Integer yearlySale, Integer yearlyAoor,
+				String companyCategory){
 		super(user);
 		
 		this.yearlySale = yearlySale;
 		this.yearlyAoor = yearlyAoor;
-		this.companySize = companySize;
 		this.companyCategory = companyCategory;
 		
 		this.leaseCallsList = new ArrayList<LeaseCall>();
@@ -90,8 +86,8 @@ public class ConstructionCompany extends User implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "ConstructionCompany(userId="+ getUserId() +", yearlySale=" + yearlySale + ", yearlyAoor=" + yearlyAoor + ", companySize="
-				+ companySize + ", companyCategory=" + companyCategory + ")";
+		return "ConstructionCompany(userId="+ getUserId() +", yearlySale=" + yearlySale + ", yearlyAoor=" + yearlyAoor + 
+				", companyCategory=" + companyCategory + ")";
 	}	
 
 }
