@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.adminwork.StandByUser;
@@ -38,6 +39,17 @@ public class LoginController {
 	public String index(Model model, Locale locale) {
 		//model.addAttribute("message", "Good Morning");
 		return "index";
+	}
+	
+	@RequestMapping(value = "/join_cancle", method = RequestMethod.GET)
+	public String join_cancle(Model model, Locale locale, SessionStatus status, HttpSession session, RedirectAttributes redir) {
+		// 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
+		redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");
+		
+		status.setComplete();
+		session.invalidate();
+		
+		return "redirect:/index";
 	}
    
    @RequestMapping(value="/login")
