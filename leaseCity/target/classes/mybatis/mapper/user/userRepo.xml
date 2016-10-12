@@ -28,7 +28,7 @@
  		#{userId},#{password},
  		#{companyName},#{representName},
  		#{representPhone},#{handPhone},
- 		#{email},#{address},
+ 		#{email},#{zipNo}, #{address},
  		#{notifyOnOff},#{url}
  		<choose>
  			<when test="regDate != null">,#{regDate}</when>

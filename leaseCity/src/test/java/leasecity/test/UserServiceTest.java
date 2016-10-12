@@ -2,7 +2,6 @@ package leasecity.test;
 
 import java.util.List;
 
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -64,8 +63,7 @@ public class UserServiceTest {
 			for(HeavyEquipment heavyEquipment : list){
 				logger.trace("보유 중장비 : {}", heavyEquipment);
 			}
-		}
-		
+		}	
 	}
 
 }

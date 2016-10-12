@@ -74,11 +74,12 @@ public class LoginController {
    public String join_input(Model model, RedirectAttributes redir) {
 
       // 1. join_input 폼에서 입력한 회원정보 -> db에 저장하기
+	   
 
       return "join/join_input";
    }
 
-   // 회원 가입, 동의 폼
+   // 회원 가입, 동의 폼 -> 수락유저의 대표자명, 회사명, 이메일이 들어옴.
    @RequestMapping(value = "/join_agree", method = RequestMethod.GET, params = { "permissionNo" })
    public String join_agree(Model model, HttpServletRequest req, HttpSession session, RedirectAttributes redir) {
 
