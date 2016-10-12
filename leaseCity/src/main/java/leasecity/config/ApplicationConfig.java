@@ -3,6 +3,7 @@ package leasecity.config;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,13 +11,14 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import leasecity.util.HashingUtil;
 
 @Configuration
 @ComponentScan(basePackages={
@@ -25,7 +27,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 		"leasecity.service"})
 @PropertySource("classpath:/config/dbconfig.properties")
 @EnableTransactionManagement
-@Import(StandByUserScheduler.class)
 public class ApplicationConfig {
 
 	@Bean

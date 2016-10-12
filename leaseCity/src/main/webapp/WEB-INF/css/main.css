@@ -1194,3 +1194,9 @@ label {
 	margin-bottom: 10px;
 	font-size: 15px;
 }
+#vali{
+	font-size: 15px;
+}
+.address input{
+	width: 300px;
+}

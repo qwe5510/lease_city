@@ -1,8 +1,10 @@
 package leasecity.controller;
 
 import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,14 +26,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
 import leasecity.exception.DuplicateValueException;
+
 import leasecity.exception.NotFoundDataException;
-import leasecity.repo.user.UserRepo;
 import leasecity.service.StandByUserService;
 import leasecity.service.UserService;
 import leasecity.util.SendMailUtil;
 
 @Controller
 public class LoginController {
+
 
 	static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -42,7 +46,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(Model model, Locale locale) {
-		// model.addAttribute("message", "Good Morning");
+
 		return "index";
 	}
 
@@ -83,11 +87,9 @@ public class LoginController {
 
 		// 대기 비회원을 저장할 객체
 		StandByUser sbu = new StandByUser();
-
 		/*
 		 * // 가입시, 아이디 중복을 위해 비교할 회원 정보 List<User> user = new ArrayList<User>();
 		 */
-
 		// 코드 받기
 		String permissionNoStr = req.getParameter("permissionNo");
 		logger.trace("들어온 permissionNo : {}", req);
@@ -98,7 +100,7 @@ public class LoginController {
 			// user = URepo.getAllUsers();
 			logger.trace("permission 값이 같은 객체 : {}", sbu);
 		} catch (NotFoundDataException e) {
-			model.addAttribute("join_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
+			model.addAttribute("join_message", "가입 승낙 기간이 만료되었습니다.");
 			return "index";
 		}
 
@@ -110,7 +112,9 @@ public class LoginController {
 		 */
 
 		// session에 객체 저장하여 보내기
+
 		// session.setAttribute("user", user); // 아이디 중복 확인 아이디
+
 		session.setAttribute("representName", sbu.getRepresentName());
 		session.setAttribute("companyName", sbu.getCompanyName());
 		session.setAttribute("email", sbu.getEmail());
@@ -138,7 +142,7 @@ public class LoginController {
 		try {
 			SBUService.addStandByUser(sbu);
 			logger.trace("저장된 임시 유저 : {}", sbu);
-			redir.addFlashAttribute("join_message", "회원가입 요청 성공");
+			model.addAttribute("join_message", "회원가입 요청 성공");
 		} catch (DuplicateValueException e) {
 			redir.addFlashAttribute("join_message", "회원가입 요청 실패 - 동일한 업체명, 이메일로 된 대기 유저가 존재합니다.");
 			logger.error("회원가입 요청실패");
@@ -199,6 +203,7 @@ public class LoginController {
 	 * return sb.toString(); }
 	 */
 
+
 	@RequestMapping(value = "/validate_id", method = RequestMethod.POST)
 	public @ResponseBody boolean validate_id(Model model, @RequestParam String input_userId) {
 		boolean checkId = UService.isUserId(input_userId);
@@ -245,6 +250,17 @@ public class LoginController {
 		// 2. 해당 유저의 db에 인증번호 저장
 
 		// 3. 응답 성공 메시지 후 비밀번호 찾기 폼으로 ( 입력된 값들은 유지 )
+	}
 
+	@RequestMapping(value="/sample")
+	public String address(Model model) {
+		logger.trace("sample check");
+		return "join/sample";
+	}
+	
+	@RequestMapping(value="/jusoPopup")
+	public String address_input(Model model) {
+		logger.trace("jusoPopup check");
+		return "join/jusoPopup";
 	}
 }

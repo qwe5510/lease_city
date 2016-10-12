@@ -35,6 +35,7 @@ public interface StandByUserService {
 			throws NotFoundDataException;
 	
 	//대기유저 정리 - 요청한지 30일넘은 유저, 발급코드 받은지 3일넘은 유저
-	public void cleanStandByUser();	
+	public void cleanStandByUser()
+						throws NotFoundDataException;	
 
 }

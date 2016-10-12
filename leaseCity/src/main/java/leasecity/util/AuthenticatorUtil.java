@@ -2,7 +2,6 @@ package leasecity.util;
 
 import javax.mail.*;
 
-//이메일을 전송하는 관리자 계정 등록
 public class AuthenticatorUtil extends javax.mail.Authenticator {
 	
 	
