@@ -12,7 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" method="post" action="#">
+			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login">
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table width="75%" cellpadding="0" cellspacing="0" align=center>
@@ -96,7 +96,7 @@
 			str6+="<input type='checkbox' name='category' value='"+i+"'>"
 				  +"<label class='category_input'>"+i+"</label>";
 		}
-		$(".heavy").html();
+		$(".heavy").html("");
 		$(".companySelector").html(str1+str2+str3+str4+str5+str6);
 	});
 
@@ -121,7 +121,7 @@
 					+"<label class='help_input'>도움여부</label>"	
 					+"<input type='checkbox' id='help' name='help' value='help'>";
 		var str6 = "<label class='help_input'>정보공개</label>"	
-					+"<input type='checkbox' id='help' name='help' value='help'>";	
+					+"<input type='checkbox' id='info' name='info' value='info'>";	
 		$(".heavy").html(srt5+str6);
 		$(".companySelector").html(str3+str1+str2+text+str4);
 	});
@@ -131,7 +131,6 @@
 		var size = $("#size").val();
 		var num = $("#num").val();
 		$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>");
-		
 	});
 	
 	$(document).on("click","#btn2",	function(e) {
@@ -172,6 +171,10 @@
 		}else{
 			$("#size").html(str4);
 		}
+	});
+	$(document).on("click","#help",	function(e) {
+		var help = $("#help").val();
+		console.log(help);
 	});
 	
 </script>

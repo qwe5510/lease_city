@@ -1183,11 +1183,14 @@ label {
 	font-size: 15px;
 }
 .heavy input{
-	width: 25px;
+	width: 18px;
 	margin-right: 30px;
+}
+.heavy lable{
+	margin-right: 60px;
 }
 .heavy{
 	margin-left: 100px;
 	margin-bottom: 10px;
-	font-size: 20px;
+	font-size: 15px;
 }

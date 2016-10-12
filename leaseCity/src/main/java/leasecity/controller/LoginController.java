@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,12 +40,14 @@ public class LoginController {
 		return "index";
 	}
    
-   @RequestMapping(value="/login",method=RequestMethod.GET)
-   public String sayHello(Model model){
+   @RequestMapping(value="/login")
+   public String login(Model model,HttpServletRequest request){
       User user = new User();
       StandByUser standByUser = new StandByUser();
       model.addAttribute("user",user);
       model.addAttribute("standByUser",standByUser);
+      String help = request.getParameter("help");
+      logger.trace("체크박스 값 : {}",help);
       return "join/login";
    }
    
