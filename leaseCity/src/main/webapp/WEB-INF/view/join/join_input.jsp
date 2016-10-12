@@ -12,6 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
+
 			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login" onsubmit="return validateform()">
 				<fieldset>
 					<legend>기본정보 입력</legend>
@@ -28,7 +29,6 @@
 								placeholder="패스워드" name="password" id="password"/>
 								<span id= "vali" class="password">영어 숫자 특수문자 혼용 최대 16글자</span>
 								</td>
-							
 						</tr>
 						<tr>
 							<td><label class="join_input">비밀번호확인</label></td>
@@ -45,8 +45,6 @@
 							<td><input type="text" name="representName" id="representName" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></td>
 						</tr>
 						<tr>
-						</tr>
-						<tr>
 							<td><label class="join_input">대표자연락처</label></td>
 							<td><input type="text" name="representPhone" id="representPhone" placeholder="대표자 연락처">
 							<span id= "vali" class="representPhone">ex)031471xxxx</span>
@@ -59,6 +57,7 @@
 							</td>
 						</tr>
 						<tr>
+
 							<td><label class="join_input">Email</label></td>
 							<td><input type="email" name="email" id="email" placeholder="Email" value="<%=session.getAttribute("email") %>" readonly></td>
 						</tr>
@@ -103,7 +102,6 @@
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
-<script src="http://code.jquery.com/jquery.js"></script>
 <script>
 function validateform() {
 	var password = $("#password").val();
@@ -251,5 +249,36 @@ function validateform() {
 		$("#address").val(roadFullAddr);
 		$("#zipNumber").val(zipNo);
 	}
+	<c:url value="/validate_id" var="validate_id"/>
+	$("#userId").keyup(function() {
+		
+		var input_userId = $("#userId").val();
+		var saved_userId = '${saved_userId}';
+		
+		$.ajax({
+	        // type을 설정합니다.
+	        type : 'post',
+	        url : "${validate_id }",
+	        // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+	        data : {
+	        	input_userId : input_userId
+	        },
+	        // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+	        success : function (data) {
+	            // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
+	            if (data == null) {
+	            	$("#userId").text(data + ' (이미 등록된 아이디) ');
+	            	$("#userId").css("color", "green");
+	                //alert(data); 
+	            } else {
+	            	$("#userId").css("color", "red");
+	            }      
+	        },
+	        error : function(xhr, status, error) {
+				alert(error);
+			}
+	    });
+	});
+	
 </script>
 </html>
