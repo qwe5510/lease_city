@@ -12,36 +12,38 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" method="post" action="#">
+			<form id="joinForm" method="post"
+				action="<%=request.getContextPath()%>/login">
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table width="75%" cellpadding="0" cellspacing="0" align=center>
 						<tr>
 							<th><label class="join_input">아이디</label></th>
-							<th><input type="text" placeholder="아이디" /></th>
+							<th><input type="text" placeholder="아이디" name="userId"/></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">비밀번호</label></th>
 							<th><input class="join_input" type="password"
-								placeholder="패스워드" /></th>
+								placeholder="패스워드" name="password"/></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">비밀번호확인</label></th>
-							<th><input type="password" placeholder="패스워드 확인" /></th>
+							<th><input type="password" placeholder="패스워드 확인" name="password2"/></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">업체명</label></th>
-							<th><input type="text" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></th>
+							<th><input type="text" name="companyName" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">대표자명</label></th>
-							<th><input type="text" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></th>
+							<th><input type="text" name="representName" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></th>
+
 						</tr>
 						<tr>
 						</tr>
 						<tr>
 							<th><label class="join_input">대표자연락처</label></th>
-							<th><input type="text" placeholder="대표자 연락처"></th>
+							<th><input type="text" name="representPhone" placeholder="대표자 연락처"></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">휴대폰연락처</label></th>
@@ -49,7 +51,8 @@
 						</tr>
 						<tr>
 							<th><label class="join_input">Email</label></th>
-							<th><input type="email" placeholder="Email" value="<%=session.getAttribute("email") %>" readonly></th>
+							<th><input type="email" placeholder="Email"
+								value="<%=session.getAttribute("email")%>" readonly></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">주소</label></th>
@@ -81,6 +84,8 @@
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/validation/lib/jquery.js"></script>
+<script src="js/validation/dist/jquery.validate.js"></script>
 <script>
 	$("#CSC").on("click",function(){
 		var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
@@ -96,7 +101,7 @@
 			str6+="<input type='checkbox' name='category' value='"+i+"'>"
 				  +"<label class='category_input'>"+i+"</label>";
 		}
-		$(".heavy").html();
+		$(".heavy").html("");
 		$(".companySelector").html(str1+str2+str3+str4+str5+str6);
 	});
 
@@ -121,7 +126,7 @@
 					+"<label class='help_input'>도움여부</label>"	
 					+"<input type='checkbox' id='help' name='help' value='help'>";
 		var str6 = "<label class='help_input'>정보공개</label>"	
-					+"<input type='checkbox' id='help' name='help' value='help'>";	
+					+"<input type='checkbox' id='info' name='info' value='info'>";	
 		$(".heavy").html(srt5+str6);
 		$(".companySelector").html(str3+str1+str2+text+str4);
 	});
@@ -131,7 +136,6 @@
 		var size = $("#size").val();
 		var num = $("#num").val();
 		$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>");
-		
 	});
 	
 	$(document).on("click","#btn2",	function(e) {
@@ -172,6 +176,19 @@
 		}else{
 			$("#size").html(str4);
 		}
+	});
+	$(document).on("click","#help",	function(e) {
+		var help = $("#help").val();
+		console.log(help);
+	});
+	
+	$("#myForm").validate({
+		  rules: {
+		    name: "required"
+		  },
+		  messages: {
+		    name: "Please specify your name"
+		  }
 	});
 	
 </script>

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.adminwork.StandByUser;
@@ -34,13 +35,26 @@ public class LoginController {
 		//model.addAttribute("message", "Good Morning");
 		return "index";
 	}
+	
+	@RequestMapping(value = "/join_cancle", method = RequestMethod.GET)
+	public String join_cancle(Model model, Locale locale, SessionStatus status, HttpSession session, RedirectAttributes redir) {
+		// 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
+		redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");
+		
+		status.setComplete();
+		session.invalidate();
+		
+		return "redirect:/index";
+	}
    
-   @RequestMapping(value="/login",method=RequestMethod.GET)
-   public String sayHello(Model model){
+   @RequestMapping(value="/login")
+   public String login(Model model,HttpServletRequest request){
       User user = new User();
       StandByUser standByUser = new StandByUser();
       model.addAttribute("user",user);
       model.addAttribute("standByUser",standByUser);
+      String help = request.getParameter("help");
+      logger.trace("체크박스 값 : {}",help);
       return "join/login";
    }
    
