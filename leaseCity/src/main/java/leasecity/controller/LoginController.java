@@ -18,8 +18,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.adminwork.StandByUser;
-import leasecity.dto.user.User;
+import leasecity.dto.user.*;
 import leasecity.exception.DuplicateValueException;
+import leasecity.exception.JoinFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.service.StandByUserService;
 import leasecity.service.UserService;
@@ -69,12 +70,77 @@ public class LoginController {
       return "join/login";
    }
 
-   // 
+   // 회원가입 폼에 적힌 값들 저장
+   @RequestMapping(value = "/join", method = RequestMethod.POST)
+   public String join(Model model, RedirectAttributes redir, HttpServletRequest request) {
+
+      // 1-1. join_input 폼에서 입력한 '기본' 회원정보 -> 갖고 오기
+	   String userId = request.getParameter("userId");
+	   String password = request.getParameter("password");
+	   String comapanyName = request.getParameter("comapanyName");
+	   String representName = request.getParameter("representName");
+	   String representPhone = request.getParameter("representPhone");
+	   String handPhone = request.getParameter("handPhone");
+	   String email = request.getParameter("email");
+	   // 집 넘버 dto 완성되는데로 넣기
+	   String address = request.getParameter("address");
+	   String url = request.getParameter("url");
+	   
+	   User user = new User(userId, password, comapanyName, representName, 
+			   				representPhone, handPhone, email, address, 
+			   				"ON", url, null, 0.0, null);
+	   // 1-2 company( 중기, 건설 )의 경우에 따라 값 호출
+	   String company = request.getParameter("company");
+	   
+	   if ( company.equals("건설업체")) {
+		   
+		   // 1. 건설업체에 필요한 값 가져오기
+		   Double yearlySale = Double.parseDouble(request.getParameter("yearlySale"));
+		   Integer yearlyAoor = Integer.parseInt(request.getParameter("yearlyAoor"));
+		   String companySize = request.getParameter("companySize");
+		   String companyCategory = request.getParameter("companyCategory");
+		   
+		   // 2. 건설업체 객체 초기화
+		   ConstructionCompany CCompany = 
+				   new ConstructionCompany(user, yearlySale, yearlyAoor, 
+						   					companySize, companyCategory);
+		   
+		   logger.trace("건설업체 받은 정보 : {}", CCompany);
+		   // 3. 가입
+		   try {
+			UService.join(CCompany);
+			redir.addFlashAttribute("join_message", CCompany.getRepresentName() + "님 회원가입에 성공했습니다.");
+		} catch (JoinFailException e) {
+			redir.addFlashAttribute("join_message", "회원가입 실패.");
+			return "join/join_input";
+		}
+		  
+		   
+	   } else if( company.equals("중기업체") ){
+		   
+		   // 1. 
+		   HeavyEquipmentCompany HCompany = new HeavyEquipmentCompany(user, "ON", "ON");
+		   logger.trace("중기업체 받은 정보 : {}", HCompany);
+		   
+		   // 2. 가입
+		   try {
+				UService.join(HCompany);
+				redir.addFlashAttribute("join_message", HCompany.getRepresentName() + "님 회원가입에 성공했습니다.");
+			} catch (JoinFailException e) {
+				redir.addFlashAttribute("join_message", "회원가입 실패.");
+				return "join/join_input";
+			}
+		   
+	   }
+	   logger.trace("조인 들어옴");
+
+      return "redirect:/index";
+   }
+   
    @RequestMapping(value = "/join_input", method = RequestMethod.POST)
    public String join_input(Model model, RedirectAttributes redir) {
 
       // 1. join_input 폼에서 입력한 회원정보 -> db에 저장하기
-	   
 
       return "join/join_input";
    }
@@ -88,7 +154,7 @@ public class LoginController {
 
       // 코드 받기
       String permissionNoStr = req.getParameter("permissionNo");
-      logger.trace("들어온 permissionNo : {}", req);
+      logger.trace("들어온 permissionNo : {}", permissionNoStr);
 
       // 코드를 DB와 비교하여 대기 비회원 검색
       try {
