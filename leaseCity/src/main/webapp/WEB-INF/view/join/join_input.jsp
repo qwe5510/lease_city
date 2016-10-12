@@ -78,6 +78,13 @@
 							</td>
 						</tr>
 						<tr>
+							<td><label class="join_input">알람 여부</label></td>
+							<td><label for="notifyOnOff">ON</label> <input type="radio"
+								name="notifyOnOff" id="CSC" value="ON" checked="checked"/> <label for="OFF">OFF</label>
+								<input type="radio" name="notifyOnOff" value="OFF" /></td>
+								<td><div id="vali" class="company"></div></td>
+						</tr>
+						<tr>
 							<td><label class="join_input">업체선택</label></td>
 							<td><label for="company">건설업체</label> <input type="radio"
 								name="company" id="CSC" value="건설업체" checked="checked"/> <label for="중기업체">중기업체</label>
