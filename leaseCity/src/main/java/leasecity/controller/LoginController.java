@@ -50,7 +50,7 @@ public class LoginController {
          RedirectAttributes redir) {
       // 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
       redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");
-
+      
       /*status.setComplete();
       session.invalidate();*/
 
