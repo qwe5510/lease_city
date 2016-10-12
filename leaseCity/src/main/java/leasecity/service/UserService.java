@@ -7,6 +7,7 @@ import leasecity.exception.ServiceFailException;
 
 public interface UserService {
 
+	
 	//회원가입
 	public void join(User user) throws JoinFailException;
 	
