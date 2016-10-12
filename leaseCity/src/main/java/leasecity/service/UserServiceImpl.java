@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	LicenseRepo licenseRepo;
 	
-
+	
 	//유저 회원가입
 	public void join(User user) throws JoinFailException{		
 		int result=-1; // 가입결과 리턴
