@@ -12,7 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login">
+			<form id="joinForm" method="post" action="<%=request.getContextPath() %>/login" onsubmit="return validateform()">
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table>
@@ -63,7 +63,7 @@
 						<tr>
 							<td><label class="join_input">주소</label></td>
 							<td><input type="text" name="zipNumber" id="zipNumber" placeholder="우편번호" readonly="readonly">
-							<button onclick="addressSearch()">주소검색</button></td>
+							<button id="addressSearch" onclick="addressSearch()">주소검색</button></td>
 						</tr>
 						<tr>
 							<td><label class="join_input"> </label></td>
@@ -112,10 +112,10 @@ function validateform() {
 	var representPhone = $("#representPhone").val();
 	var handPhone =$("#handPhone").val();
 	var url = $("#url").val();
-	var phoneRegExp = /^(01[016789]{1})[0-9]{7,8}$/;
 	
-	var repreRegExp = /^(02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
-	var urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w_\.-]*)*\/?$/;
+	
+	
+	
 
 	
 	//ID 4글자 15글자
@@ -142,30 +142,34 @@ function validateform() {
 		$(".password").html("패스워드가 확인되었습니다.")
 	}	
 	
-	
+	//일반전화 정규표현식
+	var repreRegExp = /^(02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
 	if(!repreRegExp.test(representPhone)){
 		$(".representPhone").html("연락처 조건 불일치");
 		return false;
-	}else{
-		
+	}else if(repreRegExp.test(representPhone)){
+		$(".representPhone").html("연락처 조건 일치되었습니다.");
 	}
 	
-	
+	//핸드폰 정규표현식 01다음 숫자 0~9 숫자 포함
+	var phoneRegExp = /^(01[016789]{1})[0-9]{7,8}$/;
 	if(!phoneRegExp.test(handPhone)){
 		$(".handPhone").html("연락처 조건 불일치");
 		return false;
+	}else if(phoneRegExp.test(handPhone)){
+		$(".handPhone").html("연락처 조건 일치합니다.");
 	}
 	
-	if(!password==password2){
-		$(".password2").html("패스워드 조건 불일치");
+	//url 정규 표현식 
+	var urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w_\.-]*)*\/?$/;
+	if(url==""){}
+	else if(!urlRegExp.test(url)){
+		$(".url").html("url 형식 불일치");
 		return false;
+	}else if(urlRegExp.test(url)){
+		$(".url").html("url 형식 일치합니다.");
 	}
 	
-	if(url!=null){
-		if(!urlRegExp.test(url)){
-			$(".url").html("url 형식 불일치");
-		}
-	}
 }
 	$("#CSC").on("click",function(){
 		var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
@@ -303,11 +307,10 @@ function validateform() {
 		console.log(help);
 	});
 	
-	
-	function addressSearch(){
+	$(document).on("click","#addressSearch",function(e) {
+		e.preventDefault();
 		var result = window.open("<%=request.getContextPath()%>/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes")
-	}
-	
+	});
 	
 	function jusoCallBack(roadFullAddr,zipNo){
 		$("#address").val(roadFullAddr);
