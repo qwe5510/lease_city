@@ -1136,6 +1136,8 @@ label {
 }
 .companySelector input {
 	width: 100px;
+	float: none;
+	display: inline-block;
 }
 
 .companySelector button {
@@ -1195,6 +1197,10 @@ label {
 	font-size: 15px;
 }
 #vali{
+	font-size: 15px;
+}
+.numbervali{
+	margin-left : 80px;
 	font-size: 15px;
 }
 .address input{

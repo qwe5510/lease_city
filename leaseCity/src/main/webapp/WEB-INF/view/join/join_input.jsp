@@ -18,20 +18,20 @@
 					<table>
 						<tr>
 							<td><label class="join_input">아이디</label></td>
-							<td><input type="text" placeholder="아이디" name="userId" id="userId" onblur="validateform()"/>
+							<td><input type="text" placeholder="아이디" name="userId" id="userId"/>
 							<span id= "vali" class="userId">영어 숫자 혼용 6~15글자 </span>
 							</td>
 						</tr>
 						<tr>
 							<td><label class="join_input">비밀번호</label></td>
 							<td><input class="join_input" type="password"
-								placeholder="패스워드" name="password" id="password" onblur="validateform()"/>
+								placeholder="패스워드" name="password" id="password"  onblur="passvali()"/>
 								<span id= "vali" class="password">영어 숫자 특수문자 혼용 8~16글자</span>
 								</td>
 						</tr>
 						<tr>
 							<td><label class="join_input">비밀번호확인</label></td>
-							<td><input type="password" placeholder="패스워드 확인" id="password2" name="password2" onblur="validateform()"/>
+							<td><input type="password" placeholder="패스워드 확인" id="password2" name="password2"  onblur="passvali()"/>
 							</td>
 						</tr>
 						<tr>
@@ -46,13 +46,13 @@
 						</tr>
 						<tr>
 							<td><label class="join_input">대표자연락처</label></td>
-							<td><input type="text" name="representPhone" id="representPhone" placeholder="대표자 연락처" onblur="validateform()">
+							<td><input type="text" name="representPhone" id="representPhone" placeholder="ex)031471xxxx">
 							<span id= "vali" class="representPhone">ex)031471xxxx</span>
 							</td>
 						</tr>
 						<tr>
 							<td><label class="join_input">휴대폰연락처</label></td>
-							<td><input type="text" name="handPhone" id="handPhone" placeholder="휴대폰 연락처" onblur="validateform()">
+							<td><input type="text" name="handPhone" id="handPhone" placeholder="ex)010xxxxxxxx">
 							<span id= "vali" class="handPhone">ex)010xxxxxxxx</span>
 							</td>
 						</tr>
@@ -63,7 +63,9 @@
 						<tr>
 							<td><label class="join_input">주소</label></td>
 							<td><input type="text" name="zipNumber" id="zipNumber" placeholder="우편번호" readonly="readonly">
-							<button id="addressSearch" onclick="addressSearch()">주소검색</button></td>
+							<button id="addressSearch">주소검색</button>
+							<span id= "vali" class="addressInput"></span>
+							</td>
 						</tr>
 						<tr>
 							<td><label class="join_input"> </label></td>
@@ -71,7 +73,7 @@
 						</tr>
 						<tr>
 							<td><label class="join_input">URL</label></td>
-							<td><input type="text" name="url" id="url" placeholder="홈페이지 주소" onblur="validateform()">
+							<td><input type="text" name="url" id="url" placeholder="홈페이지 주소">
 							<span id= "vali" class="url"></span>
 							</td>
 						</tr>
@@ -90,6 +92,7 @@
 					<div class="heavy" ></div>
 					<div class="companySelector">
 					</div>
+					<div class="numbervali"></div>
 					<div class="checked"></div>
 				</fieldset>
 				<br>
@@ -104,13 +107,12 @@
 <script>
 
 //====================================================================================================================================================================================
-//건설업체 상세정보 추가
+//건설업체 상세정보 추가 
 function cscInfoOutput(){
-	var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
-	var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input type='text'placeholder='연 수주량'>";
+	var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input id='sales' name='sales' type='number' placeholder='연매출'><span id= 'vali' class='sales'>단위(억)</span>";
+	var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input id='obtain' name='obtain' type='number'placeholder='연 수주량'><span id= 'vali' class='sales'>단위(건)</span>";
 	var str3 ="<br><div class='license'><label class='join_input'>"+"자격증"+"</label><input type='text'placeholder='자격증 명칭'>";
 	var str4 ="<input type='text'placeholder='발급처'>"+"<input type='date'placeholder='발급시기'><button id='btn2'>"+"추가"+"</button></div>";
-	var str5 ="<br><label class='join_input'>"+"회사규모"+"</label><input type='text'placeholder='회사 규모'>";
 	var str6 ="<br><label class='join_input'>"+"회사분야"+"</label><br>";
 	var str7 ="";
 	var str8 ="";
@@ -120,7 +122,7 @@ function cscInfoOutput(){
 			  +"<label class='category_input'>"+i+"</label>";
 	}
 	$(".heavy").html("");
-	$(".companySelector").html(str1+str2+str3+str4+str5+str6);
+	$(".companySelector").html(str1+str2+str3+str4+str6);
 }
 
 //중기업체 상세정보 추가
@@ -129,8 +131,8 @@ function hecInfoOutput(){
 	var str2  = "<select id='size' name='size'>";
 	var str3 = "<div class='companyHeavy'>";
 	var str4 = "<button id='btn1'>추가</button></div>";
-	var arr= ["차량선택","트럭","로더","그레이더","트랙","스크레이퍼","스키더","물질핸들러","벌목용장비","휠도저","굴삭기","펌프카"];
-	var arr2= ["차량크기","소형","중형","대형"];
+	var arr= ["트럭","로더","그레이더","트랙","스크레이퍼","스키더","물질핸들러","벌목용장비","휠도저","굴삭기","펌프카"];
+	var arr2= ["소형","중형","대형"];
 	for(var i of arr){
 		str1+="<option value='"+i+"'>"+i+"</option>";
 	}
@@ -164,11 +166,10 @@ function validateform() {
 	var representPhone = $("#representPhone").val();
 	var handPhone =$("#handPhone").val();
 	var url = $("#url").val();
-	
-	
-	
-	
-
+	var address = $("#address").val();
+	var sales = $("#sales").val();
+	var obtain = $("#obtain").val();
+	var num = $("#num").val();
 	
 	//ID 4글자 15글자
 	var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
@@ -222,9 +223,49 @@ function validateform() {
 		$(".url").html("url 형식 일치합니다.");
 	}
 	
+	//주소 입력검사
+	if(address==null || address==""){
+		$(".addressInput").html("주소 필수입력");
+		return false;
+	}
+	
+	//연매출  공백검사
+	if(sales==null || sales==""){
+		$(".sales").append("연매출 필수 입력 억단위로 입력");
+		return false;
+	}
+	//연 수주량 공백검사
+	if(obtain==null || obtain==""){
+		$(".obtain").append("연수주량 필수 입력 건단위로 입력");
+		return false;
+	}
+	//중기업체 차량번호 공백검사
+	if(num==null || num==""){
+		$(".checked").html("차량번호를 입력해주세요.");
+		return false;
+	}
 }
 
-
+//password 검사
+function passvali(){
+	var password = $("#password").val();
+	var password2 = $("#password2").val();
+	
+	//특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
+	var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+	if(!passRegExp.test(password)){
+		$(".password").html("패스워드 조건 불일치");
+		return false;
+	}else if(password2==""){
+		$(".password").html("패스워드 확인값을 입력해주세요.");
+		return false;
+	}else if(password != password2){
+		$(".password").html("패스워드가 일치하지 않습니다.");
+		return false;
+	}else if(password == password2) {
+		$(".password").html("패스워드가 확인되었습니다.")
+	}
+}
 
 	
 	$(document).on("click","#btn1",	function(e) {
@@ -232,7 +273,13 @@ function validateform() {
 		var type = $("#type").val();
 		var size = $("#size").val();
 		var num = $("#num").val();
-		$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>");
+		if(num==null || num==""){
+			$(".numbervali").html("차량번호 필수입력사항");
+		}else{
+			$(".numbervali").html("");
+			$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>");
+		}
+		
 	});
 	
 	$(document).on("click","#btn2",	function(e) {
@@ -244,10 +291,10 @@ function validateform() {
 	var s = 0;
 	$(document).on("click","#type",function(){
 		var type = $("#type").val();
-		var arr1 = ["장비크기","26m","32m","37m","43m","52m","58m","기타"];
-		var arr2 = ["장비크기","10톤","20톤","30톤","40톤","기타"];
-		var arr3 = ["장비크기","소형굴삭기","농용굴삭기","백호굴삭기","브레이커굴삭기","기타"];
-		var arr4 = ["장비크기","소형","중형","대형"];
+		var arr1 = ["26m","32m","37m","43m","52m","58m","기타"];
+		var arr2 = ["10톤","20톤","30톤","40톤","기타"];
+		var arr3 = ["소형굴삭기","농용굴삭기","백호굴삭기","브레이커굴삭기","기타"];
+		var arr4 = ["소형","중형","대형"];
 		var str1="";
 		var str2="";
 		var str3="";
