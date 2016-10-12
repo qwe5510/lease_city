@@ -14,14 +14,13 @@ public class UtilTest {
 
 	@Test
 	public void test() {
-		Date date = new Date();
 		
-		String test = DateUtil.getDateString(date);
-		logger.trace("날짜 String : {}", test);
 		
-		test = DateUtil.getTimeString(date);
+		Date date = DateUtil.getStringDate("2016", "5", "3");
 		
-		System.out.println(HashingUtil.hashingString("1234"));
+		
+		System.out.println(date);
+		
 		
 		
 		

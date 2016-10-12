@@ -23,8 +23,7 @@
  		INSERT INTO comments 
  		(user_id, comment_title, 
  		comment_category, comment_content)
- 		VALUES(
- 		#{userId}, #{commentTitle},
+ 		VALUES(#{userId}, #{commentTitle},
  		#{commentCategory},#{commentContent}) 
  	</insert>
  

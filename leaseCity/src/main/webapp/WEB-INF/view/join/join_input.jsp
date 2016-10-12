@@ -80,16 +80,17 @@
 						<tr>
 							<td><label class="join_input">알람 여부</label></td>
 							<td><label for="notifyOnOff">ON</label> <input type="radio"
-								name="notifyOnOff" id="CSC" value="ON" checked="checked"/> <label for="OFF">OFF</label>
+								name="notifyOnOff" value="ON" checked="checked"/> <label for="OFF">OFF</label>
 								<input type="radio" name="notifyOnOff" value="OFF" /></td>
 								<td><div id="vali" class="company"></div></td>
 						</tr>
 						<tr>
 							<td><label class="join_input">업체선택</label></td>
-							<td><label for="company">건설업체</label> <input type="radio"
-								name="company" id="CSC" value="건설업체" checked="checked"/> <label for="중기업체">중기업체</label>
-								<input type="radio" name="company" id="HEC" value="중기업체" /></td>
-								<td><div id="vali" class="company"></div></td>
+							<td><label for="company">건설업체</label> 
+							<input type="radio" name="company" id="CSC" value="건설업체" checked="checked"/> 
+							<label for="중기업체">중기업체</label>
+							<input type="radio" name="company" id="HEC" value="중기업체" />
+							</td><td><div id="vali" class="company"></div></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -114,22 +115,28 @@
 <script>
 
 //====================================================================================================================================================================================
-//건설업체 상세정보 추가 
+//건설업체 상세정보 추가
+
+var CC_arr = ["토건","토목","건축","산업설비","토공","철콘","금속구조","철강","시설물","주택건설","문화재","해외","기타"];
+
 function cscInfoOutput(){
-	var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input id='sales' name='sales' type='number' placeholder='연매출'><span id= 'vali' class='sales'>단위(억)</span>";
-	var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input id='obtain' name='obtain' type='number'placeholder='연 수주량'><span id= 'vali' class='sales'>단위(건)</span>";
-	var str3 ="<br><div class='license'><label class='join_input'>"+"자격증"+"</label><input type='text'placeholder='자격증 명칭'>";
-	var str4 ="<input type='text'placeholder='발급처'>"+"<input type='date'placeholder='발급시기'><button id='btn2'>"+"추가"+"</button></div>";
+	//중기업체 span 공백으로 설정
+	$(".checked").html("");
+	
+	var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input id='sales' name='yearlySale' type='number' min='0' placeholder='연매출'><span id= 'vali' class='sales'>단위(억)</span>";
+	var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input id='obtain' name='yearlyAoor' type='number' min='0' placeholder='연 수주량'><span id= 'vali' class='obtain'>단위(건)</span>";
+	var str3 ="<br><div class='license'><label class='join_input'>"+"자격증"+"</label><input name='licenseName' type='text'placeholder='자격증 명칭'>";
+	var str4 ="<input name='licenser' type='text'placeholder='발급처'>"+"<input name='licenseDate' type='date'placeholder='발급시기'><button id='btn2'>"+"추가"+"</button></div>";
 	var str6 ="<br><label class='join_input'>"+"회사분야"+"</label><br>";
 	var str7 ="";
 	var str8 ="";
-	var arr = ["토건","토목","건축","산업설비","토공","철콘","금속구조","철강","시설물","주택건설","문화재","해외","기타"];
-	for(var i of arr){
-		str6+="<input type='checkbox' name='category' value='"+i+"'>"
+	for(var i of CC_arr){
+		str6+="<input type='checkbox' id='" + i + "' name='companyCategory' value='"+i+"'>"
 			  +"<label class='category_input'>"+i+"</label>";
 	}
 	$(".heavy").html("");
 	$(".companySelector").html(str1+str2+str3+str4+str6);
+	
 }
 
 //중기업체 상세정보 추가
@@ -152,9 +159,9 @@ function hecInfoOutput(){
 	
 	var srt5 ="<lable clas='alarm'>알람여부 </lable>"
 				+"<label class='help_input'>도움여부</label>"	
-				+"<input type='checkbox' id='help' name='help' value='help'>";
+				+"<input type='checkbox' id='help' name='helpOnOff' value='help'>";
 	var str6 = "<label class='help_input'>정보공개</label>"	
-				+"<input type='checkbox' id='info' name='info' value='info'>";	
+				+"<input type='checkbox' id='info' name='infoOnOff' value='info'>";	
 	$(".heavy").html(srt5+str6);
 	$(".companySelector").html(str3+str1+str2+text+str4);
 }
@@ -163,6 +170,7 @@ function hecInfoOutput(){
 	//건설업체, 중기업체에 대한 이벤트 처리.
 	$("#CSC").on("click", cscInfoOutput);
 	$("#HEC").on("click", hecInfoOutput);
+	
 	$(document).on("ready", cscInfoOutput);
 	
 //회원가입 양식검사.
@@ -177,7 +185,9 @@ function validateform() {
 	var sales = $("#sales").val();
 	var obtain = $("#obtain").val();
 	var num = $("#num").val();
+	var isHEC = $("#HEC")[0].checked;	
 	
+
 	//ID 4글자 15글자
 	var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
 	if(!idRegExp.test(userId)){
@@ -199,11 +209,12 @@ function validateform() {
 		$(".password").html("패스워드가 일치하지 않습니다.");
 		return false;
 	}else if(password == password2) {
-		$(".password").html("패스워드가 확인되었습니다.")
+		$(".password").html("패스워드가 확인되었습니다.");
 	}	
 	
 	//일반전화 정규표현식
 	var repreRegExp = /^(02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
+	
 	if(!repreRegExp.test(representPhone)){
 		$(".representPhone").html("연락처 조건 불일치");
 		return false;
@@ -220,6 +231,7 @@ function validateform() {
 		$(".handPhone").html("연락처 조건 일치합니다.");
 	}
 	
+	
 	//url 정규 표현식 
 	var urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w_\.-]*)*\/?$/;
 	if(url==""){}
@@ -229,28 +241,55 @@ function validateform() {
 	}else if(urlRegExp.test(url)){
 		$(".url").html("url 형식 일치합니다.");
 	}
-	
+
 	//주소 입력검사
 	if(address==null || address==""){
 		$(".addressInput").html("주소 필수입력");
 		return false;
 	}
+
+	//중간에 공백을 포함해도되고 안해도되면서 한글2글자, 숫자 2글자, 한글1글자, 숫자 4글자인 값
+	//Ex)경기 30 바 3282
+	var regIdNumber = /^[가-힣]{2} ?[0-9]{2} ?[가-힣] ?[0-9]{4}$/;
+	//중기업체 차량번호 공백검사
+	
+	if(isHEC){
+		if(num==null || num==""){
+			$(".checked").html("차량번호를 입력해주세요.");
+			return false;
+		}
+	}
 	
 	//연매출  공백검사
-	if(sales==null || sales==""){
-		$(".sales").append("연매출 필수 입력 억단위로 입력");
+	if(sales==0){
+		$(".sales").html("연매출 필수 입력 억단위로 입력");
 		return false;
+	}else{
+		$(".sales").html("단위(억)");
 	}
+	
 	//연 수주량 공백검사
-	if(obtain==null || obtain==""){
-		$(".obtain").append("연수주량 필수 입력 건단위로 입력");
+	if(obtain==0){
+		$(".obtain").html("연수주량 필수 입력 건단위로 입력");
+		return false;
+	}else{
+		$(".obtain").html("단위(건)");
+	}
+	
+	var isChecked = false;
+	for(var idx of CC_arr){
+		var item = $("#"+idx)[0].checked;
+		if(item){
+			isChecked = true;
+		}
+	}
+	
+	if(!isChecked){
+		$(".checked").html("분야를 최소 1개 이상 선택해주세요.");
 		return false;
 	}
-	//중기업체 차량번호 공백검사
-	if(num==null || num==""){
-		$(".checked").html("차량번호를 입력해주세요.");
-		return false;
-	}
+	
+
 }
 
 //password 검사
@@ -284,7 +323,10 @@ function passvali(){
 			$(".numbervali").html("차량번호 필수입력사항");
 		}else{
 			$(".numbervali").html("");
-			$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>");
+			$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>")
+			.append("<input type='hidden' name='equipmentType' value='"+ type +"'> ")
+			.append("<input type='hidden' name='equipmentSize' value='"+ size +"'> ")
+			.append("<input type='hidden' name='idNumber' value='"+ num +"'> ");
 		}
 		
 	});
@@ -292,7 +334,7 @@ function passvali(){
 	$(document).on("click","#btn2",	function(e) {
 		e.preventDefault();
 		$(".license").append("<div class='license_add'>"
-		+"<input type='text'placeholder='자격증 명칭'><input type='text'placeholder='발급처'><input type='date'placeholder='발급시기'>"
+		+"<input name='licenseName' type='text'placeholder='자격증 명칭'><input name='licenser' type='text'placeholder='발급처'><input name='licenseDate' type='date'placeholder='발급시기'>"
 		+"</div>");
 	});
 	var s = 0;
@@ -354,8 +396,8 @@ function passvali(){
 		               } else if (data == false) {
 		                  //$("#userId").val('');
 		                  //$("#userId").val(input_userId + ' (등록 가능 아이디) ');
-		            	   $(".userId").html("등록된 아이디 입니다.");
-			               $(".userId").foucs();
+		            	   $(".userId").html("등록 가능한 아이디 입니다.");
+			               $(".userId").focus();
 		               }      
 		           },
 		           error : function(xhr, status, error) {

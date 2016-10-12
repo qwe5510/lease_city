@@ -24,7 +24,7 @@ public class StandByUserRepoImpl implements StandByUserRepo {
 	@Override
 	public List<StandByUser> getAllStandByUser() {
 		String stmt = SBU_NS + "getAllSelectStandByUsers";
-		return null;
+		return session.selectList(stmt);
 	}
 
 	// 대기유저 검색
