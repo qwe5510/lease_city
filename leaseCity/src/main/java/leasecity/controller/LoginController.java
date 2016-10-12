@@ -53,10 +53,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String sayHello(Model model) {
-		//User user = new User();
-		//StandByUser standByUser = new StandByUser();
-		//model.addAttribute("user", user);
-		//model.addAttribute("standByUser", standByUser);
+		
 		return "join/login";
 	}
 

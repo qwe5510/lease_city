@@ -81,6 +81,8 @@
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/validation/lib/jquery.js"></script>
+<script src="js/validation/dist/jquery.validate.js"></script>
 <script>
 	$("#CSC").on("click",function(){
 		var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input type='text'placeholder='연매출'>";
