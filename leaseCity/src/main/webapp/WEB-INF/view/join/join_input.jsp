@@ -343,12 +343,13 @@ function passvali(){
 		               if (data == true) {
 		                  //$("#userId").val('');
 		                  //$("#userId").val(input_userId + ' (이미 등록된 아이디) ');
-		                  $("#userId").css("color", "red");
+		                  $(".userId").html("이미 등록된 아이디 입니다.");
 		                   //alert(data); 
 		               } else if (data == false) {
 		                  //$("#userId").val('');
 		                  //$("#userId").val(input_userId + ' (등록 가능 아이디) ');
-		                  $("#userId").css("color", "green");
+		            	   $(".userId").html("등록된 아이디 입니다.");
+			               $(".userId").foucs();
 		               }      
 		           },
 		           error : function(xhr, status, error) {
