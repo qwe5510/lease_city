@@ -42,13 +42,19 @@
  	</insert>
  	
  	<!-- 유저 수정 -->
- 	<update id="updateUser" parameterType="user">
- 		UPDATE user
+ 	<update id="updateInfoUser" parameterType="user">
+ 		UPDATE users
  		SET represent_phone = #{representPhone}
  			hand_phone = #{handPhone}
  			address = #{address}
  			notify_on_off = #{notifyOnOff}
  			url = ${url}
+ 		WHERE user_id = #{userId}
+ 	</update>
+ 	
+ 	<update id="updatePasswordUser" parameterType="user">
+ 		UPDATE users
+ 		SET password = #{password}
  		WHERE user_id = #{userId}
  	</update>
  	

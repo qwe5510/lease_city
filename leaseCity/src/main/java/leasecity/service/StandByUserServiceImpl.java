@@ -6,6 +6,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import leasecity.dto.adminwork.StandByUser;
@@ -21,6 +22,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 	@Autowired
 	StandByUserRepo SBUrepo;
 
+	//logger
 	static Logger logger = LoggerFactory.getLogger(StandByUserServiceImpl.class);
 
 	@Override
@@ -28,7 +30,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 		try {
 			int result = SBUrepo.insertStandByUser(standByUser);
 			logger.trace("대기 유저 추가 : {}", result);
-		} catch (PersistenceException e) {
+		} catch (DuplicateKeyException e) {
 			logger.error("ERROR!! : 요청 값이 중복됩니다");
 			throw new DuplicateValueException();
 		}
@@ -68,7 +70,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 	
 	//대기유저 수락 - 발급코드 생성
 	@Override
-	public void providePermissionCode(StandByUser standByUser) 
+	public StandByUser providePermissionCode(StandByUser standByUser) 
 				throws NotFoundDataException {
 		
 		String companyName = standByUser.getCompanyName();
@@ -85,6 +87,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 			SBU.setPermissionNo(code);
 			int result = SBUrepo.updateStandByUser(SBU);
 			logger.trace("대기 유저 발급코드 지급 : {}", result);
+			return SBU;
 		}
 	}
 	
@@ -128,6 +131,7 @@ public class StandByUserServiceImpl implements StandByUserService{
 			logger.error("ERROR!! : 삭제 대상인 대기유저가 없습니다.");
 			throw new NotFoundDataException("삭제 대상인 대기 유저");
 		}
+		
 	}
 
 }

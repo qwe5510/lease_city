@@ -17,7 +17,7 @@ public interface LicenseRepo {
 	//자격증 추가
 	public int insertLicense(License license);
 	//자격증 수정
-	public int updateLicense(License license);
+	public int updateLicense(License prev, License next);
 	//자격증 삭제
 	public int deleteLicense(License license);
 	

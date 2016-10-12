@@ -23,7 +23,7 @@ public interface StandByUserService {
 			String email) throws NotFoundDataException;
 	
 	//대기유저 수락 - 발급코드 생성
-	public void providePermissionCode(StandByUser standByUser)
+	public StandByUser providePermissionCode(StandByUser standByUser)
 			throws NotFoundDataException;
 	
 	//수락한 유저 발급코드 확인

@@ -4,16 +4,20 @@ import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.User;
@@ -36,18 +40,31 @@ public class LoginController {
 		//model.addAttribute("message", "Good Morning");
 		return "index";
 	}
+	
+	@RequestMapping(value = "/join_cancle", method = RequestMethod.GET)
+	public String join_cancle(Model model, Locale locale, SessionStatus status, HttpSession session, RedirectAttributes redir) {
+		// 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
+		redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");
+		
+		status.setComplete();
+		session.invalidate();
+		
+		return "redirect:/index";
+	}
    
-   @RequestMapping(value="/login",method=RequestMethod.GET)
-   public String sayHello(Model model){
+   @RequestMapping(value="/login")
+   public String login(Model model,HttpServletRequest request){
       User user = new User();
       StandByUser standByUser = new StandByUser();
       model.addAttribute("user",user);
       model.addAttribute("standByUser",standByUser);
+      String help = request.getParameter("help");
+      logger.trace("체크박스 값 : {}",help);
       return "join/login";
    }
    
-   @RequestMapping(value = "/join_input", method = RequestMethod.GET)
-	public String join_input(Model model) {
+   @RequestMapping(value = "/join_input", method = RequestMethod.POST)
+	public String join_input(Model model, HttpSession session) {
 
 		model.addAttribute("message", "Good Morning");
 
@@ -58,45 +75,73 @@ public class LoginController {
 
 		return "join/join_input";
 	}
-
-	@RequestMapping(value = "/join_agree", method = RequestMethod.GET)
-	public String join_agree(Model model) {
-		model.addAttribute("message", "Good Morning");
+   	
+	@RequestMapping(value = "/join_agree", method = RequestMethod.GET, params={"permissionNo"})
+	public String join_agree(Model model, HttpServletRequest req, HttpSession session) {
+		
+		// 대기 비회원을 저장할 객체
+		StandByUser sbu = new StandByUser();
+		
+		// 코드 받기
+		String permissionNoStr = req.getParameter("permissionNo");
+		logger.trace("들어온 permissionNo : {}", req);
+		
+		// 코드를 DB와 비교하여 대기 비회원 검색
+		try {
+			sbu = SBUService.getAgreeStandByUser(permissionNoStr);
+			logger.trace("permission 값이 같은 객체 : {}", sbu);
+		} catch (NotFoundDataException e) {
+			model.addAttribute("join_message", "가입 승낙 기간이 만료되었습니다.");
+			return "index";
+		}
+		
+		// model에 객체 저장하여 보내기
+		/*model.addAttribute("representName", sbu.getRepresentName());
+		model.addAttribute("companyName", sbu.getCompanyName());
+		model.addAttribute("email", sbu.getEmail());*/
+		
+		// session에 객체 저장하여 보내기
+		session.setAttribute("representName", sbu.getRepresentName());
+		session.setAttribute("companyName", sbu.getCompanyName());
+		session.setAttribute("email", sbu.getEmail());;
+		
 		return "join/join_agree";
+		
 	}
    
-   @RequestMapping(value="/popup_join_request",method=RequestMethod.POST)
-   public String popup_join_request(Model model, HttpServletRequest request){
+	//회원가입 요청
+	@RequestMapping(value = "/popup_join_request", method = RequestMethod.POST)
+	public String popup_join_request(Model model, HttpServletRequest request, RedirectAttributes redir) {
       
-	  // 메일 유틸
-	  SendMailUtil mUtil = new SendMailUtil(); 
+		// 메일 유틸
+		SendMailUtil mUtil = new SendMailUtil(); 
 	  
-	  // 폼에서 값 받기
-	  StandByUser sbu = new StandByUser();
-	  sbu.setCompanyName(request.getParameter("companyName"));
-	  sbu.setRepresentName(request.getParameter("representName"));
-	  sbu.setEmail(request.getParameter("email"));
-	  logger.trace("받은 임시 회원 : {}", sbu);
-	  
-      // 1. db에 저장 후, 메시지
-      try {
-         SBUService.addStandByUser(sbu);
-         logger.trace("저장된 임시 유저 : {}", sbu);
-         model.addAttribute("join_message", "회원가입 요청 성공");
-      } catch (DuplicateValueException e) {
-    	 model.addAttribute("join_message", "회원가입 요청 실패");
-         return "join/login"; //추후 변경 요망@
-      }
+		// 폼에서 값 받기
+		StandByUser sbu = new StandByUser();
+		sbu.setCompanyName(request.getParameter("companyName"));
+		sbu.setRepresentName(request.getParameter("representName"));
+		sbu.setEmail(request.getParameter("email"));
+		logger.trace("받은 임시 회원 : {}", sbu);
+
+		// 1. db에 저장 후, 메시지
+		try {
+			SBUService.addStandByUser(sbu);
+			logger.trace("저장된 임시 유저 : {}", sbu);
+			model.addAttribute("join_message", "회원가입 요청 성공");
+		} catch (DuplicateValueException e) {
+			model.addAttribute("join_message", "회원가입 요청 실패 - 동일한 업체명, 이메일로 된 대기 유저가 존재합니다.");
+			return "join/login"; // 추후 변경 요망@
+		}
       
-      // 3. db에 수정하기
-   		try {
-   			SBUService.providePermissionCode(sbu);
-   			logger.trace("관리자의 승인을 받은 임시회원 : {}", sbu);
-   			logger.trace("가입승인 승낙 성공");
-   		} catch (NotFoundDataException e) {
-   			model.addAttribute("join_message", "회원가입 요청 실패");
-            return "join/login"; //추후 변경 요망@
-   		}
+		// 3. 관리자 수락 후 처리할 서비스 - db에 수정하기
+		try {
+			sbu = SBUService.providePermissionCode(sbu);
+			logger.trace("관리자의 승인을 받은 임시회원 : {}", sbu);
+			logger.trace("가입승인 승낙 성공");
+		} catch (NotFoundDataException e) {
+			model.addAttribute("join_message", "회원가입 요청 실패");
+			return "join/login"; // 추후 변경 요망@
+		}
 
    		// 4. 메일 발송하기
    		String src = "http://localhost:9090/leaseCity/join_agree" 
@@ -104,8 +149,8 @@ public class LoginController {
    		mUtil.sendMail(sbu, src);
 
    		// 3. 응답 성공 메시지 후, 관리페이지
-      
-      return "index";
+
+      return "redirect:/index";
    }
 	
 
@@ -142,4 +187,15 @@ public class LoginController {
 
 		return sb.toString();
 	}*/
+	@RequestMapping(value="/sample")
+	public String address(Model model) {
+		logger.trace("sample check");
+		return "join/sample";
+	}
+	
+	@RequestMapping(value="/jusoPopup")
+	public String address_input(Model model) {
+		logger.trace("jusoPopup check");
+		return "join/jusoPopup";
+	}
 }
