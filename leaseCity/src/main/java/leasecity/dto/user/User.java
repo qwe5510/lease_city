@@ -147,6 +147,7 @@ public class User implements Serializable {
 		this.representPhone = user.representPhone;
 		this.handPhone = user.handPhone;
 		this.email = user.email;
+		this.zipNo = user.zipNo;
 		this.address = user.address;
 		this.notifyOnOff = user.notifyOnOff;
 		this.url = user.url;
@@ -173,6 +174,7 @@ public class User implements Serializable {
 				.append(", representPhone="+representPhone)
 				.append(", handPhone="+handPhone)
 				.append(", email="+email)
+				.append(", zipNo="+zipNo)
 				.append(", address="+address)
 				.append(", notifyOnOff="+notifyOnOff)
 				.append(", url="+url)

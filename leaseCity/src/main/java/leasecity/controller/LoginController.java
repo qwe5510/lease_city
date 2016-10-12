@@ -82,28 +82,28 @@ public class LoginController {
 	   String representPhone = request.getParameter("representPhone");
 	   String handPhone = request.getParameter("handPhone");
 	   String email = request.getParameter("email");
-	   // 집 넘버 dto 완성되는데로 넣기
+	   String zipNo = request.getParameter("zipNo");
 	   String address = request.getParameter("address");
 	   String url = request.getParameter("url");
 	   
 	   User user = new User(userId, password, comapanyName, representName, 
-			   				representPhone, handPhone, email, address, 
+			   				representPhone, handPhone, email, zipNo,address, 
 			   				"ON", url, null, 0.0, null);
+	   
+	   
 	   // 1-2 company( 중기, 건설 )의 경우에 따라 값 호출
 	   String company = request.getParameter("company");
 	   
 	   if ( company.equals("건설업체")) {
 		   
 		   // 1. 건설업체에 필요한 값 가져오기
-		   Double yearlySale = Double.parseDouble(request.getParameter("yearlySale"));
+		   Integer yearlySale = Integer.parseInt(request.getParameter("yearlySale"));
 		   Integer yearlyAoor = Integer.parseInt(request.getParameter("yearlyAoor"));
-		   String companySize = request.getParameter("companySize");
 		   String companyCategory = request.getParameter("companyCategory");
 		   
 		   // 2. 건설업체 객체 초기화
 		   ConstructionCompany CCompany = 
-				   new ConstructionCompany(user, yearlySale, yearlyAoor, 
-						   					companySize, companyCategory);
+				   new ConstructionCompany(user, yearlySale, yearlyAoor,companyCategory);
 		   
 		   logger.trace("건설업체 받은 정보 : {}", CCompany);
 		   // 3. 가입

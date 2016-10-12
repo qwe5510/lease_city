@@ -62,7 +62,7 @@
 						</tr>
 						<tr>
 							<td><label class="join_input">주소</label></td>
-							<td><input type="text" name="zipNumber" id="zipNumber" placeholder="우편번호" readonly="readonly">
+							<td><input type="text" name="zipNo" id="zipNo" placeholder="우편번호" readonly="readonly">
 							<button id="addressSearch">주소검색</button>
 							<span id= "vali" class="addressInput"></span>
 							</td>
@@ -328,44 +328,6 @@ function passvali(){
 			$("#size").html(str4);
 		}
 	});
-	
-	
-<<<<<<< HEAD
-	<c:url value="/validate_id" var="validate_id"/>
-	$("#userId").blur(function() {
-		
-		var input_userId = $("#userId").val();
-		var saved_userId = '${saved_userId}';
-		
-		$.ajax({
-	        // type을 설정합니다.
-	        type : 'post',
-	        url : "${validate_id }",
-	        // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-	        data : {
-	        	input_userId : input_userId
-	        },
-	        // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
-	        success : function (data) {
-	            // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
-	            if (data == true) {
-	            	//$("#userId").val('');
-	            	//$("#userId").val(input_userId + ' (이미 등록된 아이디) ');
-	            	$("#userId").css("color", "red");
-	            	$("#vali").css("color", "red");
-	                //alert(data); 
-	            } else if (data == false) {
-	            	//$("#userId").val('');
-	            	//$("#userId").val(input_userId + ' (등록 가능 아이디) ');
-	            	$("#userId").css("color", "green");
-	            	$("#vali").css("color", "green");
-	            }      
-	        },
-	        error : function(xhr, status, error) {
-				alert(error);
-			}
-	    });
-	});
 
 	<c:url value="/validate_id" var="validate_id"/>
 		   $("#userId").blur(function() {
@@ -419,7 +381,7 @@ function passvali(){
 	
 	function jusoCallBack(roadFullAddr,zipNo){
 		$("#address").val(roadFullAddr);
-		$("#zipNumber").val(zipNo);
+		$("#zipNo").val(zipNo);
 	}
 </script>
 </html>
