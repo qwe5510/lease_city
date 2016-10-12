@@ -428,7 +428,7 @@ $(function() {
         return { init : init };
 
     })();
-    Page.init();
+    Page.init()
 });
 </script>
 	<!-- /SL Slider -->
