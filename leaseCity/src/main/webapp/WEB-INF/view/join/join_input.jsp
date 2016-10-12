@@ -19,31 +19,37 @@
 					<table width="75%" cellpadding="0" cellspacing="0" align=center>
 						<tr>
 							<th><label class="join_input">아이디</label></th>
-							<th><input type="text" placeholder="아이디" name="userId"/></th>
+							<th><input type="text" placeholder="아이디" name="userId"
+								id="userId" /></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">비밀번호</label></th>
 							<th><input class="join_input" type="password"
-								placeholder="패스워드" name="password"/></th>
+								placeholder="패스워드" name="password" /></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">비밀번호확인</label></th>
-							<th><input type="password" placeholder="패스워드 확인" name="password2"/></th>
+							<th><input type="password" placeholder="패스워드 확인"
+								name="password2" /></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">업체명</label></th>
-							<th><input type="text" name="companyName" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></th>
+							<th><input type="text" name="companyName" placeholder="업체명"
+								value="<%=session.getAttribute("companyName")%>" readonly /></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">대표자명</label></th>
-							<th><input type="text" name="representName" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></th>
+							<th><input type="text" name="representName"
+								placeholder="대표자명"
+								value="<%=session.getAttribute("representName")%>" readonly /></th>
 
 						</tr>
 						<tr>
 						</tr>
 						<tr>
 							<th><label class="join_input">대표자연락처</label></th>
-							<th><input type="text" name="representPhone" placeholder="대표자 연락처"></th>
+							<th><input type="text" name="representPhone"
+								placeholder="대표자 연락처"></th>
 						</tr>
 						<tr>
 							<th><label class="join_input">휴대폰연락처</label></th>
@@ -84,7 +90,6 @@
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/validation/lib/jquery.js"></script>
 <script src="js/validation/dist/jquery.validate.js"></script>
 <script>
 	$("#CSC").on("click",function(){
@@ -182,13 +187,35 @@
 		console.log(help);
 	});
 	
-	$("#myForm").validate({
-		  rules: {
-		    name: "required"
-		  },
-		  messages: {
-		    name: "Please specify your name"
-		  }
+	<c:url value="/validate_id" var="validate_id"/>
+	$("#userId").keyup(function() {
+		
+		var input_userId = $("#userId").val();
+		var saved_userId = '${saved_userId}';
+		
+		$.ajax({
+	        // type을 설정합니다.
+	        type : 'post',
+	        url : "${validate_id }",
+	        // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+	        data : {
+	        	input_userId : input_userId
+	        },
+	        // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+	        success : function (data) {
+	            // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
+	            if (data == null) {
+	            	$("#userId").text(data + ' (이미 등록된 아이디) ');
+	            	$("#userId").css("color", "green");
+	                //alert(data); 
+	            } else {
+	            	$("#userId").css("color", "red");
+	            }      
+	        },
+	        error : function(xhr, status, error) {
+				alert(error);
+			}
+	    });
 	});
 	
 </script>

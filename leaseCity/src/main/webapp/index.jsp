@@ -52,7 +52,7 @@
 			alert(msg);
 		</script>
 	</c:if>
-	
+
 	<!--Header-->
 	<header class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -118,8 +118,7 @@
 					<div class="sl-slide-inner">
 						<div class="container">
 							<img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/경복궁.png"
-								alt="" />
+								src="<%=request.getContextPath()%>/images/slider/경복궁.png" alt="" />
 							<h2>경복궁</h2>
 							<h4 class="gap">규모 43만 2702.87</h4>
 							<h4 class="gap">소재지 서울특별시 종로구 세종로1</h4>
@@ -401,36 +400,37 @@
 	<!-- /Required javascript files for Slider -->
 
 	<!-- SL Slider -->
-	<script type="text/javascript"> 
-$(function() {
-    var Page = (function() {
+	<script type="text/javascript">
+		$(function() {
+			var Page = (function() {
 
-        var $navArrows = $( '#nav-arrows' ),
-        slitslider = $( '#slider' ).slitslider( {
-            autoplay : true
-        } ),
+				var $navArrows = $('#nav-arrows'), slitslider = $('#slider')
+						.slitslider({
+							autoplay : true
+						}),
 
-        init = function() {
-            initEvents();
-        },
-        initEvents = function() {
-            $navArrows.children( ':last' ).on( 'click', function() {
-                slitslider.next();
-                return false;
-            });
+				init = function() {
+					initEvents();
+				}, initEvents = function() {
+					$navArrows.children(':last').on('click', function() {
+						slitslider.next();
+						return false;
+					});
 
-            $navArrows.children( ':first' ).on( 'click', function() {
-                slitslider.previous();
-                return false;
-            });
-        };
+					$navArrows.children(':first').on('click', function() {
+						slitslider.previous();
+						return false;
+					});
+				};
 
-        return { init : init };
+				return {
+					init : init
+				};
 
-    })();
-    Page.init();
-});
-</script>
+			})();
+			Page.init();
+		});
+	</script>
 	<!-- /SL Slider -->
 </body>
 </html>
