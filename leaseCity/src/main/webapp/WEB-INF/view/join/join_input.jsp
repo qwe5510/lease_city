@@ -12,7 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" >
+			<form id="joinForm" onsubmit="return validateform()" >
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table>
@@ -371,35 +371,35 @@ function passvali(){
 		}
 	});
 
-	<c:url value="/validate_id" var="validate_id"/>
-		   $("#userId").blur(function() {   
-		      var input_userId = $("#userId").val();
-		      
-		      $.ajax({
-		           // type을 설정합니다.
-		           type : 'post',
-		           url : "${validate_id }",
-		           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-		           data : {input_userId : input_userId},
-		           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
-		           success : function (data) {
-		               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
-		               if (data == true) {
-		                  //$("#userId").val('');
-		                  //$("#userId").val(input_userId + ' (이미 등록된 아이디) ');
-		                  $(".userId").html("이미 등록된 아이디 입니다.");
-		                   //alert(data); 
-		               } else if (data == false) {
-		                  //$("#userId").val('');
-		                  //$("#userId").val(input_userId + ' (등록 가능 아이디) ');
-		            	   $(".userId").html("등록 가능한 아이디 입니다.");
-			               $(".userId").focus();
-		               }      
-		           },
-		           error : function(xhr, status, error) {
-		            alert(error);
+	<c:url value="/validateId" var="validateId"/>
+		   $("#userId").blur(function(e) {   
+		            var inputUserId = $("#userId").val();
+		            $.ajax({
+		                 // type을 설정합니다.
+		                 type : 'post',
+		                 url : "${validateId }",
+		                 // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+		                 data : {inputUserId : inputUserId},
+		                 // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+		                 success : function (data) {
+		                     // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
+		                     if (data == true) {
+		                        //$("#userId").val('');
+		                        //$("#userId").val(input_userId + ' (이미 등록된 아이디) ');
+		                        $(".userId").html("이미 등록된 아이디 입니다.");
+		                        e.preventDefault();
+		                         //alert(data); 
+		                     } else if (data == false) {
+		                        //$("#userId").val('');
+		                        //$("#userId").val(input_userId + ' (등록 가능 아이디) ');
+		                        $(".userId").html("등록 가능한 아이디 입니다.");
+		                        $(".userId").focus();
+		                     }      
+		                 },
+		                 error : function(xhr, status, error) {
+		                 alert(error);
 		         }
-		       });
+		      });
 		   });
 		   
 		   

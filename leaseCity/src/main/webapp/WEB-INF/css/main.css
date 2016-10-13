@@ -446,6 +446,11 @@ header .dropdown-menu:before {
 	margin-left: -200px;
 	background: #EEE8AA;
 }
+.modal#passChange{
+	width: 350px;
+	margin-left: -200px;
+	background: #EEE8AA;
+}
 
 #passSearch input[type="email"], #passSearch input[type="number"] {
 	padding: 5px 10px;
@@ -1040,6 +1045,7 @@ label {
 /*커뮤니티 jsp 메인 div 설정  */
 .board{
 	margin-top: 50px;
+	height: 900px;
 }
 /*회원가입 페이지 메인 div 설정*/
 .join {
@@ -1050,13 +1056,46 @@ label {
 /*유챗 div 설정  */
 .uchat{
 	display: inline-block;
-	float: right;
+	float: left;
+	margin-left: 40px;
+	margin-top: 105px;
 }
 /*community div 설정  */
 .community{
+	margin-left : 80px;
 	width : 400px;
 	float: left;
 	display: inline-block;
+	text-align: center;
+}
+/*board 테이블 작업*/
+.boardLine{
+	height : 2px;
+	padding: 0px;
+	font-size: 0px;
+	overflow: hidden;
+	display: table-cell;
+	background: #e5e5e5;
+}
+.communityTable{
+	width : 650px;
+	height: 500px;
+	max-height: 500px;
+	margin-right: 40px;
+	
+}
+.communityTable tr{
+	padding: 7px;
+}
+.communityTitle{
+}
+.notify{
+	background: #f9f9f9;
+	font-size: 13px;
+	height: 40px;
+}
+.boardShow{
+	height: 28px;
 }
 .input {
 	margin-top: 15px;
@@ -1219,4 +1258,9 @@ label {
 }
 .address input{
 	width: 500px;
+}
+.modal #changeVali{
+	margin-top : 15px;
+	margin-left : 62px;
+	font-size: 15px;
 }

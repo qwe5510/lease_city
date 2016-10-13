@@ -329,20 +329,20 @@ public class LoginController {
       return "login";
    }
 
-   @RequestMapping(value = "/validate_id", method = RequestMethod.POST)
+   @RequestMapping(value = "/validateId", method = RequestMethod.POST)
    public @ResponseBody boolean validateId(Model model, @RequestParam String inputUserId) {
       boolean checkId = UService.isUserId(inputUserId);
       return checkId;
    }
    
-   @RequestMapping(value = "/validate_company_name", method = RequestMethod.POST)
+   @RequestMapping(value = "/validateCompanyName", method = RequestMethod.POST)
    public @ResponseBody boolean validateCompanyName(Model model, @RequestParam String inputCompanyName) {
       boolean checkCompanyName = UService.isUserId(inputCompanyName);
       return checkCompanyName;
    }
    
-   @RequestMapping(value = "/validate_email", method = RequestMethod.POST)
-   public @ResponseBody boolean validate_id(Model model, @RequestParam String inputEmail) {
+   @RequestMapping(value = "/validateEmail", method = RequestMethod.POST)
+   public @ResponseBody boolean validateEmail(Model model, @RequestParam String inputEmail) {
       boolean checkEmail = UService.isUserId(inputEmail);
       return checkEmail;
    }
@@ -415,7 +415,7 @@ public class LoginController {
    @RequestMapping(value = "/jusoPopup")
    public String address_input(Model model) {
       logger.trace("jusoPopup check");
-
+      
       return "join/jusoPopup";
    }
 
