@@ -27,11 +27,6 @@
  								resultType="user">
  		SELECT * FROM users WHERE email = #{email}
  	</select>
- 	
- 	
- 	
- 	
- 	
  	<!-- 유저 ID와 password로 검색 (로그인) -->
  	<select id="getSelectUserIdAndPassword" parameterType="Map" 
  								resultType="user">
