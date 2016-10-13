@@ -24,7 +24,7 @@
    <div class="login">
       <img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
       <div class="inner">
-         <form method="post" action="#">
+         <form method="post" action="popup_login">
             <fieldset>
                <legend>로그인</legend>
                <table>
@@ -145,8 +145,8 @@
          <form class="form-inline" method="post" action="popup_join_request"
             name="joinForm" onsubmit="return validateform()">
             <input id="representName" name="representName" type="text"
-               placeholder="업체명" /> <br> <input id="companyName"
-               name="companyName" type="text" placeholder="대표자명" /> <br> <input
+               placeholder="대표자명" /> <br> <input id="companyName"
+               name="companyName" type="text" placeholder="업체명" /> <br> <input
                id="email" name="email" type="email" placeholder="Email" /> <br>
             <button class="pop">가입 요청</button>
          </form>
@@ -162,9 +162,9 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <form class="form-inline" method="post" action="popup_join_request">
-            <input name="representName" type="text" placeholder="업체명" /> <br>
-            <input name="companyName" type="text" placeholder="대표자명" /> <br>
+         <form class="form-inline" method="post" action="popup_search_id">
+            <input name="representName" type="text" placeholder="대표자명" /> <br>
+            <input name="companyName" type="text" placeholder="업체명" /> <br>
             <input name="email" type="email" placeholder="Email" /> <br>
             <button class="pop">아이디 찾기</button>
          </form>
@@ -180,12 +180,12 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <form class="form-inline" method="post" action="#">
+         <form class="form-inline">
             <input name="representName" type="text" placeholder="아이디" /><br>
             <input name="representName" type="text" placeholder="업체명" /><br>
             <input name="companyName" type="text" placeholder="대표자명" /><br>
             <input name="email" type="email" placeholder="Email" />
-            <button class="btn1" value="발급">발급</button>
+            <input type="submit" class="btn1" value="발급" formmethod="get" formaction="<%=request.getContextPath() %>/popup_search_pass_issue" ></button>
             <br> <input path="companyName" type="number" placeholder="인증번호" />
             <button class="btn1" value="인증">인증</button>
             <br>

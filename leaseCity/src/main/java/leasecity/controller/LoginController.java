@@ -1,6 +1,7 @@
 package leasecity.controller;
 
 import java.util.Locale;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import leasecity.dto.adminwork.StandByUser;
 import leasecity.dto.user.*;
 import leasecity.exception.DuplicateValueException;
 import leasecity.exception.JoinFailException;
+import leasecity.exception.LoginFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.service.StandByUserService;
 import leasecity.service.UserService;
@@ -69,15 +71,36 @@ public class LoginController {
       logger.trace("체크박스 값 : {}", help);
       return "join/login";
    }
+   
+   @RequestMapping(value = "/popup_login")
+   public String popup_login(Model model, HttpServletRequest request, RedirectAttributes redir) {
+      
+	  String userId = request.getParameter("userId");
+	  String password = request.getParameter("password");
+	  
+	  try {
+		UService.login(userId, password);
+		logger.trace("로그인 시도 : {}, {}", userId, password);
+		redir.addFlashAttribute("join_message", userId + "님 로그인 하셨습니다.");
+	} catch (LoginFailException e) {
+		redir.addFlashAttribute("join_message", "로그인에 실패하였습니다.");
+		return "redirect:/login";
+	}
+      return "redirect:/index";
+   }
+
 
    // 회원가입 폼에 적힌 값들 저장
    @RequestMapping(value = "/join", method = RequestMethod.POST)
    public String join(Model model, RedirectAttributes redir, HttpServletRequest request) {
 
+	   // 삭제할 대기유저 추가
+	   StandByUser sbu = new StandByUser();
+	   
       // 1-1. join_input 폼에서 입력한 '기본' 회원정보 -> 갖고 오기
 	   String userId = request.getParameter("userId");
 	   String password = request.getParameter("password");
-	   String comapanyName = request.getParameter("comapanyName");
+	   String companyName = request.getParameter("companyName");
 	   String representName = request.getParameter("representName");
 	   String representPhone = request.getParameter("representPhone");
 	   String handPhone = request.getParameter("handPhone");
@@ -86,10 +109,11 @@ public class LoginController {
 	   String address = request.getParameter("address");
 	   String url = request.getParameter("url");
 	   
-	   User user = new User(userId, password, comapanyName, representName, 
+	   User user = new User(userId, password, companyName, representName, 
 			   				representPhone, handPhone, email, zipNo,address, 
 			   				"ON", url, null, 0.0, null);
 	   
+	   logger.trace("User 값 들어왔는지 확인 : {}", user);
 	   
 	   // 1-2 company( 중기, 건설 )의 경우에 따라 값 호출
 	   String company = request.getParameter("company");
@@ -115,7 +139,7 @@ public class LoginController {
 			return "join/join_input";
 		}
 		  
-		   
+		  
 	   } else if( company.equals("중기업체") ){
 		   
 		   // 1. 
@@ -254,11 +278,24 @@ public class LoginController {
    public String popup_search_id(Model model, HttpServletRequest request, RedirectAttributes redir) {
 
       // 1. 폼에서 입력된 값 받기
+	   StandByUser sbu = new StandByUser();
+	   String companyName = request.getParameter("companyName");
+	   String representName = request.getParameter("representName");
+	   String email = request.getParameter("email");
+	   logger.trace("아이디 찾을 회원 정보 : {}", sbu);
+	   
 
       // 2. 입력된 값 --> db와 비교
+	 try {
+		sbu = SBUService.getStandByUser(companyName, representName, email);
+		StringBuffer id = new StringBuffer(sbu.getEmail());
+		redir.addFlashAttribute("join_message", "아이디 찾기 성공 " + id.replace(4, 9, "****").toString());
+	} catch (NotFoundDataException e) {
+		redir.addFlashAttribute("join_message", "아이디 찾기 실패");
+		return "redirect:/login";
+	}
 
       // 3. 결과 출력 메시지 후, login
-
       return "redirect:/login";
    }
 
@@ -267,25 +304,36 @@ public class LoginController {
    public String popup_search_pass(Model model, HttpServletRequest request, RedirectAttributes redir) {
 
       // 1. 폼에 입력 값 받기
-
+	   StandByUser sbu = new StandByUser();
+	   String userId = request.getParameter("userId");
+	   String companyName = request.getParameter("companyName");
+	   String representName = request.getParameter("representName");
+	   String email = request.getParameter("email");
+	   logger.trace("아이디 찾을 회원 정보 : {}", sbu);
       // 2. 입력된 값 --> db와 비교
 
       // 3. 결과 출력 메시지 후, 새로운 값 입력 폼 생성
-
+	   
       // 4. 비밀번호 수정 후, 결과 출력 메시지 및 login 폼 이동
 
       return "redirect:/login";
    }
 
    // 비밀번호 찾기 시, 이메일 인증 컨트롤
-   @RequestMapping(value = "/popup_search_pass_certification", method = RequestMethod.POST)
-   public void popup_search_pass_certification(Model model, HttpServletRequest request, RedirectAttributes redir) {
+   @RequestMapping(value = "/popup_search_pass_issue", method = RequestMethod.GET)
+   public void popup_search_pass_issue(Model model, HttpServletRequest request, RedirectAttributes redir, HttpSession session) {
 
+	// 메일 유틸, 보낼 email 주소
+	  SendMailUtil mUtil = new SendMailUtil();
+	  String email = request.getParameter("email");
       // 1. 인증번호 발급
-
+	  Random randomGenerator = new Random();
+		int ramdomNum = randomGenerator.nextInt(10000) + 1000;
+		if (ramdomNum > 10000) {
+			ramdomNum -= 1000;
+		}
+		session.setAttribute("num", ramdomNum);
       // 2. 해당 유저의 db에 인증번호 저장
-
-      // 3. 응답 성공 메시지 후 비밀번호 찾기 폼으로 ( 입력된 값들은 유지 )
    }
 
    // 주소 찾기 컨트롤
