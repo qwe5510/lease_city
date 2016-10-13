@@ -10,28 +10,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CommunityController {
 	static Logger logger = LoggerFactory.getLogger(CommunityController.class);
+	//게시판 글 , 댓글 확인
 	@RequestMapping(value="/board_read",method=RequestMethod.GET)
 	public String board_read(Model model){
 		model.addAttribute("message", "Good Morning");
 		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
 		return "community/board_read";
 		
 	}
-	
+	//게시글 댓글 작성
 	@RequestMapping(value="/board_write",method=RequestMethod.GET)
 	public String board_write(Model model){
 		model.addAttribute("message", "Good Morning");
 		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
 		return "community/board_write";
 	}
-	
+	//커뮤니티 메인 페이지
 	@RequestMapping(value="/board",method=RequestMethod.GET)
 	public String board(Model model){
 		model.addAttribute("message", "Good Morning");
 		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
 		return "community/board";
 	}
 }

@@ -69,13 +69,9 @@ public class LoginController {
 
    // 로그인 폼 ( 이동만 )
    @RequestMapping(value = "/login")
-   public String login(Model model, HttpServletRequest request) {
+   public String login(Model model) {
       User user = new User();
-      StandByUser standByUser = new StandByUser();
       model.addAttribute("user", user);
-      model.addAttribute("standByUser", standByUser);
-      String help = request.getParameter("help");
-      logger.trace("체크박스 값 : {}", help);
       return "join/login";
    }
 

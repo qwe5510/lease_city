@@ -162,12 +162,12 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <form class="form-inline" method="post" action="popup_join_request">
-            <input name="representName" type="text" placeholder="업체명" /> <br>
-            <input name="companyName" type="text" placeholder="대표자명" /> <br>
-            <input name="email" type="email" placeholder="Email" /> <br>
-            <button class="pop">아이디 찾기</button>
-         </form>
+         <sform:form class="form-inline" modelAttribute="user" method="post" action="popup_join_request">
+            <sform:input path="representName" type="text" placeholder="업체명" /> <br>
+            <sform:input path="companyName" type="text" placeholder="대표자명" /> <br>
+            <sform:input path="email" type="email" placeholder="Email" /> <br>
+            <sform:button class="pop">아이디 찾기</sform:button>
+         </sform:form>
       </div>
    </div>
 
@@ -180,17 +180,17 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <form class="form-inline" method="post" action="#">
-            <input name="representName" type="text" placeholder="아이디" /><br>
-            <input name="representName" type="text" placeholder="업체명" /><br>
-            <input name="companyName" type="text" placeholder="대표자명" /><br>
-            <input name="email" type="email" placeholder="Email" />
-            <button class="btn1" value="발급">발급</button>
+         <sform:form class="form-inline" modelAttribute="user" method="post" action="#">
+            <sform:input path="representName" type="text" placeholder="아이디" /><br>
+            <sform:input path="representName" type="text" placeholder="업체명" /><br>
+            <sform:input path="companyName" type="text" placeholder="대표자명" /><br>
+            <sform:input path="email" type="email" placeholder="Email" />
+            <sform:button class="btn1" value="발급">발급</sform:button>
             <br> <input path="companyName" type="number" placeholder="인증번호" />
-            <button class="btn1" value="인증">인증</button>
+            <sform:button class="btn1" value="인증">인증</sform:button>
             <br>
             <button>비밀번호찾기</button>
-         </form>
+         </sform:form>
       </div>
    </div>
 
