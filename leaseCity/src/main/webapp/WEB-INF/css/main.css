@@ -1031,13 +1031,16 @@ label {
 	padding: 0 0 0 0;
 	margin-top: 15px;
 }
-
+/*로그인 jsp 메인 div 설정 */
 .login {
 	margin-top: 80px;
 	left: 50%;
 	margin-left: 350px;
 }
-
+/*커뮤니티 jsp 메인 div 설정  */
+.board{
+	margin-top: 50px;
+}
 .join {
 	margin-top: 50px;
 	left: 50%;

@@ -82,19 +82,19 @@
 							class="dropdown-toggle" data-toggle="dropdown">임대 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="career.html">임대 신청/조회</a></li>
-								<li><a href="registration.html">중기업체조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/lease_request">임대 신청/조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
 							</ul></li>
-						<li id="con"><a href="about-us.html">커뮤니티</a></li>
-						<li class="dropdown" id="con"><a href="#"
+						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
+						<li class="dropdown" id="con"><a href="<%=request.getContextPath() %>/FAQ"
 							class="dropdown-toggle" data-toggle="dropdown">고객센터 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="career.html">자주 묻는 질문</a></li>
-								<li><a href="registration.html">도움말</a></li>
-								<li><a href="terms.html">Q&A</a></li>
+								<li><a href="<%=request.getContextPath() %>/FAQ">자주 묻는 질문</a></li>
+								<li><a href="<%=request.getContextPath() %>/information">도움말</a></li>
+								<li><a href="<%=request.getContextPath() %>/question_answer">Q&A</a></li>
 							</ul></li>
-						<li id="con"><a href="blog.html">소개</a></li>
+						<li id="con"><a href="<%=request.getContextPath() %>/board">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
 						<li id="con"><a href=${login }> <i class="icon-lock"></i>
 						</a></li>
@@ -196,13 +196,13 @@
 							<div class="active item">
 								<div class="row-fluid">
 									<ul class="thumbnails">
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
 												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/introduction"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
 									</ul>
 								</div>
@@ -211,13 +211,13 @@
 							<div class="item">
 								<div class="row-fluid">
 									<ul class="thumbnails">
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath() %>introduction"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
 									</ul>
 								</div>
@@ -226,13 +226,13 @@
 							<div class="item">
 								<div class="row-fluid">
 									<ul class="thumbnails">
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
 												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
-										<li class="span3"><a href="#"><img
+										<li class="span3"><a href="<%=request.getContextPath() %>introduction"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
 									</ul>
 								</div>

@@ -1,13 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src='//uchat.co.kr/uchat.php' charset='UTF-8'></script>
 <title>Insert title here</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<div class="board">
+	<div class="uchat">
+	 <script >
+      u_chat({
+        room : 'yhj123',
+        chat_record : true,
+        width : '400',
+        height : '400',
+		conversation_limi : true,
+      	in_sound : true,
+      	say_id : true,
+      });
+	</script>
+	</div>
+	<div>
+		유챗
+	</div>
+	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
+
+
 </html>
