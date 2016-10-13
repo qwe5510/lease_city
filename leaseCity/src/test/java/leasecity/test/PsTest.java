@@ -35,7 +35,7 @@ public class PsTest {
 	@Autowired
 	UserRepo repo;
 
-	@Test
+	/*@Test
 	public void passwordTest() throws NoSuchAlgorithmException {
 
 		logger.trace("session : {}", session);
@@ -55,21 +55,20 @@ public class PsTest {
 		assertThat(users.size(), is(3));
 		logger.trace("User list : {}", users);
 
-		User user = repo.getUser("ysh5586");
+		User user = repo.getUserCheckId("ysh5586");
 		assertThat(user, is(notNullValue()));
 		logger.trace("User : {}", user);
 
 		logger.trace("원래 비밀번호 : {}", user.getPassword());
 		//repo.hashingPassword(user);
-		
-		user = repo.getUser("ysh5586");
+		user = repo.getUserCheckId("ysh5586");
 		logger.trace("해싱된 비밀번호 : {}", user.getPassword());
 
-	}
+	}*/
 	
 	
 	@Test
-	public void commentTest(){
+	public void userRepoTest(){
 		
 	}
 

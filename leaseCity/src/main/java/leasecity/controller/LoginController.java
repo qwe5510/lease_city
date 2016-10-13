@@ -55,8 +55,8 @@ public class LoginController {
 
    // (회원 가입시 ) 취소 버튼
    @RequestMapping(value = "/join_cancle", method = RequestMethod.GET)
-   public String join_cancle(Model model, Locale locale, SessionStatus status, HttpSession session,
-         RedirectAttributes redir) {
+   public String join_cancle(Model model, Locale locale, 
+		   SessionStatus status, HttpSession session, RedirectAttributes redir) {
       // 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
       redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");
 
@@ -78,22 +78,24 @@ public class LoginController {
       logger.trace("체크박스 값 : {}", help);
       return "join/login";
    }
+   
 
-   // 회원가입 폼에 적힌 값들 저장
+   
+   // 회원가입 컨트롤러 - 회원가입 폼에 적힌 값들 저장
    @RequestMapping(value = "/join", method = RequestMethod.POST)
    public String join(Model model, RedirectAttributes redir, HttpServletRequest request) {
 
-      // 1-1. join_input 폼에서 입력한 '기본' 회원정보 -> 갖고 오기
-	   String userId = request.getParameter("userId");
-	   String password = request.getParameter("password");
-	   String companyName = request.getParameter("companyName");
-	   String representName = request.getParameter("representName");
-	   String representPhone = request.getParameter("representPhone");
-	   String handPhone = request.getParameter("handPhone");
-	   String email = request.getParameter("email");
-	   String zipNo = request.getParameter("zipNo");
-	   String address = request.getParameter("address");
-	   String url = request.getParameter("url");
+		// 1-1. join_input 폼에서 입력한 '기본' 회원정보 -> 갖고 오기
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
+		String companyName = request.getParameter("companyName");
+		String representName = request.getParameter("representName");
+		String representPhone = request.getParameter("representPhone");
+		String handPhone = request.getParameter("handPhone");
+		String email = request.getParameter("email");
+		String zipNo = request.getParameter("zipNo");
+		String address = request.getParameter("address");
+		String url = request.getParameter("url");
 	   
 	   User user = new User(userId, password, companyName, representName, 
 			   				representPhone, handPhone, email, zipNo,address, 
@@ -187,8 +189,7 @@ public class LoginController {
 			   String equipmentCategory = equipmentTypes[n] + "/" + equipmentSizes[n];
 			   HEList.add(new HeavyEquipment(idNumbers[n], userId, equipmentCategory,  "N"));
 		   }
- 
-		   
+   
 		   // 2. 가입
 		   try {
 				UService.join(HCompany);
@@ -197,9 +198,9 @@ public class LoginController {
 				redir.addFlashAttribute("join_message", "회원가입 실패.");
 				return "join/join_input";
 			}
-		   
 	   }
-	   logger.trace("조인 들어옴");
+	   logger.trace("회원가입 완료");
+	   
 
       return "redirect:/index";
    }

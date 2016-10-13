@@ -2,9 +2,7 @@ package leasecity.dto.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import leasecity.dto.adminwork.Question;

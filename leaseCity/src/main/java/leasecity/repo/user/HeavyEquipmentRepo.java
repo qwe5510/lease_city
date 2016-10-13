@@ -3,7 +3,6 @@ package leasecity.repo.user;
 import java.util.List;
 
 import leasecity.dto.user.HeavyEquipment;
-import leasecity.dto.user.HeavyEquipmentCompany;
 
 public interface HeavyEquipmentRepo {
 

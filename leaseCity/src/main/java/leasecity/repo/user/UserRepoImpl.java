@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import leasecity.dto.user.User;
-import leasecity.util.HashingUtil;
 
 @Repository
 public class UserRepoImpl implements UserRepo{
@@ -26,11 +25,25 @@ public class UserRepoImpl implements UserRepo{
 		return session.selectList(stmt);
 	}
 	
-	//유저 검색 - id 
+	//유저 중복값 확인 - id 
 	@Override
-	public User getUser(String userId) {
-		String stmt = USER_NS + "getSelectUser";
+	public User getUserCheckId(String userId) {
+		String stmt = USER_NS + "getSelectUserCheckId";
 		return session.selectOne(stmt, userId);
+	}
+	
+	//유저 중복값 확인 - 업체명
+	@Override
+	public User getUserCheckCompanyName(String companyName) {
+		String stmt = USER_NS + "getSelectUserCheckId";
+		return session.selectOne(stmt, companyName);
+	}
+
+	//유저 중복값 확인 - email
+	@Override
+	public User getUserCheckEmail(String email) {
+		String stmt = USER_NS + "getSelectUserCheckId";
+		return session.selectOne(stmt, email);
 	}
 	
 	//유저 검색 - id,password
@@ -42,6 +55,21 @@ public class UserRepoImpl implements UserRepo{
 		idAndPassword.put("password", password);
 		return session.selectOne(stmt, idAndPassword);
 	}
+	
+	//유저 아이디 찾기
+	@Override
+	public User searchUserId(User user) {
+		String stmt = USER_NS + "searchUserId";
+		return session.selectOne(stmt, user);
+	}
+	
+	//유저 비밀번호 찾기
+	@Override
+	public User searchUserPassword(User user) {
+		String stmt = USER_NS + "searchUserPassword";
+		return session.selectOne(stmt, user);
+	}
+	
 	
 	@Override
 	public int insertUser(User user) {

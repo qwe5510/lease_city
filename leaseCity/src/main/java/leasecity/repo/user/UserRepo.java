@@ -9,9 +9,19 @@ public interface UserRepo {
 	//모든 유저 검색
 	public List<User> getAllUsers();
 	
-	//유저 검색 - Id / Id,Password
-	public User getUser(String userId);
+	//유저 정보 중복 검색 - Id,업체명, email / Id,Password
+	public User getUserCheckId(String userId);
+	public User getUserCheckCompanyName(String companyName);
+	public User getUserCheckEmail(String email);
+	
 	public User getUserIdAndPassword(String userId, String password);
+	
+	//아이디 찾기, 비밀번호 찾기 기능
+	//업체명, 대표자명, 이메일 정보로 유저id 뒷자리 **처리한 값 리턴.
+	public User searchUserId(User user);
+	
+	//아이디, 업체명, 대표자명, 이메일 정보로 유저 정보가 있는지 확인.
+	public User searchUserPassword(User user);
 	
 	//유저 추가
 	public int insertUser(User user);

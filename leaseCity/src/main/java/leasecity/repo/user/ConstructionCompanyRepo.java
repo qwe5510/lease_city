@@ -3,7 +3,6 @@ package leasecity.repo.user;
 import java.util.List;
 
 import leasecity.dto.user.ConstructionCompany;
-import leasecity.dto.user.HeavyEquipmentCompany;
 
 public interface ConstructionCompanyRepo {
 	// 모든 건설업체 검색

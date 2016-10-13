@@ -14,6 +14,7 @@ import leasecity.dto.user.License;
 import leasecity.dto.user.User;
 import leasecity.exception.JoinFailException;
 import leasecity.exception.LoginFailException;
+import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
 import leasecity.repo.user.ConstructionCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentCompanyRepo;
@@ -118,18 +119,57 @@ public class UserServiceImpl implements UserService {
 	//이미 존재하는 아이디인지 중복여부 확인. -> 중복 시 true, 아니면 false
 	@Override
 	public boolean isUserId(String userId) {
-		User user = userRepo.getUser(userId);
+		User user = userRepo.getUserCheckId(userId);
+		if(user != null){return true;}
+		else{return false;}
+	}
+	@Override
+	public boolean isUserCompanyName(String companyName) {
+		User user = userRepo.getUserCheckCompanyName(companyName);
+		if(user != null){return true;}
+		else{return false;}
+	}
+	@Override
+	public boolean isUserEmail(String email) {
+		User user = userRepo.getUserCheckEmail(email);
 		if(user != null){return true;}
 		else{return false;}
 	}
 	
+	//아이디 찾기 - 뒷자리가 *처리된 id와 이메일, 업체명, 대표자명 정보가 담긴 유저 리턴
+	@Override
+	public User searchUserId(User user) throws NotFoundDataException {
+		User result = userRepo.searchUserId(user);
+		if(result == null){
+			logger.error("ERROR!! - 아이디 찾기를 하고자하는 대상 유저가 없음");
+			throw new NotFoundDataException("아이디 찾기 대상 유저");
+		}else{
+			logger.trace("유저 아이디 찾기 완료 : {}", result.getUserId());
+			return result;
+		}
+	}
+	
+	//비밀번호 찾기 : 아이디, 업체명, 대표자명, 이메일정보로 검색하여 유저가있는지 확인.
+	@Override
+	public User searchUserPassword(User user) throws NotFoundDataException {
+		User result = userRepo.searchUserPassword(user);
+		if(result == null){
+			logger.error("ERROR!! - 비밀번호 찾기를 하고자하는 대상 유저가 없음");
+			throw new NotFoundDataException("비밀번호 찾기 대상 유저");
+		}else{
+			logger.trace("유저 아이디 찾기 완료 : {}", result.getUserId());
+			return result;
+		}
+	}
+	
+	//유저정보변경, keyword를 통해 비밀번호, 정보 중 하나 변경 
 	@Override
 	public void changeInfo(String keyword, User user) 
 								throws ServiceFailException {
 		int result = -1;
-
+		// 비밀번호 수정
 		if (keyword.equals("password")) {
-			// 비밀번호 수정
+			
 
 			// 비밀번호 해싱
 			String hashPassword = HashingUtil.hashingString(user.getPassword());
@@ -137,8 +177,10 @@ public class UserServiceImpl implements UserService {
 
 			result = userRepo.updatePasswordUser(user);
 			logger.trace("유저 비밀번호 수정 완료 : {}", result);
-		} else if (keyword.equals("info")) {
-			// 정보 수정
+		} 
+		// 정보 수정
+		else if (keyword.equals("info")) {
+			
 			result = userRepo.updateUser(user);
 			logger.trace("유저 정보 수정 완료 : {}", result);
 		} else {
