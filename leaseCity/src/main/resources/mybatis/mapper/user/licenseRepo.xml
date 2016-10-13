@@ -29,23 +29,25 @@
  	<!-- 자격증 추가 -->
  	<insert id="insertLicense" parameterType="license">
  		INSERT INTO license VALUES(
- 		#{licenseNo},#{userId},#{licenseName},
+ 		#{userId},#{licenseName},
  		#{licenseDate}, #{licenser})
  	</insert>
  	
+ 	
+ 	<!-- 작업해야함.  -->
  	<!-- 자격증 수정 -->
  	<update id="updateLicense" parameterType="license">
  		UPDATE license SET
- 		license_no = #{licenseNo}, user_id = #{userId},
- 		license_name = #{licenseName}, license_date = {licenseDate}
+ 		user_id = #{userId}, license_name = #{licenseName}, 
+ 		license_date = {licenseDate}
  		licenser = #{licenser}
- 		WHERE license_no = #{licenseNo}
+ 		
  	</update>
  	
  	<!-- 자격증 삭제 -->
  	<delete id="deleteLicense" parameterType="license">
  		DELETE FROM license
- 		WHERE license_no = #{licenseNo} 
+ 		WHERE license_name = #{licenseName}
  	</delete>
  	
  	<!-- 유저 별 통합 자격증 삭제 -->

@@ -1,7 +1,13 @@
 package leasecity.controller;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+<<<<<<< HEAD
 import java.util.Random;
+=======
+import java.util.StringTokenizer;
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,13 +25,18 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.adminwork.StandByUser;
-import leasecity.dto.user.*;
+import leasecity.dto.user.ConstructionCompany;
+import leasecity.dto.user.HeavyEquipment;
+import leasecity.dto.user.HeavyEquipmentCompany;
+import leasecity.dto.user.License;
+import leasecity.dto.user.User;
 import leasecity.exception.DuplicateValueException;
 import leasecity.exception.JoinFailException;
 import leasecity.exception.LoginFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.service.StandByUserService;
 import leasecity.service.UserService;
+import leasecity.util.DateUtil;
 import leasecity.util.SendMailUtil;
 
 @Controller
@@ -38,6 +49,7 @@ public class LoginController {
 
    @Autowired
    UserService UService;
+
 
    // 메인 페이지
    @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -113,7 +125,11 @@ public class LoginController {
 			   				representPhone, handPhone, email, zipNo,address, 
 			   				"ON", url, null, 0.0, null);
 	   
+<<<<<<< HEAD
 	   logger.trace("User 값 들어왔는지 확인 : {}", user);
+=======
+	   logger.trace("User 컨트롤러 확인 : {}", user);
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 	   
 	   // 1-2 company( 중기, 건설 )의 경우에 따라 값 호출
 	   String company = request.getParameter("company");
@@ -123,13 +139,43 @@ public class LoginController {
 		   // 1. 건설업체에 필요한 값 가져오기
 		   Integer yearlySale = Integer.parseInt(request.getParameter("yearlySale"));
 		   Integer yearlyAoor = Integer.parseInt(request.getParameter("yearlyAoor"));
-		   String companyCategory = request.getParameter("companyCategory");
+		   String[] companyCategory = request.getParameterValues("companyCategory");
+		   
+		   //체크박스 문자열을 이을 스트링버퍼 객체
+		   StringBuffer sb = new StringBuffer();
+		   for(String str : companyCategory){
+			 sb.append(str + "/");
+		   }
+		   sb.deleteCharAt(sb.length()-1);
+		   //분야를 /로 조합한 문자열
+		   String mixCompanyCategory = sb.toString();
 		   
 		   // 2. 건설업체 객체 초기화
 		   ConstructionCompany CCompany = 
-				   new ConstructionCompany(user, yearlySale, yearlyAoor,companyCategory);
+				   new ConstructionCompany(user, yearlySale, yearlyAoor, mixCompanyCategory);
 		   
-		   logger.trace("건설업체 받은 정보 : {}", CCompany);
+		   List<License> licenseList = CCompany.getLicenseList();
+		   
+		   String[] licenseNames = request.getParameterValues("licenseName");
+		   String[] licenseDates = request.getParameterValues("licenseDate");
+		   String[] licensers = request.getParameterValues("licenser");  
+		   StringTokenizer strToken;
+		   
+		   for(int n=0; n<licenseNames.length; n++){
+			   if(licenseNames[n].length() <=0 || 
+					   licenseDates[n].length() <=0 || 
+					   licensers[n].length() <=0){
+				   strToken = new StringTokenizer(licenseDates[n], "-");
+				   //년도, 월, 일 3가지 Date에 대입
+				   Date date = DateUtil.getStringDate(
+						   strToken.nextToken(), 
+						   strToken.nextToken(), 
+						   strToken.nextToken());
+			
+				   licenseList.add(new License(userId, licenseNames[n], date, licensers[n]));
+			   }
+		   }
+		
 		   // 3. 가입
 		   try {
 			UService.join(CCompany);
@@ -142,9 +188,36 @@ public class LoginController {
 		  
 	   } else if( company.equals("중기업체") ){
 		   
+		   String helpOnOff, infoOnOff;
+		   
+		   //체크박스가 걸려있으면 ON 아니면 OFF
+		   if(request.getParameter("helpOnOff")==null)
+		   		{helpOnOff = "OFF";	}
+		   else {helpOnOff = "ON";	}
+		   
+		   if(request.getParameter("infoOnOff")==null)
+		   		{infoOnOff = "OFF"; }
+		   else	{infoOnOff = "ON";  }
+		   
 		   // 1. 
-		   HeavyEquipmentCompany HCompany = new HeavyEquipmentCompany(user, "ON", "ON");
+		   HeavyEquipmentCompany HCompany = 
+				   new HeavyEquipmentCompany(user, helpOnOff, infoOnOff);
 		   logger.trace("중기업체 받은 정보 : {}", HCompany);
+		   
+		   List<HeavyEquipment> HEList = HCompany.getHeavyEquipmentList();
+		   
+		   String[] idNumbers = request.getParameterValues("idNumber");
+		   String[] equipmentTypes = request.getParameterValues("equipmentType");
+		   String[] equipmentSizes = request.getParameterValues("equipmentSize");
+		   
+		   
+		   for(int n=0; n < idNumbers.length; n++){
+			 //Type + Size 
+			   //Ex)불도저/대
+			   String equipmentCategory = equipmentTypes[n] + "/" + equipmentSizes[n];
+			   HEList.add(new HeavyEquipment(idNumbers[n], userId, equipmentCategory,  "N"));
+		   }
+ 
 		   
 		   // 2. 가입
 		   try {

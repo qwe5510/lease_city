@@ -24,9 +24,6 @@ public class License implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 자격증 번호. */
-	private String licenseNo;
-
 	/** 회원. */
 	private String userId;
 
