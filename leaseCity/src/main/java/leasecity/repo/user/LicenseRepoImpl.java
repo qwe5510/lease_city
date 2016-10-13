@@ -1,6 +1,8 @@
 package leasecity.repo.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,12 @@ public class LicenseRepoImpl implements LicenseRepo{
 	@Override
 	public int updateLicense(License prev, License next) {
 		String stmt = LICENSE_NS + "updateLicense";
+		
+		Map<String, License> map = new HashMap<>();
+		
+		map.put("prev", prev);
+		map.put("next", next);
+		
 		return session.update(stmt);
 	}
 

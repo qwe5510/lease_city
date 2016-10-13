@@ -164,7 +164,7 @@ public class LoginController {
 			// 3. 가입
 			try {
 				// 회원가입 완료 시 대기유저 목록에서 제거. (발급코드도 지움)
-				StandByUser SBU = new StandByUser(companyName, representName, email);
+				StandByUser SBU = SBUService.getStandByUser(companyName, representName, email);
 				SBUService.rejectStandByUser(SBU);
 				
 				UService.join(CCompany);
@@ -216,7 +216,7 @@ public class LoginController {
 			// 2. 가입
 			try {
 				// 회원가입 완료 시 대기유저 목록에서 제거. (발급코드도 지움)
-				StandByUser SBU = new StandByUser(companyName, representName, email);
+				StandByUser SBU = SBUService.getStandByUser(companyName, representName, email);
 				SBUService.rejectStandByUser(SBU);
 				
 				UService.join(HCompany);
