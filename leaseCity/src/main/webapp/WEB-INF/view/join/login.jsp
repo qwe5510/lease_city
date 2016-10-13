@@ -15,11 +15,10 @@
    <!-- 가입 절차 설명 메시지 -->
    <c:if test="${!empty join_message }">
       <script type="text/javascript">
-         var msg = '${join_message }'
-         alert(msg);
+         alert('${join_message }');
       </script>
    </c:if>
-
+   
    <jsp:include page="../layout/header.jsp"></jsp:include>
    <div class="login">
       <img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
@@ -133,6 +132,7 @@
       </div>
    </section>
    <jsp:include page="../layout/footer.jsp"></jsp:include>
+   
    <!--  가입요청 -->
    <div class="modal hide fade in" id="joinRequest" aria-hidden="false">
       <div class="modal-header">
@@ -158,14 +158,14 @@
       <div class="modal-header">
          <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
             class="modalImg"
-            src="<%=request.getContextPath()%>/images/pop/id.png"/>
+            src="<%=request.getContextPath()%>/images/pop/id.png" />
       </div>
       <!--Modal Body-->
       <div class="modal-body">
          <sform:form class="form-inline" modelAttribute="user" method="post" action="popup_join_request">
             <sform:input path="representName" type="text" placeholder="업체명" /> <br>
             <sform:input path="companyName" type="text" placeholder="대표자명" /> <br>
-            <sform:input path="email" type="email" placeholder="Email"/> <br>
+            <sform:input path="email" type="email" placeholder="Email" /> <br>
             <sform:button class="pop">아이디 찾기</sform:button>
          </sform:form>
       </div>
@@ -185,9 +185,8 @@
             <sform:input path="representName" type="text" placeholder="업체명" /><br>
             <sform:input path="companyName" type="text" placeholder="대표자명" /><br>
             <sform:input path="email" type="email" placeholder="Email" />
-            <sform:button class="btn1" id="issue" value="발급">발급</sform:button>
-            <input name="confirmNum" id="confirmNum" type="number" placeholder="인증번호" />
-            <sform:button class="btn1" id="confirm" value="인증">인증</sform:button>
+            <sform:button class="btn1" value="발급">발급</sform:button>
+            <sform:button class="btn1" value="인증">인증</sform:button>
             <br>
             <sform:button id="passbtn">비밀번호찾기</sform:button>
          </sform:form>
@@ -219,14 +218,14 @@
    <!-- Required javascript files for Slider -->
    <script src="js/jquery.ba-cond.min.js"></script>
    <script src="js/jquery.slitslider.js"></script>
-  
-
-</body>
-<script>
+   <script src="js/validation/lib/jquery.js"></script>
+   <script src="js/validation/dist/jquery.validate.js"></script>
+   <script>
       function validateform() {
          var representName = document.joinForm.representName.value;
          var companyName = document.joinForm.companyName.value;
          var email = document.joinForm.email.value;
+         console.log("ggggg");
          if (representName == null || representName == "") {
             alert("대표자 성명을 기입하세요!");
             return false;
@@ -297,4 +296,5 @@
     		}
       }
  </script>
+</body>
 </html>

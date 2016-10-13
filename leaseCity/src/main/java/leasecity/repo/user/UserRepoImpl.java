@@ -46,6 +46,8 @@ public class UserRepoImpl implements UserRepo{
 		return session.selectOne(stmt, email);
 	}
 	
+	
+	
 	//유저 검색 - id,password
 	@Override
 	public User getUserIdAndPassword(String userId, String password) {

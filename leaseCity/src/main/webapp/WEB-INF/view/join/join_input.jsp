@@ -12,7 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" onsubmit="return validateform()" >
+			<form id="joinForm">
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table>
@@ -46,14 +46,14 @@
 						</tr>
 						<tr>
 							<td><label class="join_input">대표자연락처</label></td>
-							<td><input type="text" name="representPhone" id="representPhone" placeholder="ex)031471xxxx">
-							<span id= "vali" class="representPhone">ex)031471xxxx</span>
+							<td><input type="text" name="representPhone" id="representPhone" placeholder="ex)031-xxx-xxxx">
+							<span id= "vali" class="representPhone">-포함 국번으로 입력</span>
 							</td>
 						</tr>
 						<tr>
 							<td><label class="join_input">휴대폰연락처</label></td>
-							<td><input type="text" name="handPhone" id="handPhone" placeholder="ex)010xxxxxxxx">
-							<span id= "vali" class="handPhone">ex)010xxxxxxxx</span>
+							<td><input type="text" name="handPhone" id="handPhone" placeholder="ex)010-xxxx-xxxx">
+							<span id= "vali" class="handPhone">-포함 11~12자리 핸드폰 번호 입력</span>
 							</td>
 						</tr>
 						<tr>
@@ -105,7 +105,7 @@
 				</fieldset>
 				<br>
 				<input type="submit" formaction="<%=request.getContextPath() %>/join" formmethod="post" value="가입" onsubmit="return validateform()">
-				<input type="submit" formaction="<%=request.getContextPath() %>/join_cancle" formmethod="get" value="취소">
+				<input type="submit" formaction="<%=request.getContextPath() %>/join_cancle" formmethod="get" value="취소" onsubmit="true">
 			</form>
 		</div>
 	</div>
@@ -171,13 +171,32 @@ function hecInfoOutput(){
 	$("#CSC").on("click", cscInfoOutput);
 	$("#HEC").on("click", hecInfoOutput);
 	
-	$(document).on("ready", cscInfoOutput);
+	$(document).on("ready", function(){
+		var isCSC = $("#CSC").attr("checked");
+		var isHEC = $("#HEC").attr("checked");
+		//CSC가 체크되어있으면  건설업체 상세정보 출력
+		if(isCSC=="checked"){
+			cscInfoOutput();
+		}else if(isHEC=="checked"){
+			hecInfoOutput();
+		}		
+	});
+
+	//회원가입 양식검사.
+	$("#joinForm").on("submit", function(e){
 	
-//회원가입 양식검사.
+		var isChecked = validateform();
+		var isDuplicated = ajaxIdCheck(); 
+		
+		if(!isChecked || !isDuplicated){
+			e.preventDefault();
+		}
+					
+	});
+ 
 function validateform() {
 	var password = $("#password").val();
 	var password2 = $("#password2").val();
-	var userId = $("#userId").val();
 	var representPhone = $("#representPhone").val();
 	var handPhone =$("#handPhone").val();
 	var url = $("#url").val();
@@ -185,17 +204,7 @@ function validateform() {
 	var sales = $("#sales").val();
 	var obtain = $("#obtain").val();
 	var num = $("#num").val();
-	var isHEC = $("#HEC")[0].checked;	
-	
-
-	//ID 4글자 15글자
-	var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
-	if(!idRegExp.test(userId)){
-		$(".userId").html("아이디 조건 불일치 ");
-		return false;
-	}else if(idRegExp.test(userId)){
-		$(".userId").html("아이디 조건이 일치합니다.");
-	}
+	var isHEC = $("#HEC")[0].checked;
 	
 	//특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
 	var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
@@ -213,19 +222,19 @@ function validateform() {
 	}	
 	
 	//일반전화 정규표현식
-	var repreRegExp = /^(02|0[3-9]{1}[0-9]{1})[0-9]{3,4}[0-9]{4}$/;
+	var repreRegExp = /^(02|0[3-9]{1}[0-9]{1})-[0-9]{3,4}-[0-9]{4}$/;
 	
 	if(!repreRegExp.test(representPhone)){
-		$(".representPhone").html("연락처 조건 불일치");
+		$(".representPhone").html("연락처 조건 불일치 (-포함 국번으로 입력)");
 		return false;
 	}else if(repreRegExp.test(representPhone)){
 		$(".representPhone").html("연락처 조건 일치되었습니다.");
 	}
 	
 	//핸드폰 정규표현식 01다음 숫자 0~9 숫자 포함
-	var phoneRegExp = /^(01[016789]{1})[0-9]{7,8}$/;
+	var phoneRegExp = /^(01[016789]{1})-[0-9]{3,4}-[0-9]{4}$/;
 	if(!phoneRegExp.test(handPhone)){
-		$(".handPhone").html("연락처 조건 불일치");
+		$(".handPhone").html("연락처 조건 불일치 (-포함 11~12자리 번호)");
 		return false;
 	}else if(phoneRegExp.test(handPhone)){
 		$(".handPhone").html("연락처 조건 일치합니다.");
@@ -241,21 +250,17 @@ function validateform() {
 	}else if(urlRegExp.test(url)){
 		$(".url").html("url 형식 일치합니다.");
 	}
-
 	//주소 입력검사
 	if(address==null || address==""){
 		$(".addressInput").html("주소 필수입력");
 		return false;
 	}
-
-	//중간에 공백을 포함해도되고 안해도되면서 한글2글자, 숫자 2글자, 한글1글자, 숫자 4글자인 값
-	//Ex)경기 30 바 3282
-	var regIdNumber = /^[가-힣]{2} ?[0-9]{2} ?[가-힣] ?[0-9]{4}$/;
 	//중기업체 차량번호 공백검사
 	
 	if(isHEC){
-		if(num==null || num==""){
-			$(".checked").html("차량번호를 입력해주세요.");
+		var hiddens = $("input[type=hidden]");
+		if(hiddens.length <= 0){
+			$(".numbervali").html("중장비는 최소 1개 이상 있어야합니다.");
 			return false;
 		}
 	}
@@ -278,7 +283,7 @@ function validateform() {
 	
 	var isChecked = false;
 	for(var idx of CC_arr){
-		var item = $("#"+idx)[0].checked;
+		var item = $("#"+idx)[0].checked
 		if(item){
 			isChecked = true;
 		}
@@ -287,10 +292,56 @@ function validateform() {
 	if(!isChecked){
 		$(".checked").html("분야를 최소 1개 이상 선택해주세요.");
 		return false;
+	}else if(isChecked){
+		$(".checked").html("");
 	}
-	
-
 }
+
+	<c:url value="/validateId" var="validateId"/>
+	$("#userId").blur(ajaxIdCheck);
+	function ajaxIdCheck() {   
+	      var inputUserId = $("#userId").val();
+	      var result = true; //결과를 리턴받는 변수  
+	      $.ajax({
+	           // type을 설정합니다.
+	           type : 'post',
+	           url : "${validateId }",
+	           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+	           data : {inputUserId : inputUserId},
+	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+	           success : function (data) {
+	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
+	             if (data == true) {
+	             	//$("#userId").val('');
+	                //$("#userId").val(input_userId + ' (이미 등록된 아이디) ');
+	                $(".userId").html("이미 등록된 아이디 입니다.");
+	                result = false;
+	                //alert(data); 
+	             } else if (data == false) {
+	                //$("#userId").val('');
+	                //$("#userId").val(input_userId + ' (등록 가능 아이디) ');		               
+		            //ID 4글자 15글자
+		            var userId = $("#userId").val();
+		          	var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
+		           	if(!idRegExp.test(userId)){
+		           		$(".userId").html("아이디 조건 불일치");
+		           		result = false;
+		           	}else if(idRegExp.test(userId)){
+		           		$(".userId").html("등록 가능한 아이디입니다.");
+		           	}		           	
+		           	$(".userId").focus();
+	             }      
+	         },
+	         error : function(xhr, status, error) {
+	     	 alert(error);
+		   }
+		});
+	    if(!result){
+	    	return result;
+	    }  
+	}
+		   
+
 
 //password 검사
 function passvali(){
@@ -314,14 +365,20 @@ function passvali(){
 }
 
 	
+	//중기업체 차량 추가 버튼 클릭 시 이벤트
 	$(document).on("click","#btn1",	function(e) {
 		e.preventDefault();
 		var type = $("#type").val();
 		var size = $("#size").val();
 		var num = $("#num").val();
-		if(num==null || num==""){
-			$(".numbervali").html("차량번호 필수입력사항");
-		}else{
+		
+		//공백 포함 2자리 수, 한글 1글자, 4자리수인 값
+		//Ex)30 바 3282
+		var regIdNumber = /^[0-9]{2} ?[가-힣] [0-9]{4}$/;
+		
+		if(!regIdNumber.test(num)){
+			$(".numbervali").html("올바르지 않은 차량번호 입니다<br>[ex)30 가 1000]");
+		}else if(regIdNumber.test(num)){
 			$(".numbervali").html("");
 			$(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>")
 			.append("<input type='hidden' name='equipmentType' value='"+ type +"'> ")
@@ -370,45 +427,6 @@ function passvali(){
 			$("#size").html(str4);
 		}
 	});
-
-	<c:url value="/validateId" var="validateId"/>
-		   $("#userId").blur(function(e) {   
-		            var inputUserId = $("#userId").val();
-		            $.ajax({
-		                 // type을 설정합니다.
-		                 type : 'post',
-		                 url : "${validateId }",
-		                 // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-		                 data : {inputUserId : inputUserId},
-		                 // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
-		                 success : function (data) {
-		                     // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
-		                     if (data == true) {
-		                        //$("#userId").val('');
-		                        //$("#userId").val(input_userId + ' (이미 등록된 아이디) ');
-		                        $(".userId").html("이미 등록된 아이디 입니다.");
-		                        e.preventDefault();
-		                         //alert(data); 
-		                     } else if (data == false) {
-		                        //$("#userId").val('');
-		                        //$("#userId").val(input_userId + ' (등록 가능 아이디) ');
-		                        $(".userId").html("등록 가능한 아이디 입니다.");
-		                        $(".userId").focus();
-		                     }      
-		                 },
-		                 error : function(xhr, status, error) {
-		                 alert(error);
-		         }
-		      });
-		   });
-		   
-		   
-	$("#userId").click(function() {
-		$("#userId").val('');
-	 	$("#userId").css("color", "black");
-	});
-	
-	
 	$(document).on("click","#help",	function(e) {
 		var help = $("#help").val();
 		console.log(help);
