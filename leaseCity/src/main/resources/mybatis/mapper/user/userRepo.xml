@@ -27,11 +27,6 @@
  								resultType="user">
  		SELECT * FROM users WHERE email = #{email}
  	</select>
- 	
- 	
- 	
- 	
- 	
  	<!-- 유저 ID와 password로 검색 (로그인) -->
  	<select id="getSelectUserIdAndPassword" parameterType="Map" 
  								resultType="user">
@@ -44,7 +39,7 @@
  								resultType="user">
  		SELECT RPAD(SUBSTR(user_id, 1, LENGTH(user_id)-2)
  					, LENGTH(user_id), '*') AS user_id
- 					, company_name, represent_name, email;
+ 					, company_name, represent_name, email
  		FROM users
  		WHERE 
  			REPLACE(company_name, ' ', '') = REPLACE(#{companyName}, ' ', '') AND
@@ -58,7 +53,7 @@
  		SELECT *
  		FROM users
  		WHERE
- 			user_id = #(user_id) AND 
+ 			user_id = #{userId} AND 
  			REPLACE(company_name, ' ', '') = REPLACE(#{companyName}, ' ', '') AND
  			represent_name = #{representName} AND
  			email = #{email}
