@@ -3,11 +3,11 @@ package leasecity.controller;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-<<<<<<< HEAD
+
 import java.util.Random;
-=======
+
 import java.util.StringTokenizer;
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -125,11 +125,9 @@ public class LoginController {
 			   				representPhone, handPhone, email, zipNo,address, 
 			   				"ON", url, null, 0.0, null);
 	   
-<<<<<<< HEAD
 	   logger.trace("User 값 들어왔는지 확인 : {}", user);
-=======
 	   logger.trace("User 컨트롤러 확인 : {}", user);
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
+
 	   
 	   // 1-2 company( 중기, 건설 )의 경우에 따라 값 호출
 	   String company = request.getParameter("company");
