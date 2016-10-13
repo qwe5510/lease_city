@@ -158,14 +158,14 @@
       <div class="modal-header">
          <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
             class="modalImg"
-            src="<%=request.getContextPath()%>/images/pop/id.png" />
+            src="<%=request.getContextPath()%>/images/pop/id.png"/>
       </div>
       <!--Modal Body-->
       <div class="modal-body">
          <sform:form class="form-inline" modelAttribute="user" method="post" action="popup_join_request">
             <sform:input path="representName" type="text" placeholder="업체명" /> <br>
             <sform:input path="companyName" type="text" placeholder="대표자명" /> <br>
-            <sform:input path="email" type="email" placeholder="Email" /> <br>
+            <sform:input path="email" type="email" placeholder="Email"/> <br>
             <sform:button class="pop">아이디 찾기</sform:button>
          </sform:form>
       </div>
@@ -185,8 +185,9 @@
             <sform:input path="representName" type="text" placeholder="업체명" /><br>
             <sform:input path="companyName" type="text" placeholder="대표자명" /><br>
             <sform:input path="email" type="email" placeholder="Email" />
-            <sform:button class="btn1" value="발급">발급</sform:button>
-            <sform:button class="btn1" value="인증">인증</sform:button>
+            <sform:button class="btn1" id="issue" value="발급">발급</sform:button>
+            <input name="confirmNum" id="confirmNum" type="number" placeholder="인증번호" />
+            <sform:button class="btn1" id="confirm" value="인증">인증</sform:button>
             <br>
             <sform:button>비밀번호찾기</sform:button>
          </sform:form>
@@ -200,14 +201,14 @@
    <!-- Required javascript files for Slider -->
    <script src="js/jquery.ba-cond.min.js"></script>
    <script src="js/jquery.slitslider.js"></script>
-   <script src="js/validation/lib/jquery.js"></script>
-   <script src="js/validation/dist/jquery.validate.js"></script>
-   <script>
+  
+
+</body>
+<script>
       function validateform() {
          var representName = document.joinForm.representName.value;
          var companyName = document.joinForm.companyName.value;
          var email = document.joinForm.email.value;
-         console.log("ggggg");
          if (representName == null || representName == "") {
             alert("대표자 성명을 기입하세요!");
             return false;
@@ -233,8 +234,22 @@
          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
          return re.test(email);
       }
-   </script>
-
-</body>
-
+      var str = "";
+      $(document).on("click","#issue",function(e){
+    	   e.preventDefault();
+    	   var value;
+    	   
+    	   
+    	   for(var i=0; i<6; i++){
+    	      value = Math.floor(Math.random()*10);
+    	      str += value;
+    	   } 
+    	   console.log(str);
+      });
+      $(document).on("click","#confirm",function(e){
+    	  e.preventDefault();
+    	  var temp = $("#confirmNum").val();
+    	  console.log(str==temp);
+      })
+ </script>
 </html>

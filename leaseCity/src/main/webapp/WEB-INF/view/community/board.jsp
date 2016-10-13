@@ -23,7 +23,7 @@
       });
 	</script>
 	</div>
-	<div>
+	<div class="community">
 		유챗
 	</div>
 	</div>

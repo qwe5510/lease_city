@@ -1041,12 +1041,23 @@ label {
 .board{
 	margin-top: 50px;
 }
+/*회원가입 페이지 메인 div 설정*/
 .join {
 	margin-top: 50px;
 	left: 50%;
 	margin-left: 350px;
 }
-
+/*유챗 div 설정  */
+.uchat{
+	display: inline-block;
+	float: right;
+}
+/*community div 설정  */
+.community{
+	width : 400px;
+	float: left;
+	display: inline-block;
+}
 .input {
 	margin-top: 15px;
 }
