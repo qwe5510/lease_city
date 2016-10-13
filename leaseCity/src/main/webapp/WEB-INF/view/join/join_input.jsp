@@ -12,7 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" onsubmit="return validateform()">
+			<form id="joinForm" >
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table>
@@ -104,7 +104,7 @@
 					<div class="checked"></div>
 				</fieldset>
 				<br>
-				<input type="submit" formaction="<%=request.getContextPath() %>/join" formmethod="post" value="가입">
+				<input type="submit" formaction="<%=request.getContextPath() %>/join" formmethod="post" value="가입" onsubmit="return validateform()">
 				<input type="submit" formaction="<%=request.getContextPath() %>/join_cancle" formmethod="get" value="취소">
 			</form>
 		</div>
@@ -372,19 +372,15 @@ function passvali(){
 	});
 
 	<c:url value="/validate_id" var="validate_id"/>
-		   $("#userId").blur(function() {
-		      
+		   $("#userId").blur(function() {   
 		      var input_userId = $("#userId").val();
-		      var saved_userId = '${saved_userId}';
 		      
 		      $.ajax({
 		           // type을 설정합니다.
 		           type : 'post',
 		           url : "${validate_id }",
 		           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-		           data : {
-		              input_userId : input_userId
-		           },
+		           data : {input_userId : input_userId},
 		           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 		           success : function (data) {
 		               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
@@ -405,10 +401,12 @@ function passvali(){
 		         }
 		       });
 		   });
-		   $("#userId").click(function() {
-		      $("#userId").val('');
-		      $("#userId").css("color", "black");
-		   });
+		   
+		   
+	$("#userId").click(function() {
+		$("#userId").val('');
+	 	$("#userId").css("color", "black");
+	});
 	
 	
 	$(document).on("click","#help",	function(e) {
