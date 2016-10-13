@@ -12,7 +12,7 @@
 	<div class=join>
 		<img src="<%=request.getContextPath()%>/images/login/join.png">
 		<div class="input">
-			<form id="joinForm" onsubmit="return validateform()">
+			<form id="joinForm" >
 				<fieldset>
 					<legend>기본정보 입력</legend>
 					<table>
@@ -104,7 +104,7 @@
 					<div class="checked"></div>
 				</fieldset>
 				<br>
-				<input type="submit" formaction="<%=request.getContextPath() %>/join" formmethod="post" value="가입">
+				<input type="submit" formaction="<%=request.getContextPath() %>/join" formmethod="post" value="가입" onsubmit="return validateform()">
 				<input type="submit" formaction="<%=request.getContextPath() %>/join_cancle" formmethod="get" value="취소">
 			</form>
 		</div>

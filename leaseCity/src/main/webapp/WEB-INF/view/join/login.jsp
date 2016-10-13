@@ -24,7 +24,7 @@
    <div class="login">
       <img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
       <div class="inner">
-         <form method="post" action="#">
+         <form method="post" action="popup_login">
             <fieldset>
                <legend>로그인</legend>
                <table>
@@ -145,8 +145,8 @@
          <form class="form-inline" method="post" action="popup_join_request"
             name="joinForm" onsubmit="return validateform()">
             <input id="representName" name="representName" type="text"
-               placeholder="업체명" /> <br> <input id="companyName"
-               name="companyName" type="text" placeholder="대표자명" /> <br> <input
+               placeholder="대표자명" /> <br> <input id="companyName"
+               name="companyName" type="text" placeholder="업체명" /> <br> <input
                id="email" name="email" type="email" placeholder="Email" /> <br>
             <button class="pop">가입 요청</button>
          </form>
@@ -186,10 +186,9 @@
             <sform:input path="companyName" type="text" placeholder="대표자명" /><br>
             <sform:input path="email" type="email" placeholder="Email" />
             <sform:button class="btn1" value="발급">발급</sform:button>
-            <br> <input path="companyName" type="number" placeholder="인증번호" />
             <sform:button class="btn1" value="인증">인증</sform:button>
             <br>
-            <button>비밀번호찾기</button>
+            <sform:button>비밀번호찾기</sform:button>
          </sform:form>
       </div>
    </div>
