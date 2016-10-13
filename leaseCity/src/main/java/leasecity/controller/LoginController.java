@@ -350,65 +350,116 @@ public class LoginController {
 
    // 아이디 찾기 컨트롤
    @RequestMapping(value = "/popup_search_id", method = RequestMethod.POST)
-   public String popup_search_id(Model model, HttpServletRequest request, RedirectAttributes redir) {
+   public String popup_search_id(Model model, HttpServletRequest request, RedirectAttributes redir, User user) {
 
-      // 1. 폼에서 입력된 값 받기
-	   StandByUser sbu = new StandByUser();
-	   String companyName = request.getParameter("companyName");
-	   String representName = request.getParameter("representName");
-	   String email = request.getParameter("email");
-	   logger.trace("아이디 찾을 회원 정보 : {}", sbu);
-	   
+		// 0. 선언 ( 메일 유틸 )
+		SendMailUtil mUtil = new SendMailUtil();
 
-      // 2. 입력된 값 --> db와 비교
-	 try {
-		sbu = SBUService.getStandByUser(companyName, representName, email);
-		StringBuffer id = new StringBuffer(sbu.getEmail());
-		redir.addFlashAttribute("join_message", "아이디 찾기 성공 " + id.replace(4, 9, "****").toString());
-	} catch (NotFoundDataException e) {
-		redir.addFlashAttribute("join_message", "아이디 찾기 실패");
+		// 1. 유저 받기
+		/*
+		 * String companyName = user.getCompanyName(); String representName =
+		 * user.getRepresentName(); String email = user.getEmail();
+		 */
+		logger.trace("아이디 찾을 회원 정보 : {}", user);
+
+		// 2. 서비스로 찾기 ( 이메일 아이디 )
+		try {
+			user = UService.searchUserId(user);
+			mUtil.email_IdCertification(user.getEmail(), user.getUserId());
+			redir.addFlashAttribute("join_message", "아이디 찾기 성공 - 이메일로 아이디를 발송했습니다.");
+		} catch (NotFoundDataException e) {
+			redir.addFlashAttribute("join_message", "아이디 찾기 실패");
+			return "redirect:/login";
+		}
+		// 3. 결과 출력 메시지 후, login
 		return "redirect:/login";
-	}
-
-      // 3. 결과 출력 메시지 후, login
-      return "redirect:/login";
    }
 
    // 비밀번호 찾기 컨트롤
-   @RequestMapping(value = "/popup_search_pass", method = RequestMethod.POST)
-   public String popup_search_pass(Model model, HttpServletRequest request, RedirectAttributes redir) {
+   @RequestMapping(value = "/popupSearchPass", method = RequestMethod.POST)
+   public String popup_search_pass(Model model, RedirectAttributes redir, User user, HttpSession session) {
 
-      // 1. 폼에 입력 값 받기
-	   StandByUser sbu = new StandByUser();
-	   String userId = request.getParameter("userId");
-	   String companyName = request.getParameter("companyName");
-	   String representName = request.getParameter("representName");
-	   String email = request.getParameter("email");
-	   logger.trace("아이디 찾을 회원 정보 : {}", sbu);
-      // 2. 입력된 값 --> db와 비교
+		// 1. 폼에 입력 값 받기
+		logger.trace("아이디 찾을 회원 정보 : {}", user);
+		// 2-1 폼에 입력된 유저가 있는지부터 검색
+		try {
+			user = UService.searchUserPassword(user);
+			logger.trace("폼에 정보로 검색된 유저 : {}", user);
+		} catch (NotFoundDataException e) {
+			logger.trace("패스워드 찾기 : DB 검색 실패");
+			redir.addFlashAttribute("join_message", "패스워드 찾기 실패 - 해당 아이디가 업습니다.");
+			return "redirect:/login";
+		}
 
-      // 3. 결과 출력 메시지 후, 새로운 값 입력 폼 생성
-	   
-      // 4. 비밀번호 수정 후, 결과 출력 메시지 및 login 폼 이동
+		// 2-2 이메일로 본인 인증이 되있는지 확인
+		Object obj = (Object) session.getAttribute("matchingResult");
+		String matchingResult = (String) obj;
+		logger.trace("메칭 결과 : {}", matchingResult);
+		if (matchingResult.equals("success")) {
+			logger.trace("이메일 인증 확인");
+		} else {
+			redir.addFlashAttribute("join_message", "본인 인증 실패 - 인증되지 않은 회원입니다 .");
+			logger.trace("이메일 인증 실패");
+			return "redirect:/login";
+		}
 
-      return "redirect:/login";
+		// 3. DB에서 검색 및 이메일 인증된 회원 ==> 비밀번호 수정 폼으로 이동
+		redir.addFlashAttribute("user", user);
+
+		return "redirect:/login";
    }
 
    // 비밀번호 찾기 시, 이메일 인증 컨트롤
-   @RequestMapping(value = "/popup_search_pass_issue", method = RequestMethod.GET)
-   public void popup_search_pass_issue(Model model, HttpServletRequest request, RedirectAttributes redir, HttpSession session) {
+   @RequestMapping(value = "/popupSearchPassIssue", method = RequestMethod.POST)
+   public @ResponseBody String popupSearchPassIssue(HttpSession session, @RequestParam String email) {
 
-	// 메일 유틸, 보낼 email 주소
-	  SendMailUtil mUtil = new SendMailUtil();
-	  String email = request.getParameter("email");
-      // 1. 인증번호 발급
-	  Random randomGenerator = new Random();
-		int ramdomNum = randomGenerator.nextInt(10000) + 1000;
-		if (ramdomNum > 10000) {
-			ramdomNum -= 1000;
+		// Ajax에서 판단할 String 값 ( success, fail )
+		String submit = "";
+		// 메일 유틸, 보낼 email 주소
+		SendMailUtil mUtil = new SendMailUtil();
+		// 1. 인증번호 발급
+		Random randomGenerator = new Random();
+		int randomNum = randomGenerator.nextInt(10000) + 1000;
+		if (randomNum > 10000) {
+			randomNum -= 1000;
 		}
-		session.setAttribute("num", ramdomNum);
-      // 2. 해당 유저의 db에 인증번호 저장
+		// 2. 메일로 인증번호 전달
+		if (email != null && email != "") {
+			session.setAttribute("randomNum", randomNum);
+			mUtil.email_PasswordCertification(email, randomNum);
+			submit = "success";
+			logger.trace("이메일 발송 성공");
+		} else {
+			logger.trace("이메일 발송 실패");
+			submit = "fail";
+		}
+
+		return submit;
+   }
+   
+// 비밀번호 찾기 : 인증번호 입력 및 인증 클릭 시
+   @RequestMapping(value = "/popupSearchPassConfirm", method = RequestMethod.POST)
+   public @ResponseBody String popupSearchPassConfirm(HttpSession session, @RequestParam String confirmNum) {
+	   
+		// Ajax에서 판단할 String 값 ( success, fail )
+		String submit = "";
+		Object obj = (Object) session.getAttribute("randomNum");
+		String randomNum = obj.toString();
+		logger.trace("세션 저장 값 : {}", randomNum);
+		logger.trace("넘어온 값 : {}", confirmNum);
+
+		// 1. 인증번호 매칭
+		if (randomNum.equals(confirmNum)) {
+			logger.trace("랜덤넘과 매칭 성공");
+			submit = "success";
+		} else {
+			logger.trace("랜덤넘과 매칭 실패");
+			submit = "fail";
+		}
+
+		session.setAttribute("matchingResult", submit);
+
+		return submit;
    }
 
    // 주소 찾기 컨트롤

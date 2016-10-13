@@ -162,9 +162,9 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <sform:form class="form-inline" modelAttribute="user" method="post" action="popup_join_request">
-            <sform:input path="representName" type="text" placeholder="업체명" /> <br>
-            <sform:input path="companyName" type="text" placeholder="대표자명" /> <br>
+         <sform:form class="form-inline" modelAttribute="user" method="post" action="popup_search_id">
+            <sform:input path="representName" type="text" placeholder="대표자명" /> <br>
+            <sform:input path="companyName" type="text" placeholder="업체명" /> <br>
             <sform:input path="email" type="email" placeholder="Email"/> <br>
             <sform:button class="pop">아이디 찾기</sform:button>
          </sform:form>
@@ -180,11 +180,11 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <sform:form class="form-inline" modelAttribute="user" method="post" action="#">
-            <sform:input path="representName" type="text" placeholder="아이디" /><br>
-            <sform:input path="representName" type="text" placeholder="업체명" /><br>
-            <sform:input path="companyName" type="text" placeholder="대표자명" /><br>
-            <sform:input path="email" type="email" placeholder="Email" />
+         <sform:form class="form-inline" modelAttribute="user" method="post" action="popupSearchPass">
+            <sform:input path="userId" type="text" placeholder="아이디" /><br>
+            <sform:input path="representName" type="text" placeholder="대표자명" /><br>
+            <sform:input path="companyName" type="text" placeholder="업체명" /><br>
+            <sform:input path="email" type="email" placeholder="Email" name="emailPass" id="emailPass"/>
             <sform:button class="btn1" id="issue" value="발급">발급</sform:button>
             <input name="confirmNum" id="confirmNum" type="number" placeholder="인증번호" />
             <sform:button class="btn1" id="confirm" value="인증">인증</sform:button>
@@ -234,22 +234,64 @@
          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
          return re.test(email);
       }
-      var str = "";
+      
+      <c:url value="/popupSearchPassIssue" var="popupSearchPassIssue"/>
       $(document).on("click","#issue",function(e){
     	   e.preventDefault();
-    	   var value;
-    	   
+    	   var email = $("#emailPass").val();
+    	   $.ajax({
+	           // type을 설정합니다.
+	           type : 'post',
+	           url : "${popupSearchPassIssue }",
+	           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+	           data : {email : email},
+	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+	           success : function (data) {
+	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
+	               if (data == "success") {
+	                  $("#issue").html('재발급');
+	                  alert("이메일이 발송되었습니다.");
+	               } else if ( data == "fail") {
+		               $("#issue").html('발급');
+	            	   alert("이메일이 발송 실패");
+	               }      
+	           },
+	           error : function(xhr, status, error) {
+	            alert(error);
+	         }
+	       });
+    	   /* var value;
     	   
     	   for(var i=0; i<6; i++){
     	      value = Math.floor(Math.random()*10);
     	      str += value;
     	   } 
-    	   console.log(str);
+    	   console.log(str); */
       });
+      <c:url value="/popupSearchPassConfirm" var="popupSearchPassConfirm"/>
       $(document).on("click","#confirm",function(e){
     	  e.preventDefault();
-    	  var temp = $("#confirmNum").val();
-    	  console.log(str==temp);
+    	  var confirmNum = $("#confirmNum").val();
+    	  
+    	  $.ajax({
+	           // type을 설정합니다.
+	           type : 'post',
+	           url : "${popupSearchPassConfirm }",
+	           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+	           data : {confirmNum : confirmNum},
+	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+	           success : function (data) {
+	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
+	               if (data == "success") {
+	                  alert("인증 성공");
+	               } else {
+	            	   alert("인증 실패");
+	               }
+	           },
+	           error : function(xhr, status, error) {
+	            alert(error);
+	         }
+	       });
       })
  </script>
 </html>
