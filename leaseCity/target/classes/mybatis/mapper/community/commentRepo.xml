@@ -4,16 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="leasecity.repo.commentRepo">
  	
- 	<!-- 게시물 전체조회 -->
- 	<select id="getAllSelectComments" resultType="comment">
- 		SELECT * FROM comments;
+ 	<!-- 게시물 전체갯수 조회 -->
+ 	<select id="getCountAllComments" resultType="int">
+ 		SELECT COUNT(*) FROM comments;
  	</select>
  	
- 	<!-- 게시물 조회 -->
- 	<select id="getSelectComment" parameterType="String" 
- 					resultType="comment">
- 		SELECT * FROM comments
+ 	<!-- 게시물 페이지별 조회 -->
+ 	<select id="getPageSelectComment" parameterType="page" resultType="comment">
+ 		SELECT * 
+ 		
+ 		
+ 		FROM comments
  		WHERE user_id = #{userId};
+ 		
+ 		<!-- 추후 작성 -->
  	</select> 	
  	
  	
@@ -26,5 +30,20 @@
  		VALUES(#{userId}, #{commentTitle},
  		#{commentCategory},#{commentContent}) 
  	</insert>
+ 	
+ 	<!-- 게시물 삭제 - 종속성에 의해 댓글도 같이 자동삭제 -->
+ 	<delete id="deleteCommentAndReply" parameterType="comment">
+ 		DELETE FROM comments
+ 		WHERE comment_no = #{commentNo}
+ 	</delete>
+ 	
+ 	<!-- 게시물 수정 -->
+ 	<update id="updateComment" parameterType="comment">
+ 		UPDATE comments SET
+ 		comment_title = #{commentTitle},
+ 		comment_category = #{commentCategory},
+ 		comment_content = #{commentContent} 		
+ 		WHERE comment_no = #{commentNo}
+ 	</update>
  
  </mapper>

@@ -23,6 +23,9 @@ public class License implements Serializable {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** 자격증 인식 번호 */
+	private Integer licenseNo;
 
 	/** 회원. */
 	private String userId;
@@ -35,5 +38,14 @@ public class License implements Serializable {
 
 	/** 발급처. */
 	private String licenser;
+	
+	public License(String userId, String licenseName, 
+			Date licenseDate, String licenser){
+		this.licenseNo = null;
+		this.userId = userId;
+		this.licenseName = licenseName;
+		this.licenseDate = licenseDate;
+		this.licenser = licenser;
+	}
 
 }

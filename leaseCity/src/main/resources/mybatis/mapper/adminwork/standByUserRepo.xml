@@ -46,7 +46,7 @@
  		DELETE FROM stand_by_user
  		WHERE stand_by_no = #{standByNo}
  	</delete>
- 	
+
  	<!-- 대기유저 삭제 : 요청한지 30일경과된 유저대상 -->
  	<delete id="deleteStandByUserRequest">
  		DELETE FROM stand_by_user
