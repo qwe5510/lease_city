@@ -2,9 +2,11 @@ package leasecity.dto.etc;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Page {
 	
 	//게시글 총 갯수.
@@ -27,9 +29,8 @@ public class Page {
 	
 	/**
 	 * 검색 조건을 명시하는 멤버
-	 * NORMAL : 없음
-	 * TITLE : 제목으로 검색 
-	 * COMPANY_NAME : 업체명(글쓴이)
+	 * TITLE : 제목으로 검색 (기본값) 
+	 * COMPANY_NAME : 업체명으로 검색
 	 * TITLE_AND_CONTENT : 제목+내용으로 검색
 	 * LOCAL : 지역명으로 검색
 	 */

@@ -32,8 +32,13 @@ public class Comment implements Serializable {
 	/** 게시글 제목. */
 	private String commentTitle;
 
-	/** 게시글 분류. */
+	/** 게시글 분류. 형식 -> 지역/종류  */
 	private String commentCategory;
+	
+	/** 게시글 분류 : 지역 */
+	private String locale;
+	/** 게시글 분류 : 종류 */
+	private String kind;
 
 	/** 게시글 내용. */
 	private String commentContent;
@@ -53,5 +58,37 @@ public class Comment implements Serializable {
 	public Comment() {
 		this.replysList = new ArrayList<Reply>();
 	}
+	
+	public Comment(Integer commentNo, String userId, 
+			String commentTitle, String locale, String kind,
+			String commentContent, Integer hits, Date regDate) {
+		this.commentNo = commentNo;
+		this.userId = userId;
+		this.commentTitle = commentTitle;
+		this.locale = locale;
+		this.kind = kind;
+		this.commentCategory = locale + "/" + kind;
+		this.commentContent = commentContent;
+		this.hits = hits;
+		this.regDate = regDate;
+		
+		this.replysList = new ArrayList<Reply>();
+	}
+
+	public Comment(Integer commentNo, String userId, 
+			String commentTitle, String commentCategory, 
+			String commentContent, Integer hits, Date regDate) {
+		this.commentNo = commentNo;
+		this.userId = userId;
+		this.commentTitle = commentTitle;
+		this.commentCategory = commentCategory;
+		this.commentContent = commentContent;
+		this.hits = hits;
+		this.regDate = regDate;
+		
+		this.replysList = new ArrayList<Reply>();
+	}
+	
+	
 
 }

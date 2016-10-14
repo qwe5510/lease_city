@@ -36,11 +36,11 @@
 						</tr>
 						<tr>
 							<td><label class="join_input">업체명</label></td>
-							<td><input type="text" name="companyName" id="companyName" placeholder="업체명" value="<%=session.getAttribute("companyName") %>" readonly /></td>
+							<td><input type="text" name="companyName" id="companyName" placeholder="업체명" value="${representName}" readonly /></td>
 						</tr>
 						<tr>
 							<td><label class="join_input">대표자명</label></td>
-							<td><input type="text" name="representName" id="representName" placeholder="대표자명" value="<%=session.getAttribute("representName") %>" readonly/></td>
+							<td><input type="text" name="representName" id="representName" placeholder="대표자명" value="${companyName}" readonly/></td>
 						</tr>
 						<tr>
 						</tr>
@@ -58,7 +58,7 @@
 						</tr>
 						<tr>
 							<td><label class="join_input">Email</label></td>
-							<td><input type="email" name="email" id="email" placeholder="Email" value="<%=session.getAttribute("email") %>" readonly></td>
+							<td><input type="email" name="email" id="email" placeholder="Email" value="${email}" readonly></td>
 						</tr>
 						<tr>
 							<td><label class="join_input">주소</label></td>

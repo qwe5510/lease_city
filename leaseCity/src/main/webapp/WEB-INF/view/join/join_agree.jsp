@@ -44,10 +44,13 @@
 			<div>④ “관리자”이 회원자격을 상실시키는 경우에는 회원등록을 말소합니다. 이 경우 회원에게 이를 통지하고, 회원등록 말소전에 소명할 기회를 부여합니다.</div>
 			</div>
 	</div>
-	<form class="agree_input">
-		<c:set var="representName" value="${representName}" scope=></c:set>
-		<input type="submit" formaction="<%=request.getContextPath() %>/join_input" formmethod="post" value="동의">
-		<input type="submit" formaction="<%=request.getContextPath() %>/join_cancle" formmethod="get" value="비동의">
+	
+	<form class="agree_input" method="post">
+		<input type="hidden" name="representName" value="${representName}" />
+		<input type="hidden" name="companyName" value="${companyName}" />
+		<input type="hidden" name="email" value="${email}" />
+		<input type="submit" formaction="<%=request.getContextPath() %>/join_input" value="동의">
+		<input type="submit" formaction="<%=request.getContextPath() %>/join_cancel" value="비동의">
 	</form>
 	</div>
 	<!--Bottom-->
@@ -134,6 +137,7 @@
 		</div>
 		<!--/row-fluid-->
 	</div>
+	</section>
 	<!--/container--> <jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 </html>
