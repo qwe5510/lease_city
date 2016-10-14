@@ -94,7 +94,11 @@ public class StandByUserServiceImpl implements StandByUserService{
 	@Override
 	public StandByUser getAgreeStandByUser(String permissionCode) 
 				throws NotFoundDataException {
-		StandByUser SBU = SBUrepo.getAgreeStandByUser(permissionCode);
+		StandByUser SBU = null;
+		
+		//코드가 null이 아닐때만
+		if(permissionCode != null)
+			SBU = SBUrepo.getAgreeStandByUser(permissionCode);
 		
 		if(SBU == null){
 			logger.error("ERROR!! : 수락한 대기유저가 검색되지 않습니다");
