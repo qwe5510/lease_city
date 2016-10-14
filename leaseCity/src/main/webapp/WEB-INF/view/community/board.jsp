@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +29,8 @@
 			<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
 			<br>
 			<br>
-			<sform:form method="post" modelAttribute="comment" action="<%=request.getContextPath()%>/board_write">
+			<c:url value="/board_write" var="board_write"/>
+			<sform:form method="post" modelAttribute="comment" action="${board_write }">
 			<table class="communityTable">
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>

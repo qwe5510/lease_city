@@ -43,11 +43,11 @@ public class UserServiceTest {
 		//User user = service.login("ysh5586", "didtngh5");
 		User user = service.login("raven92", "suhwanyun");
 		
-		if(user instanceof ConstructionCompany){
+		/*if(user instanceof ConstructionCompany){
 			ConstructionCompany CCUser = (ConstructionCompany)user;
 			logger.trace("건설업체 유저 확인 : {}", CCUser);
 			
-			List<License> list = CCUser.getLicenseList();
+			//List<License> list = CCUser.getLicenseList();
 			
 			for(License license : list){
 				logger.trace("보유 자격증 : {}", license);
@@ -58,12 +58,12 @@ public class UserServiceTest {
 			
 			logger.trace("중기업체 유저 확인 : {}", HECUser);
 			
-			List<HeavyEquipment> list = HECUser.getHeavyEquipmentList();
+			//List<HeavyEquipment> list = HECUser.getHeavyEquipmentList();
 
 			for(HeavyEquipment heavyEquipment : list){
 				logger.trace("보유 중장비 : {}", heavyEquipment);
 			}
-		}	
+		}	*/
 	}
 
 }

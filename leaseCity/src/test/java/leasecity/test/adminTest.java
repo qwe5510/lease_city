@@ -25,7 +25,7 @@ public class adminTest {
 	//기록
 	static Logger logger = LoggerFactory.getLogger(adminTest.class);
 	
-	@Test
+	/*@Test
 	public void test(){
 		
 		LeasecityAdmin admin = repo.getLeasecityAdmin("admin", "1234");
@@ -40,5 +40,5 @@ public class adminTest {
 		logger.trace("관리자 : {}", admin);
 		
 	}
-
+*/
 }
