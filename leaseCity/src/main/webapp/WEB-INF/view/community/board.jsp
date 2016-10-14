@@ -17,11 +17,13 @@
 				u_chat({
 					room : 'yhj123',
 					chat_record : true,
-					width : '400',
+					width : '300',
 					height : '650',
 					conversation_limi : true,
 					in_sound : true,
-					say_id : true
+					say_id : true,
+					skin : 1,
+					mb_list_height : '150'
 				});
 			</script>
 		</div>
@@ -48,8 +50,8 @@
 						out.print("<tr><td colspan='6' class='boardLine'></td></tr>" + "<tr class='boardShow'>" 
 								+"<td><sform:label path='commentNo'>444</sform:label></td>"
 								+"<td><sform:label path='commentCategory'>잡담/경기</td>"
-								+ "<td class='communityTitle'><sform:label path='commentTitle'>안녕하십니까 글자가 얼마나 들어갈수있나 테스트 해보고 있습니다</sform:label></td>"
-								+ "<td><sform:label path='userId'>관리자<sform:label></td>"
+								+ "<td class='communityTitle'><sform:label path='commentTitle'>안녕하세요. 글자가 얼마나 얼마나 들어갈수있나 테스트 해보고 있습니다</sform:label></td>"
+								+ "<td><sform:label path='userId'>중기건설(장필식)<sform:label></td>"
 								+ "<td><sform:label path='hits'>4<sform:label></td>" 
 								+ "<td><sform:label path='regDate'>2016-10-24<sform:label></td>" 
 								+ "</tr>");
@@ -58,19 +60,23 @@
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
 				</tr>
-				<tr>
-				<th>
+			</table>
+			
+			</sform:form>
+			
+			<sform:form method="post" modelAttribute="page" action="${board_write }">
+				<div>
+				<sform:select path="commentCategory">
+					<sform:option value=""></sform:option>
+				</sform:select>
+				<input type="text" id="boardSearch" name="boardSearch" placeholder="검색어를 입력해주세요.">
 				<%
 					for(int i=0;i<10;i++){
 						out.print("<a>"+i+"</a>");
 					}
 				%>
-				</th>
-				<th>
-					<button>글작성</button>
-				</th>
-				<tr>
-			</table>
+				<button>글작성</button>
+				</div>
 			</sform:form>
 		</div>
 	</div>

@@ -28,19 +28,19 @@
                <legend>로그인</legend>
                <table>
                   <tr>
-                     <th><label name="userId">아이디</label></th>
+                     <th><label for="userId">아이디</label></th>
                      <th><input name="userId" type="text" /></th>
                      <th rowspan="2"><button class="loginBtn">로그인</button>
                   </tr>
                   <tr>
-                     <th><label name="password">비밀번호</label></th>
+                     <th><label for="password">비밀번호</label></th>
                      <th><input name="password" type="password" /></th>
                   </tr>
                </table>
                <div class="inner1">
-                  <a data-toggle="modal" href="#joinRequest">회원가입인증</a> <a
-                     data-toggle="modal" href="#idSearch">아이디찾기</a> <a
-                     data-toggle="modal" href="#passSearch">비밀번호찾기</a>
+                  <a data-toggle="modal" data-backdrop="static" href="#joinRequest">회원가입인증</a> <a
+                     data-toggle="modal" data-backdrop="static" href="#idSearch">아이디찾기</a> <a
+                     data-toggle="modal" data-backdrop="static" href="#passSearch">비밀번호찾기</a>
                </div>
             </fieldset>
          </form>
@@ -219,8 +219,6 @@
    <!-- Required javascript files for Slider -->
    <script src="js/jquery.ba-cond.min.js"></script>
    <script src="js/jquery.slitslider.js"></script>
-   <script src="js/validation/lib/jquery.js"></script>
-   <script src="js/validation/dist/jquery.validate.js"></script>
    <script>
       function validateform() {
          var representName = document.joinForm.representName.value;

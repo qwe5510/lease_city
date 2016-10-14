@@ -293,7 +293,7 @@ header.navbar .nav>li {
 }
 
 //
-헤더 폰트조정
+占쎈엘占쎈쐭 占쎈？占쎈뱜鈺곌퀣�젟
 header.navbar .nav>li>a {
 	color: #333;
 	font-family: "Fjalla One";
@@ -1036,31 +1036,32 @@ label {
 	padding: 0 0 0 0;
 	margin-top: 15px;
 }
-/*로그인 jsp 메인 div 설정 */
+/*嚥≪뮄�젃占쎌뵥 jsp 筌롫뗄�뵥 div 占쎄퐬占쎌젟 */
 .login {
 	margin-top: 80px;
 	left: 50%;
 	margin-left: 350px;
 }
-/*커뮤니티 jsp 메인 div 설정  */
+/*�뚣끇占썬끇�빍占쎈뼒 jsp 筌롫뗄�뵥 div 占쎄퐬占쎌젟  */
 .board{
 	margin-top: 50px;
 	height: 900px;
 }
-/*회원가입 페이지 메인 div 설정*/
+/*占쎌돳占쎌뜚揶쏉옙占쎌뿯 占쎈읂占쎌뵠筌욑옙 筌롫뗄�뵥 div 占쎄퐬占쎌젟*/
 .join {
 	margin-top: 50px;
 	left: 50%;
 	margin-left: 350px;
 }
-/*유챗 div 설정  */
+
+/*占쎌�筌�占� div 占쎄퐬占쎌젟  */
 .uchat{
 	display: inline-block;
 	float: left;
 	margin-left: 40px;
 	margin-top: 105px;
 }
-/*community div 설정  */
+/*community div 占쎄퐬占쎌젟  */
 .community{
 	margin-left : 80px;
 	width : 400px;
@@ -1068,7 +1069,7 @@ label {
 	display: inline-block;
 	text-align: center;
 }
-/*board 테이블 작업*/
+/*board 占쎈�믭옙�뵠�뇡占� 占쎌삂占쎈씜*/
 .boardLine{
 	height : 2px;
 	padding: 0px;
@@ -1078,7 +1079,7 @@ label {
 	background: #e5e5e5;
 }
 .communityTable{
-	width : 650px;
+	width : 780px;
 	height: 500px;
 	max-height: 500px;
 	margin-right: 40px;
