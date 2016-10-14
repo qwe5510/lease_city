@@ -38,5 +38,14 @@ public class License implements Serializable {
 
 	/** 발급처. */
 	private String licenser;
+	
+	public License(String userId, String licenseName, 
+			Date licenseDate, String licenser){
+		this.licenseNo = null;
+		this.userId = userId;
+		this.licenseName = licenseName;
+		this.licenseDate = licenseDate;
+		this.licenser = licenser;
+	}
 
 }

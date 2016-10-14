@@ -113,9 +113,12 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
 //====================================================================================================================================================================================
 //건설업체 상세정보 추가
+
 var CC_arr = ["토건","토목","건축","산업설비","토공","철콘","금속구조","철강","시설물","주택건설","문화재","해외","기타"];
+
 function cscInfoOutput(){
 	//중기업체 span 공백으로 설정
 	$(".checked").html("");
@@ -135,6 +138,7 @@ function cscInfoOutput(){
 	$(".companySelector").html(str1+str2+str3+str4+str6);
 	
 }
+
 //중기업체 상세정보 추가
 function hecInfoOutput(){
 	var str1 = "<select id='type' name='type'>";
@@ -162,6 +166,7 @@ function hecInfoOutput(){
 	$(".companySelector").html(str3+str1+str2+text+str4);
 }
 //====================================================================================================================================================================================
+
 	//건설업체, 중기업체에 대한 이벤트 처리.
 	$("#CSC").on("click", cscInfoOutput);
 	$("#HEC").on("click", hecInfoOutput);
@@ -176,18 +181,15 @@ function hecInfoOutput(){
 			hecInfoOutput();
 		}		
 	});
+	
+
 	//회원가입 양식검사.
 	$("#joinForm").on("submit", function(e){
 	
 		var isChecked = validateform();
 		var isDuplicated = ajaxIdCheck(); 
 		
-		if(!isChecked || !isDuplicated){
-			console.log("ajax : " + isDuplicated);
-			console.log("vali : " + isChecked);
-			e.preventDefault();
-		}else{
-			console.log("submit 되는자리")
+		if(!isDuplicated||!isChecked){
 			e.preventDefault();
 		}
 					
@@ -253,10 +255,7 @@ function validateform() {
 	if(address==null || address==""){
 		$(".addressInput").html("주소 필수입력");
 		return false;
-	}else{
-		$(".addressInput").html("");
 	}
-	
 	//중기업체 차량번호 공백검사
 	
 	if(isHEC){
@@ -298,49 +297,49 @@ function validateform() {
 		$(".checked").html("");
 	}
 	
-	return true;	
+	return true;
 }
+
+
+	var res; //결과를 리턴받는 변수
 	<c:url value="/validateId" var="validateId"/>
 	$("#userId").blur(ajaxIdCheck);
-	
 	function ajaxIdCheck() {   
 	      var inputUserId = $("#userId").val();
-	      var result = "똥이다인생은"; //결과를 리턴받는 변수  
 	      $.ajax({
 	           // type을 설정합니다.
 	           type : 'post',
 	           url : "${validateId }",
 	           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-	           data : {"inputUserId" : inputUserId},
+	           data : {inputUserId : inputUserId},
 	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
-	           success : function (data) {
+	           success : function(data){
 	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
-	               console.log(data);
-	               if (data) {
+	             if (data) {
 	                $(".userId").html("이미 등록된 아이디 입니다.");
-	                result = false;
-	                console.log(result);
-	             } else{		               
-		            //ID 6글자 15글자
+	                res = false;
+	             } else if (!data) {
+		            //ID 6글자 ~ 15글자
 		            var userId = $("#userId").val();
 		          	var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
 		           	if(!idRegExp.test(userId)){
 		           		$(".userId").html("아이디 조건 불일치");
-		           		result = false;
+		           		res = false;
 		           	}else if(idRegExp.test(userId)){
 		           		$(".userId").html("등록 가능한 아이디입니다.");
-		           		//$(".userId").focus();
+		           		res = true;
 		           	}		           	
-		           	
+		           	$(".userId").focus();
 	             }      
 	         },
 	         error : function(xhr, status, error) {
 	     	 alert(error);
 		   }
 		});
-	    return result;
+	    
+	      return res;
 	}
-		   
+
 //password 검사
 function passvali(){
 	var password = $("#password").val();
@@ -350,17 +349,15 @@ function passvali(){
 	var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 	if(!passRegExp.test(password)){
 		$(".password").html("패스워드 조건 불일치");
-		return false;
 	}else if(password2==""){
 		$(".password").html("패스워드 확인값을 입력해주세요.");
-		return false;
 	}else if(password != password2){
 		$(".password").html("패스워드가 일치하지 않습니다.");
-		return false;
 	}else if(password == password2) {
 		$(".password").html("패스워드가 확인되었습니다.")
 	}
 }
+
 	
 	//중기업체 차량 추가 버튼 클릭 시 이벤트
 	$(document).on("click","#btn1",	function(e) {
@@ -424,6 +421,7 @@ function passvali(){
 			$("#size").html(str4);
 		}
 	});
+
 		   
 	$("#userId").click(function() {
 		$("#userId").val('');
@@ -438,7 +436,7 @@ function passvali(){
 	
 	$(document).on("click","#addressSearch",function(e) {
 		e.preventDefault();
-		var result = window.open("<%=request.getContextPath()%>/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes")
+		var result = window.open("<%=request.getContextPath()%>/jusoPopup","pop","width=570,height=420, scrollbars=yes, resizable=yes");
 	});
 	
 	function jusoCallBack(roadFullAddr,zipNo){

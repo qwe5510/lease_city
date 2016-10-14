@@ -189,7 +189,25 @@
             <input name="confirmNum" id="confirmNum" type="number" placeholder="인증번호" />
             <sform:button class="btn1" id="confirm" value="인증">인증</sform:button>
             <br>
-            <sform:button>비밀번호찾기</sform:button>
+            <sform:button id="passbtn">비밀번호찾기</sform:button>
+         </sform:form>
+      </div>
+   </div>
+   
+   <!--비밀번호변경 -->
+   <div class="modal hide fade in" id="passChange" aria-hidden="false">
+      <div class="modal-header">
+         <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
+            class="modalImg"
+            src="<%=request.getContextPath()%>/images/pop/pass.png" />
+      </div>
+      <div class="modal-body">
+         <sform:form class="form-inline" modelAttribute="user" method="post" action="#">
+            <sform:input path="password" type="password" placeholder="패스워드 입력" onblur="passChangeVali()"/><br>
+            <div id="changeVali">영어 숫자 특수문자 혼용 8~16글자</div>
+            <input id="password2" name="password2" type="password" placeholder="패스워드 확인" onblur="passChangeVali()"/><br>
+            <br>
+            <sform:button id="passChangeBtn">비밀번호변경</sform:button>
          </sform:form>
       </div>
    </div>
@@ -234,7 +252,50 @@
          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
          return re.test(email);
       }
-      
+      var str = "";
+      $(document).on("click","#issue",function(e){
+    	   e.preventDefault();
+    	   var value;
+    	   for(var i=0; i<6; i++){
+    	      value = Math.floor(Math.random()*10);
+    	      str += value;
+    	   } 
+    	   console.log(str);
+      });
+      $(document).on("click","#confirm",function(e){
+    	  e.preventDefault();
+    	  var temp = $("#confirmNum").val();
+    	  console.log(str==temp);
+      })
+      $(document).on("click","#passbtn",function(e){
+    	  e.preventDefault();
+    	  console.log("숨김??")
+    	  $("#passSearch").hide();
+    	  $("#passChange").show();
+      });
+      $('#passChangeBtn').attr('disabled',true)
+      function passChangeVali(){
+    	  	var password = $("#password").val();
+    		var password2 = $("#password2").val();
+    		//특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
+    		var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+    		if(!passRegExp.test(password)){
+    			$("#changeVali").html("패스워드 조건 불일치");
+    			$('#passChangeBtn').attr('disabled',true)
+    			return false;
+    		}else if(password2==""){
+    			$("#changeVali").html("패스워드 확인값을 입력해주세요.");
+    			$('#passChangeBtn').attr('disabled',true)
+    			return false;
+    		}else if(password != password2){
+    			$("#changeVali").html("패스워드가 일치하지 않습니다.");
+    			$('#passChangeBtn').attr('disabled',true)
+    			return false;
+    		}else if(password == password2) {
+    			$("#changeVali").html("패스워드가 확인되었습니다.")
+    			$('#passChangeBtn').attr('disabled',false)
+    		}
+      }
       <c:url value="/popupSearchPassIssue" var="popupSearchPassIssue"/>
       $(document).on("click","#issue",function(e){
     	   e.preventDefault();
