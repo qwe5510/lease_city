@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +45,7 @@
 			</div>
 	</div>
 	<form class="agree_input">
+		<c:set var="representName" value="${representName}" scope=></c:set>
 		<input type="submit" formaction="<%=request.getContextPath() %>/join_input" formmethod="post" value="동의">
 		<input type="submit" formaction="<%=request.getContextPath() %>/join_cancle" formmethod="get" value="비동의">
 	</form>

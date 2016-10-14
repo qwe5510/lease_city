@@ -12,12 +12,24 @@
  	<!-- 게시물 페이지별 조회 -->
  	<select id="getPageSelectComment" parameterType="page" resultType="comment">
  		SELECT * 
+ 		FROM (
+ 				SELECT sub.*, rownum AS rnum
+ 				FROM( SELECT * FROM comments 
+ 					
+ 					
+ 					WHERE
+ 					
+ 					<choose>
+ 					<when test="#{}"></when>
+ 					<when test=""></when>
+ 					<otherwise></otherwise>
+ 					</choose>
+ 					
+ 					) sub
+ 				)
+ 		<if test="pageSize != null">
  		
- 		
- 		FROM comments
- 		WHERE user_id = #{userId};
- 		
- 		<!-- 추후 작성 -->
+ 		</if>		
  	</select> 	
  	
  	
