@@ -18,29 +18,30 @@
  		WHERE user_id = #{userId}
  	</select>
  	
- 	<!-- 차번을 통한 자격증 검색 -->
+ 	<!-- 자격증 이름을 통한 자격증 검색 -->
  	<select id="getSelectlicense" parameterType="String" 
  					resultType="license">
  		SELECT * 
  		FROM license
- 		WHERE license_no = #{licenseNo}
+ 		WHERE license_name = #{licenseName} 
  	</select>
  	
  	<!-- 자격증 추가 -->
  	<insert id="insertLicense" parameterType="license">
- 		INSERT INTO license VALUES(
+ 		INSERT INTO license(
+ 		user_id, license_name, 
+ 		license_date, licenser)
+ 		VALUES( 
  		#{userId},#{licenseName},
  		#{licenseDate}, #{licenser})
  	</insert>
- 	
  	
  	<!-- 작업해야함.  -->
  	<!-- 자격증 수정 -->
  	<update id="updateLicense" parameterType="license">
  		UPDATE license SET
- 		user_id = #{userId}, license_name = #{licenseName}, 
- 		license_date = {licenseDate}
- 		licenser = #{licenser}
+ 		user_id = #{userId}, license_name = #{licenseName} 
+ 		WHERE license_no = #{licenseNo}
  		
  	</update>
  	
@@ -53,7 +54,7 @@
  	<!-- 유저 별 통합 자격증 삭제 -->
  	<delete id="deleteUserLicense" parameterType="String">
  		DELETE FROM license
- 		WHERE user_id = #{user_id} 
+ 		WHERE user_id = #{userId} 
  	</delete>
  
  </mapper>

@@ -113,12 +113,9 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
-
 //====================================================================================================================================================================================
 //건설업체 상세정보 추가
-
 var CC_arr = ["토건","토목","건축","산업설비","토공","철콘","금속구조","철강","시설물","주택건설","문화재","해외","기타"];
-
 function cscInfoOutput(){
 	//중기업체 span 공백으로 설정
 	$(".checked").html("");
@@ -138,7 +135,6 @@ function cscInfoOutput(){
 	$(".companySelector").html(str1+str2+str3+str4+str6);
 	
 }
-
 //중기업체 상세정보 추가
 function hecInfoOutput(){
 	var str1 = "<select id='type' name='type'>";
@@ -166,7 +162,6 @@ function hecInfoOutput(){
 	$(".companySelector").html(str3+str1+str2+text+str4);
 }
 //====================================================================================================================================================================================
-
 	//건설업체, 중기업체에 대한 이벤트 처리.
 	$("#CSC").on("click", cscInfoOutput);
 	$("#HEC").on("click", hecInfoOutput);
@@ -181,7 +176,6 @@ function hecInfoOutput(){
 			hecInfoOutput();
 		}		
 	});
-
 	//회원가입 양식검사.
 	$("#joinForm").on("submit", function(e){
 	
@@ -189,6 +183,11 @@ function hecInfoOutput(){
 		var isDuplicated = ajaxIdCheck(); 
 		
 		if(!isChecked || !isDuplicated){
+			console.log("ajax : " + isDuplicated);
+			console.log("vali : " + isChecked);
+			e.preventDefault();
+		}else{
+			console.log("submit 되는자리")
 			e.preventDefault();
 		}
 					
@@ -254,7 +253,10 @@ function validateform() {
 	if(address==null || address==""){
 		$(".addressInput").html("주소 필수입력");
 		return false;
+	}else{
+		$(".addressInput").html("");
 	}
+	
 	//중기업체 차량번호 공백검사
 	
 	if(isHEC){
@@ -295,32 +297,31 @@ function validateform() {
 	}else if(isChecked){
 		$(".checked").html("");
 	}
+	
+	return true;	
 }
-
 	<c:url value="/validateId" var="validateId"/>
 	$("#userId").blur(ajaxIdCheck);
+	
 	function ajaxIdCheck() {   
 	      var inputUserId = $("#userId").val();
-	      var result = true; //결과를 리턴받는 변수  
+	      var result = "똥이다인생은"; //결과를 리턴받는 변수  
 	      $.ajax({
 	           // type을 설정합니다.
 	           type : 'post',
 	           url : "${validateId }",
 	           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-	           data : {inputUserId : inputUserId},
+	           data : {"inputUserId" : inputUserId},
 	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 	           success : function (data) {
 	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
-	             if (data == true) {
-	             	//$("#userId").val('');
-	                //$("#userId").val(input_userId + ' (이미 등록된 아이디) ');
+	               console.log(data);
+	               if (data) {
 	                $(".userId").html("이미 등록된 아이디 입니다.");
 	                result = false;
-	                //alert(data); 
-	             } else if (data == false) {
-	                //$("#userId").val('');
-	                //$("#userId").val(input_userId + ' (등록 가능 아이디) ');		               
-		            //ID 4글자 15글자
+	                console.log(result);
+	             } else{		               
+		            //ID 6글자 15글자
 		            var userId = $("#userId").val();
 		          	var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
 		           	if(!idRegExp.test(userId)){
@@ -328,21 +329,18 @@ function validateform() {
 		           		result = false;
 		           	}else if(idRegExp.test(userId)){
 		           		$(".userId").html("등록 가능한 아이디입니다.");
+		           		//$(".userId").focus();
 		           	}		           	
-		           	$(".userId").focus();
+		           	
 	             }      
 	         },
 	         error : function(xhr, status, error) {
 	     	 alert(error);
 		   }
 		});
-	    if(!result){
-	    	return result;
-	    }  
+	    return result;
 	}
 		   
-
-
 //password 검사
 function passvali(){
 	var password = $("#password").val();
@@ -363,7 +361,6 @@ function passvali(){
 		$(".password").html("패스워드가 확인되었습니다.")
 	}
 }
-
 	
 	//중기업체 차량 추가 버튼 클릭 시 이벤트
 	$(document).on("click","#btn1",	function(e) {
@@ -427,7 +424,6 @@ function passvali(){
 			$("#size").html(str4);
 		}
 	});
-
 		   
 	$("#userId").click(function() {
 		$("#userId").val('');

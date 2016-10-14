@@ -38,6 +38,9 @@
 		<typeAlias type="leasecity.dto.adminwork.StandByUser" alias="standByUser" />
 		<typeAlias type="leasecity.dto.adminwork.WorkLog" alias="workLog" />
 		
+		<!-- 5.기타 기능(페이지) -->
+		<typeAlias type="leasecity.dto.etc.Page" alias="page" />
+				
 	</typeAliases>
 	
 	<mappers>

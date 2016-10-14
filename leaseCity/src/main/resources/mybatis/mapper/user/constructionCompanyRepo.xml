@@ -17,7 +17,8 @@
  	</select>
  	
  	<!-- 건설업체 유저정보와 함께 리턴 -->
- 	<select id="getSelectCCAndUser" resultType="constructionCompany">
+ 	<select id="getSelectCCAndUser" parameterType="String"
+ 					resultType="constructionCompany">
  		SELECT *
  		FROM construction_company
  		JOIN users USING(user_id)
