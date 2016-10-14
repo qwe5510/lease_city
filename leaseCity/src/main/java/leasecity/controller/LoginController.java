@@ -275,10 +275,10 @@ public class LoginController {
          return "index";
       }
 
-      // session에 객체 저장하여 보내기
-      session.setAttribute("representName", sbu.getRepresentName());
-      session.setAttribute("companyName", sbu.getCompanyName());
-      session.setAttribute("email", sbu.getEmail());
+      // dir에 객체 저장하여 보내기
+      redir.addFlashAttribute("representName", sbu.getRepresentName());     
+      redir.addFlashAttribute("companyName", sbu.getCompanyName());
+      redir.addFlashAttribute("email", sbu.getEmail());
 
       return "redirect:/joinAgree";
    }
