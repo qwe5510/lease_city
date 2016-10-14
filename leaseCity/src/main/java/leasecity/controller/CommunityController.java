@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import leasecity.dto.community.Comment;
+import leasecity.dto.etc.Page;
 
 @Controller
 public class CommunityController {
@@ -24,7 +25,8 @@ public class CommunityController {
 	//게시글 댓글 작성
 	@RequestMapping(value="/board_write")
 	public String board_write(Model model){
-		model.addAttribute("message", "Good Morning");
+		Comment comment = new Comment();
+		model.addAttribute("comment", comment);
 		logger.trace("컨트롤러!!");
 		return "community/board_write";
 	}
@@ -32,7 +34,9 @@ public class CommunityController {
 	@RequestMapping(value="/board")
 	public String board(Model model){
 		Comment comment = new Comment();
+		Page page = new Page();
 		model.addAttribute("comment", comment);
+		model.addAttribute("page", page);
 		logger.trace("컨트롤러!!");
 		return "community/board";
 	}

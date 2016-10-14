@@ -43,7 +43,7 @@
 					<td>제목</td>
 					<td>글쓴이</td>
 					<td>조회수</td>
-					<td>날짜</td>
+					<td>날짜<a href="#"><i class="icon-sort"></i></a></td>
 				</tr>
 				<%
 					for (int i = 0; i < 20; i++) {
@@ -60,24 +60,45 @@
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
 				</tr>
+			
 			</table>
-			
 			</sform:form>
-			
+			<div class="boardSearch">
 			<sform:form method="post" modelAttribute="page" action="${board_write }">
-				<div>
-				<sform:select path="commentCategory">
-					<sform:option value=""></sform:option>
-				</sform:select>
-				<input type="text" id="boardSearch" name="boardSearch" placeholder="검색어를 입력해주세요.">
-				<%
-					for(int i=0;i<10;i++){
-						out.print("<a>"+i+"</a>");
-					}
-				%>
-				<button>글작성</button>
-				</div>
+				<table>
+					<tr>
+						<th>
+							이전
+						</th>
+						<th>
+							<%
+							for(int i=0;i<10;i++){
+								out.print("<a>"+i+"</a>");
+							}
+							%>
+						</th>
+						<th>
+							다음
+						</th>
+						<th>
+							<sform:button>글작성</sform:button>
+						</th>
+					</tr>
+					<tr>
+						<th>
+							<sform:select path="search">
+							</sform:select>
+						</th>
+						<th>
+							<sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
+						</th>
+						<th colspan="3">
+							<button>검색</button>
+						</th>
+					</tr>
+						</table>
 			</sform:form>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
