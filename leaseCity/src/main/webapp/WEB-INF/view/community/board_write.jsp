@@ -30,26 +30,30 @@
 			<div class="community">
 				<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
 				<sform:form action="#" method="post" modelAttribute="comment">
-					<table>
+					<table class="boardWriteTable">
 						<tr>
-							<th>
+							<td>
 								<sform:label path="kind">분류</sform:label>
+							</td>
+							<td>
 								<sform:select path="kind"></sform:select>
-							</th>
-							<th>
+							</td>
+							<td>
 								<sform:label path="locale">지역</sform:label>
+							</td>
+							<td>
 								<sform:select path="locale"></sform:select>
-							</th>
-						<tr>
-						<tr>
-							<th>
-								<sform:input path="commentTitle" placeholder="제목"/>
-							</th>
+							</td>
 						</tr>
 						<tr>
-							<th>
-								<sform:textarea path="commentContent"/>
-							</th>
+							<td colspan="4">
+								<sform:input path="commentTitle" placeholder="제목"/>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								<sform:textarea path="commentContent" placeholder="형식에 구애받지 않고 자유롭게 입력하시면 됩니다."/>
+							</td>
 						</tr>
 					</table>
 				</sform:form>
