@@ -1036,38 +1036,104 @@ label {
 	padding: 0 0 0 0;
 	margin-top: 15px;
 }
+
 /*로그인 jsp 메인 div 설정 */
 .login {
-	margin-top: 80px;
-	left: 50%;
-	margin-left: 350px;
+	padding-top: 180px;	
+	text-align: center;
 }
-/*커뮤니티 jsp 메인 div 설정  */
-.board{
-	margin-top: 50px;
-	height: 900px;
-}
+
 /*회원가입 페이지 메인 div 설정*/
 .join {
 	margin-top: 50px;
 	left: 50%;
 	margin-left: 350px;
 }
-/*유챗 div 설정  */
-.uchat{
-	display: inline-block;
-	float: left;
-	margin-left: 40px;
-	margin-top: 105px;
-}
-/*community div 설정  */
-.community{
-	margin-left : 80px;
-	width : 400px;
-	float: left;
-	display: inline-block;
+
+/*커뮤니티 jsp 메인 div 설정  */
+.board{
+	padding-top: 0px;
+	min-width:980px;
+	height: 900px;
 	text-align: center;
 }
+
+/* 메뉴창 재설정..(잘 안됩니다)*/
+/* .nav-collapse .collapse .pull-right{
+	display:block;
+	width: 500px;
+	overflow: visible;
+} */
+
+/*Login창 설정*/
+.login > .inner{
+	display: inline-block;	
+}
+
+/*유챗 div 설정  */
+.uchat {
+	padding-top: 80px;
+	width: 550px;
+	height: 900px;
+	margin-left: 40px;
+	margin-right: 50px;
+	position: fixed;
+}
+
+/*community div 설정  */
+.community {
+	width: 400px;
+	display: inline-block;
+	position: absolute;
+}
+
+/* 화면사이즈 980px 해상도에서의 설정*/
+@media all and (min-width: 980px) {
+	
+	/*커뮤니티 jsp 메인 div 설정  */
+	.board {
+		padding-top: 80px;
+	}
+
+	/*유챗 div 설정  */
+	.uchat {
+		padding-top: 100px;
+	}
+
+	/*community div 설정  */
+	.community {
+		padding-top: 50px;
+	}
+}
+
+/*화면해상도 1200이상에서의 설정 */
+@media all and (min-width: 1200px) {
+	/* 로그인 화면*/
+	.login {
+		padding-top: 80px;	
+		text-align: center;
+	}
+	
+	/* 커뮤니티 전체 */
+	.board{
+		padding-top: 80px;
+		position: relative;
+	}
+
+	/*유챗 div 설정  */
+	.uchat {
+		padding-top: 50px;
+	}
+	
+	/*community div 설정  */
+	.community {
+		padding-top: 0px;
+		position: relative;
+		margin-left: 120px;
+	}
+}
+
+
 /*board 테이블 작업*/
 .boardLine{
 	height : 2px;
