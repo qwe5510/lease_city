@@ -430,6 +430,8 @@ public class LoginController {
 	@RequestMapping(value = "/popupSearchPass", method = RequestMethod.POST)
 	public @ResponseBody String popup_search_pass(Model model, RedirectAttributes redir, HttpSession session, @RequestParam String userId, @RequestParam String representName, @RequestParam String companyName, @RequestParam String email ) {
 
+		String submit = "";
+		
 		User user = new User();
 		user.setUserId(userId);
 		user.setRepresentName(representName);
@@ -465,6 +467,7 @@ public class LoginController {
 
 		session.setAttribute("user", user);
 		session.setMaxInactiveInterval(60 * 3);
+		logger.trace("비밀번호 찾을 유저 : {}", user);
 		//redir.addFlashAttribute("user", user);
 
 		return "success";
@@ -472,28 +475,44 @@ public class LoginController {
 
 	// 비밀번호 찾기 시, 이메일 인증 컨트롤
 	@RequestMapping(value = "/popupSearchPassIssue", method = RequestMethod.POST)
-	public @ResponseBody String popupSearchPassIssue(HttpSession session, @RequestParam String email) {
+	public @ResponseBody String popupSearchPassIssue(HttpSession session, @RequestParam String email, @RequestParam String userId, @RequestParam String representName, @RequestParam String companyName) {
 
+		// ( User 저장, 전달 객체 )
+		User user = new User();
+		user.setUserId(userId.replaceAll(" ", ""));
+		user.setRepresentName(representName.replaceAll(" ", ""));
+		user.setEmail(email.replaceAll(" ", ""));
+		user.setCompanyName(companyName.replaceAll(" ", ""));
 		// Ajax에서 판단할 String 값 ( success, fail )
-		String submit = "";
+		String submit = "fail";
 		// 메일 유틸, 보낼 email 주소
 		SendMailUtil mUtil = new SendMailUtil();
+		
 		// 1. 인증번호 발급
 		Random randomGenerator = new Random();
 		int randomNum = randomGenerator.nextInt(10000) + 1000;
 		if (randomNum > 10000) {
 			randomNum -= 1000;
 		}
-		// 2. 메일로 인증번호 전달
-		if (email != null && email != "") {
-			session.setAttribute("randomNum", randomNum);
-			session.setMaxInactiveInterval(60 * 3);
-			mUtil.email_PasswordCertification(email, randomNum);
-			submit = "success";
-			logger.trace("이메일 발송 성공");
-		} else {
-			logger.trace("이메일 발송 실패");
-			submit = "fail";
+		
+		// 2. 입력 정보가 등록 회원이 있는지 확인
+		// 3. 이메일 전송
+		try {
+			user = UService.searchUserId(user);
+			if(companyName.replaceAll(" ", "").equals(user.getCompanyName()) && 
+					representName.replaceAll(" ", "").equals(user.getRepresentName()) && 
+					email.replaceAll(" ", "").equals(user.getEmail())) {
+				session.setAttribute("randomNum", randomNum);
+				session.setMaxInactiveInterval(60 * 3);
+				mUtil.email_PasswordCertification(email, randomNum);
+				submit = "success";
+				logger.trace("이메일 발송 성공");
+			} else {
+				logger.trace("이메일 발송 실패");
+				throw new NotFoundDataException("");
+			}
+		} catch (NotFoundDataException e) {
+			logger.trace("입력된 id를 가진 아이디가 존재 X");
 		}
 
 		return submit;
