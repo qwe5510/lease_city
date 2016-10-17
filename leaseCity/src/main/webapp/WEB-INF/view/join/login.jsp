@@ -23,7 +23,7 @@
    <div class="login">
       <div class="inner">
       	<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
-         <form method="post" action="popup_login">
+         <form method="post" action="tryLogin">
             <fieldset>
                <legend>로그인</legend>
                <table>
@@ -142,7 +142,7 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <form class="form-inline" method="post" action="popup_join_request"
+         <form class="form-inline" method="post" action="popupJoinRequest"
            	name="joinForm" onsubmit="return validateform()">
             <input id="representName" name="representName" type="text"
                placeholder="대표자명" /> <br> <input id="companyName"
@@ -162,7 +162,7 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <sform:form class="form-inline" modelAttribute="user" method="post" action="popup_search_id">
+         <sform:form class="form-inline" modelAttribute="user" method="post" action="popupSearchId">
             <sform:input path="representName" type="text" placeholder="대표자명" /> <br>
             <sform:input path="companyName" type="text" placeholder="업체명" /> <br>
             <sform:input path="email" type="email" placeholder="Email"/> <br>
