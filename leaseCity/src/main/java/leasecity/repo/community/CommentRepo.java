@@ -10,8 +10,14 @@ public interface CommentRepo {
 	//모든 게시글 갯수 정수로 리턴
 	public Integer getCountAllComments();
 	
+	//검색 했을 때 게시물 갯수 리턴
+	public Integer getCountSearchComments(Page page);
+	
 	//모든 게시글 페이지 별로 리턴
 	public List<Comment> getPageComments(Page page);
+	
+	//게시글 조회
+	public Comment getComment(Integer commentNo);
 	
 	//게시글 추가
 	public int insertComment(Comment comment);
@@ -21,7 +27,4 @@ public interface CommentRepo {
 	
 	//게시글 수정
 	public int updateComment(Comment comment);
-
-	
-	
 }

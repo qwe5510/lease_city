@@ -389,13 +389,13 @@ public class LoginController {
 
 	@RequestMapping(value = "/validateCompanyName", method = RequestMethod.POST)
 	public @ResponseBody boolean validateCompanyName(Model model, @RequestParam String inputCompanyName) {
-		boolean checkCompanyName = UService.isUserId(inputCompanyName);
+		boolean checkCompanyName = UService.isUserCompanyName(inputCompanyName);
 		return checkCompanyName;
 	}
 
 	@RequestMapping(value = "/validateEmail", method = RequestMethod.POST)
 	public @ResponseBody boolean validateEmail(Model model, @RequestParam String inputEmail) {
-		boolean checkEmail = UService.isUserId(inputEmail);
+		boolean checkEmail = UService.isUserEmail(inputEmail);
 		return checkEmail;
 	}
 
