@@ -299,13 +299,21 @@
       <c:url value="/popupSearchPassIssue" var="popupSearchPassIssue"/>
       $(document).on("click","#issue",function(e){
     	   e.preventDefault();
-    	   var email = $("#emailPass").val();
+    	   var userId = $("#userIdPass").val();
+     	  var representName = $("#representNamePass").val();
+     	  var companyName = $("#companyNamePass").val();
+     	  var email = $("#emailPass").val();
+    	   
     	   $.ajax({
 	           // type을 설정합니다.
 	           type : 'post',
 	           url : "${popupSearchPassIssue }",
 	           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-	           data : {email : email},
+	           data : {email : email,
+	        	   userId : userId,
+	        	   representName : representName,
+	        	   companyName : companyName
+	        	},
 	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 	           success : function (data) {
 	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
