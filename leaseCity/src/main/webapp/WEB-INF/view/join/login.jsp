@@ -38,9 +38,9 @@
                   </tr>
                </table>
                <div class="inner1">
-                  <a data-toggle="modal" data-backdrop="static" href="#joinRequest">회원가입인증</a> <a
-                     data-toggle="modal" data-backdrop="static" href="#idSearch">아이디찾기</a> <a
-                     data-toggle="modal" data-backdrop="static" href="#passSearch">비밀번호찾기</a>
+                  <a data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#joinRequest">회원가입인증</a> <a
+                     data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#idSearch">아이디찾기</a> <a
+                     data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#passSearch">비밀번호찾기</a>
                </div>
             </fieldset>
          </form>
@@ -199,7 +199,7 @@
       <div class="modal-header">
          <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
             class="modalImg"
-            src="<%=request.getContextPath()%>/images/pop/pass.png" />
+            src="<%=request.getContextPath()%>/images/pop/passChange.png" />
       </div>
       <div class="modal-body">
          <form class="form-inline" method="post" action="popupSearchPassChangeInfo">
