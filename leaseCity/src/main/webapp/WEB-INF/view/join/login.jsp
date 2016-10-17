@@ -21,12 +21,12 @@
    
    <jsp:include page="../layout/header.jsp"></jsp:include>
    <div class="login">
-      <img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
       <div class="inner">
+      	<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
          <form method="post" action="popup_login">
             <fieldset>
                <legend>로그인</legend>
-               <table>
+               <table style="margin-left: 60px">
                   <tr>
                      <th><label for="userId">아이디</label></th>
                      <th><input name="userId" type="text" /></th>
@@ -143,12 +143,12 @@
       <!--Modal Body-->
       <div class="modal-body">
          <form class="form-inline" method="post" action="popup_join_request"
-            name="joinForm" onsubmit="return validateform()">
+           	name="joinForm" onsubmit="return validateform()">
             <input id="representName" name="representName" type="text"
                placeholder="대표자명" /> <br> <input id="companyName"
                name="companyName" type="text" placeholder="업체명" /> <br> <input
                id="email" name="email" type="email" placeholder="Email" /> <br>
-            <button class="pop">가입 요청</button>
+            <button id="joinRequestBtn" class="pop">가입 요청</button>
          </form>
       </div>
    </div>
@@ -327,6 +327,8 @@
     	   } 
     	   console.log(str); */
       });
+      
+
       <c:url value="/popupSearchPassConfirm" var="popupSearchPassConfirm"/>
       $(document).on("click","#confirm",function(e){
     	  e.preventDefault();

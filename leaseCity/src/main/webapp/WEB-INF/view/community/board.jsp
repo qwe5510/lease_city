@@ -18,12 +18,12 @@
 					room : 'yhj123',
 					chat_record : true,
 					width : '300',
-					height : '650',
+					height : '300',
 					conversation_limi : true,
 					in_sound : true,
 					say_id : true,
 					skin : 1,
-					mb_list_height : '150'
+					mb_list_height : '50'
 				});
 			</script>
 		</div>
@@ -57,6 +57,13 @@
 								+ "</tr>");
 					}
 				%>
+				<tr class="board_write">
+					<td colspan="5">
+					</td>
+					<td colspan="1">
+					<sform:button><i class="icon-pencil"></i>글작성</sform:button>
+					</td>
+				</tr>
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
 				</tr>
@@ -65,38 +72,25 @@
 			</sform:form>
 			<div class="boardSearch">
 			<sform:form method="post" modelAttribute="page" action="${board_write }">
-				<table>
-					<tr>
-						<th>
-							이전
-						</th>
-						<th>
+						<div class="boardPage">
+							<a><i class="icon-arrow-left"></i>이전</a>
 							<%
 							for(int i=0;i<10;i++){
 								out.print("<a>"+i+"</a>");
 							}
 							%>
-						</th>
-						<th>
-							다음
-						</th>
-						<th>
-							<sform:button>글작성</sform:button>
-						</th>
-					</tr>
-					<tr>
-						<th>
+							<a>다음<i class="icon-arrow-right"></i></a>
+						</div>
+						<div class="boardBottom">
 							<sform:select path="search">
+								<sform:option value="COMPANY_NAME">글쓴이</sform:option>
+								<sform:option value="TITLE">제목</sform:option>
+								<sform:option value="TITLE_AND_CONTENT">제목+내용</sform:option>
+								<sform:option value="LOCAL ">지역명</sform:option>
 							</sform:select>
-						</th>
-						<th>
 							<sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
-						</th>
-						<th colspan="3">
-							<button>검색</button>
-						</th>
-					</tr>
-						</table>
+							<button><i class="icon-search"></i>검색</button>
+						</div>
 			</sform:form>
 			</div>
 		</div>

@@ -46,9 +46,6 @@
 	</div>
 	
 	<form class="agree_input" method="post">
-		<input type="hidden" name="representName" value="${representName}" />
-		<input type="hidden" name="companyName" value="${companyName}" />
-		<input type="hidden" name="email" value="${email}" />
 		<input type="submit" formaction="<%=request.getContextPath() %>/join_input" value="동의">
 		<input type="submit" formaction="<%=request.getContextPath() %>/join_cancel" value="비동의">
 	</form>

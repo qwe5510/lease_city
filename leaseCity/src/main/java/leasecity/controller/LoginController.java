@@ -1,6 +1,7 @@
 package leasecity.controller;
 
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -47,30 +48,30 @@ public class LoginController {
 	@Autowired
 	UserService UService;
 
-	// 메인 페이지
-	//PRG
+	// 메인 페이지 PRG
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(Model model, Locale locale) {
-
 		return "index";	
+	}
+	
+	// 로그인 폼 ( 이동만 )
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		return "join/login";
 	}
 
 	// (회원 가입시 ) 취소 버튼
 	@RequestMapping(value = "/join_cancel", method = RequestMethod.POST)
-	public String join_cancel(Model model, RedirectAttributes redir) {
+	public String join_cancel(Model model, RedirectAttributes redir, HttpSession session) {
 		// 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
-		redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");
+		// 세션에 저장한 회원정보 일괄삭제 
+		session.invalidate();
+		redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");	
 		return "redirect:/index";
 	}
 
-	// 로그인 폼 ( 이동만 )
-	@RequestMapping(value = "/login")
-	public String login(Model model) {
-		User user = new User();
-		model.addAttribute("user", user);
-
-		return "join/login";
-	}
 
 	@RequestMapping(value = "/popup_login")
 	public String popup_login(Model model, HttpServletRequest request, RedirectAttributes redir) {
@@ -90,10 +91,16 @@ public class LoginController {
 
 	// 회원가입 컨트롤러 - 회원가입 폼에 적힌 값들 저장
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public String join(Model model, RedirectAttributes redir, HttpServletRequest request) {
-
-		// 삭제할 대기유저 추가
-		StandByUser sbu = new StandByUser();
+	public String join(Model model, RedirectAttributes redir,
+			HttpSession session, HttpServletRequest request) {
+		
+		//세션이 만료되었는지 확인
+		Object joinOn = session.getAttribute("email");
+		if(joinOn == null){
+			logger.error("세션이 만료되었습니다.");
+			redir.addFlashAttribute("join_message", "세션이 만료되어 회원가입을 할 수 없습니다.");
+			return "redirect:/index";
+		}
 
 		// 1-1. join_input 폼에서 입력한 '기본' 회원정보 -> 갖고 오기
 		String userId = request.getParameter("userId");
@@ -110,6 +117,7 @@ public class LoginController {
 
 		User user = new User(userId, password, companyName, representName, representPhone, handPhone, email, zipNo,
 				address, notifyOnOff, url, null, 0.0, null);
+		User joinUser = null; //회원가입 하는 유저
 
 		logger.trace("User 컨트롤러 확인 : {}", user);
 
@@ -142,33 +150,23 @@ public class LoginController {
 			String[] licenseDates = request.getParameterValues("licenseDate");
 			String[] licensers = request.getParameterValues("licenser");
 			StringTokenizer strToken;
+			
+			//하나라도 있으면 추가.
+			if(licenseNames != null){
+				for (int n = 0; n < licenseNames.length; n++) {
+					if (licenseNames[n].length() > 0 && licenseDates[n].length() > 0 && licensers[n].length() > 0) {
+						strToken = new StringTokenizer(licenseDates[n], "-");
+						// 년도, 월, 일 3가지 Date에 대입
+						Date date = DateUtil.getStringDate(strToken.nextToken(), strToken.nextToken(),
+								strToken.nextToken());
 
-			for (int n = 0; n < licenseNames.length; n++) {
-				if (licenseNames[n].length() > 0 && licenseDates[n].length() > 0 && licensers[n].length() > 0) {
-					strToken = new StringTokenizer(licenseDates[n], "-");
-					// 년도, 월, 일 3가지 Date에 대입
-					Date date = DateUtil.getStringDate(strToken.nextToken(), strToken.nextToken(),
-							strToken.nextToken());
-
-					licenseList.add(new License(userId, licenseNames[n], date, licensers[n]));
+						licenseList.add(new License(userId, licenseNames[n], date, licensers[n]));
+					}
 				}
 			}
-			// 3. 가입
-			try {
-				// 회원가입 완료 시 대기유저 목록에서 제거. (발급코드도 지움)
-				StandByUser SBU = SBUService.getStandByUser(companyName, representName, email);
-				SBUService.rejectStandByUser(SBU);
 
-				UService.join(CCompany);
-				redir.addFlashAttribute("join_message", CCompany.getRepresentName() + "님 회원가입에 성공했습니다.");
-			} catch (NotFoundDataException e) {
-				logger.error("지울 대기 유저를 찾을 수 없음.");
-				redir.addFlashAttribute("join_message", "회원가입 실패.");
-				return "redirect:/login";
-			} catch (JoinFailException e) {
-				redir.addFlashAttribute("join_message", "회원가입 실패.");
-				return "join/join_input";
-			}
+			//가입유저 건설업체에 대입.
+			joinUser = CCompany;
 		}
 		// 중기업체 회원가입 시
 		else if (company.equals("중기업체")) {
@@ -203,25 +201,27 @@ public class LoginController {
 				String equipmentCategory = equipmentTypes[n] + "/" + equipmentSizes[n];
 				HEList.add(new HeavyEquipment(idNumbers[n], userId, equipmentCategory, "N"));
 			}
-
-			// 2. 가입
-			try {
-				// 회원가입 완료 시 대기유저 목록에서 제거. (발급코드도 지움)
-				StandByUser SBU = new StandByUser(companyName, representName, email);
-				SBUService.rejectStandByUser(SBU);
-
-				UService.join(HCompany);
-				redir.addFlashAttribute("join_message", HCompany.getRepresentName() + "님 회원가입에 성공했습니다.");
-			} catch (NotFoundDataException e) {
-				logger.error("지울 대기 유저를 찾을 수 없음.");
-				redir.addFlashAttribute("join_message", "회원가입 실패.");
-				return "redirect:/login";
-			} catch (JoinFailException e) {
-				redir.addFlashAttribute("join_message", "회원가입 실패.");
-				return "join/join_input";
-			}
+			//중기업체 회원가입유저 클래스에 대입.
+			joinUser = HCompany;
 		}
-		logger.trace("회원가입 완료");
+		
+		// 가입
+		try {
+			// 회원가입 완료 시 대기유저 목록에서 제거. (발급코드도 지움)
+			StandByUser SBU = SBUService.getStandByUser(companyName, representName, email);
+			SBUService.rejectStandByUser(SBU); //대기유저 삭제
+			
+			UService.join(joinUser); //회원가입
+			redir.addFlashAttribute("join_message", joinUser.getRepresentName() + "님 회원가입에 성공했습니다.");
+			logger.trace("회원가입 완료");
+		} catch (NotFoundDataException e) {
+			logger.error("지울 대기 유저를 찾을 수 없음.");
+			redir.addFlashAttribute("join_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
+			return "redirect:/login";
+		} catch (JoinFailException e) {
+			redir.addFlashAttribute("join_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
+			return "redirect:/login";
+		}
 
 		return "redirect:/loginFromJoin";
 	}
@@ -231,46 +231,65 @@ public class LoginController {
 		return "join/login";
 	}
 
+	//동의 눌렀을 때 이동하는 컨트롤러
 	@RequestMapping(value = "/join_input", method = RequestMethod.POST)
-	public String join_input(Model model, RedirectAttributes redir, HttpServletRequest request) {
-		// 1. join_input 폼에서 입력한 회원정보 -> db에 저장하기
-
-		redir.addFlashAttribute("representName", request.getParameter("representName"));
-		redir.addFlashAttribute("companyName", request.getParameter("companyName"));
-		redir.addFlashAttribute("email", request.getParameter("email"));
-
+	public String join_input(Model model, HttpSession session, RedirectAttributes redir) {
+		String companyName = (String)session.getAttribute("companyName");
+		String representName = (String)session.getAttribute("representName");
+		String email = (String)session.getAttribute("email");
+		
+		if(companyName==null || representName==null || email==null){
+			redir.addFlashAttribute("join_message", "세션이 만료되어 회원가입을 할 수 없습니다. \\n 메인 페이지로 이동합니다.");
+			return "redirect:index";
+		}
+		
 		return "redirect:/joinInput";
 	}
 
 	@RequestMapping(value = "/joinInput", method = RequestMethod.GET)
-	public String joinInput(Model model) {
+	public String joinInput(Model model, HttpSession session, RedirectAttributes redir) {
+		String companyName = (String)session.getAttribute("companyName");
+		String representName = (String)session.getAttribute("representName");
+		String email = (String)session.getAttribute("email");
+		
+		if(companyName==null || representName==null || email==null){
+			redir.addFlashAttribute("join_message", "세션이 만료되어 회원가입을 할 수 없습니다. \\n 메인 페이지로 이동합니다.");
+			return "redirect:index";
+		}
+		
 		return "join/join_input";
 	}
 
 	// 회원 가입, 동의 폼 -> 수락유저의 대표자명, 회사명, 이메일이 들어옴.
-	@RequestMapping(value = "/join_agree", method = RequestMethod.GET, params = { "permissionNo" })
+	@RequestMapping(value = "/join_agree", method = RequestMethod.GET)
 	public String join_agree(Model model, HttpSession session,
 			RedirectAttributes redir, HttpServletRequest request) {
-
 		// 코드 받기
-		String permissionNo = request.getParameter("permissionNo");
+		String permissionNo = 
+				request.getParameter("permissionNo")!=null?
+				request.getParameter("permissionNo"):"";
+				//발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
+						
 		logger.trace("들어온 permissionNo : {}", permissionNo);
 		
-		//대기유저 인증
-		StandByUser sbu = confirmStandByUser(permissionNo, redir);
-		
-		//인증되었을 경우
-		if(sbu != null){
+		// 대기 비회원을 저장할 객체
+		StandByUser sbu = null;
+		try {
+			// 코드를 DB와 비교하여 대기 비회원 검색
+			sbu = SBUService.getAgreeStandByUser(permissionNo);
+			logger.trace("들어온 대기유저 : {}", sbu);
 			session.setAttribute("permissionNo", permissionNo);
-			session.setAttribute("representName", sbu.getRepresentName());
 			session.setAttribute("companyName", sbu.getCompanyName());
+			session.setAttribute("representName", sbu.getRepresentName());
 			session.setAttribute("email", sbu.getEmail());
+			
+			//세션 유지시간 10분.
+			session.setMaxInactiveInterval(60 * 10);
+		} catch (NotFoundDataException e) {
+			// dir에 객체 저장하여 보내기
+			redir.addFlashAttribute("join_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
+			return "redirect:index";
 		}
-		//아닐 경우
-		else if(sbu == null){
-			return "redirect:/index";
-		}	
-
 		return "redirect:/joinAgree";
 	}
 	
@@ -278,34 +297,14 @@ public class LoginController {
 	public String joinAgree(Model model, HttpSession session, 
 			RedirectAttributes redir, HttpServletRequest request) {	
 		String permissionNo = (String)session.getAttribute("permissionNo");
-		session.invalidate();
-		
-		// 대기 비회원을 저장할 객체
-		StandByUser sbu = confirmStandByUser(permissionNo, redir);
-		if(sbu != null){
-			request.setAttribute("permissionNo", permissionNo);
-			request.setAttribute("representName", sbu.getRepresentName());
-			request.setAttribute("companyName", sbu.getCompanyName());
-			request.setAttribute("email", sbu.getEmail());
-		}else if(sbu == null){
-			return "redirect:/index";
-		}
-		return "join/join_agree";
-	}
-	
-	private StandByUser confirmStandByUser(String permissionNo,	RedirectAttributes redir){
-		StandByUser sbu = null;
-		try {
-			// 코드를 DB와 비교하여 대기 비회원 검색
-			sbu = SBUService.getAgreeStandByUser(permissionNo);
-		} catch (NotFoundDataException e) {
+		if(permissionNo== null){
 			// dir에 객체 저장하여 보내기
 			redir.addFlashAttribute("join_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
+			return "redirect:index";
 		}
-		return sbu;
-	}
 
-	
+		return "join/join_agree";
+	}
 
 	// 회원가입 요청
 	@RequestMapping(value = "/popup_join_request", method = RequestMethod.POST)
@@ -350,7 +349,7 @@ public class LoginController {
 		} catch (DuplicateValueException e) {
 			redir.addFlashAttribute("join_message", "회원가입 요청 실패\\n동일한 업체명, 이메일로 된 유저 혹은 대기유저가 존재합니다.");
 			logger.error("회원가입 요청실패");
-			return null;
+			return "redirect:/login";
 		} catch (NotFoundDataException e) {
 			redir.addFlashAttribute("join_message", "회원가입 요청 실패");
 			return "redirect:/login";

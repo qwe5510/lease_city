@@ -35,14 +35,14 @@ public class UserRepoImpl implements UserRepo{
 	//유저 중복값 확인 - 업체명
 	@Override
 	public User getUserCheckCompanyName(String companyName) {
-		String stmt = USER_NS + "getSelectUserCheckId";
+		String stmt = USER_NS + "getSelectUserCheckCompanyName";
 		return session.selectOne(stmt, companyName);
 	}
 
 	//유저 중복값 확인 - email
 	@Override
 	public User getUserCheckEmail(String email) {
-		String stmt = USER_NS + "getSelectUserCheckId";
+		String stmt = USER_NS + "getSelectUserCheckEmail";
 		return session.selectOne(stmt, email);
 	}
 	

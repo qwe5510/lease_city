@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import leasecity.dto.community.Comment;
 import leasecity.dto.etc.Page;
@@ -15,9 +14,10 @@ public class CommunityController {
 	static Logger logger = LoggerFactory.getLogger(CommunityController.class);
 	
 	//게시판 글 , 댓글 확인
-	@RequestMapping(value="/board_read",method=RequestMethod.GET)
+	@RequestMapping(value="/board_read")
 	public String board_read(Model model){
-		model.addAttribute("message", "Good Morning");
+		Comment comment = new Comment();
+		model.addAttribute("comment", comment);
 		logger.trace("컨트롤러!!");
 		return "community/board_read";
 		

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
@@ -18,19 +18,23 @@
 					room : 'yhj123',
 					chat_record : true,
 					width : '300',
-					height : '650',
+					height : '300',
 					conversation_limi : true,
 					in_sound : true,
 					say_id : true,
 					skin : 1,
-					mb_list_height : '150'
+					mb_list_height : '50'
 				});
 			</script>
 			</div>
 			<div class="community">
 				<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
-				<sform:form action="#" method="post" modelAttribute="comment">
+				<c:url value="/board_read" var="board_read"/>
+				<sform:form id="board_write_form" action="${board_read }" method="post" modelAttribute="comment">
 					<table class="boardWriteTable">
+						<tr>
+							<td colspan="4" class="boardLine" style="height: 4px !important;"></td>
+						</tr>
 						<tr>
 							<td>
 								<sform:label path="kind">분류</sform:label>
@@ -46,6 +50,9 @@
 							</td>
 						</tr>
 						<tr>
+							<td colspan="4" class="boardLine" style="height: 4px !important;"></td>
+						</tr>
+						<tr>
 							<td colspan="4">
 								<sform:input path="commentTitle" placeholder="제목"/>
 							</td>
@@ -55,10 +62,24 @@
 								<sform:textarea path="commentContent" placeholder="형식에 구애받지 않고 자유롭게 입력하시면 됩니다."/>
 							</td>
 						</tr>
+			
 					</table>
+					<div class="board_write_bottom">
+						<sform:button> <i class="icon-pencil"></i>작성</sform:button>
+						<sform:button id="cancel"><i class="icon-link"></i>취소</sform:button>
+					</div>
 				</sform:form>
 			</div>
 		</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+<c:url value="/board" var="board"/>
+$("#cancel").on("click", function(e){
+    e.preventDefault();
+    $("#board_write_form").attr("action","${board}");
+    $("#board_write_form").submit();
+});
+</script>
 </html>
