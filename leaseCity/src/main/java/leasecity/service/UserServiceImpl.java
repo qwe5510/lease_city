@@ -169,8 +169,6 @@ public class UserServiceImpl implements UserService {
 		int result = -1;
 		// 비밀번호 수정
 		if (keyword.equals("password")) {
-			
-
 			// 비밀번호 해싱
 			String hashPassword = HashingUtil.hashingString(user.getPassword());
 			user.setPassword(hashPassword);
