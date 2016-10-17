@@ -430,6 +430,8 @@ public class LoginController {
 	@RequestMapping(value = "/popupSearchPass", method = RequestMethod.POST)
 	public @ResponseBody String popup_search_pass(Model model, RedirectAttributes redir, HttpSession session, @RequestParam String userId, @RequestParam String representName, @RequestParam String companyName, @RequestParam String email ) {
 
+		String submit = "";
+		
 		User user = new User();
 		user.setUserId(userId);
 		user.setRepresentName(representName);
@@ -465,6 +467,7 @@ public class LoginController {
 
 		session.setAttribute("user", user);
 		session.setMaxInactiveInterval(60 * 3);
+		logger.trace("비밀번호 찾을 유저 : {}", user);
 		//redir.addFlashAttribute("user", user);
 
 		return "success";

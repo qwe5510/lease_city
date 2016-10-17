@@ -386,13 +386,12 @@
 	        	   email : email },
 	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 	           success : function (data) {
-	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
 	               if(data=="fail_notFound") {
 	            	   alert("등록되지 않은 유저입니다.");
 	               } else if (data=="fail_notCertification") {
 	            	   alert("인증되지 않은 유저입니다. 이메일 인증을 먼저 해주세요.");
 	            	   $("#confirmNum").val('');
-	               } else if (data == "success") {
+	               } else if (data=="success") {
 	            	   alert("인증 및 등록여부 확인 성공");
 	            	   $("#passSearch").hide();
 	             	   $("#passChange").show();
