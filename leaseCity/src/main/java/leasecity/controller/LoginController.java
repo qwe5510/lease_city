@@ -32,6 +32,7 @@ import leasecity.exception.DuplicateValueException;
 import leasecity.exception.JoinFailException;
 import leasecity.exception.LoginFailException;
 import leasecity.exception.NotFoundDataException;
+import leasecity.exception.ServiceFailException;
 import leasecity.service.StandByUserService;
 import leasecity.service.UserService;
 import leasecity.util.DateUtil;
@@ -427,20 +428,27 @@ public class LoginController {
 
 	// 비밀번호 찾기 컨트롤
 	@RequestMapping(value = "/popupSearchPass", method = RequestMethod.POST)
-	public String popup_search_pass(Model model, RedirectAttributes redir, User user, HttpSession session) {
+	public @ResponseBody String popup_search_pass(Model model, RedirectAttributes redir, HttpSession session, @RequestParam String userId, @RequestParam String representName, @RequestParam String companyName, @RequestParam String email ) {
 
+		User user = new User();
+		user.setUserId(userId);
+		user.setRepresentName(representName);
+		user.setCompanyName(companyName);
+		user.setEmail(email);
+		
 		// 1. 폼에 입력 값 받기
 		logger.trace("아이디 찾을 회원 정보 : {}", user);
+		
 		// 2-1 폼에 입력된 유저가 있는지부터 검색
 		try {
 			user = UService.searchUserPassword(user);
 			logger.trace("폼에 정보로 검색된 유저 : {}", user);
 		} catch (NotFoundDataException e) {
 			logger.trace("패스워드 찾기 : DB 검색 실패");
-			redir.addFlashAttribute("join_message", "패스워드 찾기 실패 - 해당 아이디가 업습니다.");
-			return "redirect:/login";
+			//redir.addFlashAttribute("join_message", "패스워드 찾기 실패 - 등록되지 않은 회원입니다.");
+			return "fail_notFound";
 		}
-
+		
 		// 2-2 이메일로 본인 인증이 되있는지 확인
 		Object obj = (Object) session.getAttribute("matchingResult");
 		String matchingResult = (String) obj;
@@ -448,15 +456,18 @@ public class LoginController {
 		if (matchingResult.equals("success")) {
 			logger.trace("이메일 인증 확인");
 		} else {
-			redir.addFlashAttribute("join_message", "본인 인증 실패 - 인증되지 않은 회원입니다 .");
+			//redir.addFlashAttribute("join_message", "본인 인증 실패 - 인증되지 않은 회원입니다 .");
 			logger.trace("이메일 인증 실패");
-			return "redirect:/login";
+			return "fail_notCertification";
 		}
 
 		// 3. DB에서 검색 및 이메일 인증된 회원 ==> 비밀번호 수정 폼으로 이동
-		redir.addFlashAttribute("user", user);
 
-		return "redirect:/login";
+		session.setAttribute("user", user);
+		session.setMaxInactiveInterval(60 * 3);
+		//redir.addFlashAttribute("user", user);
+
+		return "success";
 	}
 
 	// 비밀번호 찾기 시, 이메일 인증 컨트롤
@@ -476,6 +487,7 @@ public class LoginController {
 		// 2. 메일로 인증번호 전달
 		if (email != null && email != "") {
 			session.setAttribute("randomNum", randomNum);
+			session.setMaxInactiveInterval(60 * 3);
 			mUtil.email_PasswordCertification(email, randomNum);
 			submit = "success";
 			logger.trace("이메일 발송 성공");
@@ -508,8 +520,36 @@ public class LoginController {
 		}
 
 		session.setAttribute("matchingResult", submit);
+		session.setMaxInactiveInterval(60 * 3);
 
 		return submit;
+	}
+	
+	// 비밀번호 찾기 : 인증번호 입력 및 인증 클릭 시
+	@RequestMapping(value = "/popupSearchPassChangeInfo", method = RequestMethod.POST)
+	public String popupSearchPassChangeInfo(HttpSession session, RedirectAttributes redir, HttpServletRequest request) {
+		
+		// 1. 비밀번호 불러오기 (request)
+		String password = request.getParameter("password");
+		// 2. 유저 불러오기 (session)
+		Object obj = session.getAttribute("user");
+		User user = (User)obj;
+		// 3. 유저에 변경할 비밀번호 삽입
+		user.setPassword(password);
+		
+		// 4-1. DB에서 비밀번호 변경
+		try {
+			UService.changeInfo("password", user);
+		} catch (ServiceFailException e) {
+			// 4-2 비밀번호 변경 실패
+			redir.addFlashAttribute("join_message", "비밀번호 변경 실패.");
+			return "redirect:/login";
+		}
+		
+		// (비밀번호 변경 성공 메시지)
+		redir.addFlashAttribute("join_message", user.getUserId() + "님! 비밀번호 변경를 변경하셨습니다.");
+		
+		return "redirect:/index";
 	}
 
 	// 주소 찾기 컨트롤

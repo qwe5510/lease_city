@@ -180,10 +180,10 @@
       </div>
       <!--Modal Body-->
       <div class="modal-body">
-         <sform:form class="form-inline" modelAttribute="user" method="post" action="popupSearchPass">
-            <sform:input path="userId" type="text" placeholder="아이디" /><br>
-            <sform:input path="representName" type="text" placeholder="대표자명" /><br>
-            <sform:input path="companyName" type="text" placeholder="업체명" /><br>
+         <sform:form class="form-inline" modelAttribute="user" method="post" action="#">
+            <sform:input path="userId" id="userIdPass" type="text" placeholder="아이디" /><br>
+            <sform:input path="representName" id="representNamePass" type="text" placeholder="대표자명" /><br>
+            <sform:input path="companyName" id="companyNamePass" type="text" placeholder="업체명" /><br>
             <sform:input path="email" type="email" placeholder="Email" name="emailPass" id="emailPass"/>
             <sform:button class="btn1" id="issue" value="발급">발급</sform:button>
             <input name="confirmNum" id="confirmNum" type="number" placeholder="인증번호" />
@@ -202,13 +202,13 @@
             src="<%=request.getContextPath()%>/images/pop/pass.png" />
       </div>
       <div class="modal-body">
-         <sform:form class="form-inline" modelAttribute="user" method="post" action="#">
-            <sform:input path="password" type="password" placeholder="패스워드 입력" onblur="passChangeVali()"/><br>
+         <form class="form-inline" method="post" action="popupSearchPassChangeInfo">
+            <input id="password" name="password" type="password" placeholder="패스워드 입력" onblur="passChangeVali()"/><br>
             <div id="changeVali">영어 숫자 특수문자 혼용 8~16글자</div>
             <input id="password2" name="password2" type="password" placeholder="패스워드 확인" onblur="passChangeVali()"/><br>
             <br>
-            <sform:button id="passChangeBtn">비밀번호변경</sform:button>
-         </sform:form>
+            <button id="passChangeBtn">비밀번호변경</button>
+         </form>
       </div>
    </div>
 
@@ -267,12 +267,12 @@
     	  var temp = $("#confirmNum").val();
     	  console.log(str==temp);
       })
-      $(document).on("click","#passbtn",function(e){
+      /* $(document).on("click","#passbtn",function(e){
     	  e.preventDefault();
     	  console.log("숨김??")
     	  $("#passSearch").hide();
     	  $("#passChange").show();
-      });
+      }); */
       $('#passChangeBtn').attr('disabled',true)
       function passChangeVali(){
     	  	var password = $("#password").val();
@@ -356,5 +356,48 @@
 	         }
 	       });
       })
+      
+      <c:url value="/popupSearchPass" var="popupSearchPass"/>
+      $(document).on("click","#passbtn",function(e){
+    	  e.preventDefault();
+    	  var userId = $("#userIdPass").val();
+    	  var representName = $("#representNamePass").val();
+    	  var companyName = $("#companyNamePass").val();
+    	  var email = $("#emailPass").val();
+    	  var confirmNum = $("#confirmNum").val();
+    	  
+    	  
+    	   $.ajax({
+	           // type을 설정합니다.
+	           type : 'post',
+	           url : "${popupSearchPass }",
+	           // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+	           data : {userId : userId,
+	        	  representName : representName,
+	        	   companyName : companyName,
+	        	   email : email },
+	           // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+	           success : function (data) {
+	               // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
+	               if(data=="fail_notFound") {
+	            	   alert("등록되지 않은 유저입니다.");
+	               } else if (data=="fail_notCertification") {
+	            	   alert("인증되지 않은 유저입니다. 이메일 인증을 먼저 해주세요.");
+	            	   $("#confirmNum").val('');
+	               } else if (data == "success") {
+	            	   alert("인증 및 등록여부 확인 성공");
+	            	   $("#passSearch").hide();
+	             	   $("#passChange").show();
+	               }
+	           },
+	           error : function(xhr, status, error) {
+	            alert(error);
+	         }
+	       });
+      })
+      
+      
+
+      
  </script>
 </html>
