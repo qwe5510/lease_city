@@ -26,11 +26,23 @@ public class CommentRepoImpl implements CommentRepo{
 		return session.selectOne(stmt);
 	}
 	
+	@Override
+	public Integer getCountSearchComments(Page page) {
+		String stmt = COMMENT_NS + "getPageSelectCommentCount";
+		return session.selectOne(stmt, page);
+	}
+	
 	//모든 게시글 페이지 별로 리턴
 	@Override
 	public List<Comment> getPageComments(Page page) {
 		String stmt = COMMENT_NS + "getPageSelectComment";
 		return session.selectList(stmt, page);
+	}
+	
+	@Override
+	public Comment getComment(Integer commentNo) {
+		String stmt = COMMENT_NS + "getSelectComment";
+		return session.selectOne(stmt, commentNo);
 	}
 	
 	//게시글 추가

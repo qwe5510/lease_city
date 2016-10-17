@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * 커뮤니티 게시글 모델 클래스.
@@ -18,6 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class Comment implements Serializable {
 
 	/** serialVersionUID. */
@@ -25,6 +28,9 @@ public class Comment implements Serializable {
 
 	/** 게시글 번호. */
 	private Integer commentNo;
+	
+	/** 게시판에 찍히는 번호 */
+	private Integer commentRowNum;
 
 	/** 회원. */
 	private String userId;
@@ -49,15 +55,8 @@ public class Comment implements Serializable {
 	/** 게시글 날짜. */
 	private Date regDate;
 
-	/** 커뮤니티 댓글 목록. */
-	private List<Reply> replysList;
-
-	/**
-	 * 생성자.
-	 */
-	public Comment() {
-		this.replysList = new ArrayList<Reply>();
-	}
+	/** 게시글에 달린 총 댓글 개수 */
+	private Integer replyCount;
 	
 	public Comment(Integer commentNo, String userId, 
 			String commentTitle, String locale, String kind,
@@ -71,8 +70,6 @@ public class Comment implements Serializable {
 		this.commentContent = commentContent;
 		this.hits = hits;
 		this.regDate = regDate;
-		
-		this.replysList = new ArrayList<Reply>();
 	}
 
 	public Comment(Integer commentNo, String userId, 
@@ -85,8 +82,6 @@ public class Comment implements Serializable {
 		this.commentContent = commentContent;
 		this.hits = hits;
 		this.regDate = regDate;
-		
-		this.replysList = new ArrayList<Reply>();
 	}
 	
 	

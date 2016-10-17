@@ -6,31 +6,80 @@
  	
  	<!-- 게시물 전체갯수 조회 -->
  	<select id="getCountAllComments" resultType="int">
- 		SELECT COUNT(*) FROM comments;
+ 		SELECT COUNT(*) FROM comments
  	</select>
  	
- 	<!-- 게시물 페이지별 조회 -->
+ 	<!-- 게시물 페이지별 조회 - 검색,정렬 포함 -->
  	<select id="getPageSelectComment" parameterType="page" resultType="comment">
- 		SELECT * 
+ 		SELECT *
  		FROM (
- 				SELECT sub.*, rownum AS rnum
+ 				SELECT sub.*, rownum AS comment_row_num,
+ 				SUBSTR(comment_category, 0, INSTR(comment_category, '/')-1) AS locale,
+ 				SUBSTR(comment_category, INSTR(comment_category, '/')+1, LENGTH(comment_category)) AS kind
  				FROM( SELECT * FROM comments 
- 					
- 					
- 					WHERE
- 					
  					<choose>
- 					<when test="#{}"></when>
- 					<when test=""></when>
- 					<otherwise></otherwise>
+	 					<when test="search == 'TITLE' and keyword != null">
+	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'COMPANY_NAME' and keyword != null">
+	 						WHERE user_id LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'TITLE_AND_CONTENT' and keyword != null">
+	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' OR
+	 						comment_content LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'LOCAL' and keyword != null">
+	 						WHERE comment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
+	 					</when>
  					</choose>
  					
+ 					<choose>
+ 						<when test="order == 'ASC'">
+ 							ORDER BY reg_date ASC
+ 						</when>
+ 						
+ 						<when test="order == 'DESC'">
+ 							ORDER BY reg_date DESC
+ 						</when>
+ 					</choose>
  					) sub
  				)
- 		<if test="pageSize != null">
- 		
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE comment_row_num BETWEEN #{to} AND #{from}
  		</if>		
- 	</select> 	
+ 	</select>
+ 	
+ 	<!-- 게시물 페이지별 조회 - 검색 정렬한 게시물의 갯수 -->
+ 	<select id="getPageSelectCommentCount" parameterType="page" resultType="int">
+ 		SELECT COUNT(*)
+ 		FROM (
+ 				SELECT sub.*, rownum AS comment_row_num 				
+ 				 				FROM( SELECT * FROM comments 
+ 					<choose>
+	 					<when test="search == 'TITLE' and keyword != null">
+	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'COMPANY_NAME' and keyword != null">
+	 						WHERE user_id LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'TITLE_AND_CONTENT' and keyword != null">
+	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' OR
+	 						comment_content LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'LOCAL' and keyword != null">
+	 						WHERE comment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
+	 					</when>
+ 					</choose>
+ 					) sub
+ 				)		
+ 	</select>
+ 	
+ 	<!-- 게시글 번호에 대한 게시글 검색 조회 -->
+ 	<select id="getSelectComment" parameterType="int" resultType="comment">
+ 		SELECT *
+ 		FROM comments
+ 		WHERE comment_no = #{commentNo}
+ 	</select>
  	
  	
  	<!-- 게시물 추가 -->

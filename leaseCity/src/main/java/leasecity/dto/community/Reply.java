@@ -27,7 +27,7 @@ public class Reply implements Serializable {
 	/** 댓글 인식번호. */
 	private Integer replyNo;
 
-	/** 커뮤니티 게시글. */
+	/** 커뮤니티 게시글 번호. */
 	private Integer commentNo;
 
 	/** 회원. */
