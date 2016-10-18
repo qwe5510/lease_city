@@ -42,6 +42,8 @@ public class CommunityServiceImpl implements CommunityService{
 			comment.setReplyCount(
 					replyRepo.getCountCommentReply
 					(comment.getCommentNo()));
+			int rowNum = (commentRepo.getCountAllComments()-comment.getCommentRowNum())+1;
+			comment.setCommentRowNum(rowNum);
 		}
 		
 		return results;

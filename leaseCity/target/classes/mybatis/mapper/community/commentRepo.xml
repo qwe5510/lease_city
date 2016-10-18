@@ -16,7 +16,7 @@
  				SELECT sub.*, rownum AS comment_row_num,
  				SUBSTR(comment_category, 0, INSTR(comment_category, '/')-1) AS locale,
  				SUBSTR(comment_category, INSTR(comment_category, '/')+1, LENGTH(comment_category)) AS kind
- 				FROM( SELECT * FROM comments JOIN users USING(user_id)
+ 				FROM( SELECT * FROM comments
  					<choose>
 	 					<when test="search == 'TITLE' and keyword != null">
 	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
@@ -38,7 +38,7 @@
  							ORDER BY reg_date ASC
  						</when>
  						
- 						<when test="order == 'DESC'">
+ 						<when test="order == 'DESC' or order == null">
  							ORDER BY reg_date DESC
  						</when>
  					</choose>

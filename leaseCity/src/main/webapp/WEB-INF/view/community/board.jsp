@@ -110,17 +110,73 @@
 				</tr>
 			</table>
 			<div class="boardSearch">
+			<div class="boardPage" style="display: inline-block;">
+				
+				<!-- 이전 페이지, 다음 페이지 변수 선언 -->
+				<fmt:parseNumber 
+					value="${(((page.currentPage-1)/10)-(((page.currentPage-1)/10)%1))*10}" 
+					var="prevPage">
+				</fmt:parseNumber>
+				<fmt:parseNumber 
+					value="${prevPage+11}" 
+					var="nextPage">
+				</fmt:parseNumber>
+					
+				<c:choose>
+				<c:when test="${prevPage > 0}">
+					<a href="<%=request.getContextPath()%>/board?currentPage=${prevPage}">
+					<i class="icon-arrow-left">이전</i></a>
+				</c:when>
+				<c:otherwise>
+				<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
+				</c:otherwise>
+				</c:choose>				
+				
+				<c:choose>
+					<c:when test="${(nextPage-1) >= page.totalPage }">
+						<c:forEach var="i" begin="${prevPage+1}" end = "${page.totalPage}">
+							<c:choose>
+								<c:when test="${i eq page.currentPage}">
+									<b><c:out value="${i}"></c:out></b>
+								</c:when>
+								<c:otherwise>
+									<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
+										<c:out value="${i}"></c:out>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="i" begin="${prevPage+1}" end = "${nextPage-1}">
+							<c:choose>
+								<c:when test="${i eq page.currentPage}">
+									<b><c:out value="${i}"></c:out></b>
+								</c:when>
+								<c:otherwise>
+									<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
+										<c:out value="${i}"></c:out>
+									</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+					
+				<c:choose>
+				<c:when test="${nextPage <= page.totalPage}">
+					<a href="<%=request.getContextPath()%>/board?currentPage=${nextPage}">
+					다음<i class="icon-arrow-right"></i></a>
+				</c:when>
+				<c:otherwise>
+					<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
+				</c:otherwise>
+				</c:choose>
+			</div>
+			
 			<%-- <c:url value="" var=""/> --%>
 			<sform:form method="post" modelAttribute="page" action="#">
-						<div class="boardPage">
-							<a><i class="icon-arrow-left"></i>이전</a>
-							<%
-							for(int i=0;i<10;i++){
-								out.print("<a>"+i+"</a>");
-							}
-							%>
-							<a>다음<i class="icon-arrow-right"></i></a>
-						</div>
+						
 						<div class="boardBottom">
 							<sform:select path="search">
 								<sform:option value="COMPANY_NAME">글쓴이</sform:option>

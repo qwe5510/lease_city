@@ -1,6 +1,5 @@
 package leasecity.controller;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.community.Comment;
@@ -124,12 +124,18 @@ public class CommunityController {
 	}
 	
 	//커뮤니티 메인 페이지
-	@RequestMapping(value="/board")
-	public String board(Model model){
-		Page page = communityService.getCommentPage(1, PAGE_SIZE);
+	@RequestMapping(value="/board", method=RequestMethod.GET)
+	public String board(Model model,
+			@RequestParam(value="currentPage", required=false) 
+			Integer currentPage){
+	
+		//값이 없으면 1대입.
+		if(currentPage == null)
+			currentPage = 1;
+		Page page = communityService.getCommentPage(currentPage, 20);
+
 		try {
 			List<Comment> comments = communityService.loadPageCommentList(page);
-			Collections.reverse(comments);
 			model.addAttribute("comments", comments);
 			model.addAttribute("page", page);
 			//communityService.getSearchCommentPage(currentPage, pageSize, search, keyword, order)

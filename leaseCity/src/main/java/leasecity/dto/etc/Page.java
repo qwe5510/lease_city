@@ -50,7 +50,7 @@ public class Page {
 	/**
 	 * 정렬방식 (날짜에 대한 정렬만 함)
 	 * ASC : 오름차순 
-	 * DESC : 내림차순
+	 * DESC : 내림차순 (기본값)
 	 */
 	private String order;
 	
