@@ -31,11 +31,13 @@
 				u_chat({
 					room : 'yhj123',
 					chat_record : true,
-					width : '400',
-					height : '650',
+					width : '300',
+					height : '300',
 					conversation_limi : true,
 					in_sound : true,
-					say_id : true
+					say_id : true,
+					skin : 1,
+					mb_list_height : '50'
 				});
 			</script>
 		</div>
@@ -43,8 +45,7 @@
 			<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
 			<br>
 			<br>
-			<c:url value="/board_write" var="board_write"/>
-			<sform:form method="post" modelAttribute="comment" action="${board_write }">
+			
 			<table class="communityTable">
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
@@ -55,11 +56,9 @@
 					<td>제목</td>
 					<td>글쓴이</td>
 					<td>조회수</td>
-					<td>날짜</td>
+					<td>날짜<a href="#"><i class="icon-sort"></i></a></td>
 				</tr>
-				
 				<c:forEach var="comment" items="${comments}">
-					
 					<tr>
 						<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
 					</tr>
@@ -91,26 +90,40 @@
 						
 					</tr>
 				</c:forEach>
-				
-					
-				
+				<tr class="board_write">
+					<td colspan="5">
+					</td>
+					<td colspan="1">
+					<button><i class="icon-pencil"></i>글작성</button>
+					</td>
+				</tr>
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
 				</tr>
-				<tr>
-				<th>
-				<%
-					for(int i=0;i<10;i++){
-						out.print("<a>"+i+"</a>");
-					}
-				%>
-				</th>
-				<th>
-					<button>글작성</button>
-				</th>
-				<tr>
 			</table>
+			<div class="boardSearch">
+			<sform:form method="post" modelAttribute="page" action="${board_write }">
+						<div class="boardPage">
+							<a><i class="icon-arrow-left"></i>이전</a>
+							<%
+							for(int i=0;i<10;i++){
+								out.print("<a>"+i+"</a>");
+							}
+							%>
+							<a>다음<i class="icon-arrow-right"></i></a>
+						</div>
+						<div class="boardBottom">
+							<sform:select path="search">
+								<sform:option value="COMPANY_NAME">글쓴이</sform:option>
+								<sform:option value="TITLE">제목</sform:option>
+								<sform:option value="TITLE_AND_CONTENT">제목+내용</sform:option>
+								<sform:option value="LOCAL ">지역명</sform:option>
+							</sform:select>
+							<sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
+							<button><i class="icon-search"></i>검색</button>
+						</div>
 			</sform:form>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>

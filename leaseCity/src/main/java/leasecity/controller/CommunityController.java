@@ -24,9 +24,10 @@ public class CommunityController {
 	CommunityService communityService;
 	
 	//게시판 글 , 댓글 확인
-	@RequestMapping(value="/board_read",method=RequestMethod.GET)
+	@RequestMapping(value="/board_read")
 	public String board_read(Model model){
-		model.addAttribute("message", "Good Morning");
+		Comment comment = new Comment();
+		model.addAttribute("comment", comment);
 		logger.trace("컨트롤러!!");
 		return "community/board_read";
 		
@@ -34,23 +35,25 @@ public class CommunityController {
 	//게시글 댓글 작성
 	@RequestMapping(value="/board_write")
 	public String board_write(Model model){
-		model.addAttribute("message", "Good Morning");
+		Comment comment = new Comment();
+		model.addAttribute("comment", comment);
 		logger.trace("컨트롤러!!");
 		return "community/board_write";
 	}
+	
 	//커뮤니티 메인 페이지
-	@RequestMapping(value="/board")
+	@RequestMapping(value="/board", method = RequestMethod.GET)
 	public String board(Model model){
 		Page page = communityService.getCommentPage(1, 20);
 		try {
 			List<Comment> comments = communityService.loadPageCommentList(page);
 			Collections.reverse(comments);
 			model.addAttribute("comments", comments);
-			model.addAllAttributes(comments);			
-			
+			model.addAttribute("page", page);
 		} catch (NotFoundDataException e) {
 			logger.error("게시글이 없음");
-		} 
+		} 				
 		return "community/board";
 	}
+	
 }
