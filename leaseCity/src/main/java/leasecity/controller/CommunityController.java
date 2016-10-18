@@ -19,6 +19,7 @@ import leasecity.service.CommunityService;
 @Controller
 public class CommunityController {
 	static Logger logger = LoggerFactory.getLogger(CommunityController.class);
+	public static final int PAGE_SIZE = 20;
 	
 	@Autowired
 	CommunityService communityService;
@@ -44,12 +45,13 @@ public class CommunityController {
 	//커뮤니티 메인 페이지
 	@RequestMapping(value="/board", method = RequestMethod.GET)
 	public String board(Model model){
-		Page page = communityService.getCommentPage(1, 20);
+		Page page = communityService.getCommentPage(1, PAGE_SIZE);
 		try {
 			List<Comment> comments = communityService.loadPageCommentList(page);
 			Collections.reverse(comments);
 			model.addAttribute("comments", comments);
 			model.addAttribute("page", page);
+			//communityService.getSearchCommentPage(currentPage, pageSize, search, keyword, order)
 		} catch (NotFoundDataException e) {
 			logger.error("게시글이 없음");
 		} 				
