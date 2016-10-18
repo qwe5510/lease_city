@@ -1,5 +1,6 @@
 package leasecity.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.community.Comment;
+import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 import leasecity.dto.user.User;
 import leasecity.exception.NotFoundDataException;
@@ -25,15 +27,19 @@ import leasecity.service.CommunityService;
 @Controller
 public class CommunityController {
 	static Logger logger = LoggerFactory.getLogger(CommunityController.class);
-	public static final int PAGE_SIZE = 20;
+	public static final int COMMENT_PAGE_SIZE = 20;
+	public static final int REPLY_PAGE_SIZE = 10;
 	
 	@Autowired
 	CommunityService communityService;
 	
 	//게시판 글 , 댓글 확인
 	@RequestMapping(value="/board_read", method = RequestMethod.GET)
-	public String board_read(Model model, HttpServletRequest request){
-		Comment comment = new Comment();
+	public String board_read(Model model, HttpServletRequest request, RedirectAttributes redir){
+		// 게시글 전달(게시물 / 댓글) 객체
+		Comment comment;
+		List<Reply> reply = new ArrayList<Reply>();
+		Page page;
 		
 		// 1-1. 게시글 번호 받기
 		String commentNo = 
@@ -45,15 +51,21 @@ public class CommunityController {
 		// 2. 게시글 번호로 게시글 갖고오기
 		try {
 			comment = communityService.viewComment(Integer.parseInt(commentNo));
+			page = communityService.getReplyPage(Integer.parseInt(commentNo), 
+					1, REPLY_PAGE_SIZE);
+			reply = communityService.loadCommentReplys(page);
+			logger.trace("reply : {}", reply);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			redir.addFlashAttribute("board_message", "글을 찾을 수 없습니다.");
+			return "redirect:/board";
 		} catch (NotFoundDataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			redir.addFlashAttribute("board_message", "비공개 또는 삭제된 게시글입니다.");
+			return "redirect:/board";
 		}
 		
 		model.addAttribute("comment", comment);
+		model.addAttribute("page", page);
+		model.addAttribute("reply", reply);
 		
 		return "community/board_read";
 		
@@ -132,7 +144,7 @@ public class CommunityController {
 		//값이 없으면 1대입.
 		if(currentPage == null)
 			currentPage = 1;
-		Page page = communityService.getCommentPage(currentPage, 20);
+		Page page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
 
 		try {
 			List<Comment> comments = communityService.loadPageCommentList(page);

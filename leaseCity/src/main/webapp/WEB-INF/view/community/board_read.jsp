@@ -32,6 +32,7 @@
 			<sform:form id="board_read_form" action="${board_write }" method="post" modelAttribute="comment">
 			<div class="board_read_line">
 				<table class="board_read_table">
+					<%-- <c:set value="" var=""></c:set> --%>
 					<tr>
 						<td><span>${userId }  ${commentCategory }</span></td>
 						<td><span>${regDate }</span></td>
