@@ -43,7 +43,7 @@ public class CommunityController {
 	}
 	
 	//커뮤니티 메인 페이지
-	@RequestMapping(value="/board", method = RequestMethod.GET)
+	@RequestMapping(value="/board")
 	public String board(Model model){
 		Page page = communityService.getCommentPage(1, PAGE_SIZE);
 		try {
