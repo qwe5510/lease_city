@@ -94,7 +94,8 @@
 					<td colspan="5">
 					</td>
 					<td colspan="1">
-					<button><i class="icon-pencil"></i>글작성</button>
+					<c:url value="/board_write" var="board_write"/>
+					<a href="${board_write}"><button><i class="icon-pencil"></i>글작성</button></a>
 					</td>
 				</tr>
 				<tr>
@@ -102,7 +103,8 @@
 				</tr>
 			</table>
 			<div class="boardSearch">
-			<sform:form method="post" modelAttribute="page" action="${board_write }">
+			<%-- <c:url value="" var=""/> --%>
+			<sform:form method="post" modelAttribute="page" action="#">
 						<div class="boardPage">
 							<a><i class="icon-arrow-left"></i>이전</a>
 							<%
