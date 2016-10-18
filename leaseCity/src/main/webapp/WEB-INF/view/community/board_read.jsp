@@ -33,21 +33,21 @@
 			<div class="board_read_line">
 				<table class="board_read_table">
 					<tr>
-						<td><span>글쓴이</span></td>
-						<td><span>2016.10.12</span></td>
-						<td><span>조회수</span></td>
+						<td><span>${userId }  ${commentCategory }</span></td>
+						<td><span>${regDate }</span></td>
+						<td><span>${hits }"</span></td>
 					</tr>
 						<tr><td colspan='6' class='boardLine'></td></tr>
 					<tr>
-						<td colspan="3"><span>제목제목제목제목제목</span></td>
+						<td colspan="3"><span>${commentTitle }</span></td>
 					</tr>
 					<tr><td colspan="3" class='boardLine'></td></tr>
 					<tr class="board_read_comment">
-						<td colspan="3"><span></span></td>
+						<td colspan="3"><span>${commentContent }</span></td>
 					</tr>
 				</table>
 				<div style="text-align: left; padding: 10px;">
-				<span>댓글 xx개</span>
+				<span>댓글 ${replyCount }개</span>
 				</div>
 				
 				<div style="background: white;">

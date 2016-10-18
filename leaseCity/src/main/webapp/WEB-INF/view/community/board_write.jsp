@@ -30,7 +30,7 @@
 			<div class="community">
 				<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
 				<c:url value="/board_read" var="board_read"/>
-				<sform:form id="board_write_form" action="${board_read }" method="post" modelAttribute="comment">
+				<sform:form id="board_write_form" action="writeComment" method="post" modelAttribute="comment">
 					<table class="boardWriteTable">
 						<tr>
 							<td colspan="4" class="boardLine" style="height: 4px !important;"></td>
