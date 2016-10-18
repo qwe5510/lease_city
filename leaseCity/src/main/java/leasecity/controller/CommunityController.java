@@ -38,11 +38,12 @@ public class CommunityController {
 	
 	//게시판 글 , 댓글 확인
 	@RequestMapping(value="/board_read", method = RequestMethod.GET)
-	public String board_read(Model model, HttpServletRequest request, RedirectAttributes redir){
+	public String board_read(Model model, HttpServletRequest request, 
+			RedirectAttributes redir, @RequestParam(value="currentPage", required=false) Integer currentPage){
 		// 게시글 전달(게시물 / 댓글) 객체
-		Comment comment;
-		List<Reply> reply = new ArrayList<Reply>();
-		Page page;
+		Comment comment = null;
+		//Page page = null;
+		//List<Reply> replys = null;
 		
 		// 1-1. 게시글 번호 받기
 		String commentNo = 
@@ -52,12 +53,14 @@ public class CommunityController {
 		logger.trace("들어온 commentNo : {}", commentNo);
 		
 		// 2. 게시글 번호로 게시글 갖고오기
+		if(currentPage == null)
+			currentPage = 1;
+		
 		try {
 			comment = communityService.viewComment(Integer.parseInt(commentNo));
-			page = communityService.getReplyPage(Integer.parseInt(commentNo), 
-					1, REPLY_PAGE_SIZE);
-			reply = communityService.loadCommentReplys(page);
-			logger.trace("reply : {}", reply);
+			/*page = communityService.getReplyPage(Integer.parseInt(commentNo), 
+					currentPage, REPLY_PAGE_SIZE);*/
+			//replys = communityService.loadCommentReplys(page);
 		} catch (NumberFormatException e) {
 			redir.addFlashAttribute("board_message", "글을 찾을 수 없습니다.");
 			return "redirect:/board";
@@ -67,8 +70,8 @@ public class CommunityController {
 		}
 		
 		model.addAttribute("comment", comment);
-		model.addAttribute("page", page);
-		model.addAttribute("reply", reply);
+		//model.addAttribute("page", page);
+		//model.addAttribute("reply", reply);
 		
 		return "community/board_read";
 		
@@ -87,14 +90,14 @@ public class CommunityController {
 	@RequestMapping(value = "/writeComment", method = RequestMethod.POST)
 	public String writeComment(Model model, RedirectAttributes redir, Comment comment, HttpSession session) {
 		
-		// 1. 유저가 로그인 되있는지 확인
+		/*// 1. 유저가 로그인 되있는지 확인
 		User user = new User();
 		try {
 			user = isUserLogin(session.getAttribute("loginUser"));
 		} catch (WriteFailException e1) {
 			redir.addFlashAttribute("join_message", "로그인이 만료됬습니다.");
 			return "redirect:/index";
-		}
+		}*/
 
 		// 2. 게시물에 필요 정보 넣기
 		//comment.setUserId(user.getUserId()); // 로그인된 유저
@@ -127,13 +130,6 @@ public class CommunityController {
 		
 		// ( 미완성 )
 		model.addAttribute("comment", comment);
-		model.addAttribute("userId", comment.getUserId());
-		model.addAttribute("commentCategory", comment.getCommentCategory());
-		model.addAttribute("regDate", comment.getRegDate());
-		model.addAttribute("hits", comment.getHits());
-		model.addAttribute("commentTitle", comment.getCommentTitle());
-		model.addAttribute("commentContent", comment.getCommentContent());
-		model.addAttribute("replyCount", comment.getReplyCount());
 		
 		return "community/board_read";
 	}
