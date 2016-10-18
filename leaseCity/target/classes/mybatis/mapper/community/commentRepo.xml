@@ -21,17 +21,17 @@
  							 c.hits hits, c.reg_date, u.company_name company_name 							 
  						FROM comments c JOIN users u ON c.user_id=u.user_id
  					<choose>
-	 					<when test="search == 'TITLE' and keyword != null">
+	 					<when test="search == 'TITLE' and (keyword != null or keyword !='')">
 	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
-	 					<when test="search == 'COMPANY_NAME' and keyword != null">
+	 					<when test="search == 'COMPANY_NAME' and (keyword != null or keyword !='')">
 	 						WHERE company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
-	 					<when test="search == 'TITLE_AND_CONTENT' and keyword != null">
+	 					<when test="search == 'TITLE_AND_CONTENT' and (keyword != null or keyword !='')">
 	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' OR
 	 						comment_content LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
-	 					<when test="search == 'LOCAL' and keyword != null">
+	 					<when test="search == 'LOCAL' and (keyword != null or keyword !='')">
 	 						WHERE comment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
 	 					</when>
  					</choose>

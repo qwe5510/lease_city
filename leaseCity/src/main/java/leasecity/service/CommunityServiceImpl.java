@@ -58,8 +58,16 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public List<Comment> loadTermsComment(Page page) throws NotFoundDataException {
 		List<Comment> results = commentRepo.getPageComments(page);
+		for(Comment comment : results){
+			comment.setReplyCount(
+					replyRepo.getCountCommentReply
+					(comment.getCommentNo()));
+			int rowNum = (commentRepo.getCountAllComments()-comment.getCommentRowNum())+1;
+			comment.setCommentRowNum(rowNum);
+		}
+		
 		if(results.size() <= 0){
-			throw new NotFoundDataException("검색 조건에 알맞는 게시글");
+			throw new NotFoundDataException(page.getKeyword());
 		}
 		
 		return results;
@@ -177,7 +185,6 @@ public class CommunityServiceImpl implements CommunityService{
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
 		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
-		
 		page.setFromTo();
 		
 		System.out.println("여기서 에러뜸?");

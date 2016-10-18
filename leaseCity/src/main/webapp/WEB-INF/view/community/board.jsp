@@ -56,8 +56,23 @@
 					<td>제목</td>
 					<td>글쓴이</td>
 					<td>조회수</td>
-					<td>날짜<a href="#"><i class="icon-sort"></i></a></td>
+					<c:choose>
+						<c:when test="${!empty page.keyword and page.order eq 'ASC'}">
+							<td>날짜<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=DESC"><i class="icon-sort"></i></a></td>
+						</c:when>
+						<c:when test="${!empty page.keyword}">
+							<td>날짜<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=ASC"><i class="icon-sort"></i></a></td>
+						</c:when>
+						<c:when test="${page.order eq 'ASC' }">
+							<td>날짜<a href="<%=request.getContextPath()%>/board?order=DESC"><i class="icon-sort"></i></a></td>
+						</c:when>
+						<c:otherwise>
+							<td>날짜<a href="<%=request.getContextPath()%>/board?order=ASC"><i class="icon-sort"></i></a></td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
+
+
 				<c:forEach var="comment" items="${comments}">
 					<tr>
 						<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
@@ -87,9 +102,18 @@
 							<td><c:out value="${strRegDate}" /></td>
 						</c:otherwise>
 						</c:choose>									
-						
 					</tr>
 				</c:forEach>
+				
+				<c:if test="${empty page.totalPage and !empty errorMsg }">
+					<tr>
+						<td colspan="6"><c:out value="${errorMsg}"></c:out></td>
+					</tr>
+				</c:if>
+				<tr>
+					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
+				</tr>
+				
 				<tr class="board_write">
 					<td colspan="5">
 					</td>
@@ -98,9 +122,7 @@
 					<a href="${board_write}"><button><i class="icon-pencil"></i>글작성</button></a>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
-				</tr>
+				
 			</table>
 			<div class="boardSearch">
 			<div class="boardPage" style="display: inline-block;">
@@ -115,9 +137,19 @@
 					var="nextPage">
 				</fmt:parseNumber>
 					
+				
 				<c:choose>
 				<c:when test="${prevPage > 0}">
+									
 					<c:choose>
+						<c:when test="${!empty page.keyword and !empty page.order}">
+							<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${prevPage}">
+							<i class="icon-arrow-left">이전</i></a>
+						</c:when>
+						<c:when test="${!empty page.order}">
+							<a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${prevPage}">
+							<i class="icon-arrow-left">이전</i></a>
+						</c:when>
 						<c:when test="${!empty page.keyword}">
 							<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${prevPage}">
 							<i class="icon-arrow-left">이전</i></a>
@@ -133,49 +165,88 @@
 				</c:otherwise>
 				</c:choose>				
 				
-				<c:choose>
-					<c:when test="${(nextPage-1) >= page.totalPage }">
-						<c:forEach var="i" begin="${prevPage+1}" end = "${page.totalPage}">
-							<c:choose>
-								<c:when test="${i eq page.currentPage}">
-									<b><c:out value="${i}"></c:out></b>
-								</c:when>
-								<c:otherwise>
-									<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
-										<c:out value="${i}"></c:out>
-									</a>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="i" begin="${prevPage+1}" end = "${nextPage-1}">
-							<c:choose>
-								<c:when test="${i eq page.currentPage}">
-									<b><c:out value="${i}"></c:out></b>
-								</c:when>
-								<c:otherwise>
-									<c:choose>
-										<c:when test="${!empty page.keyword}">
-											<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
-												<c:out value="${i}"></c:out>
-											</a>								
-										</c:when>
-										<c:otherwise>
-											<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
-												<c:out value="${i}"></c:out>
-											</a>
-										</c:otherwise>
-									</c:choose>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
+				<c:if test="${!empty page.totalPage}">
+					<c:choose>
+						<c:when test="${(nextPage-1) >= page.totalPage }">
+							<c:forEach var="i" begin="${prevPage+1}" end = "${page.totalPage}">
+								<c:choose>
+									<c:when test="${i eq page.currentPage}">
+										<b><c:out value="${i}"></c:out></b>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${!empty page.keyword and !empty page.order}">
+												<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>
+											</c:when>
+											<c:when test="${!empty page.order}">
+												<a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>
+											</c:when>
+											<c:when test="${!empty page.keyword}">
+												<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>								
+											</c:when>
+											<c:otherwise>
+												<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="i" begin="${prevPage+1}" end = "${nextPage-1}">
+								<c:choose>
+									<c:when test="${i eq page.currentPage}">
+										<b><c:out value="${i}"></c:out></b>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${!empty page.keyword and !empty page.order}">
+												<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>
+											</c:when>
+											<c:when test="${!empty page.order}">
+												<a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>
+											</c:when>
+											<c:when test="${!empty page.keyword}">
+												<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>								
+											</c:when>
+											<c:otherwise>
+												<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
+													<c:out value="${i}"></c:out>
+												</a>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 				
 				<c:choose>
 				<c:when test="${nextPage <= page.totalPage}">
 					<c:choose>
+					<c:when test="${!empty page.keyword and !empty page.order}">
+							<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${nextPage}">
+							다음<i class="icon-arrow-right"></i></a>
+						</c:when>
+						<c:when test="${!empty page.order}">
+							<a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${nextPage}">
+							다음<i class="icon-arrow-right"></i></a>
+						</c:when>
 						<c:when test="${!empty page.keyword}">
 							<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${nextPage}">
 							다음<i class="icon-arrow-right"></i></a>

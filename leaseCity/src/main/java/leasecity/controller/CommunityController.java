@@ -71,6 +71,7 @@ public class CommunityController {
 				model.addAttribute("page", page);
 		} catch (NotFoundDataException e) {
 			logger.error("게시글이 없음");
+			model.addAttribute("errorMsg", e.getMessage());
 		}
 				
 		return "community/board";
