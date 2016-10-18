@@ -3,9 +3,12 @@ package leasecity.controller;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,16 +48,17 @@ public class CommunityController {
 	
 	//커뮤니티 메인 페이지
 	@RequestMapping(value="/board", method=RequestMethod.GET)
-	public String board(Model model, 
-			@RequestParam("currentPage") Integer currentPage){
-		if(currentPage == null){
+	public String board(Model model,
+			@RequestParam(value="currentPage", required=false) 
+			Integer currentPage){
+	
+		//값이 없으면 1대입.
+		if(currentPage == null)
 			currentPage = 1;
-		}
 		Page page = communityService.getCommentPage(currentPage, 20);
 
 		try {
 			List<Comment> comments = communityService.loadPageCommentList(page);
-			Collections.reverse(comments);
 			model.addAttribute("comments", comments);
 			model.addAttribute("page", page);
 			//communityService.getSearchCommentPage(currentPage, pageSize, search, keyword, order)

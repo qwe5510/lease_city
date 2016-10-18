@@ -45,7 +45,7 @@ public class PageTest {
 		page.setPageSize(20);
 		page.setCurrentPage(1);
 		page.setFromTo();
-		page.setOrder("DESC");
+		page.setOrder("ASC");
 		page.setSuperNo(2);
 		
 		List<Comment> comment = repo.getPageComments(page);
