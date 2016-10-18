@@ -171,11 +171,14 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public Page getCommentPage(Integer currentPage, Integer pageSize) {
 		Page page = new Page();
-		page.totalCount = commentRepo.getCountAllComments();
-		page.totalPage = (page.totalCount-1)/page.pageSize+1;
-		page.currentPage = currentPage;
-		page.pageSize = pageSize;
+		page.setTotalCount(commentRepo.getCountAllComments());
+		page.setCurrentPage(currentPage);
+		page.setPageSize(pageSize);
+		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
+		
 		page.setFromTo();
+		
+		System.out.println("여기서 에러뜸?");
 		
 		return page;
 	}
@@ -184,13 +187,13 @@ public class CommunityServiceImpl implements CommunityService{
 	public Page getSearchCommentPage(Integer currentPage, Integer pageSize,
 			String search, String keyword, String order) {
 		Page page = new Page();
-		page.totalCount = commentRepo.getCountSearchComments(new Page(search, keyword));
-		page.totalPage = (page.totalCount-1)/page.pageSize+1;
-		page.currentPage = currentPage;
-		page.pageSize = pageSize;
-		page.search = search;
-		page.keyword = keyword;
-		page.order = order;
+		page.setTotalCount(commentRepo.getCountSearchComments(new Page(search, keyword)));
+		page.setCurrentPage(currentPage);
+		page.setPageSize(pageSize);
+		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
+		page.setSearch(search);
+		page.setKeyword(keyword);
+		page.setOrder(order);
 		page.setFromTo();
 		
 		return page;
@@ -199,10 +202,11 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public Page getReplyPage(Integer commentNo, Integer currentPage, Integer pageSize) {
 		Page page = new Page();
-		page.superNo = commentNo;
-		page.totalCount = replyRepo.getCountCommentReply(commentNo);
-		page.totalPage = (page.totalCount-1)/page.pageSize+1;
-		page.pageSize = pageSize;
+		page.setSuperNo(commentNo);
+		page.setTotalCount(replyRepo.getCountCommentReply(commentNo));
+		page.setCurrentPage(currentPage);
+		page.setPageSize(pageSize);
+		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
 		page.setFromTo();
 		
 		return page;

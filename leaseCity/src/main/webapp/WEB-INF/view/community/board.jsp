@@ -1,6 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@page import="org.springframework.web.servlet.ModelAndView"%>
+<%@page import="leasecity.dto.community.Comment"%>
+<%@page import="leasecity.util.DateUtil"%>
+<%@page import="java.util.Date"%>
+<%@page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -10,6 +15,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+	Date todayDate = new Date();
+	String today = DateUtil.getDateString(todayDate);
+	request.setAttribute("today", today);
+%>
+	
+	
+
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="board">
 		<div class="uchat">
@@ -43,18 +57,43 @@
 					<td>조회수</td>
 					<td>날짜</td>
 				</tr>
-				<%
-					for (int i = 0; i < 20; i++) {
-						out.print("<tr><td colspan='6' class='boardLine'></td></tr>" + "<tr class='boardShow'>" 
-								+"<td><sform:label path='commentNo'>444</sform:label></td>"
-								+"<td><sform:label path='commentCategory'>잡담/경기</td>"
-								+ "<td class='communityTitle'><sform:label path='commentTitle'>안녕하십니까 글자가 얼마나 들어갈수있나 테스트 해보고 있습니다</sform:label></td>"
-								+ "<td><sform:label path='userId'>관리자<sform:label></td>"
-								+ "<td><sform:label path='hits'>4<sform:label></td>" 
-								+ "<td><sform:label path='regDate'>2016-10-24<sform:label></td>" 
-								+ "</tr>");
-					}
-				%>
+				
+				<c:forEach var="comment" items="${comments}">
+					
+					<tr>
+						<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
+					</tr>
+					<tr class="boardShow">
+						<td><c:out value="${comment.commentRowNum}" /></td>
+						<td><c:out value="${comment.commentCategory}" /></td>
+						<td class='communityTitle'>
+							<c:out value="${comment.commentTitle}" />
+						</td>
+						<td><c:out value="${comment.userId}" /></td>
+						<td><c:out value="${comment.hits}" /></td>					
+						
+						<fmt:formatDate value="${comment.regDate}"
+								pattern="yyyy-MM-dd"
+								var="strRegDate"/>
+						
+						<fmt:formatDate value="${comment.regDate}"
+								pattern="hh:mm:ss"
+								var="strRegTime"/>
+						
+						<c:choose>
+						<c:when test="${strRegDate eq today}">
+							<td><c:out value="${strRegTime}" /></td>
+						</c:when>
+						<c:otherwise>
+							<td><c:out value="${strRegDate}" /></td>
+						</c:otherwise>
+						</c:choose>									
+						
+					</tr>
+				</c:forEach>
+				
+					
+				
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
 				</tr>

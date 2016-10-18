@@ -41,12 +41,12 @@ public class PageTest {
 	@Test
 	public void test() throws NotFoundDataException{
 		Page page = new Page();
-		page.totalCount = repo.getCountAllComments();
-		page.pageSize = 20;
-		page.currentPage = 1;
+		page.setTotalCount(repo.getCountAllComments());
+		page.setPageSize(20);
+		page.setCurrentPage(1);
 		page.setFromTo();
-		page.order = "DESC";
-		page.superNo = 2;
+		page.setOrder("DESC");
+		page.setSuperNo(2);
 		
 		List<Comment> comment = repo.getPageComments(page);
 		Collections.reverse(comment);
@@ -75,8 +75,8 @@ public class PageTest {
 		logger.trace("덧글 삭제 : {}", result);	
 		
 		Page testP = new Page();
-		testP.currentPage = 1;
-		testP.pageSize = 10;
+		testP.setCurrentPage(1);
+		testP.setPageSize(10);
 		
 		List<Comment> comments = service.loadPageCommentList(testP);
 		
