@@ -50,7 +50,7 @@ public class JoinController {
 	UserService UService;
 
 	// (회원 가입시 ) 취소 버튼
-	@RequestMapping(value = "/join_cancel", method = RequestMethod.POST)
+	@RequestMapping(value = "/joinCancle", method = RequestMethod.POST)
 	public String join_cancel(Model model, RedirectAttributes redir, HttpSession session) {
 		// 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
 		// 세션에 저장한 회원정보 일괄삭제 
@@ -328,7 +328,7 @@ public class JoinController {
 	}
 
 	// 관리자의 회원가입 승인 컨트롤 ( 아직 사용 X)
-	@RequestMapping(value = "/popup_join_response", method = RequestMethod.GET)
+	@RequestMapping(value = "/popupJoinResponse", method = RequestMethod.GET)
 	public String popup_join_response(Model model, HttpServletRequest request, StandByUser sbu) {
 
 		SendMailUtil mUtil = new SendMailUtil();
