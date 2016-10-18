@@ -1,10 +1,12 @@
 package leasecity.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 import leasecity.dto.user.User;
+import leasecity.dto.etc.Page;
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.CommunityService;
@@ -137,23 +140,35 @@ public class CommunityController {
 	
 	//커뮤니티 메인 페이지
 	@RequestMapping(value="/board", method=RequestMethod.GET)
-	public String board(Model model,
+	public String board(Model model, Page searchPage,
 			@RequestParam(value="currentPage", required=false) 
-			Integer currentPage){
+			Integer currentPage,
+			@RequestParam(value="order", required=false)
+			String order){
 	
+		Page page = null;
+		List<Comment> comments = null;
+		
 		//값이 없으면 1대입.
 		if(currentPage == null)
 			currentPage = 1;
-		Page page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-
 		try {
-			List<Comment> comments = communityService.loadPageCommentList(page);
-			model.addAttribute("comments", comments);
-			model.addAttribute("page", page);
-			//communityService.getSearchCommentPage(currentPage, pageSize, search, keyword, order)
+			if(searchPage != null){
+				page = communityService.getSearchCommentPage
+						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+								searchPage.getKeyword(), order);
+				logger.trace("page : {}", page);
+				comments = communityService.loadTermsComment(page);
+			}else if(searchPage == null){
+				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+				comments = communityService.loadPageCommentList(page);
+			}			
+				model.addAttribute("comments", comments);
+				model.addAttribute("page", page);
 		} catch (NotFoundDataException e) {
 			logger.error("게시글이 없음");
-		} 				
+		}
+				
 		return "community/board";
 	}
 	

@@ -75,7 +75,7 @@
 							<a href="<%=request.getContextPath() %>/board_read?commentNo=${comment.commentNo}">
 							${comment.commentTitle}</a>
 						</td>
-						<td><c:out value="${comment.userId}" /></td>
+						<td><c:out value="${comment.companyName}" /></td>
 						<td><c:out value="${comment.hits}" /></td>					
 						
 						<fmt:formatDate value="${comment.regDate}"
@@ -124,8 +124,16 @@
 					
 				<c:choose>
 				<c:when test="${prevPage > 0}">
-					<a href="<%=request.getContextPath()%>/board?currentPage=${prevPage}">
-					<i class="icon-arrow-left">이전</i></a>
+					<c:choose>
+						<c:when test="${!empty page.keyword}">
+							<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${prevPage}">
+							<i class="icon-arrow-left">이전</i></a>
+						</c:when>
+						<c:otherwise>
+							<a href="<%=request.getContextPath()%>/board?currentPage=${prevPage}">
+							<i class="icon-arrow-left">이전</i></a>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 				<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
@@ -154,19 +162,36 @@
 									<b><c:out value="${i}"></c:out></b>
 								</c:when>
 								<c:otherwise>
-									<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
-										<c:out value="${i}"></c:out>
-									</a>
+									<c:choose>
+										<c:when test="${!empty page.keyword}">
+											<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
+												<c:out value="${i}"></c:out>
+											</a>								
+										</c:when>
+										<c:otherwise>
+											<a href="<%=request.getContextPath()%>/board?currentPage=${i}">
+												<c:out value="${i}"></c:out>
+											</a>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-					
+				
 				<c:choose>
 				<c:when test="${nextPage <= page.totalPage}">
-					<a href="<%=request.getContextPath()%>/board?currentPage=${nextPage}">
-					다음<i class="icon-arrow-right"></i></a>
+					<c:choose>
+						<c:when test="${!empty page.keyword}">
+							<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${nextPage}">
+							다음<i class="icon-arrow-right"></i></a>
+						</c:when>
+						<c:otherwise>
+							<a href="<%=request.getContextPath()%>/board?currentPage=${nextPage}">
+							다음<i class="icon-arrow-right"></i></a>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
@@ -174,8 +199,8 @@
 				</c:choose>
 			</div>
 			
-			<%-- <c:url value="" var=""/> --%>
-			<sform:form method="post" modelAttribute="page" action="#">
+			<c:url value="/board" var="board"/> 
+			<sform:form method="get" modelAttribute="page" action="${board }">
 						
 						<div class="boardBottom">
 							<sform:select path="search">
