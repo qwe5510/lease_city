@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -32,22 +33,37 @@
 			<sform:form id="board_read_form" action="${board_write }" method="post" modelAttribute="comment">
 			<div class="board_read_line">
 				<table class="board_read_table">
+					<c:set value="${comment }" var="comment"></c:set>
 					<tr>
-						<td><span>글쓴이</span></td>
-						<td><span>2016.10.12</span></td>
-						<td><span>조회수</span></td>
+						<td><span>${comment.commentNo} | ${comment.commentCategory }</span></td>
+						<td colspan="5"><span>${comment.commentTitle }</span></td>
+						<td><span>${comment.userId }"</span></td>
+						<td><span>${comment.hits }"</span></td>
+						<fmt:formatDate value="${comment.regDate}"
+								pattern="yyyy-MM-dd"
+								var="strRegDate"/>
+						
+						<fmt:formatDate value="${comment.regDate}"
+								pattern="hh:mm:ss"
+								var="strRegTime"/>
+						
+						<c:choose>
+						<c:when test="${strRegDate eq today}">
+							<td><c:out value="${strRegTime}" /></td>
+						</c:when>
+						<c:otherwise>
+							<td><c:out value="${strRegDate}" /></td>
+						</c:otherwise>
+						</c:choose>
 					</tr>
 						<tr><td colspan='6' class='boardLine'></td></tr>
-					<tr>
-						<td colspan="3"><span>제목제목제목제목제목</span></td>
-					</tr>
 					<tr><td colspan="3" class='boardLine'></td></tr>
 					<tr class="board_read_comment">
-						<td colspan="3"><span></span></td>
+						<td><span>${comment.commentContent }</span></td>
 					</tr>
 				</table>
 				<div style="text-align: left; padding: 10px;">
-				<span>댓글 xx개</span>
+				<span>댓글 ${comment.replyCount }개</span>
 				</div>
 				
 				<div style="background: white;">

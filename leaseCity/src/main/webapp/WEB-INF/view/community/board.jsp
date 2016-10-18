@@ -16,13 +16,19 @@
 </head>
 <body>
 
-<%
-	Date todayDate = new Date();
-	String today = DateUtil.getDateString(todayDate);
-	request.setAttribute("today", today);
-%>
-	
-	
+	<c:if test="${!empty board_message }">
+		<script type="text/javascript">
+			alert('${board_message }');
+		</script>
+	</c:if>
+
+	<%
+		Date todayDate = new Date();
+		String today = DateUtil.getDateString(todayDate);
+		request.setAttribute("today", today);
+	%>
+
+
 
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="board">
@@ -81,7 +87,8 @@
 						<td><c:out value="${comment.commentRowNum}" /></td>
 						<td><c:out value="${comment.commentCategory}" /></td>
 						<td class='communityTitle'>
-							<c:out value="${comment.commentTitle}" />
+							<a href="<%=request.getContextPath() %>/board_read?commentNo=${comment.commentNo}">
+							${comment.commentTitle}</a>
 						</td>
 						<td><c:out value="${comment.companyName}" /></td>
 						<td><c:out value="${comment.hits}" /></td>					
