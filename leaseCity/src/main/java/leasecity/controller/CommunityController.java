@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import leasecity.dto.community.Comment;
 import leasecity.dto.etc.Page;
@@ -42,8 +43,9 @@ public class CommunityController {
 	}
 	
 	//커뮤니티 메인 페이지
-	@RequestMapping(value="/board")
+	@RequestMapping(value="/board", method=RequestMethod.GET)
 	public String board(Model model){
+		
 		Page page = communityService.getCommentPage(1, 20);
 		try {
 			List<Comment> comments = communityService.loadPageCommentList(page);
