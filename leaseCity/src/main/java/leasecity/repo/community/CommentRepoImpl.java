@@ -66,5 +66,12 @@ public class CommentRepoImpl implements CommentRepo{
 		String stmt = COMMENT_NS + "updateComment";
 		return session.update(stmt, comment);
 	}
+	
+	@Override
+	public int hitsUpComment(Comment comment) {
+		String stmt = COMMENT_NS + "hitsUpComment";
+		comment.setHits(comment.getHits()+1);
+		return session.update(stmt, comment);
+	}
 
 }

@@ -2,6 +2,8 @@ package leasecity.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import leasecity.repo.community.ReplyRepo;
 @Service
 public class CommunityServiceImpl implements CommunityService{
 
+	static Logger logger = LoggerFactory.getLogger(CommunityServiceImpl.class);
+	
 	@Autowired
 	CommentRepo commentRepo;
 	
@@ -95,12 +99,21 @@ public class CommunityServiceImpl implements CommunityService{
 	 */
 	@Override
 	public Comment viewComment(Integer commentNo) throws NotFoundDataException {
-		Comment result = commentRepo.getComment(commentNo);	
+		
+		if(commentNo == null){
+			throw new NotFoundDataException("해당 게시글");
+		}
+		
+		Comment result = commentRepo.getComment(commentNo);
 		
 		if(result == null){
 			throw new NotFoundDataException("해당 게시글");
 		}
-		
+		else{
+			int hitCount = commentRepo.hitsUpComment(result);
+			result.setReplyCount(replyRepo.getCountCommentReply(commentNo));
+			logger.trace("게시글 조회수 증가 : {}", hitCount);
+		}
 		return result;
 	}
 

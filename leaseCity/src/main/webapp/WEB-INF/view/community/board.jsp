@@ -1,4 +1,3 @@
-<%@page import="org.springframework.web.servlet.ModelAndView"%>
 <%@page import="leasecity.dto.community.Comment"%>
 <%@page import="leasecity.util.DateUtil"%>
 <%@page import="java.util.Date"%>
@@ -278,7 +277,7 @@
 								<sform:option value="COMPANY_NAME">글쓴이</sform:option>
 								<sform:option value="TITLE">제목</sform:option>
 								<sform:option value="TITLE_AND_CONTENT">제목+내용</sform:option>
-								<sform:option value="LOCAL ">지역명</sform:option>
+								<sform:option value="LOCAL">지역명</sform:option>
 							</sform:select>
 							<sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
 							<button><i class="icon-search"></i>검색</button>

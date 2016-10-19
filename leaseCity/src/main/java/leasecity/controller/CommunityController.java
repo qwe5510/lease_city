@@ -1,7 +1,10 @@
 package leasecity.controller;
 
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +14,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,34 +43,37 @@ public class CommunityController {
 	@Autowired
 	CommunityService communityService;
 	
+	@InitBinder
+	public void setBindingFormat(WebDataBinder binder){
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		binder.registerCustomEditor(Date.class, 
+				new CustomDateEditor(format, true));
+	}
+	
 	//게시판 글 , 댓글 확인
 	@RequestMapping(value="/board_read", method = RequestMethod.GET)
 	public String board_read(Model model, HttpServletRequest request, 
-			RedirectAttributes redir, @RequestParam(value="currentPage", required=false) Integer currentPage){
+			RedirectAttributes redir, 
+			@RequestParam(value="currentPage", required=false) Integer currentPage,
+			@RequestParam(value="commentNo", required=false) Integer commentNo){ 
 		// 게시글 전달(게시물 / 댓글) 객체
 		Comment comment = null;
 		//Page page = null;
 		//List<Reply> replys = null;
 		
-		// 1-1. 게시글 번호 받기
-		String commentNo = 
-				request.getParameter("commentNo") != null 
-				? request.getParameter("commentNo") : "";
-		// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
-		logger.trace("들어온 commentNo : {}", commentNo);
+		// 1-1. 게시글 번호 받기 : RequestParam로 받음
 		
 		// 2. 게시글 번호로 게시글 갖고오기
 		if(currentPage == null)
 			currentPage = 1;
-		
 		try {
-			comment = communityService.viewComment(Integer.parseInt(commentNo));
+			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
+			logger.trace("들어온 commentNo : {}", commentNo);
+			comment = communityService.viewComment(commentNo);
+			logger.trace("보는 게시글 : {}", comment);
 			/*page = communityService.getReplyPage(Integer.parseInt(commentNo), 
 					currentPage, REPLY_PAGE_SIZE);*/
 			//replys = communityService.loadCommentReplys(page);
-		} catch (NumberFormatException e) {
-			redir.addFlashAttribute("board_message", "글을 찾을 수 없습니다.");
-			return "redirect:/board";
 		} catch (NotFoundDataException e) {
 			redir.addFlashAttribute("board_message", "비공개 또는 삭제된 게시글입니다.");
 			return "redirect:/board";
