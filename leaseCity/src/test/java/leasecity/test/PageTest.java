@@ -39,54 +39,12 @@ public class PageTest {
 	CommunityService service;
 	
 	@Test
-	public void test() throws NotFoundDataException{
-		Page page = new Page();
-		page.setTotalCount(repo.getCountAllComments());
-		page.setPageSize(20);
-		page.setCurrentPage(1);
-		page.setFromTo();
-		page.setOrder("ASC");
-		page.setSuperNo(2);
+	public void test() throws NotFoundDataException{		
+		Page replPage = service.getFirstReplyPage(241, 10);
+		List<Reply> list = service.loadCommentReplys(replPage);
 		
-		List<Comment> comment = repo.getPageComments(page);
-		Collections.reverse(comment);
+		System.out.println(list);
 		
-		int count = repo.getCountSearchComments(page);
-		
-		System.out.println("게시물 갯수 : " + count);
-		System.out.println(comment);
-		
-		Reply reply = new Reply
-				(null, 2, "ysh5586", "아무내용이나 달자", null);
-		int result = subRepo.insertReply(reply);
-		logger.trace("덧글 추가 : {}", result);
-		
-		List<Reply> replys = subRepo.getPageReplys(page);
-		
-		logger.trace("덧글 목록 : {}", replys);
-		System.out.println(DateUtil.getDateString(replys.get(2).getRegDate()));
-		
-		replys.get(2).setReplyContent("아무내용이나 왜 달아");
-		
-		result = subRepo.updateReply(replys.get(2));
-		logger.trace("덧글 수정 : {}", result);
-		
-		result = subRepo.deleteReply(replys.get(2));
-		logger.trace("덧글 삭제 : {}", result);	
-		
-		Page testP = new Page();
-		testP.setCurrentPage(1);
-		testP.setPageSize(10);
-		
-		List<Comment> comments = service.loadPageCommentList(testP);
-		
-		logger.trace("출력된 게시물 : {}", comments);
-		
-		result = repo.deleteCommentAndReply(comments.get(0));
-		logger.trace("삭제된 게시글 : {}", result);
-		
-		replys = subRepo.getPageReplys(page);
-		logger.trace("덧글 목록 확인 : {}", replys);
 		
 	}
 	

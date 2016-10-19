@@ -16,8 +16,11 @@
 	 		FROM (
 	 				SELECT sub.*, rownum AS rnum
 	 				FROM( 
-	 					SELECT * FROM replys
-	 					WHERE comment_no = #{superNo}
+	 					SELECT r.reply_no, r.comment_no, r.user_id, 
+	 					REPLACE(r.reply_content,CHR(13), '\n') reply_content,
+	 					r.reg_date, u.company_name company_name
+	 					FROM replys r JOIN users u ON r.user_id=u.user_id
+	 					WHERE r.comment_no = #{superNo}
 	 				) sub 
 	 			)
  		<if test="pageSize != null and to !=null and from != null">

@@ -32,7 +32,10 @@ public class Reply implements Serializable {
 
 	/** 회원. */
 	private String userId;
-
+	
+	/** 업체 명 (실제 테이블에는 반영되지 않음) */ 
+	private String companyName;
+	
 	/** 댓글 내용. */
 	private String replyContent;
 

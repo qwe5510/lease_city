@@ -416,7 +416,7 @@ function validateform() {
                   //ID 6글자 ~ 15글자
                   var userId = $("#userId").val();
                    var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
-                    if(!idRegExp.test(userId)){
+                    if(!idRegExp.test(u)){
                        $(".userId").html("아이디 조건 불일치");
                        $(".userId").css("color", "#FF0000");
                        res = false;
