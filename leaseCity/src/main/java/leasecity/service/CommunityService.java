@@ -109,6 +109,8 @@ public interface CommunityService {
 	(Integer currentPage, Integer pageSize,
 			String search, String keyword, String order);
 	
-	public Page getReplyPage(Integer commentNo, Integer currentPage, Integer pageSize);
+	public Page getFirstReplyPage(Integer commentNo, Integer pageSize);
+	
+	public Page getReplyPage(Integer commentNo, Integer CurrentPage, Integer pageSize);
 
 }

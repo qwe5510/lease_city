@@ -1055,7 +1055,6 @@ label {
 .board{
    padding-top: 0px;
    min-width:980px;
-   height: 1000px;
    text-align: center;
 }
 
@@ -1106,9 +1105,28 @@ label {
 	height: 400px;
 	overflow: auto;
 }
+
+.board_read_comment .comment_content{
+	margin-left: 5px;
+	margin-bottom: 15px;
+}
+
+.board_read_comment_author{
+	margin-left: 5px;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.board_read_comment_userId{
+	font-size: 11px;
+}
+
+
 .replyBaseLine{
 	height: 1px;
     padding: 0;
+    margin-top: 5px;
+    margin-bottom: 10px;
     overflow: hidden;
     font: 0/0 arial;
     border-bottom-width: 1px;
@@ -1118,20 +1136,66 @@ label {
 	padding : 10px;
 	float: right;
 }
+
+/*Reply div 작업*/
+.comment_reply{
+	background: white;
+}
+
 .board_read_reply{
 	list-style: none;
 	text-align: left;
+	margin-left: 15px;
 	padding: 10px;
+	border: thin 1px;
 }
-.board_read_reply textarea{
-	width: 400px;
+
+.reply_input_area{
+	padding: 0px;
+	width: 450px;
 	height: 50px;
+	border: solid 1px;
 }
-.board_read_reply button{
+
+.reply_registry{
 	width : 50px;
 	height: 55px;
+	margin-left: 5px;
 	margin-bottom: 10px;
 }
+
+.reply_author{
+	float: left;
+	font-weight: bold;
+}
+
+.reply_date{
+	float: right;
+	font-size:x-small;
+}
+
+.reply_option{
+	float : right;
+	margin-left: 5px;
+}
+button{
+	border: 0px;
+}
+
+.reply_option button{
+	border: 0px;
+	color: #387db1;
+	padding: 0;
+	width: 20px;
+	height: 20px;
+}
+
+.reply_content{
+	text-align: left;
+	clear : both;
+	display: block;
+}
+
 /* 화면사이즈 980px 해상도에서의 설정*/
 @media all and (min-width: 980px) {
    
@@ -1211,6 +1275,7 @@ label {
    display: table-cell;
    background: #e5e5e5;
 }
+
 .communityTable{
    width : 780px;
    margin-right: 40px;

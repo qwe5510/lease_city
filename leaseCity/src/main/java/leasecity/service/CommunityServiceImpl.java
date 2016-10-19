@@ -199,9 +199,7 @@ public class CommunityServiceImpl implements CommunityService{
 		page.setPageSize(pageSize);
 		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
 		page.setFromTo();
-		
-		System.out.println("여기서 에러뜸?");
-		
+	
 		return page;
 	}
 
@@ -222,13 +220,26 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 	
 	@Override
+	public Page getFirstReplyPage(Integer commentNo, Integer pageSize) {
+		Page page = new Page();
+		page.setSuperNo(commentNo);
+		page.setTotalCount(replyRepo.getCountCommentReply(commentNo));
+		page.setPageSize(pageSize);
+		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
+		page.setCurrentPage(page.getTotalPage());
+		page.setFromTo();
+		
+		return page;
+	}
+	
+	@Override
 	public Page getReplyPage(Integer commentNo, Integer currentPage, Integer pageSize) {
 		Page page = new Page();
 		page.setSuperNo(commentNo);
 		page.setTotalCount(replyRepo.getCountCommentReply(commentNo));
-		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
 		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
+		page.setCurrentPage(currentPage);
 		page.setFromTo();
 		
 		return page;

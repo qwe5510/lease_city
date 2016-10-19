@@ -301,8 +301,5 @@
 		$("form").submit();
 	}
 }) 
-
-
-
 </script>
 </html>
