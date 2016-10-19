@@ -40,13 +40,33 @@
 								<sform:label path="kind">분류</sform:label>
 							</td>
 							<td>
-								<sform:select path="kind"></sform:select>
+								<sform:select path="kind">
+									<sform:option value="잡담">잡담</sform:option>
+									<sform:option value="공유">공유</sform:option>
+									<sform:option value="상담">상담</sform:option>
+									<sform:option value="기타">기타</sform:option>
+								</sform:select>
 							</td>
 							<td>
 								<sform:label path="locale">지역</sform:label>
 							</td>
 							<td>
-								<sform:select path="locale"></sform:select>
+								<sform:select path="locale">
+									<sform:option value="서울">서울</sform:option>
+									<sform:option value="인천">인천</sform:option>
+									<sform:option value="대전">대전</sform:option>
+									<sform:option value="대구">대구</sform:option>
+									<sform:option value="울산">울산</sform:option>
+									<sform:option value="부산">부산</sform:option>
+									<sform:option value="경기">경기</sform:option>
+									<sform:option value="강원">강원</sform:option>
+									<sform:option value="충남">충남</sform:option>
+									<sform:option value="충북">충북</sform:option>
+									<sform:option value="전남">전남</sform:option>
+									<sform:option value="전북">전북</sform:option>
+									<sform:option value="경남">경남</sform:option>
+									<sform:option value="경북">경북</sform:option>
+								</sform:select>
 							</td>
 						</tr>
 						<tr>
@@ -65,7 +85,7 @@
 			
 					</table>
 					<div class="board_write_bottom">
-						<sform:button> <i class="icon-pencil"></i>작성</sform:button>
+						<sform:button id="write"> <i class="icon-pencil"></i>작성</sform:button>
 						<sform:button id="cancel"><i class="icon-link"></i>취소</sform:button>
 					</div>
 				</sform:form>
@@ -80,6 +100,19 @@ $("#cancel").on("click", function(e){
     e.preventDefault();
     $("#board_write_form").attr("action","${board}");
     $("#board_write_form").submit();
+});
+$("#write").on("click",function(e){
+	e.preventDefault();
+	var commentTitle = $("#commentTitle").val();
+	var commentContent = $("#commentContent").val();
+	
+	if(commentTitle==null || commentTitle==""){
+		alert("제목을 입력해주세요.");
+	}else if(commentContent==null || commentContent==""){
+		alert("내용을 입력해주세요.");
+	}else{
+		$("#board_write_form").submit();
+	}
 });
 </script>
 </html>

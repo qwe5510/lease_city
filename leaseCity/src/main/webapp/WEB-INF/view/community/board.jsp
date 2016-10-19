@@ -280,7 +280,7 @@
                         <sform:option value="LOCAL">지역명</sform:option>
                      </sform:select>
                      <sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
-                     <button><i class="icon-search"></i>검색</button>
+                     <button id="boardBtn"><i class="icon-search"></i>검색</button>
                   </div>
          </sform:form>
          </div>
@@ -288,6 +288,21 @@
    </div>
    <jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+ $("#boardBtn").on("click",function(e){
+	e.preventDefault();
+	var keyword = $("#keyword").val();
+	var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
+	if(!searchRegExp.test(keyword)){
+		alert("%를 제외하고 검색해주세요.");
+		return false;
+	}else{
+		$("form").submit();
+	}
+}) 
 
 
+
+</script>
 </html>

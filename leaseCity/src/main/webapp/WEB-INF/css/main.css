@@ -1216,6 +1216,9 @@ label {
    margin-right: 40px;
    
 }
+.communityTable select{
+	margin-bottom: 20px;
+}
 .communityTable tr{
    padding: 7px;
 }
@@ -1232,6 +1235,9 @@ label {
 .board_write_bottom{
 	padding : 10px;
 	float: right;
+}
+.searchInput{
+	font-size: 20px;
 }
 .notify{
    background: #f9f9f9;
@@ -1513,4 +1519,15 @@ label {
   	  padding-top: 0px;
       position: relative;
       width: 600px;
-  }
+ }
+ .manager_answer{
+  background: white;
+ }
+ .manager_answer textarea {
+	width: 450px;
+}
+.manager_answer button {
+	width: 56px;
+    height: 46px;
+    margin-bottom: 10px;
+}

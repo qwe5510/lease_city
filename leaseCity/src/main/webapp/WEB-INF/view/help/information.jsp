@@ -24,7 +24,38 @@
 			</ul>
 		</div>
 		<div class="help_main">
-			asdasdaaaaa
+			<div>
+				<p class="lease">임대신청</p>
+				<ul class="hide" style="display: none;">
+					<li><img id="help_advice_img" src="<%=request.getContextPath()%>/images/help/help_menu3_1.png"></li>
+					<li>설명2</li>
+					<li>설명3</li>
+				</ul>
+			</div>
+			<div>
+				<p>임대요청</p>
+				<ul style="display: none;"> 
+					<li>설명1</li>
+					<li>설명2</li>
+					<li>설명3</li>
+				</ul>
+			</div>
+			<div>
+				<p>임대양도</p>
+				<ul style="display: none;">
+					<li>설명1</li>
+					<li>설명2</li>
+					<li>설명3</li>
+				</ul>
+			</div>
+			<div>
+				<p>중기업체조회</p>
+				<ul style="display: none;">
+					<li>설명1</li>
+					<li>설명2</li>
+					<li>설명3</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
@@ -49,6 +80,18 @@
 	$("#help_question").on("mouseout",function(){
 		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4.png");
 		$("#help_advice_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu3_1.png");
+	});
+	$(document).ready(function(){
+		$(".lease").on("click",function(){
+			console.log("들어옴");
+			var submenu =$(this).next("ul");
+			console.log(submenu);
+			if( submenu.is(":visible") ){
+                submenu.slideUp();
+            }else{
+                submenu.slideDown();
+            }
+		});
 	});
 </script>
 </html>

@@ -86,6 +86,9 @@ public class Comment implements Serializable {
 		this.hits = hits;
 		this.regDate = regDate;
 	}
+	public Comment(String locale){
+		this.locale=locale;
+	}
 	
 	
 
