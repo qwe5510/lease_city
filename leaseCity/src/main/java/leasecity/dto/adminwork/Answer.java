@@ -6,6 +6,7 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * 답변 모델 클래스.
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class Answer implements Serializable {
 
 	/** serialVersionUID. */

@@ -56,7 +56,7 @@
 					<td>제목</td>
 					<td>글쓴이</td>
 					<td>조회수</td>
-					<td>날짜<a href="#"><i class="icon-sort"></i></a></td>
+					<td><a href="#">날짜<i class="icon-sort"></i></a></td>
 				</tr>
 				<c:forEach var="comment" items="${comments}">
 					<tr>

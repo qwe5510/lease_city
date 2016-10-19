@@ -1411,3 +1411,108 @@ label {
    margin-left : 62px;
    font-size: 15px;
 }
+.help{
+	width : 1200px;
+	height : 800px;
+	padding-top: 80px;
+    position: relative;
+}
+.help_menu{
+	height : 650px;
+	margin-left : 50px;
+	float : left;
+	width : 30%;
+	background: url(../images/help/help_back.png)
+	no-repeat 10% 40%;
+    
+}
+.help_baseLine{
+    padding: 0;
+    overflow: hidden;
+	border-bottom-width: 1px;
+    border-bottom-style: dotted;
+    font: 0/0 arial;
+    
+}
+.help_main{
+	float : right;
+	width : 60%;
+	margin-right: 30px;
+}
+.help_menu_inner1{
+	background: url(../images/help/help_menu1.png)
+	no-repeat 10% 30%;
+	padding: 55px;
+	margin-top: 23px;
+	margin-left: 50px;
+}
+.help_menu_ul{
+	list-style: none;
+	text-align: left;
+}
+.help_menu_ul li{
+	margin-left : 30px;
+	margin-top : 40px;
+	font-size: 25px;
+	font-family: NanumGothic,나눔고딕,'Helvetica Neue',Helvetica,'Apple SD Gothic Neo',AppleGothic,Dotum,돋움,Arial,sans-serif;
+}
+.help_menu_ul .help_menu_first{
+	margin-top : 0px;
+}
+.help_menu_select{
+	width: 186px;
+    padding-left: 12px;
+    color: #fff;
+    background: url(../images/help/help_li.png)
+    no-repeat 20% 60%;
+}
+.help_table{
+	margin-top: 40px;
+	width: 780px;
+	text-align: center;
+}
+.help_table .td1{
+	width: 80px;
+}
+.help_table .td2{
+	width: 100px;
+}
+.help_table .td3{
+	width: 350px;
+}
+.help_table .td4{
+	width: 100px;
+}
+.help_table .td5{
+	width: 80px;
+}
+.help_table .td6{
+	width: 150px;
+}
+.helpWriteTable{
+	width: 600px;
+}
+.helpWriteTable input[type="text"]{
+	width: 600px;
+}
+.helpWriteTable textarea{
+	width: 600px;
+	height: 500px;
+}
+.helpWriteTable label{
+	width: 200px;
+}
+.help_read_table{
+	width: 580px;
+}
+.help_read_main{
+	float : right;
+	width : 55%;
+	margin-right: 30px;
+}
+.help_read_main_inner{
+	  margin-top : 40px;
+  	  padding-top: 0px;
+      position: relative;
+      width: 600px;
+  }
