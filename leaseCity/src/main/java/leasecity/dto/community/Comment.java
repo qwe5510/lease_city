@@ -34,6 +34,9 @@ public class Comment implements Serializable {
 
 	/** 회원. */
 	private String userId;
+	
+	/** 게시글 회원 업체명*/
+	private String companyName;
 
 	/** 게시글 제목. */
 	private String commentTitle;

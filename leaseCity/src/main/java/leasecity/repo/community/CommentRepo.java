@@ -27,4 +27,6 @@ public interface CommentRepo {
 	
 	//게시글 수정
 	public int updateComment(Comment comment);
+	//조회수 증가
+	public int hitsUpComment(Comment comment);
 }

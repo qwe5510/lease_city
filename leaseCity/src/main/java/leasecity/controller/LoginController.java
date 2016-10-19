@@ -131,7 +131,7 @@ public class LoginController {
 	@RequestMapping(value = "/popupSearchPass", method = RequestMethod.POST)
 	public @ResponseBody String popup_search_pass(Model model, RedirectAttributes redir, HttpSession session, @RequestParam String userId, @RequestParam String representName, @RequestParam String companyName, @RequestParam String email ) {
 
-		String submit = "";
+		String submit = "fail_notCertification";
 		
 		User user = new User();
 		user.setUserId(userId);
@@ -148,8 +148,9 @@ public class LoginController {
 			logger.trace("폼에 정보로 검색된 유저 : {}", user);
 		} catch (NotFoundDataException e) {
 			logger.trace("패스워드 찾기 : DB 검색 실패");
+			submit = "fail_notFound";
 			//redir.addFlashAttribute("join_message", "패스워드 찾기 실패 - 등록되지 않은 회원입니다.");
-			return "fail_notFound";
+			return submit;
 		}
 		
 		// 2-2 이메일로 본인 인증이 되있는지 확인
@@ -161,17 +162,17 @@ public class LoginController {
 		} else {
 			//redir.addFlashAttribute("join_message", "본인 인증 실패 - 인증되지 않은 회원입니다 .");
 			logger.trace("이메일 인증 실패");
-			return "fail_notCertification";
+			return submit;
 		}
 
 		// 3. DB에서 검색 및 이메일 인증된 회원 ==> 비밀번호 수정 폼으로 이동
 
+		session.invalidate();
 		session.setAttribute("user", user);
-		session.setMaxInactiveInterval(60 * 3);
+		submit = "success";
 		logger.trace("비밀번호 찾을 유저 : {}", user);
-		//redir.addFlashAttribute("user", user);
 
-		return "success";
+		return submit;
 	}
 
 	// 비밀번호 찾기 시, 이메일 인증 컨트롤

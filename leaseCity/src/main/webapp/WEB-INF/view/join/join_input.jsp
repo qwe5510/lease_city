@@ -190,7 +190,7 @@ function hecInfoOutput(){
       e.preventDefault(); 
       var form = document.createElement("form");
       form.setAttribute("method", "post");
-      form.setAttribute("action", "<%=request.getContextPath() %>/join_cancel")
+      form.setAttribute("action", "<%=request.getContextPath() %>/joinCancle")
       form.submit();
    });
    
