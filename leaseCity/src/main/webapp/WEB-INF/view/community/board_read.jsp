@@ -116,7 +116,7 @@
 									<div class="reply_option">
 										<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
 										<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
-										<button title="댓글 삭제" class="reply_remove"><i class="icon-remove"></i></button>
+										<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
 									</div>
 									<div class="reply_date">
 										${replyRegDate}
@@ -289,7 +289,7 @@
 					str+=("<i class='icon-eraser'></i></button>");
 					str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
 					str+=("<i class='icon-eraser'></i></button>");
-					str+=("<button title='댓글 삭제' class='reply_remove'>");
+					str+=("<button title='댓글 삭제' id='reply_remove' class='reply_remove'>");
 					str+=("<i class='icon-remove'></i></button></div>");
 					str+=("<div class='reply_date'>");
 					str+=(new Date(reply.regDate).format("yyyy-MM-dd hh:mm:ss"));
@@ -385,6 +385,8 @@
 			success : function(page){
 				if(page != null){
 					alert("덧글 등록이 완료되었습니다.");
+					g_currentPage = page.totalPage;
+					g_totalPage = page.totalPage;
 					moveReplyPage(page.totalPage, ${comment.commentNo});
 					$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
 					$(".reply_input_area")[0].value="";
@@ -461,7 +463,7 @@
 			},
 			success : function(page){
 				if(page != null){
-					moveReplyPage(g_currentPage, ${comment.commentNo});
+					moveReplyPage(g_currentPage, commentNo);
 					$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
 					//덧글 수정 후 
 				}else{
@@ -471,9 +473,50 @@
 			fail : function(error){
 				alert(error);
 			}
-		})
+		});
 	});
 	
+	<c:url value="/replyRemoveAjax" var="replyRemoveAjax"></c:url>
+	$(document).on("click", "#reply_remove", function(){
+		var res = confirm("삭제 후 복구가 불가능합니다.\n정말로 삭제 하시겠습니까?");
+		
+		var li = $(this).parent().parent();
+		var liChildren = li.children();
+		var replyInfo = $(liChildren[5]).children();
+		
+		var commentNo = $(replyInfo[0]).html();
+		var replyNo = $(replyInfo[1]).html();
+		
+		if(res){
+			$.ajax({
+				method : "GET",
+				url : "${replyRemoveAjax}",
+				data : {
+					commentNo : commentNo,
+					userId : "ysh5586",
+					replyNo : replyNo			
+				},
+				success : function(page){
+					if(page != null){
+						if(g_currentPage > page.totalPage){
+							g_currentPage = page.totalPage;
+							g_totalPage = page.totalPage;
+						}else if(g_currentPage <= page.totalPage){
+							g_totalPage = page.totalPage;
+						}
+						moveReplyPage(g_currentPage, commentNo);
+						$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
+						//덧글 수정 후 
+					}else{
+						alert("덧글 삭제 실패");
+					}
+				},
+				fail : function(error){
+					alert(error);
+				}
+			});
+		}
+	});
 	
 	
 	

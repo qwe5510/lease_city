@@ -31,6 +31,7 @@ import leasecity.dto.user.User;
 import leasecity.exception.ChangeValueFailException;
 //github.com/qwe5510/lease_city.git
 import leasecity.exception.NotFoundDataException;
+import leasecity.exception.RemoveFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.CommunityService;
 
@@ -160,7 +161,7 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="/replyAdjustAjax", method=RequestMethod.GET)
-	public @ResponseBody Page ReplyRegistryAjax(
+	public @ResponseBody Page ReplyAdjustAjax(
 			@RequestParam Integer commentNo,
 			@RequestParam String userId,
 			@RequestParam Integer replyNo,
@@ -172,7 +173,26 @@ public class CommunityController {
 			communityService.updateReply(reply);
 			page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
 		} catch (ChangeValueFailException e) {
-			logger.trace("댓글 수정 실패");
+			logger.trace("댓글 수정 실패", e);
+			return null;
+		}
+		
+		return page;
+	}
+	
+	@RequestMapping(value="/replyRemoveAjax", method=RequestMethod.GET)
+	public @ResponseBody Page ReplyRemoveAjax(
+			@RequestParam Integer commentNo,
+			@RequestParam String userId,
+			@RequestParam Integer replyNo){
+		Page page = null;
+		Reply reply = new Reply(replyNo, commentNo, userId, null, null, null);
+		
+		try {
+			communityService.removeReply(reply);
+			page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
+		} catch (RemoveFailException e) {
+			logger.trace("댓글 삭제 실패", e);
 			return null;
 		}
 		
@@ -265,7 +285,7 @@ public class CommunityController {
 				model.addAttribute("page", page);
 		} catch (NotFoundDataException e) {
 			logger.error("게시글이 없음");
-			model.addAttribute("errorMsg", e.getMessage());
+			model.addAttribute("errorMsg", "게시글이 없습니다.");
 		}
 				
 		return "community/board";
