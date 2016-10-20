@@ -3,7 +3,9 @@ package leasecity.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,6 +28,7 @@ import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 import leasecity.dto.user.User;
+import leasecity.exception.ChangeValueFailException;
 //github.com/qwe5510/lease_city.git
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.WriteFailException;
@@ -93,7 +96,7 @@ public class CommunityController {
 			}
 			
 		}catch (NotFoundDataException e) {
-			model.addAttribute("errorMsg", "등록된 덧글이 없습니다.");
+			model.addAttribute("errorMsg", "등록된 댓글이 없습니다.");
 		}
 		
 		
@@ -108,20 +111,72 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="/boardReadReplyAjax", method=RequestMethod.GET)
-	public @ResponseBody List<Reply> boardReadReplyAjax(
+	public @ResponseBody Map<String, Object> boardReadReplyAjax(
 			@RequestParam Integer commentNo,
 			@RequestParam Integer currentPage){
 		
-		List<Reply> replys = null;
+		Map<String, Object> map = new HashMap<>();
 		
-		Page page = communityService.getReplyPage(commentNo, currentPage, REPLY_PAGE_SIZE);
+		List<Reply> replys = null;
+		Page page = communityService.
+				getReplyPage(commentNo, currentPage, REPLY_PAGE_SIZE);
+		
 		try {
 			replys = communityService.loadCommentReplys(page);
+			
+			for(Reply reply : replys){
+				String content = reply.getReplyContent();
+				content = content.replaceAll("\n", "<br>");
+				reply.setReplyContent(content);
+			}
+			
+			map.put("replys", replys);
+			map.put("page", page);
+			
 		} catch (NotFoundDataException e) {
 			e.printStackTrace();
 		}		
 		
-		return replys;
+		return map;
+	}
+	
+	@RequestMapping(value="/replyRegistryAjax", method=RequestMethod.GET)
+	public @ResponseBody Page ReplyRegistryAjax(
+			@RequestParam Integer commentNo,
+			@RequestParam String userId,
+			@RequestParam String replyContent){
+		Page page = null;
+		Reply reply = new Reply(null, commentNo, userId, null, replyContent, null);
+		
+		try {
+			communityService.writeReply(reply);
+			page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
+		} catch (WriteFailException e) {
+			logger.trace("댓글 작성 실패");
+			return null;
+		}
+		
+		return page;
+	}
+	
+	@RequestMapping(value="/replyAdjustAjax", method=RequestMethod.GET)
+	public @ResponseBody Page ReplyRegistryAjax(
+			@RequestParam Integer commentNo,
+			@RequestParam String userId,
+			@RequestParam Integer replyNo,
+			@RequestParam String replyContent){
+		Page page = null;
+		Reply reply = new Reply(replyNo, commentNo, userId, null, replyContent, null);
+		
+		try {
+			communityService.updateReply(reply);
+			page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
+		} catch (ChangeValueFailException e) {
+			logger.trace("댓글 수정 실패");
+			return null;
+		}
+		
+		return page;
 	}
 
 	//게시글 댓글 작성 페이지 이동 ( 기능 X )

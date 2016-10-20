@@ -1086,6 +1086,7 @@ label {
    display: inline-block;
    position: absolute;
 }
+
 .board_read_main{
     width: 500px;
     display: inline-block;
@@ -1150,6 +1151,11 @@ label {
 	border: thin 1px;
 }
 
+.replyPage a, b{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
 .reply_input_area{
 	padding: 0px;
 	width: 450px;
@@ -1190,7 +1196,12 @@ button{
 	height: 20px;
 }
 
+.reply_option .reply_adjust_cancel{
+	color: #FF3148;
+}
+
 .reply_content{
+	margin-top: 51px;
 	text-align: left;
 	clear : both;
 	display: block;
