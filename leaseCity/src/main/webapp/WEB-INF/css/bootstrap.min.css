@@ -5701,7 +5701,7 @@ button.close {
 	}
 }
 
-@media ( min-width :1200px) {
+/* @media ( min-width :1200px) { */
 	.row {
 		margin-left: -30px;
 		*zoom: 1;
@@ -6019,7 +6019,7 @@ button.close {
 	.row-fluid .thumbnails {
 		margin-left: 0;
 	}
-}
+/* 미디어 설정 1200} */
 
 @media ( max-width :979px) {
 	body {

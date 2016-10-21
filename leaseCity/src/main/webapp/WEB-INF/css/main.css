@@ -1216,7 +1216,7 @@ button{
 }
 
 /*화면해상도 1200이상에서의 설정 */
-@media all and (min-width: 1200px) {
+/* @media all and (min-width: 1200px) { */
    /* 로그인 화면*/
    .login {
       padding-top: 80px;   
@@ -1247,7 +1247,7 @@ button{
       margin-left: 200px;
       width: 600px;
    }
-}
+/* } */
 /* board 페이징 부분 설정 */
 .boardPage{
 	width : 780px;
