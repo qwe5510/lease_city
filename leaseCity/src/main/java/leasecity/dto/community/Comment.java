@@ -57,6 +57,9 @@ public class Comment implements Serializable {
 
 	/** 게시글 날짜. */
 	private Date regDate;
+	
+	/** 글 속성  */
+	private String attribute;
 
 	/** 게시글에 달린 총 댓글 개수 */
 	private Integer replyCount;

@@ -13,9 +13,11 @@
  	<select id="getPageSelectComment" parameterType="page" resultType="comment">
  		SELECT *
  		FROM (
- 				SELECT sub.*, rownum AS comment_row_num,
- 				SUBSTR(comment_category, 0, INSTR(comment_category, '/')-1) AS locale,
+ 				SELECT sub.*, rownum AS comment_row_num
+ 				
+ 				,SUBSTR(comment_category, 0, INSTR(comment_category, '/')-1) AS locale,
  				SUBSTR(comment_category, INSTR(comment_category, '/')+1, LENGTH(comment_category)) AS kind
+ 				
  				FROM( SELECT  c.comment_no comment_no, c.user_id user_id,
  							 c.comment_title comment_title, c.comment_category comment_category,
  							 c.hits hits, c.reg_date, u.company_name company_name 							 
