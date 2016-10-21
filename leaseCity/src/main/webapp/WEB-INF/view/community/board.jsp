@@ -88,6 +88,18 @@
                   <td class='communityTitle'>
                      <a href="<%=request.getContextPath() %>/board_read?commentNo=${comment.commentNo}">
                      ${comment.commentTitle}</a>
+                     
+                      <c:if test="${comment.hits >= 100}">
+                     	<span class="label label-important">
+                     		hot
+                     	</span>
+                     </c:if>
+                     
+                     <c:if test="${!(comment.replyCount eq 0)}">
+                     	<span class="label label-warning">
+                     		+${comment.replyCount}
+                     	</span>
+                     </c:if>
                   </td>
                   <td><c:out value="${comment.companyName}" /></td>
                   <td><c:out value="${comment.hits}" /></td>               

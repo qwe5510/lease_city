@@ -21,6 +21,7 @@
 	 					r.reg_date, u.company_name company_name
 	 					FROM replys r JOIN users u ON r.user_id=u.user_id
 	 					WHERE r.comment_no = #{superNo}
+	 					ORDER BY r.reg_date
 	 				) sub 
 	 			)
  		<if test="pageSize != null and to !=null and from != null">
@@ -39,14 +40,18 @@
  	<!-- 덧글 삭제 - 종속성에 의해 댓글도 같이 자동삭제 -->
  	<delete id="deleteReply" parameterType="reply">
  		DELETE FROM replys
- 		WHERE reply_no = #{replyNo}
+ 		WHERE reply_no = #{replyNo} AND
+ 			  comment_no = #{commentNo} AND
+ 			  user_id = #{userId}
  	</delete>
  	
  	<!-- 덧글 수정 -->
  	<update id="updateReply" parameterType="reply">
  		UPDATE replys SET
  		reply_content = #{replyContent}
- 		WHERE reply_no = #{replyNo}
+ 		WHERE reply_no = #{replyNo} AND
+ 			  comment_no = #{commentNo} AND
+ 			  user_id = #{userId}
  	</update> 
  	 
  </mapper>

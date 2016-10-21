@@ -84,10 +84,7 @@
 							<td width="2px" class="boardLine"></td>
 							<td colspan="11">
 								<div class="comment_content">
-								
-									${comment.commentContent}<br>
-									<br>
-									<br>
+									${comment.commentContent}
 								</div>
 							</td>
 							<td width="2px" class="boardLine"></td>
@@ -97,35 +94,42 @@
 						</tr>
 					</table>
 					<div style="text-align: left; padding: 10px;">
-						<span>댓글 <b><c:out value="${comment.replyCount }"></c:out></b>개
-						</span>
+						<span id="comment_reply_count">댓글 <b><c:out value="${comment.replyCount }"></c:out></b>개</span>
 					</div>
 
 					<div class="comment_reply">
 						<ul class="board_read_reply">
 
 							<c:if test="${!empty errorMsg }">
-								<li><c:out value="${errorMsg}"></c:out></li>
+								<li>${errorMsg}</li>
 								<li class="replyBaseLine"></li>
 							</c:if>
 
 							<c:forEach var="reply" items="${replys}">
 								<fmt:formatDate value="${reply.regDate}"
 									pattern="yyyy-MM-dd  hh:mm:ss" var="replyRegDate" />
-								<li>
+								<li id="reply_${reply.replyNo}">
 									<div class="reply_author">
-										<c:out value="${reply.companyName}"></c:out>
+										${reply.companyName}
 									</div>
+									<!-- 이부분 Session Filter 해야 함 -->
 									<div class="reply_option">
-										<button>
-											<i class="icon-eraser"></i>
-										</button>
+										<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
+										<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
+										<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
 									</div>
 									<div class="reply_date">
-										<c:out value="${replyRegDate}"></c:out>
+										${replyRegDate}
 									</div>
 									<div class="reply_content">
-										${reply.replyContent}"
+										${reply.replyContent}
+									</div>
+									<div style="display: none;"class="reply_content_temp">
+										${reply.replyContent}
+									</div>
+									<div class="reply_data" style="display: none;">
+										<span>${comment.commentNo}</span>
+										<span>${reply.replyNo}</span>
 									</div>
 								</li>
 								<li class="replyBaseLine"></li>
@@ -144,9 +148,8 @@
 
 						<c:choose>
 							<c:when test="${prevPage > 0}">
-								<a href="<%=request.getContextPath()%>/board?currentPage=${prevPage}">
-									<i class="icon-arrow-left">이전</i>
-								</a>
+								<a href="#" id="replyPage${prevPage}" 
+									onclick="moveReplyPage(${prevPage}, ${comment.commentNo})"><i class="icon-arrow-left">이전</i></a>
 							</c:when>
 							<c:otherwise>
 								<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
@@ -162,9 +165,8 @@
 												<b><c:out value="${i}"></c:out></b>
 											</c:when>
 											<c:otherwise>
-												<a href="#" id="replyPage${i}" onclick="moveReplyPage(${i}, ${replyPage.superNo})">
-													<c:out value="${i}"></c:out>
-												</a>
+												<a href="#" id="replyPage${i}" 
+													onclick="moveReplyPage(${i}, ${comment.commentNo})"><c:out value="${i}"></c:out></a>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
@@ -172,14 +174,11 @@
 								<c:otherwise>
 									<c:forEach var="i" begin="${prevPage+1}" end="${nextPage-1}">
 										<c:choose>
-											<c:when test="${i eq replyPage.currentPage}">
-												<b><c:out value="${i}"></c:out></b>
+											<c:when test="${i eq replyPage.currentPage}"><b><c:out value="${i}"></c:out></b>
 											</c:when>
 											<c:otherwise>
 												<a href="#" id="replyPage${i}" 
-												onclick="moveReplyPage(${i}, ${comment.commentNo})">
-													<c:out value="${i}"></c:out>
-												</a>
+												onclick="moveReplyPage(${i}, ${comment.commentNo})"><c:out value="${i}"></c:out></a>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
@@ -189,18 +188,14 @@
 						
 						<c:choose>
 							<c:when test="${nextPage <= replyPage.totalPage}">
-								<a ${nextPage}">
-									다음<i class="icon-arrow-right"></i>
-								</a>
+								<a href="#" id="replyPage${nextPage}" 
+									onclick="moveReplyPage(${nextPage}, ${comment.commentNo})">다음<i class="icon-arrow-right"></i></a>
 							</c:when>
 							<c:otherwise>
 								<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
 							</c:otherwise>
 						</c:choose>
-						
 					</div>
-					
-
 					<textarea class="reply_input_area" rows="3" cols="50"></textarea>
 					<button id="reply_registry" class="reply_registry">등록</button>
 				</div>
@@ -217,6 +212,40 @@
 
 </body>
 <script>
+
+	var g_totalPage = ${replyPage.totalPage}; //총 페이지
+	var g_currentPage = ${replyPage.currentPage}; //현재 페이지
+
+	Date.prototype.format = function(f) {
+	    if (!this.valueOf()) return " ";
+	 
+	    var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+	    var d = this;
+	     
+	    return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+	        switch ($1) {
+	            case "yyyy": return d.getFullYear();
+	            case "yy": return (d.getFullYear() % 1000).zf(2);
+	            case "MM": return (d.getMonth() + 1).zf(2);
+	            case "dd": return d.getDate().zf(2);
+	            case "E": return weekName[d.getDay()];
+	            case "HH": return d.getHours().zf(2);
+	            case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+	            case "mm": return d.getMinutes().zf(2);
+	            case "ss": return d.getSeconds().zf(2);
+	            case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+	            default: return $1;
+	        }
+	    });
+	};
+	 
+	String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+	String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+	Number.prototype.zf = function(len){return this.toString().zf(len);};
+	
+	//날짜에 관한 스크립트 함수
+
+
 	<c:url value="/board" var="board"/>
 	$("#board_read_list").on("click", function(e) {
 		e.preventDefault();
@@ -224,6 +253,7 @@
 		$("#board_read_form").submit();
 	});
 
+	//클릭 submit 방지
 	$(document).on("click", "#reply_registry", function(e) {
 		e.preventDefault();
 	})
@@ -232,9 +262,9 @@
 		event.preventDefault();
 	})
 	
+	
 	<c:url value="/boardReadReplyAjax" var="boardReadReplyAjax"></c:url>
 	function moveReplyPage(currentPage, commentNo){
-		
 		$.ajax({
 			method : "GET",
 			url : "${boardReadReplyAjax}",
@@ -242,17 +272,253 @@
 				currentPage : currentPage,
 				commentNo : commentNo
 			},
-			success:function(replys){
-				$(".comment_reply").html("");
-				$(".comment_reply")
-				.append()
-				.append()
+			success:function(map){
+				$(".board_read_reply").html("");
+				var replys = map.replys;
+				var page = map.page;
+				
+				var str="";
+				var pageStr="";
+				
+				$.each(replys, function(idx, reply){				
+					str+=("<li>");
+					str+=("<div class='reply_author'>");
+					str+=(reply.companyName+"</div>");
+					str+=("<div class='reply_option'>");
+					str+=("<button title='댓글 수정' style='margin-right:3px;' class='reply_adjust'>");
+					str+=("<i class='icon-eraser'></i></button>");
+					str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
+					str+=("<i class='icon-eraser'></i></button>");
+					str+=("<button title='댓글 삭제' id='reply_remove' class='reply_remove'>");
+					str+=("<i class='icon-remove'></i></button></div>");
+					str+=("<div class='reply_date'>");
+					str+=(new Date(reply.regDate).format("yyyy-MM-dd hh:mm:ss"));
+					str+=("</div>");
+					str+=("<div class='reply_content'>"+reply.replyContent+"</div>");
+					str+=("<div style='display: none;' class='reply_content_temp'>");
+					str+=(reply.replyContent+"</div>");
+					str+=("<div class='reply_data' style='display: none;'>");
+					str+=("<span>${comment.commentNo}</span>");
+					str+=("<span>"+reply.replyNo+"</span></div></li>");
+					str+=("<li class='replyBaseLine'></li>");			
+				})
+				
+				$(".board_read_reply").html(str);
+				
+				var prevPage = (((page.currentPage-1)/10)-(((page.currentPage-1)/10)%1))*10;
+				var nextPage = prevPage+11;
+				
+				$(".replyPage").html("");
+				
+				if(prevPage >0){
+					pageStr+=("<a href='#' id='replyPage"+prevPage+"'")
+					pageStr+=("onclick='moveReplyPage("+prevPage+", "+page.superNo+")'></a>");
+				}else{
+					pageStr+=("<a style='color: black;'><i class='icon-arrow-left'>처음</i></a>");
+				}
+				
+				if(page.totalPage != null){
+					g_currentPage = page.currentPage;
+					g_totalPage = page.totalPage;
+					
+					if(nextPage-1 >= page.totalPage){
+						for(var i=prevPage+1; i<=page.totalPage; i++){
+							if(i == page.currentPage){
+								pageStr+="<b>"+i+"</b>";
+							}
+							else{
+								pageStr+="<a href='#' id='replyPage"+i+"'";
+								pageStr+="onclick='moveReplyPage("+i+", "+page.superNo+")'>"+ i +"</a>";
+							}							
+						}
+					}else{
+						for(var i=prevPage+1; i<page.nextPage-1; i++){
+							if(i == page.currentPage){
+								pageStr+="<b> "+i+" </b>";
+							}
+							else{
+								pageStr+=" <a href='#' id='replyPage"+i+"'";
+								pageStr+="onclick='moveReplyPage("+i+", "+page.superNo+")'>"+ i +"</a> ";
+							}
+						}
+					}
+				}
+				
+				if(nextPage <= page.totalPage){
+					pageStr+=("<a href='#' id='replyPage"+nextPage+"'")
+					pageStr+=("onclick='moveReplyPage("+nextPage+", "+page.superNo+")'></a>");
+				}else{
+					pageStr+=("<a style='color: black;'>끝<i class='icon-arrow-right'></i></a>");
+				}
+				
+				$(".replyPage").html(pageStr);
 			},
 			error:function(xhr, status, error){
-				
+				alert(error + " : 덧글 불러오기 실패");
 			}
 		})
 	}
+	
+	
+	//
+	
+	//댓글 등록 입력란
+	<c:url value="/replyRegistryAjax" var="replyRegistryAjax"></c:url>
+	$("#reply_registry").on("click", function(){
+		
+		var replySize = 10; //덧글 사이즈
+		var inputArea = $(".reply_input_area").val(); // Area에 대한 값 전환
+		
+		//덧글 공백입력 막기
+		if(inputArea == null || inputArea == ""){
+			return false;
+		}
+		
+		$.ajax({
+			method : "GET",
+			url : "${replyRegistryAjax}",
+			data : {
+				commentNo : ${comment.commentNo},
+				userId : "ysh5586",
+				replyContent : inputArea				
+			},
+			success : function(page){
+				if(page != null){
+					alert("덧글 등록이 완료되었습니다.");
+					g_currentPage = page.totalPage;
+					g_totalPage = page.totalPage;
+					moveReplyPage(page.totalPage, ${comment.commentNo});
+					$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
+					$(".reply_input_area")[0].value="";
+					//덧글등록 안내 후 페이지 가장 끝단으로 이동.
+				}else{
+					alert("덧글 등록 실패");
+				}
+			},
+			fail : function(error){
+				alert(error);
+			}
+		});
+	});
+
+	
+	
+	
+	//수정 취소 
+	$(document).on("click", ".reply_adjust_cancel", function(){
+		var li = $(this).parent().parent();
+		var liChildren = li.children();
+		var replyContent = $($(liChildren[3])[0]);
+		var contentText = replyContent.next().html();
+		
+		replyContent.html(contentText);	
+		
+		//수정 보이게 하기.
+		$(this).css("display", "none");
+		var adjustCancel = $(this).prev();
+		adjustCancel.css("display", "inline-block");
+	});
+	
+	
+	//덧글 수정하기.
+	$(document).on("click", ".reply_adjust", function(){	
+		var li = $(this).parent().parent();
+		var liChildren = li.children();
+		var replyContent = $($(liChildren[3])[0]);
+		var contentText = replyContent.html().trim().replace(/<br>/gi, "\n");
+		
+		str="";
+		str+="<div style='padding-top: 5px;'><textarea style='vertical-align:middle;' class='reply_input_area' rows='3' cols='50'>"
+		str+=contentText+"</textarea>";
+		str+="<button id='reply_adjust' class='reply_registry'>등록</button></div>";
+
+		replyContent.html(str)
+		
+		//수정취소 보이게 하기.
+		$(this).css("display", "none");
+		var adjustCancel = $(this).next();
+		adjustCancel.css("display", "inline-block");
+		
+	})
+	
+	<c:url value="/replyAdjustAjax" var="replyAdjustAjax"></c:url>
+	$(document).on("click", "#reply_adjust", function(){
+		var inputArea=$(this).prev().val();
+		
+		var li = $(this).parent().parent().parent();
+		var liChildren = li.children();
+		var replyInfo = $(liChildren[5]).children();
+		
+		var commentNo = $(replyInfo[0]).html();
+		var replyNo = $(replyInfo[1]).html();
+		
+		$.ajax({
+			method : "GET",
+			url : "${replyAdjustAjax}",
+			data : {
+				commentNo : commentNo,
+				userId : "ysh5586",
+				replyNo : replyNo,
+				replyContent : inputArea				
+			},
+			success : function(page){
+				if(page != null){
+					moveReplyPage(g_currentPage, commentNo);
+					$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
+					//덧글 수정 후 
+				}else{
+					alert("덧글 수정 실패");
+				}
+			},
+			fail : function(error){
+				alert(error);
+			}
+		});
+	});
+	
+	<c:url value="/replyRemoveAjax" var="replyRemoveAjax"></c:url>
+	$(document).on("click", "#reply_remove", function(){
+		var res = confirm("삭제 후 복구가 불가능합니다.\n정말로 삭제 하시겠습니까?");
+		
+		var li = $(this).parent().parent();
+		var liChildren = li.children();
+		var replyInfo = $(liChildren[5]).children();
+		
+		var commentNo = $(replyInfo[0]).html();
+		var replyNo = $(replyInfo[1]).html();
+		
+		if(res){
+			$.ajax({
+				method : "GET",
+				url : "${replyRemoveAjax}",
+				data : {
+					commentNo : commentNo,
+					userId : "ysh5586",
+					replyNo : replyNo			
+				},
+				success : function(page){
+					if(page != null){
+						if(g_currentPage > page.totalPage){
+							g_currentPage = page.totalPage;
+							g_totalPage = page.totalPage;
+						}else if(g_currentPage <= page.totalPage){
+							g_totalPage = page.totalPage;
+						}
+						moveReplyPage(g_currentPage, commentNo);
+						$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
+						//덧글 수정 후 
+					}else{
+						alert("덧글 삭제 실패");
+					}
+				},
+				fail : function(error){
+					alert(error);
+				}
+			});
+		}
+	});
+	
+	
 	
 </script>
 </html>
