@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment implements Serializable {
-
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
@@ -66,7 +65,8 @@ public class Comment implements Serializable {
 	
 	public Comment(Integer commentNo, String userId, 
 			String commentTitle, String locale, String kind,
-			String commentContent, Integer hits, Date regDate) {
+			String commentContent, Integer hits, Date regDate,
+			String attribute) {
 		this.commentNo = commentNo;
 		this.userId = userId;
 		this.commentTitle = commentTitle;
@@ -76,11 +76,13 @@ public class Comment implements Serializable {
 		this.commentContent = commentContent;
 		this.hits = hits;
 		this.regDate = regDate;
+		this.attribute = attribute;
 	}
 
 	public Comment(Integer commentNo, String userId, 
 			String commentTitle, String commentCategory, 
-			String commentContent, Integer hits, Date regDate) {
+			String commentContent, Integer hits, Date regDate,
+			String attribute) {
 		this.commentNo = commentNo;
 		this.userId = userId;
 		this.commentTitle = commentTitle;
@@ -88,6 +90,7 @@ public class Comment implements Serializable {
 		this.commentContent = commentContent;
 		this.hits = hits;
 		this.regDate = regDate;
+		this.attribute = attribute;
 	}
 	public Comment(String locale){
 		this.locale=locale;

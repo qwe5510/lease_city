@@ -26,14 +26,12 @@
 		<typeAlias type="leasecity.dto.lease.LeaseTransfer" alias="leaseTransfer" />
 		<typeAlias type="leasecity.dto.lease.LeaseSelection" alias="leaseSelection" />
 		
-		<!--  3.커뮤니티 (게시글, 댓글) -->
+		<!--  3.커뮤니티 (게시글, 댓글) / Q&A 겸용 -->
 		<typeAlias type="leasecity.dto.community.Comment" alias="comment" />
 		<typeAlias type="leasecity.dto.community.Reply" alias="reply" />
 		
-		<!--  4.관리자 기능(Q&A, 알림, 대기유저, 작업기록, 관리자 -->
+		<!--  4.관리자 기능(알림, 대기유저, 작업기록, 관리자 -->
 		<typeAlias type="leasecity.dto.adminwork.LeasecityAdmin" alias="leasecityAdmin" />
-		<typeAlias type="leasecity.dto.adminwork.Question" alias="question" />
-		<typeAlias type="leasecity.dto.adminwork.Answer" alias="answer" />
 		<typeAlias type="leasecity.dto.adminwork.Notify" alias="notify" />
 		<typeAlias type="leasecity.dto.adminwork.StandByUser" alias="standByUser" />
 		<typeAlias type="leasecity.dto.adminwork.WorkLog" alias="workLog" />
@@ -59,7 +57,6 @@
 		<!-- 3.관리자작업 mapping -->
 		<mapper resource="mybatis/mapper/adminwork/leasecityAdminRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/standByUserRepo.xml" />
-		<mapper resource="mybatis/mapper/adminwork/questionRepo.xml" />
 		
 	</mappers>	
 	
