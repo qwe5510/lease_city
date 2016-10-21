@@ -247,10 +247,10 @@
 
 
 	<c:url value="/board" var="board"/>
+	//bind - 키 - 값, live - 객체 - 자바스크립트 변수 (값)
 	$("#board_read_list").on("click", function(e) {
 		e.preventDefault();
-		$("#board_read_form").attr("action", "${board}");
-		$("#board_read_form").submit();
+		location.href="${board}";
 	});
 
 	//클릭 submit 방지
@@ -358,9 +358,6 @@
 			}
 		})
 	}
-	
-	
-	//
 	
 	//댓글 등록 입력란
 	<c:url value="/replyRegistryAjax" var="replyRegistryAjax"></c:url>

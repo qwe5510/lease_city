@@ -76,6 +76,25 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		return results;
 	}
+	
+	/**
+	 * 게시글 번호로 게시글 불러오기.
+	 * @param commentNo
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	@Override
+	public Comment loadComment(Integer commentNo) throws NotFoundDataException {
+		Comment comment = commentRepo.getComment(commentNo);
+		
+		if(comment == null){
+			throw new NotFoundDataException(commentNo + "번 게시글");
+		}else{
+			comment.setReplyCount(replyRepo.getCountCommentReply(commentNo));
+		}
+		
+		return comment;
+	}
 
 	/**
 	 * 게시글 쓰기 기능

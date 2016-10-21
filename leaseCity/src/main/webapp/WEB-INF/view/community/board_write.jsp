@@ -79,7 +79,8 @@
 						</tr>
 						<tr>
 							<td colspan="4">
-								<sform:textarea path="commentContent" placeholder="형식에 구애받지 않고 자유롭게 입력하시면 됩니다."/>
+								<sform:textarea id="commentContent" path="commentContent" placeholder="형식에 구애받지 않고 자유롭게 입력하시면 됩니다."/>
+								<div style="display: none;" class="commentContent"></div>							
 							</td>
 						</tr>
 			
@@ -98,9 +99,10 @@
 <c:url value="/board" var="board"/>
 $("#cancel").on("click", function(e){
     e.preventDefault();
-    $("#board_write_form").attr("action","${board}");
-    $("#board_write_form").submit();
+    location.href = "${board}";
 });
+
+
 $("#write").on("click",function(e){
 	e.preventDefault();
 	var commentTitle = $("#commentTitle").val();
@@ -114,5 +116,25 @@ $("#write").on("click",function(e){
 		$("#board_write_form").submit();
 	}
 });
+
+$("#commentContent").on("keyup", function(e){
+	
+	var inputText = "";
+	var text = $(this).val();
+	
+	var textArray = text.split("\n");
+	
+	for(var item of textArray){
+		if(item == null || item==""){
+			inputText+= "<p><br></p>"
+		}else{
+			inputText.replace("<p><br><p>", "");
+			inputText+= "<p>"+item+"</p>";
+		}
+	}
+	
+	$(".commentContent").html(inputText);
+})
+
 </script>
 </html>

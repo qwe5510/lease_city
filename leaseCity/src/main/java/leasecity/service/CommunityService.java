@@ -29,6 +29,14 @@ public interface CommunityService {
 	public List<Comment> loadTermsComment(Page page) throws NotFoundDataException;
 	
 	/**
+	 * 게시글 번호로 게시글 불러오기.
+	 * @param commentNo
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	public Comment loadComment(Integer commentNo) throws NotFoundDataException;
+	
+	/**
 	 * 게시글 쓰기 기능
 	 * @param comment
 	 * @return 쓴 글

@@ -95,6 +95,10 @@
  	<!-- 게시물 추가 -->
  	<!-- comment_no는 TRIGGER로 AUTO_INCREMENT취급 받음 -->
  	<insert id="insertComment" parameterType="comment">
+ 		<selectKey resultType="int" keyProperty="commentNo" order="AFTER"> 
+	 		SELECT SEQ_COMMENTS_COMMENT_NO.CURRVAL AS comment_no 
+	 		FROM dual 
+ 		</selectKey>
  		INSERT INTO comments 
  		(user_id, comment_title, 
  		comment_category, comment_content)

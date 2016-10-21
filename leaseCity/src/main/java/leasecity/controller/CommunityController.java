@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -210,7 +211,7 @@ public class CommunityController {
 	
 	// 게시글 댓글 작성
 	@RequestMapping(value = "/writeComment", method = RequestMethod.POST)
-	public String writeComment(Model model, RedirectAttributes redir, Comment comment, HttpSession session) {
+	public String writeComment(Model model, RedirectAttributes redir, Comment comment) {
 		
 		/*// 1. 유저가 로그인 되있는지 확인
 		User user = new User();
@@ -230,30 +231,15 @@ public class CommunityController {
 		// 3. 게시물 작성
 		try {
 			communityService.writeComment(comment);
-			session.setAttribute("comment", comment);
 			logger.trace("글 작성 성공");
 		} catch (WriteFailException e) {
 			redir.addFlashAttribute("board_message", "글 작성 실패.");
 			logger.trace("글 작성 실패");
 			return "redirect:/board";
-		}
-		
+		} 
 		// 4. 끝
 		logger.trace("글 작성 페이지 이동");
-		return "redirect:/writeCommentPRG";
-	}
-	
-	// 게시글 댓글 작성 ( PRG 처리, board_read 페이지로 이동 )
-	@RequestMapping(value = "/writeCommentPRG")
-	public String writeCommentPRG(Model model, HttpSession session) {
-		// 작성된 게시물을 확인하기 위해, model에 넣고 board_read 페이지로 이동
-		Object obj = session.getAttribute("comment");
-		Comment comment = (Comment)obj;
-		
-		// ( 미완성 )
-		model.addAttribute("comment", comment);
-		
-		return "community/board_read";
+		return "redirect:/board_read?commentNo="+comment.getCommentNo();
 	}
 	
 	//커뮤니티 메인 페이지
