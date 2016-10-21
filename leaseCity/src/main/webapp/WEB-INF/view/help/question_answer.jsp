@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="leasecity.dto.community.Comment"%>
+<%@page import="leasecity.util.DateUtil"%>
+<%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -36,29 +40,94 @@
 					<td class="td4">글쓴이</td>
 					<td class="td5">조회수</td>
 					<!-- <td class="td6"><a href="#">날짜<i class="icon-sort"></i></a></td> -->
-					<%-- <c:choose>
+					<c:choose>
 						<c:when test="${!empty page.keyword and page.order eq 'ASC'}">
 							<td>날짜<a
-								href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=DESC"><i
+								href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=DESC"><i
 									class="icon-sort"></i></a></td>
 						</c:when>
 						<c:when test="${!empty page.keyword}">
 							<td>날짜<a
-								href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=ASC"><i
+								href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=ASC"><i
 									class="icon-sort"></i></a></td>
 						</c:when>
 						<c:when test="${page.order eq 'ASC' }">
 							<td>날짜<a
-								href="<%=request.getContextPath()%>/board?order=DESC"><i
+								href="<%=request.getContextPath()%>/question_answer?order=DESC"><i
 									class="icon-sort"></i></a></td>
 						</c:when>
 						<c:otherwise>
 							<td>날짜<a
-								href="<%=request.getContextPath()%>/board?order=ASC"><i
+								href="<%=request.getContextPath()%>/question_answer?order=ASC"><i
 									class="icon-sort"></i></a></td>
 						</c:otherwise>
-					</c:choose> --%>
+					</c:choose>
 				</tr>
+				<c:forEach var="comment" items="${comments}">
+               <tr>
+                  <td colspan="6" class="boardLine" style="height: 4px !important;"></td>
+               </tr>
+               <tr class="boardShow">
+                  <td><c:out value="${comment.commentRowNum}" /></td>
+                  <td><c:out value="${comment.commentCategory}" /></td>
+                  <td class='communityTitle'>
+                  
+                  <c:choose>
+	                  <c:when test="${!empty page.keyword and !empty page.order}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:when>
+	                  <c:when test="${!empty page.order}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:when>
+	                  <c:when test="${!empty page.keyword}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:when>
+	                  <c:otherwise>
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:otherwise>
+               		</c:choose>
+
+                      <c:if test="${comment.hits >= 100}">
+                     	<span class="label label-important">
+                     		hot
+                     	</span>
+                     </c:if>
+                     
+                     <c:if test="${!(comment.replyCount eq 0)}">
+                     	<span class="label label-warning">
+                     		+${comment.replyCount}
+                     	</span>
+                     </c:if>
+                  </td>
+                  <td><c:out value="${comment.companyName}" /></td>
+                  <td><c:out value="${comment.hits}" /></td>               
+                  
+                  <fmt:formatDate value="${comment.regDate}"
+                        pattern="yyyy-MM-dd"
+                        var="strRegDate"/>
+                  
+                  <fmt:formatDate value="${comment.regDate}"
+                        pattern="hh:mm:ss"
+                        var="strRegTime"/>
+                  
+                  <c:choose>
+                  <c:when test="${strRegDate eq today}">
+                     <td><c:out value="${strRegTime}" /></td>
+                  </c:when>
+                  <c:otherwise>
+                     <td><c:out value="${strRegDate}" /></td>
+                  </c:otherwise>
+                  </c:choose>                           
+               </tr>
+            </c:forEach>
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
 				</tr>

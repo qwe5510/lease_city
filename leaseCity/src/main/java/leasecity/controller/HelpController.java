@@ -59,6 +59,7 @@ public class HelpController {
 		
 		Page page = null;
 		List<Comment> comments = null;
+		List<Comment> questions = null;
 		
 		// 값이 없으면 1대입.
 		if (currentPage == null)
@@ -76,6 +77,7 @@ public class HelpController {
 				comments = communityService.loadPageCommentList(page);
 			}			
 				model.addAttribute("comments", comments);
+				model.addAttribute("QNA", comments);
 				model.addAttribute("page", page);
 		} catch (NotFoundDataException e) {
 			logger.error("게시글이 없음");
