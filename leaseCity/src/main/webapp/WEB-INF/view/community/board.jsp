@@ -89,26 +89,26 @@
                   
                   <c:choose>
 	                  <c:when test="${!empty page.keyword and !empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.keyword}">
-	                    <a href="<%=request.getContextPath() %>/board_read?search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <a href="<%=request.getContextPath() %>/board_read?&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:otherwise>
-               	</c:choose>
+               		</c:choose>
 
                       <c:if test="${comment.hits >= 100}">
                      	<span class="label label-important">
