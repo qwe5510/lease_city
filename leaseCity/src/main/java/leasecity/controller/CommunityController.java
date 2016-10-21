@@ -53,7 +53,7 @@ public class CommunityController {
 	}
 	
 	//게시판 글 , 댓글 확인
-	@RequestMapping(value="/board_read", method = RequestMethod.GET)
+	@RequestMapping(value="/board/read", method = RequestMethod.GET)
 	public String board_read(Model model, HttpServletRequest request, 
 			RedirectAttributes redir, 
 			@RequestParam(value="currentPage", required=false) Integer currentPage,

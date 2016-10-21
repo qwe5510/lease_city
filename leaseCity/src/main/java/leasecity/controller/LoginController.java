@@ -154,8 +154,11 @@ public class LoginController {
 		}
 		
 		// 2-2 이메일로 본인 인증이 되있는지 확인
-		Object obj = (Object) session.getAttribute("matchingResult");
-		String matchingResult = (String) obj;
+		String matchingResult = "fail";
+		if ( session.getAttribute("matchingResult") != null) {
+			Object obj = (Object) session.getAttribute("matchingResult");
+			matchingResult = (String) obj;
+		}
 		logger.trace("메칭 결과 : {}", matchingResult);
 		if (matchingResult.equals("success")) {
 			logger.trace("이메일 인증 확인");
@@ -167,8 +170,9 @@ public class LoginController {
 
 		// 3. DB에서 검색 및 이메일 인증된 회원 ==> 비밀번호 수정 폼으로 이동
 
-		session.invalidate();
+		//session.invalidate();
 		session.setAttribute("user", user);
+		session.setMaxInactiveInterval(60 * 3);
 		submit = "success";
 		logger.trace("비밀번호 찾을 유저 : {}", user);
 

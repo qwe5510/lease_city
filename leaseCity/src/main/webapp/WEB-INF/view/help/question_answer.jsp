@@ -35,7 +35,29 @@
 					<td class="td3">제목</td>
 					<td class="td4">글쓴이</td>
 					<td class="td5">조회수</td>
-					<td class="td6"><a href="#">날짜<i class="icon-sort"></i></a></td>
+					<!-- <td class="td6"><a href="#">날짜<i class="icon-sort"></i></a></td> -->
+					<%-- <c:choose>
+						<c:when test="${!empty page.keyword and page.order eq 'ASC'}">
+							<td>날짜<a
+								href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=DESC"><i
+									class="icon-sort"></i></a></td>
+						</c:when>
+						<c:when test="${!empty page.keyword}">
+							<td>날짜<a
+								href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=ASC"><i
+									class="icon-sort"></i></a></td>
+						</c:when>
+						<c:when test="${page.order eq 'ASC' }">
+							<td>날짜<a
+								href="<%=request.getContextPath()%>/board?order=DESC"><i
+									class="icon-sort"></i></a></td>
+						</c:when>
+						<c:otherwise>
+							<td>날짜<a
+								href="<%=request.getContextPath()%>/board?order=ASC"><i
+									class="icon-sort"></i></a></td>
+						</c:otherwise>
+					</c:choose> --%>
 				</tr>
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>

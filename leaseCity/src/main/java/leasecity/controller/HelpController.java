@@ -5,17 +5,23 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import leasecity.dto.adminwork.Answer;
 import leasecity.dto.adminwork.Question;
 import leasecity.dto.community.Comment;
+import leasecity.dto.etc.Page;
+import leasecity.exception.NotFoundDataException;
 
 @Controller
 public class HelpController {
+	
 	static Logger logger = LoggerFactory.getLogger(HelpController.class);
+	
 	@RequestMapping(value="/FAQ")
 	public String FAQ(Model model){
 		model.addAttribute("message", "Good Morning");
@@ -48,10 +54,38 @@ public class HelpController {
 	}
 	
 	@RequestMapping(value="/question_answer")
-	public String question_answer(Model model){
-		model.addAttribute("message", "Good Morning");
+	public String question_answer(Model model, Page searchPage,
+			@RequestParam(value="currentPage", required=false) 
+			Integer currentPage,
+			@RequestParam(value="order", required=false)
+			String order){
+		
+		Page page = null;
+		List<Question> questions = null;
+		
+		// 값이 없으면 1대입.
+		if (currentPage == null)
+			currentPage = 1;
+		
+		/*try {
+			if(searchPage != null){
+				page = communityService.getSearchCommentPage
+						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+								searchPage.getKeyword(), order);
+				logger.trace("page : {}", page);
+				comments = communityService.loadTermsComment(page);
+			}else if(searchPage == null){
+				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+				comments = communityService.loadPageCommentList(page);
+			}			
+				model.addAttribute("comments", comments);
+				model.addAttribute("page", page);
+		} catch (NotFoundDataException e) {
+			logger.error("게시글이 없음");
+			model.addAttribute("errorMsg", "게시글이 없습니다.");
+		}
 		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
+		System.out.println("컨틀롤러들어옴!");*/
 		return "help/question_answer";
 	}
 }
