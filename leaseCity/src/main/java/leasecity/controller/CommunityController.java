@@ -52,27 +52,77 @@ public class CommunityController {
 				new CustomDateEditor(format, true));
 	}
 	
+	//커뮤니티 메인 페이지
+		@RequestMapping(value="/board", method=RequestMethod.GET)
+		public String board(Model model, Page searchPage,
+				@RequestParam(value="currentPage", required=false) 
+				Integer currentPage,
+				@RequestParam(value="order", required=false)
+				String order){
+		
+			Page page = null;
+			List<Comment> comments = null;
+			
+			//값이 없으면 1대입.
+			if(currentPage == null)
+				currentPage = 1;
+			try {
+				if(searchPage != null){
+					page = communityService.getSearchCommentPage
+							(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+									searchPage.getKeyword(), order);
+					logger.trace("page : {}", page);
+					comments = communityService.loadTermsComment(page);
+				}else if(searchPage == null){
+					page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+					comments = communityService.loadPageCommentList(page);
+				}			
+					model.addAttribute("comments", comments);
+					model.addAttribute("page", page);
+			} catch (NotFoundDataException e) {
+				logger.error("게시글이 없음");
+				model.addAttribute("errorMsg", "게시글이 없습니다.");
+			}
+					
+			return "community/board";
+		}
+	
 	//게시판 글 , 댓글 확인
 	@RequestMapping(value="/board_read", method = RequestMethod.GET)
-	public String board_read(Model model, HttpServletRequest request, 
-			RedirectAttributes redir, 
+	public String boardRead(Model model, RedirectAttributes redir, 
+			Page searchPage, 
 			@RequestParam(value="currentPage", required=false) Integer currentPage,
 			@RequestParam(value="commentNo", required=false) Integer commentNo,
 			@RequestParam(value="search", required=false) String search,
 			@RequestParam(value="keyword", required=false) String keyword,
 			@RequestParam(value="order", required=false) String order){ 
 		// 게시글 전달(게시물 / 댓글) 객체
+		
 		Comment comment = null;
+		List<Comment> comments = null;
 		Page page = null;
 		Page replyPage = null;
 		List<Reply> replys = null;
 		
 		// 1-1. 게시글 번호 받기 : RequestParam로 받음
 		
-		// 2. 게시글 번호로 게시글 갖고오기
+		// 2. 게시글 번호로 게시글 갖고 오기 및 게시글 목록 출력
 		if(currentPage == null)
 			currentPage = 1;
 		try {
+			
+			if(searchPage != null){
+				page = communityService.getSearchCommentPage
+						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+								searchPage.getKeyword(), order);
+				logger.trace("page : {}", page);
+				comments = communityService.loadTermsComment(page);
+			}else if(searchPage == null){
+				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+				comments = communityService.loadPageCommentList(page);
+			}			
+				model.addAttribute("comments", comments);
+				model.addAttribute("page", page);
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 			logger.trace("들어온 commentNo : {}", commentNo);
 			comment = communityService.viewComment(commentNo);
@@ -87,6 +137,7 @@ public class CommunityController {
 			return "redirect:/board";
 		}
 		
+		//3.댓글 정보 입력
 		try{
 			replyPage = communityService.getFirstReplyPage(comment.getCommentNo(), REPLY_PAGE_SIZE);
 			replys = communityService.loadCommentReplys(replyPage);
@@ -240,41 +291,6 @@ public class CommunityController {
 		// 4. 끝
 		logger.trace("글 작성 페이지 이동");
 		return "redirect:/board_read?commentNo="+comment.getCommentNo();
-	}
-	
-	//커뮤니티 메인 페이지
-	@RequestMapping(value="/board", method=RequestMethod.GET)
-	public String board(Model model, Page searchPage,
-			@RequestParam(value="currentPage", required=false) 
-			Integer currentPage,
-			@RequestParam(value="order", required=false)
-			String order){
-	
-		Page page = null;
-		List<Comment> comments = null;
-		
-		//값이 없으면 1대입.
-		if(currentPage == null)
-			currentPage = 1;
-		try {
-			if(searchPage != null){
-				page = communityService.getSearchCommentPage
-						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
-								searchPage.getKeyword(), order);
-				logger.trace("page : {}", page);
-				comments = communityService.loadTermsComment(page);
-			}else if(searchPage == null){
-				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-				comments = communityService.loadPageCommentList(page);
-			}			
-				model.addAttribute("comments", comments);
-				model.addAttribute("page", page);
-		} catch (NotFoundDataException e) {
-			logger.error("게시글이 없음");
-			model.addAttribute("errorMsg", "게시글이 없습니다.");
-		}
-				
-		return "community/board";
 	}
 	
 	// 함수 1 : 유저가 로그인 되어있는지 확인
