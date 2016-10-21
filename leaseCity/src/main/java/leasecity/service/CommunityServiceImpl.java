@@ -35,7 +35,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 * @throws NotFoundDataException
 	 */
 	@Override
-	public List<Comment> loadPageCommentList(Page page) throws NotFoundDataException {
+	public List<Comment> loadPageCommunityCommentList(Page page) throws NotFoundDataException {
 		List<Comment> results = commentRepo.getPageComments(page);
 		
 		if(results.size() <= 0){
@@ -46,7 +46,7 @@ public class CommunityServiceImpl implements CommunityService{
 			comment.setReplyCount(
 					replyRepo.getCountCommentReply
 					(comment.getCommentNo()));
-			int rowNum = (commentRepo.getCountAllComments()-comment.getCommentRowNum())+1;
+			int rowNum = (commentRepo.getCountAllCommunityComments()-comment.getCommentRowNum())+1;
 			comment.setCommentRowNum(rowNum);
 		}
 		
@@ -60,13 +60,13 @@ public class CommunityServiceImpl implements CommunityService{
 	 * @throws NotFoundDataException
 	 */
 	@Override
-	public List<Comment> loadTermsComment(Page page) throws NotFoundDataException {
+	public List<Comment> loadTermsCommunityComment(Page page) throws NotFoundDataException {
 		List<Comment> results = commentRepo.getPageComments(page);
 		for(Comment comment : results){
 			comment.setReplyCount(
 					replyRepo.getCountCommentReply
 					(comment.getCommentNo()));
-			int rowNum = (commentRepo.getCountAllComments()-comment.getCommentRowNum())+1;
+			int rowNum = (commentRepo.getCountAllCommunityComments()-comment.getCommentRowNum())+1;
 			comment.setCommentRowNum(rowNum);
 		}
 		
@@ -211,9 +211,15 @@ public class CommunityServiceImpl implements CommunityService{
 	//페이지 리턴
 	//----------------------------------------------------------------
 	@Override
-	public Page getCommentPage(Integer currentPage, Integer pageSize) {
+	public Page getCommentPage(Integer currentPage, String serviceKind,  Integer pageSize) {
 		Page page = new Page();
-		page.setTotalCount(commentRepo.getCountAllComments());
+		page.setServiceKind(serviceKind);
+		if(serviceKind.equals("COMMUNITY")){
+			page.setTotalCount(commentRepo.getCountAllCommunityComments());
+		}else if(serviceKind.equals("Q_AND_A")){
+			page.setTotalCount(commentRepo.getCountAllQAndAComments());
+		}
+		
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
 		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
@@ -223,9 +229,10 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	@Override
-	public Page getSearchCommentPage(Integer currentPage, Integer pageSize,
-			String search, String keyword, String order) {
+	public Page getSearchCommentPage(Integer currentPage, Integer pageSize, 
+			String serviceKind, String search, String keyword, String order) {
 		Page page = new Page();
+		page.setServiceKind(serviceKind);
 		page.setTotalCount(commentRepo.getCountSearchComments(new Page(search, keyword)));
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);

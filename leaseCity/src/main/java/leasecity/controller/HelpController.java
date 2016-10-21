@@ -67,13 +67,13 @@ public class HelpController {
 		try {
 			if(searchPage != null){
 				page = communityService.getSearchCommentPage
-						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+						(currentPage, COMMENT_PAGE_SIZE, "COMMUNITY", searchPage.getSearch(),
 								searchPage.getKeyword(), order);
 				logger.trace("page : {}", page);
-				comments = communityService.loadTermsComment(page);
+				comments = communityService.loadTermsCommunityComment(page);
 			}else if(searchPage == null){
-				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-				comments = communityService.loadPageCommentList(page);
+				page = communityService.getCommentPage(currentPage, "COMMUNITY", COMMENT_PAGE_SIZE);
+				comments = communityService.loadPageCommunityCommentList(page);
 			}			
 				model.addAttribute("comments", comments);
 				model.addAttribute("page", page);

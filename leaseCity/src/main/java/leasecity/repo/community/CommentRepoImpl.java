@@ -19,10 +19,17 @@ public class CommentRepoImpl implements CommentRepo{
 	// mapper연동용 문자열 코드 - 게시글
 	private final String COMMENT_NS = "leasecity.repo.commentRepo.";
 	
-	//모든 게시글 갯수 정수로 리턴
+	//모든 커뮤니티 게시글 갯수 정수로 리턴
 	@Override
-	public Integer getCountAllComments() {
-		String stmt = COMMENT_NS + "getCountAllComments";
+	public Integer getCountAllCommunityComments() {
+		String stmt = COMMENT_NS + "getCountAllCommunityComments";
+		return session.selectOne(stmt);
+	}
+	
+	//모든 질문과답변 글 갯수 정수로 리턴
+	@Override
+	public Integer getCountAllQAndAComments() {
+		String stmt = COMMENT_NS + "getCountAllQAndAComments";
 		return session.selectOne(stmt);
 	}
 	

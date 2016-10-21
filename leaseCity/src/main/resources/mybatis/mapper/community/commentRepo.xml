@@ -5,8 +5,14 @@
  <mapper namespace="leasecity.repo.commentRepo">
  	
  	<!-- 게시물 전체갯수 조회 -->
- 	<select id="getCountAllComments" resultType="int">
+ 	<select id="getCountAllCommunityComments" resultType="int">
  		SELECT COUNT(*) FROM comments
+ 		WHERE attribute = 'COMMUNITY' 
+ 	</select>
+ 	
+ 	<select id="getCountAllQAndAComments" resultType="int">
+ 		SELECT COUNT(*) FROM comments
+ 		WHERE attribute = 'Q_AND_A' 
  	</select>
  	
  	<!-- 게시물 페이지별 조회 - 검색,정렬 포함 -->
@@ -14,14 +20,12 @@
  		SELECT *
  		FROM (
  				SELECT sub.*, rownum AS comment_row_num
- 				<if test="attribute == 'COMMUNITY'">
  				,SUBSTR(comment_category, 0, INSTR(comment_category, '/')-1) AS locale,
  				SUBSTR(comment_category, INSTR(comment_category, '/')+1, LENGTH(comment_category)) AS kind
- 				</if>
 
  				FROM( SELECT  c.comment_no comment_no, c.user_id user_id,
  							 c.comment_title comment_title, c.comment_category comment_category,
- 							 c.hits hits, c.reg_date, u.company_name company_name 							 
+ 							 c.hits hits, c.reg_date, u.company_name company_name, c.attribute attribute						 
  						FROM comments c JOIN users u ON c.user_id=u.user_id
  					<choose>
 	 					<when test="search == 'TITLE' and (keyword != null or keyword !='')">
@@ -40,6 +44,15 @@
 	 					</when>
  					</choose>
  					
+ 					<choose>
+ 						<when test="search!= null and keyword != null">
+ 							AND attribute = #{serviceKind} 
+ 						</when>
+ 						<otherwise>
+ 							WHERE attribute = #{serviceKind} 
+ 						</otherwise>
+ 					</choose>
+ 						
  					<choose>
  						<when test="order == 'ASC'">
  							ORDER BY reg_date ASC
@@ -78,6 +91,16 @@
 	 							  LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
 	 					</when>
  					</choose>
+ 					
+ 					<choose>
+ 						<when test="search!= null and keyword != null and serviceKind != null">
+ 							AND attribute = #{serviceKind} 
+ 						</when>
+ 						<when test="serviceKind != null">
+ 							WHERE attribute = #{serviceKind} 
+ 						</when>
+ 					</choose>
+ 					
  					) sub
  				)		
  	</select>
@@ -102,11 +125,10 @@
 	 		SELECT SEQ_COMMENTS_COMMENT_NO.CURRVAL AS comment_no 
 	 		FROM dual 
  		</selectKey>
- 		INSERT INTO comments 
- 		(user_id, comment_title, 
- 		comment_category, comment_content)
- 		VALUES(#{userId}, #{commentTitle},
- 		#{commentCategory},#{commentContent}) 
+ 		INSERT INTO comments (user_id, comment_title, comment_category, comment_content
+ 		<if test="attribute != null">,attribute</if>)
+ 		VALUES(#{userId}, #{commentTitle}, #{commentCategory}, #{commentContent} 
+ 		<if test="attribute != null">,#{attribute}</if>)
  	</insert>
  	
  	<!-- 게시물 삭제 - 종속성에 의해 댓글도 같이 자동삭제 -->

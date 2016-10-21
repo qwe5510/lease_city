@@ -18,7 +18,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws NotFoundDataException
 	 */
-	public List<Comment> loadPageCommentList (Page page) throws NotFoundDataException;
+	public List<Comment> loadPageCommunityCommentList (Page page) throws NotFoundDataException;
 	
 	/**
 	 * 조건이 달린 게시글 페이지 출력
@@ -26,7 +26,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws NotFoundDataException
 	 */
-	public List<Comment> loadTermsComment(Page page) throws NotFoundDataException;
+	public List<Comment> loadTermsCommunityComment(Page page) throws NotFoundDataException;
 	
 	/**
 	 * 게시글 번호로 게시글 불러오기.
@@ -111,10 +111,10 @@ public interface CommunityService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Page getCommentPage(Integer currentPage, Integer pageSize);
+	public Page getCommentPage(Integer currentPage, String serviceKind, Integer pageSize);
 	
 	public Page getSearchCommentPage
-	(Integer currentPage, Integer pageSize,
+	(Integer currentPage, Integer pageSize, String serviceKind, 
 			String search, String keyword, String order);
 	
 	public Page getFirstReplyPage(Integer commentNo, Integer pageSize);

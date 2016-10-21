@@ -63,19 +63,29 @@ public class CommunityController {
 			Page page = null;
 			List<Comment> comments = null;
 			
+			
+			
 			//값이 없으면 1대입.
 			if(currentPage == null)
 				currentPage = 1;
 			try {
 				if(searchPage != null){
+					
+					String str = searchPage.getKeyword()==null?"":searchPage.getKeyword();
+					
+					if(!str.matches("/^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/")){
+						logger.error("게시글이 없음");
+						model.addAttribute("errorMsg", "조건이 알맞지 않습니다.\\n(%를 제외한 2글자 이상 문자.)");
+					}
+					
 					page = communityService.getSearchCommentPage
-							(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+							(currentPage, COMMENT_PAGE_SIZE, "COMMUNITY", searchPage.getSearch(),
 									searchPage.getKeyword(), order);
 					logger.trace("page : {}", page);
-					comments = communityService.loadTermsComment(page);
+					comments = communityService.loadTermsCommunityComment(page);
 				}else if(searchPage == null){
-					page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-					comments = communityService.loadPageCommentList(page);
+					page = communityService.getCommentPage(currentPage,"COMMUNITY", COMMENT_PAGE_SIZE);
+					comments = communityService.loadPageCommunityCommentList(page);
 				}			
 					model.addAttribute("comments", comments);
 					model.addAttribute("page", page);
@@ -88,7 +98,7 @@ public class CommunityController {
 		}
 	
 	//게시판 글 , 댓글 확인
-	@RequestMapping(value="/board/read", method = RequestMethod.GET)
+	@RequestMapping(value="/board_read", method = RequestMethod.GET)
 	public String board_read(Model model, HttpServletRequest request, 
 			RedirectAttributes redir, Page searchPage, 
 
@@ -114,24 +124,38 @@ public class CommunityController {
 			
 			if(searchPage != null){
 				page = communityService.getSearchCommentPage
-						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+						(currentPage, COMMENT_PAGE_SIZE, "COMMUNITY", searchPage.getSearch(),
 								searchPage.getKeyword(), order);
 				logger.trace("page : {}", page);
-				comments = communityService.loadTermsComment(page);
+				comments = communityService.loadTermsCommunityComment(page);
 			}else if(searchPage == null){
-				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-				comments = communityService.loadPageCommentList(page);
+				page = communityService.getCommentPage(currentPage, "COMMUNITY", COMMENT_PAGE_SIZE);
+				comments = communityService.loadPageCommunityCommentList(page);
 			}			
-				model.addAttribute("comments", comments);
-				model.addAttribute("page", page);
+
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 			logger.trace("들어온 commentNo : {}", commentNo);
 			comment = communityService.viewComment(commentNo);
 			logger.trace("보는 게시글 : {}", comment);
+			
+			String[] commentContent = comment.getCommentContent().split("\n");
+			StringBuffer sb = new StringBuffer();
+			
+			for(String CC : commentContent){
+				
+				if(CC == null){
+					sb.append("<p><br></p>");
+				}else{
+					sb.append("<p>"+CC+"</p>");
+				}
+			}
+			
+			comment.setCommentContent(sb.toString());
+			
 			if(search != null && keyword != null){
-				page = communityService.getSearchCommentPage(currentPage, COMMENT_PAGE_SIZE,search, keyword, order);
+				page = communityService.getSearchCommentPage(currentPage, COMMENT_PAGE_SIZE, "COMMUNITY", search, keyword, order);
 			}else if(search==null || keyword==null ){
-				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+				page = communityService.getCommentPage(currentPage, "COMMUNITY", COMMENT_PAGE_SIZE);
 			}
 		} catch (NotFoundDataException e) {
 			redir.addFlashAttribute("board_message", "비공개 또는 삭제된 게시글입니다.");
@@ -153,7 +177,7 @@ public class CommunityController {
 			model.addAttribute("errorMsg", "등록된 댓글이 없습니다.");
 		}
 		
-		
+		model.addAttribute("comments", comments);
 		model.addAttribute("comment", comment);
 		model.addAttribute("page", page);
 		
@@ -163,6 +187,25 @@ public class CommunityController {
 		return "community/board_read";
 		
 	}
+	
+	@RequestMapping(value="/board_adjust", method = RequestMethod.POST)
+	public String boardAdjust(Model model, Comment comment, 
+			@RequestParam Integer currentPage){
+		
+		logger.trace("수정할 게시글 : {}",comment);
+		
+		String content = comment.getCommentContent();
+		
+		content = content.replaceAll("<p>", "").replaceAll("</p>", "");
+		comment.setCommentContent(content);
+		
+		model.addAttribute("comment", comment);
+		model.addAttribute("currentPage", currentPage);
+		
+		return "community/board_adjust";
+	}
+	
+	
 	
 	@RequestMapping(value="/boardReadReplyAjax", method=RequestMethod.GET)
 	public @ResponseBody Map<String, Object> boardReadReplyAjax(
@@ -248,7 +291,6 @@ public class CommunityController {
 			logger.trace("댓글 삭제 실패", e);
 			return null;
 		}
-		
 		return page;
 	}
 
@@ -276,7 +318,7 @@ public class CommunityController {
 
 		// 2. 게시물에 필요 정보 넣기
 		//comment.setUserId(user.getUserId()); // 로그인된 유저
-		comment.setUserId("yhjcom7"); // 임시 아이디
+		comment.setUserId("ysh5586"); // 임시 아이디
 		comment.setCommentCategory(comment.getLocale() + "/" + comment.getKind()); // board 페이지에서 보여줄 정보
 		logger.trace("작성한 게시물 내용 : {}", comment);
 		
@@ -292,6 +334,37 @@ public class CommunityController {
 		// 4. 끝
 		logger.trace("글 작성 페이지 이동");
 		return "redirect:/board_read?commentNo="+comment.getCommentNo();
+	}
+	
+	//게시글 수정
+	@RequestMapping(value = "/adjustComment", method = RequestMethod.POST)
+	public String adjustComment(Model model, Comment comment, RedirectAttributes redir,
+			@RequestParam Integer currentPage) {
+		try {
+			comment.setCommentCategory(comment.getLocale() + "/" + comment.getKind());
+			communityService.updateComment(comment);
+		} catch (ChangeValueFailException e) {
+			redir.addFlashAttribute("board_message", "글 수정에 실패하였습니다.");
+			logger.trace("글 수정 실패");
+			return "redirect:/board";
+		}
+		
+		return "redirect:/board_read?currentPage="+ currentPage +"&commentNo="+comment.getCommentNo();
+	}
+	
+	//게시글 삭제
+	@RequestMapping(value="/boardRemove", method = RequestMethod.POST)
+	public String boardRemove(Model model, Comment comment, RedirectAttributes redir,
+			@RequestParam Integer currentPage){
+		try {
+			communityService.removeComment(comment);
+		} catch (RemoveFailException e) {
+			redir.addFlashAttribute("board_message", "'"+ comment.getCommentTitle() + "'글 삭제에 실패하였습니다.");
+			logger.trace("글 삭제 실패");
+			return "redirect:/board";
+		}
+		
+		return "redirect:/board";
 	}
 	
 	// 함수 1 : 유저가 로그인 되어있는지 확인

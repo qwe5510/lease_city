@@ -8,7 +8,8 @@ import leasecity.dto.etc.Page;
 public interface CommentRepo {
 	
 	//모든 게시글 갯수 정수로 리턴
-	public Integer getCountAllComments();
+	public Integer getCountAllCommunityComments();
+	public Integer getCountAllQAndAComments();
 	
 	//검색 했을 때 게시물 갯수 리턴
 	public Integer getCountSearchComments(Page page);
@@ -30,3 +31,4 @@ public interface CommentRepo {
 	//조회수 증가
 	public int hitsUpComment(Comment comment);
 }
+

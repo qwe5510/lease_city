@@ -30,8 +30,8 @@
 			<div class="community">
 				<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
 				<c:url value="/board_read" var="board_read"/>
-				<sform:form id="board_write_form" action="writeComment" method="post" modelAttribute="comment">
-					<table class="boardWriteTable">
+				<sform:form id="board_adjust_form" action="adjustComment" method="post" modelAttribute="comment">
+					<table class="boardAdjustTable">
 						<tr>
 							<td colspan="4" class="boardLine" style="height: 4px !important;"></td>
 						</tr>
@@ -84,9 +84,11 @@
 						</tr>
 			
 					</table>
-					<div class="board_write_bottom">
-						<sform:button id="write"> <i class="icon-pencil"></i>작성</sform:button>
-						<sform:button id="cancel"><i class="icon-link"></i>취소</sform:button>
+					<div class="board_adjust_bottom">
+						<sform:button id="adjust"> <i class="icon-edit"></i>수정</sform:button>
+						<sform:button id="cancel"> <i class="icon-remove"></i>취소</sform:button>
+						<input type="hidden" name="currentPage" value="${currentPage}" />
+						<sform:hidden path="commentNo"/>
 					</div>
 				</sform:form>
 			</div>
@@ -102,7 +104,7 @@ $("#cancel").on("click", function(e){
 });
 
 
-$("#write").on("click",function(e){
+$("#adjust").on("click",function(e){
 	e.preventDefault();
 	var commentTitle = $("#commentTitle").val();
 	var commentContent = $("#commentContent").val();
@@ -112,7 +114,7 @@ $("#write").on("click",function(e){
 	}else if(commentContent==null || commentContent==""){
 		alert("내용을 입력해주세요.");
 	}else{
-		$("#board_write_form").submit();
+		$("#board_adjust_form").submit();
 	}
 });
 

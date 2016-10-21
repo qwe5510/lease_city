@@ -201,10 +201,35 @@
 				</div>
 		</div>
 		<div class="board_read_bottom">
-			<button id="board_read_write">
-				<i class="icon-pencil"></i>글쓰기</button>
-			<button id="board_read_list">
-				<i class="icon-link"></i>목록</button>
+		
+		<button id="board_read_list">
+				<i class="icon-list"></i>목록</button>
+		
+		<button id="board_read_write">
+			<i class="icon-pencil"></i>글쓰기</button>
+
+			
+				
+			<c:url value="/board_adjust" var="board_adjust" />
+			
+			<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
+			<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
+			<sform:hidden path="commentNo"/>
+			<sform:hidden path="commentContent"/>
+			<sform:hidden path="commentTitle"/>
+			<sform:hidden path="locale"/>
+			<sform:hidden path="kind"/>
+			<input name="currentPage" type="hidden" value="${page.currentPage}">
+			</sform:form>
+			
+			<c:url value="/boardRemove" var="boardRemove" />
+			<sform:form id="board_edit_form" modelAttribute="comment" action="${boardRemove}" method="POST">
+			<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
+			<sform:hidden path="commentNo"/>
+			<sform:hidden path="commentTitle"/>
+			<input name="currentPage" type="hidden" value="${page.currentPage}">
+			</sform:form>
+
 		</div>
 	</div>
 	
@@ -528,6 +553,15 @@
 		e.preventDefault();
 		location.href="${board}";
 	});
+	
+	//게시글 삭제
+	$("#board_read_delete").on("click", function(e){	
+		var res = confirm("정말로 게시글을 삭제하시겠습니까?");
+		if(!res){
+			return false;
+		}
+	});
+	
 
 	//클릭 submit 방지
 	$(document).on("click", "#reply_registry", function(e) {
@@ -791,7 +825,17 @@
 		}
 	});
 	
-	
+	 $("#boardBtn").on("click",function(e){
+			e.preventDefault();
+			var keyword = $("#keyword").val();
+			var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
+			if(!searchRegExp.test(keyword)){
+				alert("조건이 알맞지 않습니다.\n(%를 제외한 2글자 이상 문자.)");
+				return false;
+			}else{
+				$("form").submit();
+			}
+		}) 
 	
 </script>
 </html>
