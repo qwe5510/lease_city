@@ -94,6 +94,13 @@ public class LoginController {
 	public String tryLoginPRG(HttpSession session) {
 		return "index";
 	}
+	
+	@RequestMapping(value = "/logout", method=RequestMethod.GET)
+	public String logout(Model model, HttpSession session, RedirectAttributes redir){
+		session.invalidate();
+		redir.addFlashAttribute("join_message", "로그아웃 되었습니다.");
+		return "redirect:index";
+	}
 
 	// 아이디 찾기 컨트롤
 	@RequestMapping(value = "/popupSearchId", method = RequestMethod.POST)

@@ -71,10 +71,10 @@ public class HelpController {
 						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
 								searchPage.getKeyword(), order);
 				logger.trace("page : {}", page);
-				comments = communityService.loadTermsComment(page);
+				comments = communityService.loadTermsCommunityComment(page);
 			}else if(searchPage == null){
 				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-				comments = communityService.loadPageCommentList(page);
+				comments = communityService.loadPageCommunityCommentList(page);
 			}			
 				model.addAttribute("comments", comments);
 				model.addAttribute("QNA", comments);

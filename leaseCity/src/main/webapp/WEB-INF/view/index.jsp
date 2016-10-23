@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Home | Nova</title>
+<title>Home | LEASECITY</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width">
 
@@ -61,7 +61,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a> -->
-				<a id="logo" class="pull-left" href="index.jsp"></a>
+				<a id="logo" class="pull-left" href="<%=request.getContextPath()%>/index"></a>
 				<div class="nav-collapse collapse pull-right">
 					<ul class="nav">
 						<li>
@@ -96,8 +96,15 @@
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
-						<li id="con"><a href=${login }> <i class="icon-lock"></i>
-						</a></li>
+						<c:url value="/logout" var="logout"></c:url>
+						<c:choose>
+							<c:when test="${!empty loginUser}">
+								<li id="con"><a href=${logout }><i class="icon-signout"></i></a></li>
+							</c:when>
+							<c:otherwise>
+								<li id="con"><a href=${login }><i class="icon-lock"></i></a></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->

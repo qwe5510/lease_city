@@ -260,10 +260,11 @@ public class JoinController {
 			redir.addFlashAttribute("join_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
 			return "redirect:index";
 		}
-		return "redirect:/joinAgreePRG";
+		return "redirect:/joinAgree";
 	}
 	
-	@RequestMapping(value = "/joinAgreePRG", method = RequestMethod.GET)
+	//PRG
+	@RequestMapping(value = "/joinAgree", method = RequestMethod.GET)
 	public String joinAgreePRG(Model model, HttpSession session, 
 			RedirectAttributes redir, HttpServletRequest request) {	
 		String permissionNo = (String)session.getAttribute("permissionNo");
