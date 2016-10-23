@@ -36,7 +36,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 */
 	@Override
 	public List<Comment> loadPageCommunityCommentList(Page page) throws NotFoundDataException {
-		List<Comment> results = commentRepo.getPageComments(page);
+		List<Comment> results = commentRepo.getPageCommunityComments(page);
 		
 		if(results.size() <= 0){
 			throw new NotFoundDataException("조회하려는 게시글");
@@ -61,7 +61,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 */
 	@Override
 	public List<Comment> loadTermsCommunityComment(Page page) throws NotFoundDataException {
-		List<Comment> results = commentRepo.getPageComments(page);
+		List<Comment> results = commentRepo.getPageCommunityComments(page);
 		for(Comment comment : results){
 			comment.setReplyCount(
 					replyRepo.getCountCommentReply
@@ -85,7 +85,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 */
 	@Override
 	public Comment loadComment(Integer commentNo) throws NotFoundDataException {
-		Comment comment = commentRepo.getComment(commentNo);
+		Comment comment = commentRepo.getCommunityComment(commentNo);
 		
 		if(comment == null){
 			throw new NotFoundDataException(commentNo + "번 게시글");
@@ -104,7 +104,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 */
 	@Override
 	public void writeComment(Comment comment) throws WriteFailException {
-		int result = commentRepo.insertComment(comment);
+		int result = commentRepo.insertCommunityComment(comment);
 		if(result != 1){
 			throw new WriteFailException("커뮤니티 게시글");
 		}
@@ -117,22 +117,41 @@ public class CommunityServiceImpl implements CommunityService{
 	 * @throws NotFoundDataException
 	 */
 	@Override
-	public Comment viewComment(Integer commentNo) throws NotFoundDataException {
+	public Comment viewComment(Integer commentNo, String userId) throws NotFoundDataException {
 		
 		if(commentNo == null){
 			throw new NotFoundDataException("해당 게시글");
 		}
 		
-		Comment result = commentRepo.getComment(commentNo);
+		Comment result = commentRepo.getCommunityComment(commentNo);
 		
 		if(result == null){
 			throw new NotFoundDataException("해당 게시글");
 		}
 		else{
-			int hitCount = commentRepo.hitsUpComment(result);
+			//내가 작성한 글인지 확인 -> 작성한글이면 조회수안오름
+			Comment check = new Comment(commentNo, userId);			
+			check = commentRepo.getCommunityUserComment(check);
+			
+			if(check == null){
+				int hitCount = commentRepo.hitsUpCommunityComment(result);
+				logger.trace("게시글 조회수 증가 : {}", hitCount);
+			}
 			result.setReplyCount(replyRepo.getCountCommentReply(commentNo));
-			logger.trace("게시글 조회수 증가 : {}", hitCount);
 		}
+		return result;
+	}
+	
+	//작성자 본인의 글인지 확인
+	@Override
+	public Comment isCommentUser(Comment comment) throws NotFoundDataException {
+
+		Comment result = commentRepo.getCommunityUserComment(comment);
+		if (result == null) {
+			logger.error("ERROR!! : 회원님이 작성한 게시글이 아닙니다.");
+			throw new NotFoundDataException("회원 본인이 작성한 게시글");
+		}
+
 		return result;
 	}
 
@@ -144,7 +163,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 */
 	@Override
 	public void updateComment(Comment comment) throws ChangeValueFailException {
-		int result = commentRepo.updateComment(comment);
+		int result = commentRepo.updateCommunityComment(comment);
 		
 		if(result != 1){
 			throw new ChangeValueFailException("수정하려는 게시글");
@@ -159,7 +178,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 */
 	@Override
 	public void removeComment(Comment comment) throws RemoveFailException {
-		int result = commentRepo.deleteCommentAndReply(comment);
+		int result = commentRepo.deleteCommunityCommentAndReply(comment);
 		if(result != 1){
 			throw new RemoveFailException(comment.getCommentTitle() + "게시글");
 		}
@@ -168,7 +187,7 @@ public class CommunityServiceImpl implements CommunityService{
 	
 
 	/**
-	 * 게시글에 대한 덧글 목록 출력
+	 * 게시글에 대한 댓글 목록 출력
 	 * @param page : superNo : 게시글 번호, currentPage, pageSize 기입
 	 * @return
 	 * @throws NotFoundDataException
@@ -186,7 +205,7 @@ public class CommunityServiceImpl implements CommunityService{
 	public void writeReply(Reply reply) throws WriteFailException {
 		int result = replyRepo.insertReply(reply);
 		if(result != 1){
-			throw new WriteFailException("덧글");
+			throw new WriteFailException("댓글");
 		}
 	}
 
@@ -194,7 +213,7 @@ public class CommunityServiceImpl implements CommunityService{
 	public void updateReply(Reply reply) throws ChangeValueFailException {
 		int result = replyRepo.updateReply(reply);
 		if(result != 1){
-			throw new ChangeValueFailException("덧글");
+			throw new ChangeValueFailException("댓글");
 		}
 	}
 
@@ -202,24 +221,21 @@ public class CommunityServiceImpl implements CommunityService{
 	public void removeReply(Reply reply) throws RemoveFailException {
 		int result = replyRepo.deleteReply(reply);
 		if(result != 1){
-			throw new RemoveFailException("덧글");
+			throw new RemoveFailException("댓글");
 		}
 	}
+	
+	
 
 	
 	//----------------------------------------------------------------
 	//페이지 리턴
 	//----------------------------------------------------------------
 	@Override
-	public Page getCommentPage(Integer currentPage, String serviceKind,  Integer pageSize) {
+	public Page getCommentPage(Integer currentPage, Integer pageSize) {
 		Page page = new Page();
-		page.setServiceKind(serviceKind);
-		if(serviceKind.equals("COMMUNITY")){
-			page.setTotalCount(commentRepo.getCountAllCommunityComments());
-		}else if(serviceKind.equals("Q_AND_A")){
-			page.setTotalCount(commentRepo.getCountAllQAndAComments());
-		}
-		
+		page.setServiceKind("COMMUNITY");
+		page.setTotalCount(commentRepo.getCountAllCommunityComments());		
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
 		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
@@ -230,10 +246,10 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	public Page getSearchCommentPage(Integer currentPage, Integer pageSize, 
-			String serviceKind, String search, String keyword, String order) {
+			String search, String keyword, String order) {
 		Page page = new Page();
-		page.setServiceKind(serviceKind);
-		page.setTotalCount(commentRepo.getCountSearchComments(new Page(search, keyword)));
+		page.setServiceKind("COMMUNITY");
+		page.setTotalCount(commentRepo.getCountSearchCommunityComments(new Page(search, keyword)));
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
 		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);

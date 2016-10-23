@@ -88,6 +88,8 @@
 						<sform:button id="adjust"> <i class="icon-edit"></i>수정</sform:button>
 						<sform:button id="cancel"> <i class="icon-remove"></i>취소</sform:button>
 						<input type="hidden" name="currentPage" value="${currentPage}" />
+						<!-- 로그인 유저 아이디  -->
+						
 						<sform:hidden path="commentNo"/>
 					</div>
 				</sform:form>
@@ -108,6 +110,8 @@ $("#adjust").on("click",function(e){
 	e.preventDefault();
 	var commentTitle = $("#commentTitle").val();
 	var commentContent = $("#commentContent").val();
+	
+	$("#board_adjust_form").append("<input type='hidden' name='userId' value='${loginUser.userId}'/>")
 	
 	if(commentTitle==null || commentTitle==""){
 		alert("제목을 입력해주세요.");

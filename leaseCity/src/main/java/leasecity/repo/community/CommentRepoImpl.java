@@ -25,36 +25,36 @@ public class CommentRepoImpl implements CommentRepo{
 		String stmt = COMMENT_NS + "getCountAllCommunityComments";
 		return session.selectOne(stmt);
 	}
-	
-	//모든 질문과답변 글 갯수 정수로 리턴
-	@Override
-	public Integer getCountAllQAndAComments() {
-		String stmt = COMMENT_NS + "getCountAllQAndAComments";
-		return session.selectOne(stmt);
-	}
+
 	
 	@Override
-	public Integer getCountSearchComments(Page page) {
+	public Integer getCountSearchCommunityComments(Page page) {
 		String stmt = COMMENT_NS + "getPageSelectCommentCount";
 		return session.selectOne(stmt, page);
 	}
 	
 	//모든 게시글 페이지 별로 리턴
 	@Override
-	public List<Comment> getPageComments(Page page) {
+	public List<Comment> getPageCommunityComments(Page page) {
 		String stmt = COMMENT_NS + "getPageSelectComment";
 		return session.selectList(stmt, page);
 	}
 	
 	@Override
-	public Comment getComment(Integer commentNo) {
+	public Comment getCommunityComment(Integer commentNo) {
 		String stmt = COMMENT_NS + "getSelectComment";
 		return session.selectOne(stmt, commentNo);
 	}
 	
+	@Override
+	public Comment getCommunityUserComment(Comment comment) {
+		String stmt = COMMENT_NS + "getSelectUserComment";
+		return session.selectOne(stmt, comment);
+	}
+	
 	//게시글 추가
 	@Override
-	public int insertComment(Comment comment) {
+	public int insertCommunityComment(Comment comment) {
 		String stmt = COMMENT_NS + "insertComment";
 		return session.insert(stmt, comment);
 	}
@@ -62,20 +62,20 @@ public class CommentRepoImpl implements CommentRepo{
 	
 	//게시글 삭제 (댓글도 같이 삭제)
 	@Override
-	public int deleteCommentAndReply(Comment comment) {
+	public int deleteCommunityCommentAndReply(Comment comment) {
 		String stmt = COMMENT_NS + "deleteCommentAndReply";
 		return session.delete(stmt, comment);
 	}
 	
 	//게시글 수정
 	@Override
-	public int updateComment(Comment comment) {
+	public int updateCommunityComment(Comment comment) {
 		String stmt = COMMENT_NS + "updateComment";
 		return session.update(stmt, comment);
 	}
 	
 	@Override
-	public int hitsUpComment(Comment comment) {
+	public int hitsUpCommunityComment(Comment comment) {
 		String stmt = COMMENT_NS + "hitsUpComment";
 		comment.setHits(comment.getHits()+1);
 		return session.update(stmt, comment);

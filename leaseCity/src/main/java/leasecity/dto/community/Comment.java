@@ -34,6 +34,9 @@ public class Comment implements Serializable {
 	/** 회원. */
 	private String userId;
 	
+	/** 문자 3개가 생략된 ID*/
+	private String outputId;
+	
 	/** 게시글 회원 업체명*/
 	private String companyName;
 
@@ -94,6 +97,11 @@ public class Comment implements Serializable {
 	}
 	public Comment(String locale){
 		this.locale=locale;
+	}
+	
+	public Comment(Integer commentNo, String userId){
+		this.commentNo = commentNo;
+		this.userId = userId;
 	}
 	
 	

@@ -416,7 +416,7 @@ function validateform() {
                   //ID 6글자 ~ 15글자
                   var userId = $("#userId").val();
                    var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
-                    if(!idRegExp.test(u)){
+                    if(!idRegExp.test(userId)){
                        $(".userId").html("아이디 조건 불일치");
                        $(".userId").css("color", "#FF0000");
                        res = false;
@@ -471,12 +471,13 @@ function passvali(){
       
       //공백 포함 2자리 수, 한글 1글자, 4자리수인 값
       //Ex)30 바 3282
-      var regIdNumber = /^[0-9]{2} [가-힣] [0-9]{4}$/;
-      
+      var regIdNumber = /^[0-9]{2}[가-힣] [0-9]{4}$/;
+   
       if(!regIdNumber.test(num)){
-         $(".numbervali").html("올바르지 않은 차량번호 입니다<br>[ex)30 가 1000]");
+         $(".numbervali").html("올바르지 않은 차량번호 입니다<br>[ex)30가 1000]");
       }else if(regIdNumber.test(num)){
          $(".numbervali").html("");
+         $("#num").val("");
          $(".checked").append("<div>중장비 : "+type+"  차량크기 : "+size+"  차량번호 : "+num+"</div>")
          .append("<input type='hidden' name='equipmentType' value='"+ type +"'> ")
          .append("<input type='hidden' name='equipmentSize' value='"+ size +"'> ")

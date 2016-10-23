@@ -41,14 +41,15 @@ public class PageTest {
 	@Test
 	public void test() throws NotFoundDataException{		
 		Page replPage = service.getFirstReplyPage(241, 10);
-		Comment comment = new Comment(null, null, "ysh5586", null, "질문글", "비밀번호/아이디 찾기", null, null, "내용내용내용\n내용그리고내용", null, null, "QNA", null);
+		Comment comment = new Comment(null, null, "ysh5586", null, "질문글", "비밀번호/아이디 찾기", null, null, "내용내용내용\n내용그리고내용", null, null, null,
+				"Q_AND_A", null);
 		
-		int result = repo.insertComment(comment);
+		int result = repo.insertCommunityComment(comment);
 		System.out.println(result);
 		
-		Page page = service.getCommentPage(1,"COMMUNITY", 20);
+		Page page = service.getCommentPage(1, 20);
 		
-		List<Comment> comments = repo.getPageComments(page);
+		List<Comment> comments = repo.getPageCommunityComments(page);
 		
 		System.out.println(comments);
 		

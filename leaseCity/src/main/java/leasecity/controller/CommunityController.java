@@ -1,6 +1,8 @@
 package leasecity.controller;
 
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,6 +35,7 @@ import leasecity.exception.ChangeValueFailException;
 //github.com/qwe5510/lease_city.git
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.RemoveFailException;
+import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.CommunityService;
 
@@ -64,7 +67,6 @@ public class CommunityController {
 			List<Comment> comments = null;
 			
 			
-			
 			//값이 없으면 1대입.
 			if(currentPage == null)
 				currentPage = 1;
@@ -79,12 +81,12 @@ public class CommunityController {
 					}
 					
 					page = communityService.getSearchCommentPage
-							(currentPage, COMMENT_PAGE_SIZE, "COMMUNITY", searchPage.getSearch(),
+							(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
 									searchPage.getKeyword(), order);
 					logger.trace("page : {}", page);
 					comments = communityService.loadTermsCommunityComment(page);
 				}else if(searchPage == null){
-					page = communityService.getCommentPage(currentPage,"COMMUNITY", COMMENT_PAGE_SIZE);
+					page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
 					comments = communityService.loadPageCommunityCommentList(page);
 				}			
 					model.addAttribute("comments", comments);
@@ -99,9 +101,8 @@ public class CommunityController {
 	
 	//게시판 글 , 댓글 확인
 	@RequestMapping(value="/board_read", method = RequestMethod.GET)
-	public String board_read(Model model, HttpServletRequest request, 
+	public String board_read(Model model, HttpSession session, 
 			RedirectAttributes redir, Page searchPage, 
-
 			@RequestParam(value="currentPage", required=false) Integer currentPage,
 			@RequestParam(value="commentNo", required=false) Integer commentNo,
 			@RequestParam(value="search", required=false) String search,
@@ -124,38 +125,39 @@ public class CommunityController {
 			
 			if(searchPage != null){
 				page = communityService.getSearchCommentPage
-						(currentPage, COMMENT_PAGE_SIZE, "COMMUNITY", searchPage.getSearch(),
+						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
 								searchPage.getKeyword(), order);
 				logger.trace("page : {}", page);
 				comments = communityService.loadTermsCommunityComment(page);
 			}else if(searchPage == null){
-				page = communityService.getCommentPage(currentPage, "COMMUNITY", COMMENT_PAGE_SIZE);
+				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
 				comments = communityService.loadPageCommunityCommentList(page);
 			}			
 
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
-			logger.trace("들어온 commentNo : {}", commentNo);
-			comment = communityService.viewComment(commentNo);
-			logger.trace("보는 게시글 : {}", comment);
 			
-			String[] commentContent = comment.getCommentContent().split("\n");
-			StringBuffer sb = new StringBuffer();
+			//로그인 중인 유저 탐색
+			User loginUser = (User)session.getAttribute("loginUser");
 			
-			for(String CC : commentContent){
-				
-				if(CC == null){
-					sb.append("<p><br></p>");
-				}else{
-					sb.append("<p>"+CC+"</p>");
-				}
+			try {
+				loginUser = isUserLogin(loginUser);
+			} catch (ServiceFailException e) {
+				redir.addFlashAttribute("join_message", "로그인 세션이 만료되었습니다.");
+				return "redirect:/index";
 			}
 			
-			comment.setCommentContent(sb.toString());
+			
+			logger.trace("들어온 commentNo : {}", commentNo);
+			comment = communityService.viewComment(commentNo, loginUser.getUserId());
+			logger.trace("보는 게시글 : {}", comment);
+			
+			String commentContent = comment.getCommentContent().replaceAll("\n", "<br>");
+			comment.setCommentContent(commentContent);
 			
 			if(search != null && keyword != null){
-				page = communityService.getSearchCommentPage(currentPage, COMMENT_PAGE_SIZE, "COMMUNITY", search, keyword, order);
+				page = communityService.getSearchCommentPage(currentPage, COMMENT_PAGE_SIZE, search, keyword, order);
 			}else if(search==null || keyword==null ){
-				page = communityService.getCommentPage(currentPage, "COMMUNITY", COMMENT_PAGE_SIZE);
+				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
 			}
 		} catch (NotFoundDataException e) {
 			redir.addFlashAttribute("board_message", "비공개 또는 삭제된 게시글입니다.");
@@ -189,15 +191,23 @@ public class CommunityController {
 	}
 	
 	@RequestMapping(value="/board_adjust", method = RequestMethod.POST)
-	public String boardAdjust(Model model, Comment comment, 
-			@RequestParam Integer currentPage){
+	public String boardAdjust(Model model, Comment comment, RedirectAttributes redir,
+			@RequestParam Integer currentPage, @RequestParam String userId){
 		
 		logger.trace("수정할 게시글 : {}",comment);
 		
 		String content = comment.getCommentContent();
 		
-		content = content.replaceAll("<p>", "").replaceAll("</p>", "");
+		content = content.replaceAll("<br>", "");
 		comment.setCommentContent(content);
+		comment.setUserId(userId);
+		
+		try {
+			communityService.isCommentUser(comment);
+		} catch (NotFoundDataException e) {
+			redir.addFlashAttribute("board_message", "회원님의 게시글이 아닙니다.");
+			return "redirect:/board_read?currentPage"+currentPage + "&commentNo="+comment.getCommentNo();
+		}
 		
 		model.addAttribute("comment", comment);
 		model.addAttribute("currentPage", currentPage);
@@ -305,20 +315,21 @@ public class CommunityController {
 	
 	// 게시글 댓글 작성
 	@RequestMapping(value = "/writeComment", method = RequestMethod.POST)
-	public String writeComment(Model model, RedirectAttributes redir, Comment comment) {
+	public String writeComment(Model model, HttpSession session,
+			RedirectAttributes redir, Comment comment) {
 		
-		/*// 1. 유저가 로그인 되있는지 확인
+		// 1. 유저가 로그인 되있는지 확인
 		User user = new User();
 		try {
 			user = isUserLogin(session.getAttribute("loginUser"));
-		} catch (WriteFailException e1) {
+		} catch (ServiceFailException e) {
 			redir.addFlashAttribute("join_message", "로그인이 만료됬습니다.");
 			return "redirect:/index";
-		}*/
+		}
 
 		// 2. 게시물에 필요 정보 넣기
-		//comment.setUserId(user.getUserId()); // 로그인된 유저
-		comment.setUserId("ysh5586"); // 임시 아이디
+		comment.setUserId(user.getUserId()); // 로그인된 유저
+		//comment.setUserId("ysh5586"); // 임시 아이디
 		comment.setCommentCategory(comment.getLocale() + "/" + comment.getKind()); // board 페이지에서 보여줄 정보
 		logger.trace("작성한 게시물 내용 : {}", comment);
 		
@@ -339,9 +350,10 @@ public class CommunityController {
 	//게시글 수정
 	@RequestMapping(value = "/adjustComment", method = RequestMethod.POST)
 	public String adjustComment(Model model, Comment comment, RedirectAttributes redir,
-			@RequestParam Integer currentPage) {
+			@RequestParam Integer currentPage, @RequestParam String userId) {
 		try {
 			comment.setCommentCategory(comment.getLocale() + "/" + comment.getKind());
+			comment.setUserId(userId);
 			communityService.updateComment(comment);
 		} catch (ChangeValueFailException e) {
 			redir.addFlashAttribute("board_message", "글 수정에 실패하였습니다.");
@@ -355,30 +367,31 @@ public class CommunityController {
 	//게시글 삭제
 	@RequestMapping(value="/boardRemove", method = RequestMethod.POST)
 	public String boardRemove(Model model, Comment comment, RedirectAttributes redir,
-			@RequestParam Integer currentPage){
+			@RequestParam Integer currentPage, @RequestParam String userId){
 		try {
+			comment.setUserId(userId);
 			communityService.removeComment(comment);
+			redir.addFlashAttribute("board_message", "게시글 삭제가 완료되었습니다.");
 		} catch (RemoveFailException e) {
-			redir.addFlashAttribute("board_message", "'"+ comment.getCommentTitle() + "'글 삭제에 실패하였습니다.");
+			redir.addFlashAttribute("board_message", "권한이 없습니다.");
 			logger.trace("글 삭제 실패");
-			return "redirect:/board";
 		}
 		
-		return "redirect:/board";
+		return "redirect:/board_read";
 	}
 	
 	// 함수 1 : 유저가 로그인 되어있는지 확인
-	public User isUserLogin(Object obj) throws WriteFailException {
+	public User isUserLogin(Object obj) throws ServiceFailException {
 		
 		// 전달 유저
 		User user;
 		
 		// 유저가 로그인 되있는지 확인.
-		if ( obj != null ) {
+		if ( obj != null && obj instanceof User ) {
 			user = (User) obj;
 		} else {
 			// 없으면 예외 ( 예외 따로 만들기 )
-			throw new WriteFailException("유저가된 유저가 session에 없습니다.");
+			throw new ServiceFailException();
 		}
 		
 		return user;

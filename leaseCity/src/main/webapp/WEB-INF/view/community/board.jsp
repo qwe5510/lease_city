@@ -1,4 +1,3 @@
-<%@page import="leasecity.dto.community.Comment"%>
 <%@page import="leasecity.util.DateUtil"%>
 <%@page import="java.util.Date"%>
 <%@page language="java" contentType="text/html; charset=utf-8"
@@ -11,7 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src='//uchat.co.kr/uchat.php' charset='UTF-8'></script>
-<title>Insert title here</title>
+<title>COMMUNITY | LEASECITY</title>
 </head>
 <body>
 
@@ -109,6 +108,7 @@
                      	</a>
 	                  </c:otherwise>
                		</c:choose>
+               		
 
                       <c:if test="${comment.hits >= 100}">
                      	<span class="label label-important">
@@ -158,7 +158,7 @@
                </td>
                <td colspan="1">
                <c:url value="/board_write" var="board_write"/>
-               <a href="${board_write}"><button><i class="icon-pencil"></i>글작성</button></a>
+               <a href="${board_write}"><button><i class="icon-pencil"></i>글쓰기</button></a>
                </td>
             </tr>
             

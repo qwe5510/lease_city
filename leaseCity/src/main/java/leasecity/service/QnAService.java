@@ -10,15 +10,15 @@ import leasecity.exception.NotFoundDataException;
 import leasecity.exception.RemoveFailException;
 import leasecity.exception.WriteFailException;
 
-public interface CommunityService {
-	
+public interface QnAService {
+
 	/**
-	 * 일반적인 게시글 페이지 출력
+	 * 일반적인 질문글 페이지 출력
 	 * @param page - pageSize, currentPage를 대입하는 페이지
 	 * @return
 	 * @throws NotFoundDataException
 	 */
-	public List<Comment> loadPageCommunityCommentList (Page page) throws NotFoundDataException;
+	public List<Comment> loadPageQuestions (Page page) throws NotFoundDataException;
 	
 	/**
 	 * 조건이 달린 게시글 페이지 출력
@@ -26,7 +26,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws NotFoundDataException
 	 */
-	public List<Comment> loadTermsCommunityComment(Page page) throws NotFoundDataException;
+	public List<Comment> loadTermsQuestions(Page page) throws NotFoundDataException;
 	
 	/**
 	 * 게시글 번호로 게시글 불러오기.
@@ -34,7 +34,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws NotFoundDataException
 	 */
-	public Comment loadComment(Integer commentNo) throws NotFoundDataException;
+	public Comment loadQuestion(Integer commentNo) throws NotFoundDataException;
 	
 	/**
 	 * 게시글 쓰기 기능
@@ -42,7 +42,7 @@ public interface CommunityService {
 	 * @return 쓴 글
 	 * @throws WriteFailException
 	 */
-	public void writeComment(Comment comment) throws WriteFailException;
+	public void writeQuestion(Comment comment) throws WriteFailException;
 	
 	
 	/**
@@ -51,8 +51,8 @@ public interface CommunityService {
 	 * @return 읽는 글 정보.
 	 * @throws NotFoundDataException
 	 */
-	public Comment viewComment(Integer commentNo, String userId) throws NotFoundDataException;
-	public Comment isCommentUser(Comment comment) throws NotFoundDataException;
+	public Comment viewQuestion(Integer commentNo, String userId) throws NotFoundDataException;
+	public Comment isQuestionUser(Comment comment) throws NotFoundDataException;
 	
 	/**
 	 * 게시글 수정 기능
@@ -60,7 +60,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws ChangeValueFailException
 	 */
-	public void updateComment(Comment comment) throws ChangeValueFailException;
+	public void updateQuestion(Comment comment) throws ChangeValueFailException;
 	
 	
 	/**
@@ -68,7 +68,7 @@ public interface CommunityService {
 	 * @param comment
 	 * @throws RemoveFailException
 	 */
-	public void removeComment(Comment comment) throws RemoveFailException;
+	public void removeQuestion(Comment comment) throws RemoveFailException;
 	
 	
 	//덧글 기능
@@ -79,7 +79,7 @@ public interface CommunityService {
 	 * @return
 	 * @throws NotFoundDataException
 	 */
-	public List<Reply> loadCommentReplys(Page page)
+	public List<Reply> loadQuestionAnswers(Page page)
 			throws NotFoundDataException;
 	
 	/**
@@ -87,38 +87,61 @@ public interface CommunityService {
 	 * @param reply
 	 * @throws NotFoundDataException
 	 */
-	public void writeReply(Reply reply) throws WriteFailException;
+	public void writeAnswer(Reply reply) throws WriteFailException;
 	
 	/**
 	 * 덧글 수정
 	 * @param reply
 	 * @throws ChangeValueFailException
 	 */
-	public void updateReply(Reply reply) throws ChangeValueFailException;
+	public void updateAnswer(Reply reply) throws ChangeValueFailException;
 	
 	/**
 	 * 덧글 삭제
 	 * @param reply
 	 * @throws RemoveFailException
 	 */
-	public void removeReply(Reply reply) throws RemoveFailException;
+	public void removeAnswer(Reply reply) throws RemoveFailException;
 	
 	
 
 	/**
-	 * 게시글 현재 페이지 정보 리턴
+	 * 질문글 현재 페이지 정보 리턴
 	 * @param currentPage
 	 * @param pageSize
 	 * @return
 	 */
 	public Page getCommentPage(Integer currentPage, Integer pageSize);
 	
+	/**
+	 * 검색한 질문글 페이지 정보 리턴
+	 * @param currentPage 현재페이지
+	 * @param pageSize 페이지크기
+	 * @param search 검색목적(제목, 내용, 작성자 등등)
+	 * @param keyword 검색어
+	 * @param order 정렬
+	 * @return
+	 */
 	public Page getSearchCommentPage
 	(Integer currentPage, Integer pageSize, 
 			String search, String keyword, String order);
 	
+	/**
+	 * 게시물 클릭 시 처음 보이는 댓글 페이지
+	 * @param commentNo
+	 * @param pageSize
+	 * @return
+	 */
 	public Page getFirstReplyPage(Integer commentNo, Integer pageSize);
 	
-	public Page getReplyPage(Integer commentNo, Integer CurrentPage, Integer pageSize);
+	/**
+	 * 덧글 클릭시 보이는 페이지
+	 * @param commentNo
+	 * @param CurrentPage
+	 * @param pageSize
+	 * @return
+	 */
+	public Page getReplyPage(Integer commentNo, Integer currentPage, Integer pageSize);
 
+	
 }

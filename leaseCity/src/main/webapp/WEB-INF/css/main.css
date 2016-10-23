@@ -1055,6 +1055,7 @@ label {
 .board{
    padding-top: 0px;
    min-width: 1300px;
+   min-height: 800px;
    text-align: center;
 }
 
@@ -1083,6 +1084,7 @@ label {
 /*community div 설정  */
 .community {
    width: 400px;
+   clear: both;
    display: inline-block;
    position: absolute;
 }
@@ -1260,7 +1262,7 @@ button{
    	  width: 650px;
       padding-top: 0px;
       position: relative;
-      margin-left: 200px;
+      margin-left: 80px;
    }
    .board_read_main{
   	  padding-top: 0px;
@@ -1279,6 +1281,8 @@ button{
 /*board 검색부분  */
 .boardBottom{
 	width: 500px;
+	display: inline-block;
+	margin-left: 80px;
 }
 .boardBottom select{
 	width: 130px;
@@ -1311,10 +1315,10 @@ button{
 .boardWriteTable, .boardAdjustTable{
 	width: 600px;
 }
-.boardWriteTable, .boardAdjustTable input[type="text"]{
+.boardWriteTable input[type="text"], .boardAdjustTable input[type="text"]{
 	width: 600px;
 }
-.boardWriteTable, .boardAdjustTable textarea{
+.boardWriteTable textarea, .boardAdjustTable textarea{
 	width: 600px;
 	height: 500px;
 }
@@ -1366,6 +1370,7 @@ button{
    margin-top: 25px;
    width: 600px;
    height: 450px;
+   display:inline-block;
 }
 
 .agree_inner {

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date"%>
+<%@page import="leasecity.util.DateUtil"%>
+<%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -13,6 +14,19 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
+	
+	<c:if test="${!empty board_message }">
+      <script type="text/javascript">
+         alert('${board_message }');
+      </script>
+   </c:if>
+	
+	<%
+      Date todayDate = new Date();
+      String today = DateUtil.getDateString(todayDate);
+      request.setAttribute("today", today);
+    %>
+	
 	<div class="board">
 		<div class="uchat">
 			<script>
@@ -72,7 +86,7 @@
 								class="board_read_comment_author"> <c:out
 										value="${comment.companyName}"></c:out> <span
 									class="board_read_comment_userId"> (<c:out
-											value="${comment.userId}"></c:out>)
+											value="${comment.outputId}"></c:out>)
 								</span>
 							</span></td>
 							<td colspan="5" align="right"><b><c:out
@@ -209,34 +223,36 @@
 			<i class="icon-pencil"></i>글쓰기</button>
 
 			
-				
-			<c:url value="/board_adjust" var="board_adjust" />
+			<c:if test="${comment.userId eq loginUser.userId}">
+				<c:url value="/board_adjust" var="board_adjust" />
+				<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
+				<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
+				<sform:hidden path="commentNo"/>
+				<sform:hidden path="commentContent"/>
+				<sform:hidden path="commentTitle"/>
+				<sform:hidden path="locale"/>
+				<sform:hidden path="kind"/>
+				<input name="userId" type="hidden" value="${loginUser.userId}" />
+				<input name="currentPage" type="hidden" value="${page.currentPage}">
+				</sform:form>
+			</c:if>
 			
-			<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
-			<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
-			<sform:hidden path="commentNo"/>
-			<sform:hidden path="commentContent"/>
-			<sform:hidden path="commentTitle"/>
-			<sform:hidden path="locale"/>
-			<sform:hidden path="kind"/>
-			<input name="currentPage" type="hidden" value="${page.currentPage}">
-			</sform:form>
-			
-			<c:url value="/boardRemove" var="boardRemove" />
-			<sform:form id="board_edit_form" modelAttribute="comment" action="${boardRemove}" method="POST">
-			<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
-			<sform:hidden path="commentNo"/>
-			<sform:hidden path="commentTitle"/>
-			<input name="currentPage" type="hidden" value="${page.currentPage}">
-			</sform:form>
+			<!-- 관리자가 로그인했을 때도 출력되게 해야함 -->
+			<c:if test="${comment.userId eq loginUser.userId}">
+				<c:url value="/boardRemove" var="boardRemove" />
+				<sform:form id="board_edit_form" modelAttribute="comment" action="${boardRemove}" method="POST">
+				<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
+				<sform:hidden path="commentNo"/>
+				<sform:hidden path="commentTitle"/>
+				<input name="userId" type="hidden" value="${loginUser.userId}" />
+				<input name="currentPage" type="hidden" value="${page.currentPage}">
+				</sform:form>
+			</c:if>
 
 		</div>
 	</div>
-	
+	<br>
 	<div class="community">
-         <img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
-         <br>
-         <br>
          
          <table class="communityTable">
             <tr>
@@ -339,16 +355,7 @@
             <tr>
                <td colspan="6" class="boardLine" style="height: 3px !important;"></td>
             </tr>
-            
-            <tr class="board_write">
-               <td colspan="5">
-               </td>
-               <td colspan="1">
-               <c:url value="/board_write" var="board_write"/>
-               <a href="${board_write}"><button><i class="icon-pencil"></i>글작성</button></a>
-               </td>
-            </tr>
-            
+  
          </table>
          <div class="boardSearch">
          <div class="boardPage" style="display: inline-block;">
@@ -554,6 +561,12 @@
 		location.href="${board}";
 	});
 	
+	<c:url value="/board_write" var="board_write"/>
+	$("#board_read_write").on("click", function(e){
+		e.preventDefault();
+		location.href="${board_write}";
+	});
+	
 	//게시글 삭제
 	$("#board_read_delete").on("click", function(e){	
 		var res = confirm("정말로 게시글을 삭제하시겠습니까?");
@@ -686,7 +699,7 @@
 			url : "${replyRegistryAjax}",
 			data : {
 				commentNo : ${comment.commentNo},
-				userId : "ysh5586",
+				userId : "${loginUser.userId}",
 				replyContent : inputArea				
 			},
 			success : function(page){
@@ -764,7 +777,7 @@
 			url : "${replyAdjustAjax}",
 			data : {
 				commentNo : commentNo,
-				userId : "ysh5586",
+				userId : "${loginUser.userId}",
 				replyNo : replyNo,
 				replyContent : inputArea				
 			},
@@ -800,7 +813,7 @@
 				url : "${replyRemoveAjax}",
 				data : {
 					commentNo : commentNo,
-					userId : "ysh5586",
+					userId : "${loginUser.userId}",
 					replyNo : replyNo			
 				},
 				success : function(page){
