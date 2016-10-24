@@ -1054,7 +1054,12 @@ label {
 
 /*커뮤니티 jsp 메인 div 설정  */
 .board{
-	background: url("../images/board_main.png");
+	background: url("../images/board_main.png")
+	no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 	padding-top: 0px;
 	min-width: 1300px;
 	min-height: 800px;
@@ -1510,7 +1515,12 @@ button{
    font-size: 15px;
 }
 .help{
-	background: url("../images/help_main.png");
+	background: url("../images/help_main.png")
+	no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 	width : 1200px;
 	min-height : 800px;
 	padding-top: 80px;
@@ -1560,10 +1570,9 @@ button{
 }
 .help_menu_select{
 	width: 186px;
-    padding-left: 12px;
+    padding-left: 0px;
     color: #fff;
-    background: url(../images/help/help_li.png)
-    no-repeat 20% 60%;
+    
 }
 .help_table{
 	margin-top: 40px;
