@@ -2,16 +2,15 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="leasecity.repo.commentRepo">
+ <mapper namespace="leasecity.repo.questionRepo">
  	
- 	<!-- 게시물 전체갯수 조회 -->
- 	<select id="getCountAllCommunityComments" resultType="int">
+ 	<select id="getCountAllQAndAComments" resultType="int">
  		SELECT COUNT(*) FROM comments
- 		WHERE attribute = 'COMMUNITY' 
+ 		WHERE attribute = 'Q_AND_A' 
  	</select>
  	
  	<!-- 게시물 페이지별 조회 - 검색,정렬 포함 -->
- 	<select id="getPageSelectComment" parameterType="page" resultType="comment">
+ 	<select id="getPageSelectQuestions" parameterType="page" resultType="comment">
  		SELECT *
  		FROM (
  				SELECT sub.*, rownum AS comment_row_num
@@ -33,18 +32,17 @@
 	 						WHERE c.comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' OR
 	 						comment_content LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
-	 					<when test="search == 'LOCAL' and (keyword != null or keyword !='')">
-	 						WHERE SUBSTR(c.comment_category, 0, INSTR(c.comment_category, '/')-1)
-	 						      LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
+	 					<when test="search == 'CATEGORY' and (keyword != null or keyword !='')">
+	 						WHERE c.comment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
 	 					</when>
  					</choose>
  					
  					<choose>
  						<when test="search!= null and keyword != null">
- 							AND attribute = 'COMMUNITY' 
+ 							AND attribute = 'Q_AND_A'
  						</when>
  						<otherwise>
- 							WHERE attribute = 'COMMUNITY'
+ 							WHERE attribute = 'Q_AND_A'    
  						</otherwise>
  					</choose>
  						
@@ -65,7 +63,7 @@
  	</select>
  	
  	<!-- 게시물 페이지별 조회 - 검색 정렬한 게시물의 갯수 -->
- 	<select id="getPageSelectCommentCount" parameterType="page" resultType="int">
+ 	<select id="getPageSelectQuestionCount" parameterType="page" resultType="int">
  		SELECT COUNT(*)
  		FROM (
  				SELECT sub.*, rownum AS comment_row_num			
@@ -81,18 +79,17 @@
 	 						WHERE comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' OR
 	 						comment_content LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
-	 					<when test="search == 'LOCAL' and keyword != null">
-	 						WHERE SUBSTR(comment_category, 0, INSTR(comment_category, '/')-1)
-	 							  LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
+	 					<when test="search == 'CATEGORY' and keyword != null">
+	 						WHERE comment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' 
 	 					</when>
  					</choose>
  					
  					<choose>
  						<when test="search!= null and keyword != null">
- 							AND attribute = 'COMMUNITY'
+ 							AND attribute = 'Q_AND_A' 
  						</when>
  						<otherwise>
- 							WHERE attribute = 'COMMUNITY'
+ 							WHERE attribute = 'Q_AND_A' 
  						</otherwise>
  					</choose>
  					
@@ -100,62 +97,61 @@
  				)		
  	</select>
  	
- 	<!-- 게시글 번호에 대한 게시글 검색 조회 -->
- 	<select id="getSelectComment" parameterType="int" resultType="comment">
- 		SELECT c.comment_no comment_no, c.comment_title comment_title, c.user_id user_id,
- 				RPAD(SUBSTR(c.user_id, 1, LENGTH(c.user_id)-3), LENGTH(c.user_id), '*') AS output_id,
+ 	<!-- 게시글 번호에 대한 질문글 검색 조회 -->
+ 	<select id="getSelectQuestion" parameterType="int" resultType="comment">
+ 		SELECT c.comment_no comment_no, c.comment_title comment_title, 
+ 				RPAD(SUBSTR(c.user_id, 1, LENGTH(c.user_id)/2), LENGTH(c.user_id), '*') AS user_id,
  				c.comment_category comment_category, c.comment_content comment_content,
  				c.hits hits, c.reg_date reg_date, u.company_name company_name, c.attribute attribute,
  				SUBSTR(c.comment_category, 0, INSTR(c.comment_category, '/')-1) AS locale,
  				SUBSTR(c.comment_category, INSTR(c.comment_category, '/')+1, LENGTH(c.comment_category)) AS kind
  		FROM comments c JOIN users u ON c.user_id=u.user_id
- 		WHERE comment_no = #{commentNo} AND attribute = 'COMMUNITY'
+ 		WHERE comment_no = #{commentNo} AND attribute = 'Q_AND_A'
  	</select>
  	
- 	<select id="getSelectUserComment" parameterType="int" resultType="comment">
+ 	<select id="getSelectUserQuestion" parameterType="int" resultType="comment">
  		SELECT * FROM comments
- 		WHERE attribute='COMMUNITY'
+ 		WHERE attribute='Q_AND_A'
  		AND	  comment_no = #{commentNo}
  		<if test="userId != null">
  		AND   user_id = #{userId}
  		</if>
  	</select>
  	
- 	
  	<!-- 게시물 추가 -->
  	<!-- comment_no는 TRIGGER로 AUTO_INCREMENT취급 받음 -->
- 	<insert id="insertComment" parameterType="comment">
+ 	<insert id="insertQuestion" parameterType="comment">
  		<selectKey resultType="int" keyProperty="commentNo" order="AFTER"> 
 	 		SELECT SEQ_COMMENTS_COMMENT_NO.CURRVAL AS comment_no 
 	 		FROM dual 
  		</selectKey>
  		INSERT INTO comments (user_id, comment_title, comment_category, comment_content, attribute)
- 		VALUES(#{userId}, #{commentTitle}, #{commentCategory}, #{commentContent},'COMMUNITY')
+ 		VALUES(#{userId}, #{commentTitle}, #{commentCategory}, #{commentContent}, 'Q_AND_A')
  	</insert>
  	
  	<!-- 게시물 삭제 - 종속성에 의해 댓글도 같이 자동삭제 -->
- 	<delete id="deleteCommentAndReply" parameterType="comment">
+ 	<delete id="deleteQuestionAndAnswer" parameterType="comment">
  		DELETE FROM comments
- 		WHERE comment_no = #{commentNo} AND user_id = #{userId}
- 		AND attribute = 'COMMUNITY'
+ 		WHERE comment_no = #{commentNo}
+ 		AND attribute = 'Q_AND_A'
  	</delete>
  	
  	<!-- 게시물 수정 -->
- 	<update id="updateComment" parameterType="comment">
+ 	<update id="updateQuestion" parameterType="comment">
  		UPDATE comments SET
  		comment_title = #{commentTitle},
  		comment_category = #{commentCategory},
  		comment_content = #{commentContent} 		
- 		WHERE comment_no = #{commentNo} AND user_id = #{userId}
- 		AND attribute = 'COMMUNITY'
+ 		WHERE comment_no = #{commentNo}
+ 		AND attribute = 'Q_AND_A'
  	</update>
  	
  	<!-- 게시물 조회수 증가 -->
- 	<update id="hitsUpComment" parameterType="comment">
+ 	<update id="hitsUpQuestion" parameterType="comment">
  		UPDATE comments SET
  		hits = #{hits}		
  		WHERE comment_no = #{commentNo}
- 		AND attribute = 'COMMUNITY'
+ 		AND attribute = 'Q_AND_A'
  	</update>
-
+ 	
  </mapper>

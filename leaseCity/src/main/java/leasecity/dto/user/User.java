@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import leasecity.dto.adminwork.Question;
 import leasecity.dto.adminwork.WorkLog;
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
@@ -80,9 +79,6 @@ public class User implements Serializable {
 	/** 중기업체 목록. */
 	private List<HeavyEquipmentCompany> heavyEquipmentCompanyList;
 
-	/** 질문 목록. */
-	private List<Question> questionsList;
-
 	/** 커뮤니티 댓글 목록. */
 	private List<Reply> replysList;
 
@@ -96,7 +92,6 @@ public class User implements Serializable {
 		this.commentsList = new ArrayList<Comment>();
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
 		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
-		this.questionsList = new ArrayList<Question>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 	}
@@ -130,7 +125,6 @@ public class User implements Serializable {
 		this.commentsList = new ArrayList<Comment>();
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
 		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
-		this.questionsList = new ArrayList<Question>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 		
@@ -156,7 +150,6 @@ public class User implements Serializable {
 		this.commentsList = new ArrayList<Comment>();
 		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
 		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
-		this.questionsList = new ArrayList<Question>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 	}

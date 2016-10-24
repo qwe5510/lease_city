@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment implements Serializable {
-
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
@@ -34,6 +33,9 @@ public class Comment implements Serializable {
 
 	/** 회원. */
 	private String userId;
+	
+	/** 문자 3개가 생략된 ID*/
+	private String outputId;
 	
 	/** 게시글 회원 업체명*/
 	private String companyName;
@@ -57,13 +59,17 @@ public class Comment implements Serializable {
 
 	/** 게시글 날짜. */
 	private Date regDate;
+	
+	/** 글 속성  */
+	private String attribute;
 
 	/** 게시글에 달린 총 댓글 개수 */
 	private Integer replyCount;
 	
 	public Comment(Integer commentNo, String userId, 
 			String commentTitle, String locale, String kind,
-			String commentContent, Integer hits, Date regDate) {
+			String commentContent, Integer hits, Date regDate,
+			String attribute) {
 		this.commentNo = commentNo;
 		this.userId = userId;
 		this.commentTitle = commentTitle;
@@ -73,11 +79,13 @@ public class Comment implements Serializable {
 		this.commentContent = commentContent;
 		this.hits = hits;
 		this.regDate = regDate;
+		this.attribute = attribute;
 	}
 
 	public Comment(Integer commentNo, String userId, 
 			String commentTitle, String commentCategory, 
-			String commentContent, Integer hits, Date regDate) {
+			String commentContent, Integer hits, Date regDate,
+			String attribute) {
 		this.commentNo = commentNo;
 		this.userId = userId;
 		this.commentTitle = commentTitle;
@@ -85,9 +93,15 @@ public class Comment implements Serializable {
 		this.commentContent = commentContent;
 		this.hits = hits;
 		this.regDate = regDate;
+		this.attribute = attribute;
 	}
 	public Comment(String locale){
 		this.locale=locale;
+	}
+	
+	public Comment(Integer commentNo, String userId){
+		this.commentNo = commentNo;
+		this.userId = userId;
 	}
 	
 	

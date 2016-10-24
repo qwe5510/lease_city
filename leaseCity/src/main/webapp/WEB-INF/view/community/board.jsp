@@ -1,4 +1,3 @@
-<%@page import="leasecity.dto.community.Comment"%>
 <%@page import="leasecity.util.DateUtil"%>
 <%@page import="java.util.Date"%>
 <%@page language="java" contentType="text/html; charset=utf-8"
@@ -11,7 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src='//uchat.co.kr/uchat.php' charset='UTF-8'></script>
-<title>Insert title here</title>
+<title>COMMUNITY | LEASECITY</title>
 </head>
 <body>
 
@@ -26,7 +25,6 @@
       String today = DateUtil.getDateString(todayDate);
       request.setAttribute("today", today);
    %>
-
 
 
    <jsp:include page="../layout/header.jsp"></jsp:include>
@@ -86,9 +84,31 @@
                   <td><c:out value="${comment.commentRowNum}" /></td>
                   <td><c:out value="${comment.commentCategory}" /></td>
                   <td class='communityTitle'>
-                     <a href="<%=request.getContextPath() %>/board_read?commentNo=${comment.commentNo}">
-                     ${comment.commentTitle}</a>
-                     
+                  
+                  <c:choose>
+	                  <c:when test="${!empty page.keyword and !empty page.order}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:when>
+	                  <c:when test="${!empty page.order}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:when>
+	                  <c:when test="${!empty page.keyword}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:when>
+	                  <c:otherwise>
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
+                     		${comment.commentTitle}
+                     	</a>
+	                  </c:otherwise>
+               		</c:choose>
+               		
+
                       <c:if test="${comment.hits >= 100}">
                      	<span class="label label-important">
                      		hot
@@ -137,7 +157,7 @@
                </td>
                <td colspan="1">
                <c:url value="/board_write" var="board_write"/>
-               <a href="${board_write}"><button><i class="icon-pencil"></i>글작성</button></a>
+               <a href="${board_write}"><button><i class="icon-pencil"></i>글쓰기</button></a>
                </td>
             </tr>
             
@@ -307,7 +327,7 @@
 	var keyword = $("#keyword").val();
 	var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
 	if(!searchRegExp.test(keyword)){
-		alert("%를 제외하고 검색해주세요.");
+		alert("조건이 알맞지 않습니다.\n(%를 제외한 2글자 이상 문자.)");
 		return false;
 	}else{
 		$("form").submit();

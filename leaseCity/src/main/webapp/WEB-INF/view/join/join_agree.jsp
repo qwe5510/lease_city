@@ -10,8 +10,9 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class=login>
-		<img src="<%=request.getContextPath()%>/images/login/agree.png">
 		<div class="agree">
+			<img src="<%=request.getContextPath()%>/images/login/agree.png">
+			<br><br>
 			<h4>leaseCity 이용약관 동의(필수)</h4>
 			<div class="agree_inner">
 			<div>제1조(목적)</div>

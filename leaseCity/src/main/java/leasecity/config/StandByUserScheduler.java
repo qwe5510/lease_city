@@ -28,20 +28,20 @@ public class StandByUserScheduler implements SchedulingConfigurer{
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 		
 		//TEST용 코드
-		taskRegistrar.setScheduler(taskShceduler());
+		/*taskRegistrar.setScheduler(taskShceduler());
 		taskRegistrar.addFixedDelayTask(new Runnable(){
 			@Override
 			public void run() {
 				SBUService.cleanStandByUser();
 			}
-		}, 1000 * 60 * 5);
+		}, 1000 * 60 * 5);*/
 		
-		/*taskRegistrar.addCronTask(new Runnable(){
+		taskRegistrar.addCronTask(new Runnable(){
 			@Override
 			public void run() {
 				SBUService.cleanStandByUser();
 			}
-		}, " 0 0 0 * * ?");*/
+		}, " 0 0 0 * * ?");
 		//0초 0분 0시 매일 아무요일이나
 		//CRONTRIGGER OPTION (ss, mm, hh, DD, MM, DAY_OF_WEEK) / 년도는 지정하지않음.
 	}

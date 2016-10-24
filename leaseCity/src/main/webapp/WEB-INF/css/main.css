@@ -1054,9 +1054,11 @@ label {
 
 /*커뮤니티 jsp 메인 div 설정  */
 .board{
-   padding-top: 0px;
-   min-width:980px;
-   text-align: center;
+	background: url("../images/board_main.png");
+	padding-top: 0px;
+	min-width: 1300px;
+	min-height: 800px;
+	text-align: center;
 }
 
 /* 메뉴창 재설정..(잘 안됩니다)*/
@@ -1084,6 +1086,7 @@ label {
 /*community div 설정  */
 .community {
    width: 400px;
+   clear: both;
    display: inline-block;
    position: absolute;
 }
@@ -1113,6 +1116,11 @@ label {
 	margin-bottom: 15px;
 }
 
+.board_read_comment .comment_content p{
+	margin: 0px;
+}
+
+
 .board_read_comment_author{
 	margin-left: 5px;
 	font-weight: bold;
@@ -1121,6 +1129,11 @@ label {
 
 .board_read_comment_userId{
 	font-size: 11px;
+}
+
+#board_read_write, #board_read_list, #board_edit_form{
+	float:right;
+	margin-left: 5px;
 }
 
 
@@ -1252,7 +1265,7 @@ button{
    	  width: 650px;
       padding-top: 0px;
       position: relative;
-      margin-left: 200px;
+      margin-left: 80px;
    }
    .board_read_main{
   	  padding-top: 0px;
@@ -1271,6 +1284,8 @@ button{
 /*board 검색부분  */
 .boardBottom{
 	width: 500px;
+	display: inline-block;
+	margin-left: 80px;
 }
 .boardBottom select{
 	width: 130px;
@@ -1300,17 +1315,17 @@ button{
 .communityTable tr{
    padding: 7px;
 }
-.boardWriteTable{
+.boardWriteTable, .boardAdjustTable{
 	width: 600px;
 }
-.boardWriteTable input[type="text"]{
+.boardWriteTable input[type="text"], .boardAdjustTable input[type="text"]{
 	width: 600px;
 }
-.boardWriteTable textarea{
+.boardWriteTable textarea, .boardAdjustTable textarea{
 	width: 600px;
 	height: 500px;
 }
-.board_write_bottom{
+.board_write_bottom, .board_adjust_bottom{
 	padding : 10px;
 	float: right;
 }
@@ -1358,6 +1373,7 @@ button{
    margin-top: 25px;
    width: 600px;
    height: 450px;
+   display:inline-block;
 }
 
 .agree_inner {
@@ -1494,6 +1510,7 @@ button{
    font-size: 15px;
 }
 .help{
+	background: url("../images/help_main.png");
 	width : 1200px;
 	min-height : 800px;
 	padding-top: 80px;
@@ -1505,8 +1522,6 @@ button{
 	margin-left : 50px;
 	float : left;
 	width : 30%;
-	background: url(../images/help/help_back.png)
-	no-repeat 10% 40%;
     
 }
 .help_baseLine{
