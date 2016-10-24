@@ -83,12 +83,7 @@ public class LoginController {
 				return "redirect:/login";
 			}
 		}
-		return "redirect:/tryLoginPRG";
-	}
-	
-	@RequestMapping(value = "/tryLoginPRG", method = RequestMethod.GET)
-	public String tryLoginPRG(HttpSession session) {
-		return "index";
+		return "redirect:/index";
 	}
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)

@@ -28,11 +28,11 @@ import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 import leasecity.dto.user.User;
 import leasecity.exception.ChangeValueFailException;
-//github.com/qwe5510/lease_city.git
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.RemoveFailException;
 import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
+import leasecity.service.AdminService;
 import leasecity.service.CommunityService;
 
 @Controller
@@ -43,6 +43,9 @@ public class CommunityController {
 	
 	@Autowired
 	CommunityService communityService;
+	
+	@Autowired
+	AdminService adminService;
 	
 	@InitBinder
 	public void setBindingFormat(WebDataBinder binder){
@@ -292,15 +295,26 @@ public class CommunityController {
 			@RequestParam String userId,
 			@RequestParam Integer replyNo){
 		Page page = null;
-		Reply reply = new Reply(replyNo, commentNo, userId, null, null, null);
 		
-		try {
-			communityService.removeReply(reply);
-			page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
-		} catch (RemoveFailException e) {
-			logger.trace("댓글 삭제 실패", e);
-			return null;
+		if(adminService.isAdmin(userId)){
+			try {
+				adminService.removeCommunityReply(replyNo);
+				page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
+			} catch (RemoveFailException e) {
+				logger.trace("댓글 삭제 실패", e);
+				return null;
+			}
+		}else{
+			Reply reply = new Reply(replyNo, commentNo, userId, null, null, null);
+			try {
+				communityService.removeReply(reply);
+				page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
+			} catch (RemoveFailException e) {
+				logger.trace("댓글 삭제 실패", e);
+				return null;
+			}
 		}
+		
 		return page;
 	}
 

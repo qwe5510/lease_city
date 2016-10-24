@@ -13,6 +13,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<c:url value="/information" var="information"/>
 	<c:url value="/FAQ" var="FAQ"/>
@@ -28,42 +29,35 @@
 			<li><a id="help_question" href="#"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4_1.png"></a></li>
 			</ul>
 		</div>
-		<div class="help_main">
-			<table class="help_table">
-				<tr>
-					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
-				</tr>
-				<tr class="notify">
-					<td class="td1">글번호</td>
-					<td class="td2">분류</td>
-					<td class="td3">제목</td>
-					<td class="td4">글쓴이</td>
-					<td class="td5">조회수</td>
-					<!-- <td class="td6"><a href="#">날짜<i class="icon-sort"></i></a></td> -->
-					<c:choose>
-						<c:when test="${!empty page.keyword and page.order eq 'ASC'}">
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=DESC"><i
-									class="icon-sort"></i></a></td>
-						</c:when>
-						<c:when test="${!empty page.keyword}">
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=ASC"><i
-									class="icon-sort"></i></a></td>
-						</c:when>
-						<c:when test="${page.order eq 'ASC' }">
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?order=DESC"><i
-									class="icon-sort"></i></a></td>
-						</c:when>
-						<c:otherwise>
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?order=ASC"><i
-									class="icon-sort"></i></a></td>
-						</c:otherwise>
-					</c:choose>
-				</tr>
-				<c:forEach var="comment" items="${Q_AND_A}">
+		<div class="help_main">         
+         <table class="QnATable">
+            <tr>
+               <td colspan="6" class="boardLine" style="height: 4px !important;"></td>
+            </tr>
+            <tr class="notify">
+               <td>글번호</td>
+               <td>분류</td>
+               <td>제목</td>
+               <td>글쓴이</td>
+               <td>조회수</td>
+               <c:choose>
+                  <c:when test="${!empty page.keyword and page.order eq 'ASC'}">
+                     <td>날짜<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=DESC"><i class="icon-sort"></i></a></td>
+                  </c:when>
+                  <c:when test="${!empty page.keyword}">
+                     <td>날짜<a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=ASC"><i class="icon-sort"></i></a></td>
+                  </c:when>
+                  <c:when test="${page.order eq 'ASC' }">
+                     <td>날짜<a href="<%=request.getContextPath()%>/board?order=DESC"><i class="icon-sort"></i></a></td>
+                  </c:when>
+                  <c:otherwise>
+                     <td>날짜<a href="<%=request.getContextPath()%>/board?order=ASC"><i class="icon-sort"></i></a></td>
+                  </c:otherwise>
+               </c:choose>
+            </tr>
+
+
+            <c:forEach var="comment" items="${comments}">
                <tr>
                   <td colspan="6" class="boardLine" style="height: 4px !important;"></td>
                </tr>
@@ -74,26 +68,27 @@
                   
                   <c:choose>
 	                  <c:when test="${!empty page.keyword and !empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.keyword}">
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:otherwise>
                		</c:choose>
+               		
 
                       <c:if test="${comment.hits >= 100}">
                      	<span class="label label-important">
@@ -107,7 +102,16 @@
                      	</span>
                      </c:if>
                   </td>
-                  <td><c:out value="${comment.companyName}" /></td>
+                  <td>
+                  <c:choose>
+                  	<c:when test="${!empty admin}">
+                  	<b>${comment.companyName}</b>
+                  	</c:when>
+                  	<c:otherwise>
+                  		${comment.companyName}
+                  	</c:otherwise>
+                  </c:choose>
+                  </td>
                   <td><c:out value="${comment.hits}" /></td>               
                   
                   <fmt:formatDate value="${comment.regDate}"
@@ -134,22 +138,21 @@
                   <td colspan="6"><c:out value="${errorMsg}"></c:out></td>
                </tr>
             </c:if>
-				<tr>
-					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
-				</tr>
-				<tr class="board_write">
-					<td colspan="5">
-					</td>
-					<td colspan="1">
-					<c:url value="/question_answer_write" var="question_answer_write"/>
-					<a href="${question_answer_write}"><button><i class="icon-pencil"></i>글작성</button></a>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
-				</tr>
-			</table>
-			<div class="boardSearch">
+            <tr>
+               <td colspan="6" class="boardLine" style="height: 3px !important;"></td>
+            </tr>
+            
+            <tr class="board_write">
+               <td colspan="5">
+               </td>
+               <td colspan="1">
+               <c:url value="/board_write" var="board_write"/>
+               <a href="${board_write}"><button><i class="icon-pencil"></i>글쓰기</button></a>
+               </td>
+            </tr>
+            
+         </table>
+         <div class="boardSearch">
          <div class="boardPage" style="display: inline-block;">
             
             <!-- 이전 페이지, 다음 페이지 변수 선언 -->
@@ -168,19 +171,19 @@
                            
                <c:choose>
                   <c:when test="${!empty page.keyword and !empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${prevPage}">
+                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${prevPage}">
                      <i class="icon-arrow-left">이전</i></a>
                   </c:when>
                   <c:when test="${!empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${prevPage}">
+                     <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${prevPage}">
                      <i class="icon-arrow-left">이전</i></a>
                   </c:when>
                   <c:when test="${!empty page.keyword}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${prevPage}">
+                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${prevPage}">
                      <i class="icon-arrow-left">이전</i></a>
                   </c:when>
                   <c:otherwise>
-                     <a href="<%=request.getContextPath()%>/question_answer?currentPage=${prevPage}">
+                     <a href="<%=request.getContextPath()%>/board?currentPage=${prevPage}">
                      <i class="icon-arrow-left">이전</i></a>
                   </c:otherwise>
                </c:choose>
@@ -201,22 +204,22 @@
                            <c:otherwise>
                               <c:choose>
                                  <c:when test="${!empty page.keyword and !empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>
                                  </c:when>
                                  <c:when test="${!empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>
                                  </c:when>
                                  <c:when test="${!empty page.keyword}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>                        
                                  </c:when>
                                  <c:otherwise>
-                                    <a href="<%=request.getContextPath()%>/question_answer?currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>
                                  </c:otherwise>
@@ -234,22 +237,22 @@
                            <c:otherwise>
                               <c:choose>
                                  <c:when test="${!empty page.keyword and !empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>
                                  </c:when>
                                  <c:when test="${!empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>
                                  </c:when>
                                  <c:when test="${!empty page.keyword}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>                        
                                  </c:when>
                                  <c:otherwise>
-                                    <a href="<%=request.getContextPath()%>/question_answer?currentPage=${i}">
+                                    <a href="<%=request.getContextPath()%>/board?currentPage=${i}">
                                        <c:out value="${i}"></c:out>
                                     </a>
                                  </c:otherwise>
@@ -265,19 +268,19 @@
             <c:when test="${nextPage <= page.totalPage}">
                <c:choose>
                <c:when test="${!empty page.keyword and !empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${nextPage}">
+                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${nextPage}">
                      다음<i class="icon-arrow-right"></i></a>
                   </c:when>
                   <c:when test="${!empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${nextPage}">
+                     <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${nextPage}">
                      다음<i class="icon-arrow-right"></i></a>
                   </c:when>
                   <c:when test="${!empty page.keyword}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${nextPage}">
+                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${nextPage}">
                      다음<i class="icon-arrow-right"></i></a>
                   </c:when>
                   <c:otherwise>
-                     <a href="<%=request.getContextPath()%>/question_answer?currentPage=${nextPage}">
+                     <a href="<%=request.getContextPath()%>/board?currentPage=${nextPage}">
                      다음<i class="icon-arrow-right"></i></a>
                   </c:otherwise>
                </c:choose>
@@ -296,7 +299,7 @@
                         <sform:option value="COMPANY_NAME">글쓴이</sform:option>
                         <sform:option value="TITLE">제목</sform:option>
                         <sform:option value="TITLE_AND_CONTENT">제목+내용</sform:option>
-                        <sform:option value="LOCAL">지역명</sform:option>
+                        <sform:option value="CATEGORY">분류</sform:option>
                      </sform:select>
                      <sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
                      <button id="boardBtn"><i class="icon-search"></i>검색</button>
@@ -309,6 +312,19 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+	$("#boardBtn").on("click",function(e){
+		e.preventDefault();
+		var keyword = $("#keyword").val();
+		var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
+		if(!searchRegExp.test(keyword)){
+			alert("조건이 알맞지 않습니다.\n(%를 제외한 2글자 이상 문자.)");
+			return false;
+		}else{
+			$("form").submit();
+		}
+	}) 
+
 	$("#help_frequenty").on("mouseover",function(){
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2_1.png");
 		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4.png");

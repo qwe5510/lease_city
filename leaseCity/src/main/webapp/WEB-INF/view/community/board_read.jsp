@@ -82,12 +82,15 @@
 							pattern="yyyy-MM-dd  hh:mm:ss" var="commentRegDate" />
 						<tr>
 							<td width="2px" class="boardLine"></td>
-							<td colspan="6" align="left"><span
-								class="board_read_comment_author"> <c:out
-										value="${comment.companyName}"></c:out> <span
-									class="board_read_comment_userId"> (<c:out
-											value="${comment.outputId}"></c:out>)
-								</span>
+							<td colspan="6" align="left">
+							
+								<span class="board_read_comment_author"> 
+									${comment.companyName}
+								<c:if test="${empty admin}"> 
+									<span class="board_read_comment_userId">
+										(${comment.outputId})
+									</span>
+								</c:if>
 							</span></td>
 							<td colspan="5" align="right"><b><c:out
 										value="${commentRegDate}"></c:out></b></td>
@@ -356,7 +359,7 @@
                   
                   <td>
                   <c:choose>
-                  	<c:when test="${!empty admin}">
+                  	<c:when test="${comment.userId eq 'admin'}">
                   	<b>${comment.companyName}</b>
                   	</c:when>
                   	<c:otherwise>
@@ -737,7 +740,7 @@
 			url : "${replyRegistryAjax}",
 			data : {
 				commentNo : ${comment.commentNo},
-				userId : "${loginUser.userId}",
+				userId : "${!empty admin?admin.userId:loginUser.userId}",
 				replyContent : inputArea				
 			},
 			success : function(page){
@@ -815,7 +818,7 @@
 			url : "${replyAdjustAjax}",
 			data : {
 				commentNo : commentNo,
-				userId : "${loginUser.userId}",
+				userId : "${!empty admin?admin.userId:loginUser.userId}",
 				replyNo : replyNo,
 				replyContent : inputArea				
 			},
@@ -851,7 +854,7 @@
 				url : "${replyRemoveAjax}",
 				data : {
 					commentNo : commentNo,
-					userId : "${loginUser.userId}",
+					userId : "${admin==null?loginUser.userId:admin.userId}",
 					replyNo : replyNo			
 				},
 				success : function(page){

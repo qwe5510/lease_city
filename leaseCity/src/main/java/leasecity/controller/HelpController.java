@@ -19,6 +19,7 @@ import leasecity.dto.etc.Page;
 import leasecity.dto.user.User;
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
+import leasecity.service.AdminService;
 import leasecity.service.QnAService;
 
 @Controller
@@ -30,6 +31,9 @@ public class HelpController {
 	
 	@Autowired
 	QnAService qnaService;
+	
+	@Autowired
+	AdminService adminService;
 	
 	@RequestMapping(value="/FAQ")
 	public String FAQ(Model model){

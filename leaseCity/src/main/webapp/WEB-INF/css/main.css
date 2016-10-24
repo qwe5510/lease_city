@@ -1284,12 +1284,10 @@ button{
 	width : 780px;
 	font-size: 15px;
 	letter-spacing: 10px;
-	
 }
 /*board 검색부분  */
 .boardBottom{
 	width: 500px;
-	display: inline-block;
 	margin-left: 80px;
 }
 .boardBottom select{
@@ -1309,10 +1307,9 @@ button{
    background: #e5e5e5;
 }
 
-.communityTable{
+.communityTable, .QnATable{
    width : 780px;
    margin-right: 40px;
-   
 }
 .communityTable select{
 	margin-bottom: 20px;
@@ -1524,6 +1521,7 @@ button{
 	background-size: cover;
 	min-width : 1200px;
 	min-height : 800px;
+	text-align: center;
 	padding-top: 80px;
     position: relative;
     overflow: auto;
@@ -1544,10 +1542,11 @@ button{
     
 }
 .help_main{
-	float : right;
+	float: right;
+	margin-right: 50px;
 	min-height : 800px;
 	width : 60%;
-	margin-right: 30px;
+	display: inline-block;
 }
 .help_menu_inner1{
 	background: url(../images/help/help_menu1.png)
