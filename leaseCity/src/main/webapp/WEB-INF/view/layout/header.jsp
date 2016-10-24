@@ -77,7 +77,6 @@
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="<%=request.getContextPath() %>/FAQ">자주 묻는 질문</a></li>
-								<li><a href="<%=request.getContextPath() %>/information">도움말</a></li>
 								<li><a href="<%=request.getContextPath() %>/question_answer">Q&A</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/introduction">소개</a></li>
