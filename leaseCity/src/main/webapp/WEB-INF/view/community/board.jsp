@@ -27,7 +27,6 @@
    %>
 
 
-
    <jsp:include page="../layout/header.jsp"></jsp:include>
    <div class="board">
       <div class="uchat">
@@ -122,7 +121,16 @@
                      	</span>
                      </c:if>
                   </td>
-                  <td><c:out value="${comment.companyName}" /></td>
+                  <td>
+                  <c:choose>
+                  	<c:when test="${!empty admin}">
+                  	<b>${comment.companyName}</b>
+                  	</c:when>
+                  	<c:otherwise>
+                  		${comment.companyName}
+                  	</c:otherwise>
+                  </c:choose>
+                  </td>
                   <td><c:out value="${comment.hits}" /></td>               
                   
                   <fmt:formatDate value="${comment.regDate}"

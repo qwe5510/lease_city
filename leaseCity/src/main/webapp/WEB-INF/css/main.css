@@ -1036,6 +1036,7 @@ label {
    margin: 0 0 0 0;
    padding: 0 0 0 0;
    margin-top: 15px;
+   font-weight: 9000;
 }
 
 /*로그인 jsp 메인 div 설정 */
@@ -1053,10 +1054,16 @@ label {
 
 /*커뮤니티 jsp 메인 div 설정  */
 .board{
-   padding-top: 0px;
-   min-width: 1300px;
-   min-height: 800px;
-   text-align: center;
+	background: url("../images/board_main.png")
+	no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding-top: 0px;
+	min-width: 1300px;
+	min-height: 800px;
+	text-align: center;
 }
 
 /* 메뉴창 재설정..(잘 안됩니다)*/
@@ -1095,13 +1102,13 @@ label {
    	position: absolute;
    	padding: 10px;
 }
-.board_read_line{
+.board_read_line, .qna_read_line{
 	border-style: solid;
     border-width: 2px;
     border-color: #e5e5e5;
     padding: 10px;
 }
-.board_read_table{
+.board_read_table, .qna_read_table{
 	width: 580px;
 }
 .board_read_comment{
@@ -1239,7 +1246,7 @@ button{
 }
 
 /*화면해상도 1200이상에서의 설정 */
-@media all and (min-width: 1200px) {
+/* @media all and (min-width: 1200px) { */
    /* 로그인 화면*/
    .login {
       padding-top: 80px;   
@@ -1249,6 +1256,7 @@ button{
    /* 커뮤니티 전체 */
    .board{
       padding-top: 80px;
+      min-height : 800px;
       position: relative;
    }
 
@@ -1270,18 +1278,16 @@ button{
       margin-left: 200px;
       width: 600px;
    }
-}
+/* } */
 /* board 페이징 부분 설정 */
 .boardPage{
 	width : 780px;
 	font-size: 15px;
 	letter-spacing: 10px;
-	
 }
 /*board 검색부분  */
 .boardBottom{
 	width: 500px;
-	display: inline-block;
 	margin-left: 80px;
 }
 .boardBottom select{
@@ -1301,10 +1307,9 @@ button{
    background: #e5e5e5;
 }
 
-.communityTable{
+.communityTable, .QnATable{
    width : 780px;
    margin-right: 40px;
-   
 }
 .communityTable select{
 	margin-bottom: 20px;
@@ -1319,6 +1324,7 @@ button{
 	width: 600px;
 }
 .boardWriteTable textarea, .boardAdjustTable textarea{
+	padding: 0px;
 	width: 600px;
 	height: 500px;
 }
@@ -1507,19 +1513,27 @@ button{
    font-size: 15px;
 }
 .help{
-	width : 1200px;
-	height : 800px;
+	background: url("../images/help_main.png")
+	no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width : 1200px;
+	min-height : 800px;
+	text-align: center;
 	padding-top: 80px;
     position: relative;
+    overflow: auto;
 }
 .help_menu{
-	height : 650px;
+	margin-top : 20px;
+	min-height : 800px;
 	margin-left : 50px;
 	float : left;
+	min-width : 30%;
 	width : 30%;
-	background: url(../images/help/help_back.png)
-	no-repeat 10% 40%;
-    
+	position: fixed;    
 }
 .help_baseLine{
     padding: 0;
@@ -1530,24 +1544,26 @@ button{
     
 }
 .help_main{
-	float : right;
+	float: right;
+	margin-right: 50px;
+	min-height : 800px;
 	width : 60%;
-	margin-right: 30px;
+	display: inline-block;
+	text-align: left;
 }
 .help_menu_inner1{
 	background: url(../images/help/help_menu1.png)
 	no-repeat 10% 30%;
 	padding: 55px;
 	margin-top: 23px;
-	margin-left: 50px;
+	margin-left: 10px;
 }
 .help_menu_ul{
 	list-style: none;
 	text-align: left;
 }
 .help_menu_ul li{
-	margin-left : 30px;
-	margin-top : 40px;
+	margin-top : 60px;
 	font-size: 25px;
 	font-family: NanumGothic,나눔고딕,'Helvetica Neue',Helvetica,'Apple SD Gothic Neo',AppleGothic,Dotum,돋움,Arial,sans-serif;
 }
@@ -1556,14 +1572,13 @@ button{
 }
 .help_menu_select{
 	width: 186px;
-    padding-left: 12px;
+    padding-left: 0px;
     color: #fff;
-    background: url(../images/help/help_li.png)
-    no-repeat 20% 60%;
+    
 }
 .help_table{
 	margin-top: 40px;
-	width: 780px;
+	width: 800px;
 	text-align: center;
 }
 .help_table .td1{
@@ -1590,7 +1605,8 @@ button{
 .helpWriteTable input[type="text"]{
 	width: 600px;
 }
-.helpWriteTable textarea{
+.helpWriteTable textarea, .helpAdjustTable textarea{
+	padding : 0px;
 	width: 600px;
 	height: 500px;
 }
@@ -1612,13 +1628,89 @@ button{
       width: 600px;
  }
  .manager_answer{
-  background: white;
+  	padding: 0px;
  }
  .manager_answer textarea {
 	width: 450px;
 }
 .manager_answer button {
-	width: 56px;
+	width: 480px;
     height: 46px;
     margin-bottom: 10px;
+}
+
+.faq_bold{
+	font-size: 19px;
+	font-weight: 100px;
+	color: #228B22;
+}
+.search{
+	margin-top : 40px;
+	font-size: 25px;
+	font-weight: 300px;
+	color: #228B22;
+}
+
+.qna_list{
+	float: right;
+	text-align: center;
+}
+
+.qna_buttonForm{
+	display: inline;
+}
+
+.qna_read_bottom{
+	float: right;
+}
+
+
+#menu{
+	margin-top: 20px;
+}
+.introduce{
+	padding : 80px;
+	min-height : 500px;
+	text-align: center;
+}
+.lease{
+	background: url("../images/help_main.png")
+	no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width : 1200px;
+	min-height : 800px;
+	padding-top: 30px;
+    position: relative;
+    overflow: auto;
+}
+.lease_menu{
+	margin-top : 20px;
+	min-height : 800px;
+	margin-left : 50px;
+	float : left;
+	width : 30%;
+	position: fixed;
+    
+}
+.lease_main{
+	float : right;
+	min-height : 800px;
+	width : 65%;
+	margin-right: 30px;
+}
+.lease_main fieldset{
+	width: 700px;
+}
+#lease_request_form textarea{
+	width: 690px;
+	height : 60px;
+	padding: 0px;
+}
+.lease_write_bottom{
+	margin-top : 20px;
+	margin-right : 110px;
+	float: right;
 }

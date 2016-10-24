@@ -111,7 +111,16 @@ $("#adjust").on("click",function(e){
 	var commentTitle = $("#commentTitle").val();
 	var commentContent = $("#commentContent").val();
 	
-	$("#board_adjust_form").append("<input type='hidden' name='userId' value='${loginUser.userId}'/>")
+	<c:choose>
+	<c:when test="${!empty admin}">
+		$("#board_adjust_form").append("<input type='hidden' name='userId' value='${admin.userId}'/>")
+	</c:when>
+	<c:otherwise>
+		$("#board_adjust_form").append("<input type='hidden' name='userId' value='${loginUser.userId}'/>")
+	</c:otherwise>
+	</c:choose>
+	
+	
 	
 	if(commentTitle==null || commentTitle==""){
 		alert("제목을 입력해주세요.");

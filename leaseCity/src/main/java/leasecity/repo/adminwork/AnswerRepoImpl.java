@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 
+@Repository
 public class AnswerRepoImpl implements AnswerRepo{
 	
 	// Sql쿼리를 작동시키는 SessionTemplate Bean

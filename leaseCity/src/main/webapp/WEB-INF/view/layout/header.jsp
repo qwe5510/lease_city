@@ -72,19 +72,18 @@
 								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
-						<li class="dropdown" id="con"><a href="<%=request.getContextPath() %>/FAQ"
+						<li class="dropdown" id="con"><a href="<%=request.getContextPath() %>/help/FAQ"
 							class="dropdown-toggle" data-toggle="dropdown">고객센터 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/FAQ">자주 묻는 질문</a></li>
-								<li><a href="<%=request.getContextPath() %>/information">도움말</a></li>
-								<li><a href="<%=request.getContextPath() %>/question_answer">Q&A</a></li>
+								<li><a href="<%=request.getContextPath() %>/help/FAQ">자주 묻는 질문</a></li>
+								<li><a href="<%=request.getContextPath() %>/help/qna">Q&A</a></li>
 							</ul></li>
-						<li id="con"><a href="<%=request.getContextPath() %>/board">소개</a></li>
+						<li id="con"><a href="<%=request.getContextPath() %>/introduction">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
 						<c:url value="/logout" var="logout"></c:url>
 						<c:choose>
-							<c:when test="${!empty loginUser}">
+							<c:when test="${!empty loginUser or !empty admin}">
 								<li id="con"><a href=${logout }><i class="icon-signout"></i></a></li>
 							</c:when>
 							<c:otherwise>
