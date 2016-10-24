@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="leasecity.util.DateUtil"%>
-<%@page import="java.util.Date"%>
+<%@ page import="leasecity.util.DateUtil"%>
+<%@ page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -782,7 +782,7 @@
 				replyContent : inputArea				
 			},
 			success : function(page){
-				if(page != null){
+				if(page != null && page != ""){
 					moveReplyPage(g_currentPage, commentNo);
 					$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
 					//덧글 수정 후 
@@ -817,7 +817,7 @@
 					replyNo : replyNo			
 				},
 				success : function(page){
-					if(page != null){
+					if(page != null && page != ""){						
 						if(g_currentPage > page.totalPage){
 							g_currentPage = page.totalPage;
 							g_totalPage = page.totalPage;
