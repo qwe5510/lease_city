@@ -33,15 +33,15 @@
 						</tr>
 						<tr>
 							<td colspan="1">
-								<sform:label path="questionCategory">분류</sform:label>
+								<sform:label path="commentCategory">분류</sform:label>
 							</td>
 							<td colspan="3">
-								<sform:radiobutton path="questionCategory" value="lease" label="임대"/>
-								<sform:radiobutton path="questionCategory" value="community" label="커뮤니티"/>
-								<sform:radiobutton path="questionCategory" value="email" label="이메일인증"/>
-								<sform:radiobutton path="questionCategory" value="passId" label="비밀번호/아이디찾기"/>
-								<sform:radiobutton path="questionCategory" value="evaluate" label="평가"/>
-								<sform:radiobutton path="questionCategory" value="etc" label="기타"/>
+								<sform:radiobutton path="commentCategory" value="lease" label="임대"/>
+								<sform:radiobutton path="commentCategory" value="community" label="커뮤니티"/>
+								<sform:radiobutton path="commentCategory" value="email" label="이메일인증"/>
+								<sform:radiobutton path="commentCategory" value="passId" label="비밀번호/아이디찾기"/>
+								<sform:radiobutton path="commentCategory" value="evaluate" label="평가"/>
+								<sform:radiobutton path="commentCategory" value="etc" label="기타"/>
 							</td>
 						</tr>
 						<tr>
@@ -49,12 +49,12 @@
 						</tr>
 						<tr>
 							<td colspan="4">
-								<sform:input path="questionTitle" placeholder="제목"/>
+								<sform:input path="commentTitle" placeholder="제목"/>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="4">
-								<sform:textarea path="questionContent" placeholder="형식에 구애받지 않고 자유롭게 입력하시면 됩니다."/>
+								<sform:textarea path="commentContent" placeholder="영어 숫자 4000자, 한글 1330자 이내의 내용 입력."/>
 							</td>
 						</tr>
 					</table>

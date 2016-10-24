@@ -222,29 +222,57 @@
 		<button id="board_read_write">
 			<i class="icon-pencil"></i>글쓰기</button>
 
+			<c:if test="${empty admin}">
+				<c:if test="${comment.userId eq loginUser.userId}">
+					<c:url value="/board_adjust" var="board_adjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
+					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
+					<sform:hidden path="commentNo"/>
+					<sform:hidden path="commentContent"/>
+					<sform:hidden path="commentTitle"/>
+					<sform:hidden path="locale"/>
+					<sform:hidden path="kind"/>
+					<input name="userId" type="hidden" value="${loginUser.userId}" />
+					<input name="currentPage" type="hidden" value="${page.currentPage}">
+					</sform:form>
+				</c:if>
 			
-			<c:if test="${comment.userId eq loginUser.userId}">
-				<c:url value="/board_adjust" var="board_adjust" />
-				<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
-				<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
-				<sform:hidden path="commentNo"/>
-				<sform:hidden path="commentContent"/>
-				<sform:hidden path="commentTitle"/>
-				<sform:hidden path="locale"/>
-				<sform:hidden path="kind"/>
-				<input name="userId" type="hidden" value="${loginUser.userId}" />
-				<input name="currentPage" type="hidden" value="${page.currentPage}">
-				</sform:form>
+				<!-- 관리자가 로그인했을 때도 출력되게 해야함 -->
+				<c:if test="${comment.userId eq loginUser.userId}">
+					<c:url value="/boardRemove" var="boardRemove" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardRemove}" method="POST">
+					<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
+					<sform:hidden path="commentNo"/>
+					<sform:hidden path="commentTitle"/>
+					<input name="userId" type="hidden" value="${loginUser.userId}" />
+					<input name="currentPage" type="hidden" value="${page.currentPage}">
+					</sform:form>
+				</c:if>
 			</c:if>
 			
-			<!-- 관리자가 로그인했을 때도 출력되게 해야함 -->
-			<c:if test="${comment.userId eq loginUser.userId}">
+			<!-- 관리자 로그인 시-->
+			<c:if test="${!empty admin}">
+				
+				<c:if test="${comment.userId eq admin.userId}">
+					<c:url value="/board_adjust" var="board_adjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
+					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
+					<sform:hidden path="commentNo"/>
+					<sform:hidden path="commentContent"/>
+					<sform:hidden path="commentTitle"/>
+					<sform:hidden path="locale"/>
+					<sform:hidden path="kind"/>
+					<input name="userId" type="hidden" value="${admin.userId}" />
+					<input name="currentPage" type="hidden" value="${page.currentPage}">
+					</sform:form>
+				</c:if>
+				
 				<c:url value="/boardRemove" var="boardRemove" />
 				<sform:form id="board_edit_form" modelAttribute="comment" action="${boardRemove}" method="POST">
 				<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
 				<sform:hidden path="commentNo"/>
 				<sform:hidden path="commentTitle"/>
-				<input name="userId" type="hidden" value="${loginUser.userId}" />
+				<input name="userId" type="hidden" value="${comment.userId}" />
 				<input name="currentPage" type="hidden" value="${page.currentPage}">
 				</sform:form>
 			</c:if>
@@ -325,8 +353,18 @@
                      	</span>
                      </c:if>
                   </td>
-                  <td><c:out value="${comment.companyName}" /></td>
-                  <td><c:out value="${comment.hits}" /></td>               
+                  
+                  <td>
+                  <c:choose>
+                  	<c:when test="${!empty admin}">
+                  	<b>${comment.companyName}</b>
+                  	</c:when>
+                  	<c:otherwise>
+                  		${comment.companyName}
+                  	</c:otherwise>
+                  </c:choose>
+                  </td>
+                  <td>${comment.hits}</td>               
                   
                   <fmt:formatDate value="${comment.regDate}"
                         pattern="yyyy-MM-dd"

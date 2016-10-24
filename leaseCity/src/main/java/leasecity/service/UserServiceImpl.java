@@ -81,6 +81,25 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+	
+	//관리자 로그인
+	@Override
+	public User adminLogin(String userId, String password) throws LoginFailException {
+		String hashPass = HashingUtil.hashingString(password);
+		User admin = userRepo.getUserIdAndPassword(userId, hashPass);
+		ConstructionCompany CC = constructionCompanyRepo.getConstructionCompany(userId);
+		HeavyEquipmentCompany HEC = heavyEquipmentCompanyRepo.getHeavyEquipmentCompany(userId);
+		
+		
+		if(admin!=null && CC == null && HEC == null){
+			logger.trace("관리자 로그인 성공");
+		}else{
+			logger.error("관리자 로그인에 실패하였습니다. 유저 로그인을 시도합니다.");
+			throw new LoginFailException();
+		}
+		return admin;
+	}
+
 
 	@Override
 	public User login(String userId, String password) throws LoginFailException {

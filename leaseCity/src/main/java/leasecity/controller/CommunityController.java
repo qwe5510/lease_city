@@ -1,15 +1,12 @@
 package leasecity.controller;
 
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -137,7 +133,13 @@ public class CommunityController {
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 			
 			//로그인 중인 유저 탐색
-			User loginUser = (User)session.getAttribute("loginUser");
+			
+			User loginUser = (User) session.getAttribute("loginUser");
+			
+			//loginUser가 null이면 관리자로 대입.
+			if(loginUser == null){
+				loginUser = (User) session.getAttribute("admin");
+			}
 			
 			try {
 				loginUser = isUserLogin(loginUser);
@@ -146,11 +148,9 @@ public class CommunityController {
 				return "redirect:/index";
 			}
 			
-			
 			logger.trace("들어온 commentNo : {}", commentNo);
 			comment = communityService.viewComment(commentNo, loginUser.getUserId());
 			logger.trace("보는 게시글 : {}", comment);
-			
 			String commentContent = comment.getCommentContent().replaceAll("\n", "<br>");
 			comment.setCommentContent(commentContent);
 			
@@ -319,11 +319,14 @@ public class CommunityController {
 			RedirectAttributes redir, Comment comment) {
 		
 		// 1. 유저가 로그인 되있는지 확인
-		User user = new User();
+		User user = null;
+		// 1-2. 유저가 없을 시 관리자 대입
+		Object userObj = session.getAttribute("loginUser")==null?
+							session.getAttribute("admin"):session.getAttribute("loginUser");
 		try {
-			user = isUserLogin(session.getAttribute("loginUser"));
+			user = isUserLogin(userObj);
 		} catch (ServiceFailException e) {
-			redir.addFlashAttribute("join_message", "로그인이 만료됬습니다.");
+			redir.addFlashAttribute("join_message", "로그인 세션이 만료 되었습니다.");
 			return "redirect:/index";
 		}
 
@@ -377,7 +380,7 @@ public class CommunityController {
 			logger.trace("글 삭제 실패");
 		}
 		
-		return "redirect:/board_read";
+		return "redirect:/board";
 	}
 	
 	// 함수 1 : 유저가 로그인 되어있는지 확인

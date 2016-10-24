@@ -135,6 +135,9 @@ public class HelpController {
 	
 	@RequestMapping(value="/question_answer_write")
 	public String question_answer_write(Model model){
+		Comment question = new Comment();
+		model.addAttribute("question", question);
+		logger.trace("질문글 작성 페이지 이동");
 		return "help/question_answer_write";
 	}
 	

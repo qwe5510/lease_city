@@ -1327,6 +1327,7 @@ button{
 	width: 600px;
 }
 .boardWriteTable textarea, .boardAdjustTable textarea{
+	padding: 0px;
 	width: 600px;
 	height: 500px;
 }
@@ -1521,7 +1522,7 @@ button{
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	width : 1200px;
+	min-width : 1200px;
 	min-height : 800px;
 	padding-top: 80px;
     position: relative;
@@ -1531,7 +1532,7 @@ button{
 	min-height : 800px;
 	margin-left : 50px;
 	float : left;
-	width : 30%;
+	min-width : 30%;
     
 }
 .help_baseLine{
@@ -1603,7 +1604,8 @@ button{
 .helpWriteTable input[type="text"]{
 	width: 600px;
 }
-.helpWriteTable textarea{
+.helpWriteTable textarea, .helpAdjustTable textarea{
+	padding : 0px;
 	width: 600px;
 	height: 500px;
 }

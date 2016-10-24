@@ -98,7 +98,7 @@
 						<c:url value="/login" var="login"></c:url>
 						<c:url value="/logout" var="logout"></c:url>
 						<c:choose>
-							<c:when test="${!empty loginUser}">
+							<c:when test="${!empty loginUser or !empty admin}">
 								<li id="con"><a href=${logout }><i class="icon-signout"></i></a></li>
 							</c:when>
 							<c:otherwise>
