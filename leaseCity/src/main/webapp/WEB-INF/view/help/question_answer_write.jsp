@@ -10,7 +10,7 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<c:url value="/FAQ" var="FAQ"/>
+	<c:url value="/help/FAQ" var="FAQ"/>
 	<div class="help">
 		<div class="help_menu">
 			<div class="help_menu_inner1">
@@ -19,12 +19,12 @@
 			</div>
 			<ul class="help_menu_ul">
 			<li class="help_menu_first"><a id="help_frequenty" href="${FAQ }"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2.png"></a></li>
-			<li><a id="help_question" href="#"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4_1.png"></a></li>
+			<li><a id="help_question"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4_1.png"></a></li>
 			</ul>
 		</div>
 		<div class="help_main">
-			<c:url value="/question_answer_read" var="question_answer_read"/>
-				<sform:form id="question_answer_write_form" action="${question_answer_read }" method="post" modelAttribute="question">
+			<c:url value="/writeQuestion" var="writeQuestion"/>
+				<sform:form id="question_answer_write_form" action="${writeQuestion}" method="post" modelAttribute="question">
 					<table class=helpWriteTable>
 						<tr>
 							<td colspan="4" class="boardLine" style="height: 4px !important;"></td>
@@ -34,12 +34,12 @@
 								<sform:label path="commentCategory">분류</sform:label>
 							</td>
 							<td colspan="3">
-								<sform:radiobutton path="commentCategory" value="lease" label="임대"/>
-								<sform:radiobutton path="commentCategory" value="community" label="커뮤니티"/>
-								<sform:radiobutton path="commentCategory" value="email" label="이메일인증"/>
-								<sform:radiobutton path="commentCategory" value="passId" label="비밀번호/아이디찾기"/>
-								<sform:radiobutton path="commentCategory" value="evaluate" label="평가"/>
-								<sform:radiobutton path="commentCategory" value="etc" label="기타"/>
+								<sform:radiobutton path="commentCategory" value="임대" label="임대" id="checked"/>
+								<sform:radiobutton path="commentCategory" value="커뮤니티" label="커뮤니티"/>
+								<sform:radiobutton path="commentCategory" value="이메일인증" label="이메일인증"/>
+								<sform:radiobutton path="commentCategory" value="비밀번호/아이디찾기" label="비밀번호/아이디찾기"/>
+								<sform:radiobutton path="commentCategory" value="평가" label="평가"/>
+								<sform:radiobutton path="commentCategory" value="기타" label="기타"/>
 							</td>
 						</tr>
 						<tr>
@@ -56,9 +56,9 @@
 							</td>
 						</tr>
 					</table>
-						<div>
-						<sform:button> <i class="icon-pencil"></i>작성</sform:button>
-						<sform:button id="question_write_btn"><i class="icon-link"></i>취소</sform:button>
+						<div class="qna_buttonForm">
+						<sform:button id="question_write_btn"> <i class="icon-pencil"></i>작성</sform:button>
+						<sform:button id="question_write_cancel_btn"><i class="icon-link"></i>취소</sform:button>
 						</div>
 					</sform:form>
 		</div>
@@ -67,6 +67,9 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+	
+	$("#checked").prop('checked', true);
+
 	$("#help_frequenty").on("mouseover",function(){
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2_1.png");
 		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4.png");
@@ -76,10 +79,10 @@
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2.png");
 		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4_1.png");
 	});
-	<c:url value="/question_answer" var="question_answer"/>
-		$("#question_write_btn").on("click", function(e){
+	<c:url value="/help/qna" var="qna"/>
+		$("#question_write_cancel_btn").on("click", function(e){
 		    e.preventDefault();
-		    $("#question_answer_write_form").attr("action","${question_answer}");
+		    $("#question_answer_write_form").attr("action","${qna}");
 		    $("#question_answer_write_form").submit();
 		});
 </script>

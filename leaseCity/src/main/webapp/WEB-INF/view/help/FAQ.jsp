@@ -6,11 +6,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath() %>/css/accordionImageMenu.css" rel="stylesheet">
+
+<script>
+	console.log("<%=request.getContextPath()%>");
+</script>
+
 <title>Insert title here</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<c:url value="/question_answer" var="question_answer"/>
+	<c:url value="/help/qna" var="qna"/>
 	<div class="help">
 		<div class="help_menu">
 			<div class="help_menu_inner1">
@@ -19,7 +24,7 @@
 			</div>
 			<ul class="help_menu_ul">
 			<li class="help_menu_first"><a id="help_frequenty" href="#"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></a></li>
-			<li><a id="help_question" href="${question_answer }"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4.png"></a></li>
+			<li><a id="help_question" href="${qna}"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4.png"></a></li>
 			</ul>
 		</div>
 		<div class="help_main">
@@ -54,8 +59,8 @@
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/accordion/jquery-ui-1.10.3.custom.min.js"></script>
-<script src="js/accordion/jquery.accordionImageMenu.js"></script>
+<script src="<%=request.getContextPath() %>/js/accordion/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/accordion/jquery.accordionImageMenu.js"></script>
 <script>
 	$("#help_question").on("mouseover",function(){
 		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4_1.png");

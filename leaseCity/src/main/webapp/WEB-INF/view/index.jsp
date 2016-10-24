@@ -90,9 +90,8 @@
 							class="dropdown-toggle" data-toggle="dropdown">고객센터 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/FAQ">자주 묻는 질문</a></li>
-								<li><a href="<%=request.getContextPath() %>/information">도움말</a></li>
-								<li><a href="<%=request.getContextPath() %>/question_answer">Q&A</a></li>
+								<li><a href="<%=request.getContextPath() %>/help/FAQ">자주 묻는 질문</a></li>
+								<li><a href="<%=request.getContextPath() %>/help/qna">Q&A</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
@@ -398,12 +397,12 @@
 		<!--/Modal Body-->
 	</div>
 	<!--  /Login form -->
-	<script src="js/vendor/jquery-1.9.1.min.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/js/vendor/jquery-1.9.1.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/vendor/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/main.js"></script>
 	<!-- Required javascript files for Slider -->
-	<script src="js/jquery.ba-cond.min.js"></script>
-	<script src="js/jquery.slitslider.js"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.ba-cond.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.slitslider.js"></script>
 	<!-- /Required javascript files for Slider -->
 
 	<!-- SL Slider -->

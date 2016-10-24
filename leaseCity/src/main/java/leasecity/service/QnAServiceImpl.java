@@ -192,7 +192,7 @@ public class QnAServiceImpl implements QnAService{
 	//페이지 리턴
 	//----------------------------------------------------------------
 	@Override
-	public Page getCommentPage(Integer currentPage, Integer pageSize) {
+	public Page getQuestionPage(Integer currentPage, Integer pageSize) {
 		Page page = new Page();
 		page.setServiceKind("Q_AND_A");
 		page.setTotalCount(questionRepo.getCountAllQuestions());		
@@ -205,7 +205,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 
 	@Override
-	public Page getSearchCommentPage(Integer currentPage, Integer pageSize, String search, String keyword,
+	public Page getSearchQuestionPage(Integer currentPage, Integer pageSize, String search, String keyword,
 			String order) {
 		Page page = new Page();
 		page.setServiceKind("Q_AND_A");
@@ -222,7 +222,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 
 	@Override
-	public Page getFirstReplyPage(Integer commentNo, Integer pageSize) {
+	public Page getFirstAnswerPage(Integer commentNo, Integer pageSize) {
 		Page page = new Page();
 		page.setSuperNo(commentNo);
 		page.setTotalCount(answerRepo.getCountQuestionAnswer(commentNo));
@@ -235,7 +235,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 
 	@Override
-	public Page getReplyPage(Integer commentNo, Integer currentPage, Integer pageSize) {
+	public Page getAnswerPage(Integer commentNo, Integer currentPage, Integer pageSize) {
 		Page page = new Page();
 		page.setSuperNo(commentNo);
 		page.setTotalCount(answerRepo.getCountQuestionAnswer(commentNo));

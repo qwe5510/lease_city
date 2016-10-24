@@ -327,7 +327,7 @@ public class CommunityController {
 		return "community/board_write";
 	}
 	
-	// 게시글 댓글 작성
+	// 게시글 작성
 	@RequestMapping(value = "/writeComment", method = RequestMethod.POST)
 	public String writeComment(Model model, HttpSession session,
 			RedirectAttributes redir, Comment comment) {
@@ -346,7 +346,6 @@ public class CommunityController {
 
 		// 2. 게시물에 필요 정보 넣기
 		comment.setUserId(user.getUserId()); // 로그인된 유저
-		//comment.setUserId("ysh5586"); // 임시 아이디
 		comment.setCommentCategory(comment.getLocale() + "/" + comment.getKind()); // board 페이지에서 보여줄 정보
 		logger.trace("작성한 게시물 내용 : {}", comment);
 		

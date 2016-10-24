@@ -86,7 +86,7 @@
 							
 								<span class="board_read_comment_author"> 
 									${comment.companyName}
-								<c:if test="${empty admin}"> 
+								<c:if test="${comment.userId != 'admin'}"> 
 									<span class="board_read_comment_userId">
 										(${comment.outputId})
 									</span>
@@ -111,7 +111,7 @@
 						</tr>
 					</table>
 					<div style="text-align: left; padding: 10px;">
-						<span id="comment_reply_count">댓글 <b><c:out value="${comment.replyCount }"></c:out></b>개</span>
+						<span id="comment_reply_count">댓글 <b>${comment.replyCount}</b>개</span>
 					</div>
 
 					<div class="comment_reply">
@@ -131,9 +131,19 @@
 									</div>
 									<!-- 이부분 Session Filter 해야 함 -->
 									<div class="reply_option">
-										<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
-										<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
-										<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
+										<c:if test="${!empty admin}">
+											<c:if test="${admin.userId eq reply.userId}">
+											<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
+											<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
+										</c:if>
+											<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
+										</c:if>
+										
+										<c:if test="${!empty loginUser and loginUser.userId eq reply.userId}">
+											<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
+											<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
+											<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
+										</c:if>
 									</div>
 									<div class="reply_date">
 										${replyRegDate}
@@ -648,13 +658,28 @@
 					str+=("<li>");
 					str+=("<div class='reply_author'>");
 					str+=(reply.companyName+"</div>");
+					<c:if test="${!empty admin}">
 					str+=("<div class='reply_option'>");
-					str+=("<button title='댓글 수정' style='margin-right:3px;' class='reply_adjust'>");
-					str+=("<i class='icon-eraser'></i></button>");
-					str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
-					str+=("<i class='icon-eraser'></i></button>");
+					if("${admin.userId}" == reply.userId){
+						str+=("<button title='댓글 수정' style='margin-right:3px;' class='reply_adjust'>");
+						str+=("<i class='icon-eraser'></i></button>");
+						str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
+						str+=("<i class='icon-eraser'></i></button>");
+					}
 					str+=("<button title='댓글 삭제' id='reply_remove' class='reply_remove'>");
 					str+=("<i class='icon-remove'></i></button></div>");
+					</c:if>
+					<c:if test="${!empty loginUser}">
+						if("${loginUser.userId}" == reply.userId){
+							str+=("<div class='reply_option'>");
+							str+=("<button title='댓글 수정' style='margin-right:3px;' class='reply_adjust'>");
+							str+=("<i class='icon-eraser'></i></button>");
+							str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
+							str+=("<i class='icon-eraser'></i></button>");
+							str+=("<button title='댓글 삭제' id='reply_remove' class='reply_remove'>");
+							str+=("<i class='icon-remove'></i></button></div>");
+						}
+					</c:if>
 					str+=("<div class='reply_date'>");
 					str+=(new Date(reply.regDate).format("yyyy-MM-dd hh:mm:ss"));
 					str+=("</div>");

@@ -99,7 +99,7 @@
  		SELECT c.comment_no comment_no, c.comment_title comment_title, c.user_id user_id,
  				RPAD(SUBSTR(c.user_id, 1, LENGTH(c.user_id)-3), LENGTH(c.user_id), '*') AS output_id,
  				c.comment_category comment_category, c.comment_content comment_content,
- 				c.hits hits, c.reg_date reg_date, u.company_name company_name, c.attribute attribute,
+ 				c.hits hits, c.reg_date reg_date, u.company_name company_name, c.attribute attribute
  		FROM comments c JOIN users u ON c.user_id=u.user_id
  		WHERE comment_no = #{commentNo} AND attribute = 'Q_AND_A'
  	</select>
@@ -118,7 +118,7 @@
  	<insert id="insertQuestion" parameterType="comment">
  		<selectKey resultType="int" keyProperty="commentNo" order="AFTER"> 
 	 		SELECT SEQ_COMMENTS_COMMENT_NO.CURRVAL AS comment_no 
-	 		FROM dual 
+	 		FROM dual
  		</selectKey>
  		INSERT INTO comments (user_id, comment_title, comment_category, comment_content, attribute)
  		VALUES(#{userId}, #{commentTitle}, #{commentCategory}, #{commentContent}, 'Q_AND_A')

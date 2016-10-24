@@ -1102,13 +1102,13 @@ label {
    	position: absolute;
    	padding: 10px;
 }
-.board_read_line{
+.board_read_line, .qna_read_line{
 	border-style: solid;
     border-width: 2px;
     border-color: #e5e5e5;
     padding: 10px;
 }
-.board_read_table{
+.board_read_table, .qna_read_table{
 	width: 580px;
 }
 .board_read_comment{
@@ -1521,12 +1521,8 @@ button{
 	background-size: cover;
 	min-width : 1200px;
 	min-height : 800px;
-<<<<<<< HEAD
 	text-align: center;
 	padding-top: 80px;
-=======
-	padding-top: 30px;
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
     position: relative;
     overflow: auto;
 }
@@ -1535,13 +1531,9 @@ button{
 	min-height : 800px;
 	margin-left : 50px;
 	float : left;
-<<<<<<< HEAD
 	min-width : 30%;
-=======
 	width : 30%;
-	position: fixed;
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
-    
+	position: fixed;    
 }
 .help_baseLine{
     padding: 0;
@@ -1555,13 +1547,9 @@ button{
 	float: right;
 	margin-right: 50px;
 	min-height : 800px;
-<<<<<<< HEAD
 	width : 60%;
 	display: inline-block;
-=======
-	width : 65%;
-	margin-right: 30px;
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
+	text-align: left;
 }
 .help_menu_inner1{
 	background: url(../images/help/help_menu1.png)
@@ -1640,16 +1628,17 @@ button{
       width: 600px;
  }
  .manager_answer{
-  background: white;
+  	padding: 0px;
  }
  .manager_answer textarea {
 	width: 450px;
 }
 .manager_answer button {
-	width: 56px;
+	width: 480px;
     height: 46px;
     margin-bottom: 10px;
 }
+
 .faq_bold{
 	font-size: 19px;
 	font-weight: 100px;
@@ -1661,6 +1650,21 @@ button{
 	font-weight: 300px;
 	color: #228B22;
 }
+
+.qna_list{
+	float: right;
+	text-align: center;
+}
+
+.qna_buttonForm{
+	display: inline;
+}
+
+.qna_read_bottom{
+	float: right;
+}
+
+
 #menu{
 	margin-top: 20px;
 }

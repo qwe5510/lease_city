@@ -111,7 +111,7 @@ public interface QnAService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Page getCommentPage(Integer currentPage, Integer pageSize);
+	public Page getQuestionPage(Integer currentPage, Integer pageSize);
 	
 	/**
 	 * 검색한 질문글 페이지 정보 리턴
@@ -122,7 +122,7 @@ public interface QnAService {
 	 * @param order 정렬
 	 * @return
 	 */
-	public Page getSearchCommentPage
+	public Page getSearchQuestionPage
 	(Integer currentPage, Integer pageSize, 
 			String search, String keyword, String order);
 	
@@ -132,7 +132,7 @@ public interface QnAService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Page getFirstReplyPage(Integer commentNo, Integer pageSize);
+	public Page getFirstAnswerPage(Integer commentNo, Integer pageSize);
 	
 	/**
 	 * 덧글 클릭시 보이는 페이지
@@ -141,7 +141,7 @@ public interface QnAService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Page getReplyPage(Integer commentNo, Integer currentPage, Integer pageSize);
+	public Page getAnswerPage(Integer commentNo, Integer currentPage, Integer pageSize);
 
 	
 }
