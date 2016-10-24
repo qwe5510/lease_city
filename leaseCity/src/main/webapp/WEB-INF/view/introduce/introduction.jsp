@@ -8,6 +8,9 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<div class="introduce">
+		<img alt="" src="<%=request.getContextPath()%>/images/introduce.png">
+	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 </html>
