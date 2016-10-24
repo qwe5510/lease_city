@@ -27,7 +27,6 @@
    %>
 
 
-
    <jsp:include page="../layout/header.jsp"></jsp:include>
    <div class="board">
       <div class="uchat">

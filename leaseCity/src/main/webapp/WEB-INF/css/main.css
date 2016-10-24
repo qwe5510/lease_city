@@ -1053,10 +1053,11 @@ label {
 
 /*커뮤니티 jsp 메인 div 설정  */
 .board{
-   padding-top: 0px;
-   min-width: 1300px;
-   min-height: 800px;
-   text-align: center;
+	background: url("../images/board_main.png");
+	padding-top: 0px;
+	min-width: 1300px;
+	min-height: 800px;
+	text-align: center;
 }
 
 /* 메뉴창 재설정..(잘 안됩니다)*/
@@ -1507,6 +1508,7 @@ button{
    font-size: 15px;
 }
 .help{
+	background: url("../images/help_main.png");
 	width : 1200px;
 	height : 800px;
 	padding-top: 80px;
@@ -1517,8 +1519,6 @@ button{
 	margin-left : 50px;
 	float : left;
 	width : 30%;
-	background: url(../images/help/help_back.png)
-	no-repeat 10% 40%;
     
 }
 .help_baseLine{
