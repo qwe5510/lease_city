@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
@@ -16,6 +17,7 @@ import leasecity.exception.WriteFailException;
 import leasecity.repo.adminwork.AnswerRepo;
 import leasecity.repo.adminwork.QuestionRepo;
 
+@Service
 public class QnAServiceImpl implements QnAService{
 
 	static Logger logger = LoggerFactory.getLogger(QnAServiceImpl.class);
