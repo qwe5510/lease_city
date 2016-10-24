@@ -1646,3 +1646,7 @@ button{
 	font-weight: 300px;
 	color: #228B22;
 }
+/* introduce 페이징 부분 설정 */
+.introduce{
+	text-align: center;
+}
