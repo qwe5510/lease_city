@@ -1521,16 +1521,26 @@ button{
 	background-size: cover;
 	min-width : 1200px;
 	min-height : 800px;
+<<<<<<< HEAD
 	text-align: center;
 	padding-top: 80px;
+=======
+	padding-top: 30px;
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
     position: relative;
     overflow: auto;
 }
 .help_menu{
+	margin-top : 20px;
 	min-height : 800px;
 	margin-left : 50px;
 	float : left;
+<<<<<<< HEAD
 	min-width : 30%;
+=======
+	width : 30%;
+	position: fixed;
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
     
 }
 .help_baseLine{
@@ -1545,23 +1555,27 @@ button{
 	float: right;
 	margin-right: 50px;
 	min-height : 800px;
+<<<<<<< HEAD
 	width : 60%;
 	display: inline-block;
+=======
+	width : 65%;
+	margin-right: 30px;
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 }
 .help_menu_inner1{
 	background: url(../images/help/help_menu1.png)
 	no-repeat 10% 30%;
 	padding: 55px;
 	margin-top: 23px;
-	margin-left: 50px;
+	margin-left: 10px;
 }
 .help_menu_ul{
 	list-style: none;
 	text-align: left;
 }
 .help_menu_ul li{
-	margin-left : 30px;
-	margin-top : 40px;
+	margin-top : 60px;
 	font-size: 25px;
 	font-family: NanumGothic,나눔고딕,'Helvetica Neue',Helvetica,'Apple SD Gothic Neo',AppleGothic,Dotum,돋움,Arial,sans-serif;
 }
@@ -1576,7 +1590,7 @@ button{
 }
 .help_table{
 	margin-top: 40px;
-	width: 780px;
+	width: 800px;
 	text-align: center;
 }
 .help_table .td1{
@@ -1647,7 +1661,52 @@ button{
 	font-weight: 300px;
 	color: #228B22;
 }
-/* introduce 페이징 부분 설정 */
+#menu{
+	margin-top: 20px;
+}
 .introduce{
+	padding : 80px;
+	min-height : 500px;
 	text-align: center;
+}
+.lease{
+	background: url("../images/help_main.png")
+	no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width : 1200px;
+	min-height : 800px;
+	padding-top: 30px;
+    position: relative;
+    overflow: auto;
+}
+.lease_menu{
+	margin-top : 20px;
+	min-height : 800px;
+	margin-left : 50px;
+	float : left;
+	width : 30%;
+	position: fixed;
+    
+}
+.lease_main{
+	float : right;
+	min-height : 800px;
+	width : 65%;
+	margin-right: 30px;
+}
+.lease_main fieldset{
+	width: 700px;
+}
+#lease_request_form textarea{
+	width: 690px;
+	height : 60px;
+	padding: 0px;
+}
+.lease_write_bottom{
+	margin-top : 20px;
+	margin-right : 110px;
+	float: right;
 }
