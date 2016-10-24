@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="leasecity.util.DateUtil"%>
+<%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +13,19 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
+	
+	<c:if test="${!empty board_message }">
+      <script type="text/javascript">
+         alert('${qna_message }');
+      </script>
+   </c:if>
+	
+	<%
+      Date todayDate = new Date();
+      String today = DateUtil.getDateString(todayDate);
+      request.setAttribute("today", today);
+    %>
+    
 	<c:url value="/information" var="information"/>
 	<c:url value="/FAQ" var="FAQ"/>
 	<div class="help">
@@ -27,50 +43,68 @@
 		<div class="help_read_main">
 			<c:url value="/question_answer_write" var="question_answer_write"/>
 			<div class="help_read_main_inner">
-			<sform:form id="help_read_form" action="${question_answer_write }" method="post" modelAttribute="answer">
+			<sform:form id="help_read_form" action="${question_answer_write }" method="post" modelAttribute="comment">
 			<div class="board_read_line">
 				<table class="board_read_table">
-               <tr><td colspan='13' class='boardLine'></td></tr>
-               <tr>
-                  	<td width="2px" class="boardLine"></td>
-                  	<th>분류</th>
-                  	<td width="2px" class="boardLine"></td>
-                  	<th>아이디/비밀번호찾기</th>
-                  	<td width="2px" class="boardLine"></td>
-                  	<th><span>조회수</span></th>
-                  	<td width="2px" class="boardLine"></td>
-                  	<th width="100px">100</th>
-                  	<td width="2px" class="boardLine"></td>
-               </tr>
-                  	<tr><td colspan='13' class='boardLine'></td></tr>
-               <tr>
-               		<td width="2px" class="boardLine"></td>
-                  	<td align="left" colspan="11" style="padding-left: 25px">
-                  	<span style="font-size: 1.3em">제목이에요?</span></td>
-                  	<td width="2px" class="boardLine"></td>
-               </tr>
-               <tr><td colspan="13" class='boardLine'></td></tr>
-               
-               <tr>
-               	  <td width="2px" class="boardLine"></td>
-               	  <td colspan="11" align="right"><b><c:out value="${commentRegDate}"></c:out></b></td>
-               	  <td width="2px" class="boardLine"></td>
-               </tr>
-               <tr>
-               	  <td width="2px" class="boardLine"></td>
-                  <td colspan="11" align="right"><span style="font-size: 1.2em"><c:out value="${comment.companyName}"></c:out></span></td>
-                  <td width="2px" class="boardLine"></td>
-               </tr>
-                                 	
-               <tr class="board_read_comment" align="left" valign="top">
-               	  <td width="2px" class="boardLine"></td>
-                  <td colspan="11" style="padding-left: 20px">
-                  	<p>내용이에요??</p>
-                  </td>
-                  <td width="2px" class="boardLine"></td>
-               </tr>
-               <tr><td colspan="13" class='boardLine'></td></tr>
-            </table>
+						<tr>
+							<td colspan='13' class='boardLine'></td>
+						</tr>
+						<tr>
+							<td width="2px" class="boardLine"></td>
+							<th>지역</th>
+							<td width="2px" class="boardLine"></td>
+							<td><c:out value="${comment.locale }"></c:out></td>
+							<td width="2px" class="boardLine"></td>
+							<th>분류</th>
+							<td width="2px" class="boardLine"></td>
+							<td><c:out value="${comment.kind }"></c:out></td>
+							<td width="2px" class="boardLine"></td>
+							<th><span>조회수</span></th>
+							<td width="2px" class="boardLine"></td>
+							<td width="100px"><c:out value="${comment.hits }"></c:out></td>
+							<td width="2px" class="boardLine"></td>
+						</tr>
+						<tr>
+							<td colspan='13' class='boardLine'></td>
+						</tr>
+						<tr>
+							<td width="2px" class="boardLine"></td>
+							<td align="left" colspan="11" style="padding-left: 25px"><span
+								style="font-size: 1.3em">${comment.commentTitle}</span></td>
+							<td width="2px" class="boardLine"></td>
+						</tr>
+						<tr>
+							<td colspan="13" class='boardLine'></td>
+						</tr>
+						<fmt:formatDate value="${comment.regDate}"
+							pattern="yyyy-MM-dd  hh:mm:ss" var="commentRegDate" />
+						<tr>
+							<td width="2px" class="boardLine"></td>
+							<td colspan="6" align="left"><span
+								class="board_read_comment_author"> <c:out
+										value="${comment.companyName}"></c:out> <span
+									class="board_read_comment_userId"> (<c:out
+											value="${comment.outputId}"></c:out>)
+								</span>
+							</span></td>
+							<td colspan="5" align="right"><b><c:out
+										value="${commentRegDate}"></c:out></b></td>
+							<td width="2px" class="boardLine"></td>
+						</tr>
+
+						<tr class="board_read_comment" align="left" valign="top">
+							<td width="2px" class="boardLine"></td>
+							<td colspan="11">
+								<div class="comment_content">
+									${comment.commentContent}
+								</div>
+							</td>
+							<td width="2px" class="boardLine"></td>
+						</tr>
+						<tr>
+							<td colspan="13" class='boardLine'></td>
+						</tr>
+					</table>
             <div id="manager_answer_show"></div>
             <div style="text-align: left; padding: 10px;">
             <span><b>답변</b></span>

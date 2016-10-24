@@ -1036,6 +1036,7 @@ label {
    margin: 0 0 0 0;
    padding: 0 0 0 0;
    margin-top: 15px;
+   font-weight: 9000;
 }
 
 /*로그인 jsp 메인 div 설정 */
@@ -1245,7 +1246,7 @@ button{
 }
 
 /*화면해상도 1200이상에서의 설정 */
-@media all and (min-width: 1200px) {
+/* @media all and (min-width: 1200px) { */
    /* 로그인 화면*/
    .login {
       padding-top: 80px;   
@@ -1255,6 +1256,7 @@ button{
    /* 커뮤니티 전체 */
    .board{
       padding-top: 80px;
+      min-height : 800px;
       position: relative;
    }
 
@@ -1276,7 +1278,7 @@ button{
       margin-left: 200px;
       width: 600px;
    }
-}
+/* } */
 /* board 페이징 부분 설정 */
 .boardPage{
 	width : 780px;
@@ -1520,12 +1522,13 @@ button{
 	-o-background-size: cover;
 	background-size: cover;
 	width : 1200px;
-	height : 800px;
+	min-height : 800px;
 	padding-top: 80px;
     position: relative;
+    overflow: auto;
 }
 .help_menu{
-	height : 650px;
+	min-height : 800px;
 	margin-left : 50px;
 	float : left;
 	width : 30%;
@@ -1541,6 +1544,7 @@ button{
 }
 .help_main{
 	float : right;
+	min-height : 800px;
 	width : 60%;
 	margin-right: 30px;
 }
@@ -1630,4 +1634,15 @@ button{
 	width: 56px;
     height: 46px;
     margin-bottom: 10px;
+}
+.faq_bold{
+	font-size: 19px;
+	font-weight: 100px;
+	color: #228B22;
+}
+.search{
+	margin-top : 40px;
+	font-size: 25px;
+	font-weight: 300px;
+	color: #228B22;
 }

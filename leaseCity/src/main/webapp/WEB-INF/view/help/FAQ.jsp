@@ -26,26 +26,26 @@
 		</div>
 		<div class="help_main">
 			<ul id='menu'>
-				<li><a id="a1" href='#'><span>title 1</span><img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
+				<li><a id="a1" href='#'><b class="faq_bold">임대요청</b><span>임대요청</span><img
+								src="<%=request.getContextPath()%>/images/FAQ/임대요청.png"
 								alt="" /></a></li>
-				<li><a id="a2" href='#'><span>title 2</span><img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
+				<li><a id="a2" href='#'><b class="faq_bold">임대신청</b><span>임대신청</span><img
+								src="<%=request.getContextPath()%>/images/FAQ/임대신청.png"
 								alt="" /></a></li>
-				<li><a id="a2"href='#'><span>title 3</span><img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
+				<li><a id="a3"href='#'><b class="faq_bold">직접신청</b><span>임대직접신청</span><img
+								src="<%=request.getContextPath()%>/images/FAQ/직접신청.png"
 								alt="" /></a></li>
-				<li><a id="a3" href='#'><span>title 4</span><img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
+				<li><a id="a4" href='#'><b class="faq_bold">양도</b><span>임대양도</span><img
+								src="<%=request.getContextPath()%>/images/FAQ/양도.png"
 								alt="" /></a></li>
-				<li><a id="a4" href='#'><span>title 4</span><img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
+				<li><a id="a5" href='#'><b class="faq_bold">ID/Pass</b><span>id/pass찾기</span><img
+								src="<%=request.getContextPath()%>/images/FAQ/아이디패스.png"
 								alt="" /></a></li>
-				<li><a id="a5" href='#'><span>title 4</span><img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
+				<li><a id="a6" href='#'><b class="faq_bold">채팅방</b><span>채팅방이용</span><img
+								src="<%=request.getContextPath()%>/images/FAQ/채팅방.png"
 								alt="" /></a></li>
-				<li><a id="a6" href='#'><span>title 4</span><img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/피사의사탑.png"
+				<li><a id="a7" href='#'><b class="faq_bold">평가</b><span>평가하기</span><img
+								src="<%=request.getContextPath()%>/images/FAQ/평가.png"
 								alt="" /></a></li>
 			</ul>
 			<div class="bb" style="display: none;">
@@ -82,12 +82,9 @@
 	$(document).ready(function() {
 		$('#menu').AccordionImageMenu();
 	});
-	
+	var submenu =$(".bb");
 	$(document).ready(function(){
 		$("#a1").on("click",function(){
-			console.log("a1");
-			var submenu =$(".bb");
-			console.log("맨처음",submenu.is());
 			if(submenu.is(":visible")){
                 submenu.slideUp();
             }else{
@@ -98,10 +95,6 @@
 		});
 		
 		$("#a2").on("click",function(){
-			console.log("a2");
-			var submenu =$(".bb");
-			console.log(submenu);
-			console.log(submenu.is(":visible"));
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
@@ -111,10 +104,6 @@
 		});
 		
 		$("#a3").on("click",function(){
-			console.log("a3");
-			var submenu =$(".bb");
-			console.log(submenu);
-			console.log(submenu.is(":visible"));
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
@@ -124,10 +113,6 @@
 		});
 		
 		$("#a4").on("click",function(){
-			console.log("a4");
-			var submenu =$(".bb");
-			console.log(submenu);
-			console.log(submenu.is(":visible"));
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
@@ -137,29 +122,53 @@
 		});
 		
 		$("#a5").on("click",function(){
-			console.log("a5");
-			var submenu =$(".bb");
-			console.log(submenu);
-			console.log(submenu.is(":visible"));
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
-            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img5.jpg'>");
+            	$(".bb").html("<div class='search'><p id='idSearch'>아이디찾기</p><ul style='display: none;'><li><img src='<%=request.getContextPath()%>/images/FAQ/아이디1.PNG'></li><li><img src='<%=request.getContextPath()%>/images/FAQ/아이디2.PNG'></li></ul>"
+            	+"</div><div class='search'><p id='passSearch'>비밀번호찾기</p><ul style='display: none;'><li><img src='<%=request.getContextPath()%>/images/FAQ/비밀번호1.PNG'></li><li><img src='<%=request.getContextPath()%>/images/FAQ/비밀번호2.PNG'></li></ul></div>");
                 submenu.slideDown();
             }
 		});
 		$("#a6").on("click",function(){
-			console.log("a6");
-			var submenu =$(".bb");
-			console.log(submenu);
-			console.log(submenu.is(":visible"));
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
-            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img6.jpg'>");
+            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/FAQ/채팅방1.PNG'>"
+            			+"<br><img src='<%=request.getContextPath()%>/images/FAQ/채팅방2.PNG'>");
                 submenu.slideDown();
             }
 		});
+	
+	$("#a7").on("click",function(){
+		if( submenu.is(":visible") ){
+            submenu.slideUp();
+        }else{
+        	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img6.jpg'>");
+            submenu.slideDown();
+        }
 	});
+});
+	$(document).ready(function(){
+		 $(document).on("click","#idSearch",function(){
+			console.log("들어옴");
+			var idmenu =$(this).next("ul");
+			if( idmenu.is(":visible") ){
+				idmenu.slideUp();
+            }else{
+            	idmenu.slideDown();
+            }
+		});
+		$(document).on("click","#passSearch",function(){
+				console.log("들어옴");
+				var idmenu =$(this).next("ul");
+				if( idmenu.is(":visible") ){
+					idmenu.slideUp();
+	           }else{
+	           	idmenu.slideDown();
+	           }
+			});
+		});
+
 </script>
 </html>

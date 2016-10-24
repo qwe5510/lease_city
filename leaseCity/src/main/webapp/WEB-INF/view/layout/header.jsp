@@ -80,7 +80,7 @@
 								<li><a href="<%=request.getContextPath() %>/information">도움말</a></li>
 								<li><a href="<%=request.getContextPath() %>/question_answer">Q&A</a></li>
 							</ul></li>
-						<li id="con"><a href="<%=request.getContextPath() %>/board">소개</a></li>
+						<li id="con"><a href="<%=request.getContextPath() %>/introduction">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
 						<c:url value="/logout" var="logout"></c:url>
 						<c:choose>
