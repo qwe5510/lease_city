@@ -14,7 +14,6 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<c:url value="/information" var="information"/>
 	<c:url value="/FAQ" var="FAQ"/>
 	<div class="help">
 		<div class="help_menu">
@@ -24,7 +23,6 @@
 			</div>
 			<ul class="help_menu_ul">
 			<li class="help_menu_first"><a id="help_frequenty" href="${FAQ }"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2.png"></a></li>
-			<li><a id="help_advice" href="${information }"><img id="help_advice_img" src="<%=request.getContextPath()%>/images/help/help_menu3.png"></a></li>
 			<li><a id="help_question" href="#"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4_1.png"></a></li>
 			</ul>
 		</div>
@@ -316,16 +314,6 @@
 	
 	$("#help_frequenty").on("mouseout",function(){
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2.png");
-		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4_1.png");
-	});
-	
-	$("#help_advice").on("mouseover",function(){
-		$("#help_advice_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu3_1.png");
-		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4.png");
-	});
-	
-	$("#help_advice").on("mouseout",function(){
-		$("#help_advice_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu3.png");
 		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4_1.png");
 	});
 </script>

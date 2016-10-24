@@ -1521,17 +1521,19 @@ button{
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	width : 1200px;
+	min-width : 1200px;
 	min-height : 800px;
-	padding-top: 80px;
+	padding-top: 30px;
     position: relative;
     overflow: auto;
 }
 .help_menu{
+	margin-top : 20px;
 	min-height : 800px;
 	margin-left : 50px;
 	float : left;
 	width : 30%;
+	position: fixed;
     
 }
 .help_baseLine{
@@ -1545,7 +1547,7 @@ button{
 .help_main{
 	float : right;
 	min-height : 800px;
-	width : 60%;
+	width : 65%;
 	margin-right: 30px;
 }
 .help_menu_inner1{
@@ -1553,15 +1555,14 @@ button{
 	no-repeat 10% 30%;
 	padding: 55px;
 	margin-top: 23px;
-	margin-left: 50px;
+	margin-left: 10px;
 }
 .help_menu_ul{
 	list-style: none;
 	text-align: left;
 }
 .help_menu_ul li{
-	margin-left : 30px;
-	margin-top : 40px;
+	margin-top : 60px;
 	font-size: 25px;
 	font-family: NanumGothic,나눔고딕,'Helvetica Neue',Helvetica,'Apple SD Gothic Neo',AppleGothic,Dotum,돋움,Arial,sans-serif;
 }
@@ -1576,7 +1577,7 @@ button{
 }
 .help_table{
 	margin-top: 40px;
-	width: 780px;
+	width: 800px;
 	text-align: center;
 }
 .help_table .td1{
@@ -1645,4 +1646,7 @@ button{
 	font-size: 25px;
 	font-weight: 300px;
 	color: #228B22;
+}
+#menu{
+	margin-top: 20px;
 }
