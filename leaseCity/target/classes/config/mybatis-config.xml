@@ -59,6 +59,7 @@
 		<mapper resource="mybatis/mapper/adminwork/standByUserRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/questionRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/answerRepo.xml" />
+		<mapper resource="mybatis/mapper/adminwork/notifyRepo.xml" />
 		
 	</mappers>	
 	

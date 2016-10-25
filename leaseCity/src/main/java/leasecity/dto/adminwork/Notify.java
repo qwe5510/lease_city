@@ -50,12 +50,6 @@ public class Notify implements Serializable {
 	/** 댓글 인식번호. */
 	private Integer replyNo;
 
-	/** 질문글 번호. */
-	private Integer questionNo;
-
-	/** 답변글 번호. */
-	private Integer answerNo;
-
 	/** 알림날짜. */
 	private Date notifyDate;
 }
