@@ -17,17 +17,20 @@
 		<div class="lease_main">
 			<br><br>
 			<c:url value="/lease_request_read" var="lease_request_read"></c:url>
-			<sform:form action="#" method="post" modelAttribute="ConstructionCompany">
+			<sform:form action="#" method="post" modelAttribute="constructionCompany">
 			<fieldset>
 			<legend>기업개요</legend>
 			<table>
 				<tr>
+					<td><sform:label path="companyName">회사명</sform:label></td>
+					<td><sform:label path="representName">대표자</sform:label></td>
 				</tr>
 				<tr>
+					<td><sform:label path="companyCategory">회사분류</sform:label></td>
+					<td><sform:label path="address">소재지</sform:label></td>
 				</tr>
 				<tr>
-				</tr>
-				<tr>
+					<td><sform:label path="licenseList">자격증목록</sform:label></td>
 				</tr>
 			</table>
 			</fieldset>
@@ -37,8 +40,12 @@
 			<legend>임대신청</legend>
 			<table>
 				<tr>
+					<td><sform:label path="leaseCategory">공사업종</sform:label></td>
+					<td><sform:label path="address">작업장소</sform:label></td>
 				</tr>
 				<tr>
+					<td><sform:label path="equipmentCategory">필요차량</sform:label></td>
+					<td><sform:label path="regDate">기간</sform:label></td>
 				</tr>
 				<tr>
 				</tr>
