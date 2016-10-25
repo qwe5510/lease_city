@@ -1,11 +1,7 @@
 package leasecity.controller;
 
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,30 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import leasecity.dto.adminwork.StandByUser;
-import leasecity.dto.user.ConstructionCompany;
-import leasecity.dto.user.HeavyEquipment;
-import leasecity.dto.user.HeavyEquipmentCompany;
-import leasecity.dto.user.License;
 import leasecity.dto.user.User;
-import leasecity.exception.DuplicateValueException;
-import leasecity.exception.JoinFailException;
 import leasecity.exception.LoginFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
 import leasecity.service.StandByUserService;
 import leasecity.service.UserService;
-import leasecity.util.DateUtil;
 import leasecity.util.SendMailUtil;
 
 @Controller
 public class LoginController {
 
 	static Logger logger = LoggerFactory.getLogger(LoginController.class);
-
+	
 	@Autowired
 	StandByUserService SBUService;
 
@@ -73,26 +60,30 @@ public class LoginController {
 	@RequestMapping(value = "/tryLogin")
 	public String popup_login(Model model, HttpServletRequest request, RedirectAttributes redir, HttpSession session) {
 		
-		User user = new User();
+		User user = null;
+		User admin = null;
 		
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 
+		
+		//관리자 로그인부터 시도
 		try {
-			user = UService.login(userId, password);
-			logger.trace("로그인 시도 : {}, {}", userId, password);
-			session.setAttribute("loginUser", user);
-			redir.addFlashAttribute("join_message", userId + "님 로그인 하셨습니다.");
-		} catch (LoginFailException e) {
-			redir.addFlashAttribute("join_message", "로그인에 실패하였습니다.");
-			return "redirect:/login";
+			admin = UService.adminLogin(userId, password);
+			session.setAttribute("admin", admin);
+			redir.addFlashAttribute("join_message", "관리자님 반갑습니다.");
+		} catch (LoginFailException e1) { // 관리자 로그인이 실패했을 경우
+			try {
+				user = UService.login(userId, password);
+				logger.trace("로그인 시도 : {}, {}", userId, password);
+				session.setAttribute("loginUser", user);
+				redir.addFlashAttribute("join_message", userId + "님 로그인 하셨습니다.");
+			} catch (LoginFailException e) {
+				redir.addFlashAttribute("join_message", "로그인 실패 - 아이디 혹은 비밀번호가 올바르지 않습니다.");
+				return "redirect:/login";
+			}
 		}
-		return "redirect:/tryLoginPRG";
-	}
-	
-	@RequestMapping(value = "/tryLoginPRG", method = RequestMethod.GET)
-	public String tryLoginPRG(HttpSession session) {
-		return "index";
+		return "redirect:/index";
 	}
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)

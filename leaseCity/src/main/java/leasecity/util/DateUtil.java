@@ -20,8 +20,6 @@ public class DateUtil {
 					+ (calendar.get(Calendar.MONTH)+1) + "-"
 					+ calendar.get(Calendar.DAY_OF_MONTH);
 		}
-		
-		 
 	}
 	
 	//Date의 시간을 String으로 전환.
@@ -73,6 +71,23 @@ public class DateUtil {
 		calendar.set(Calendar.DAY_OF_MONTH, intDay);
 		
 		return calendar.getTime();
+	}
+	
+	public static Integer getTimeNumber(Date date){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		
+		StringBuffer sb = new StringBuffer();
+		
+		sb
+		.append(calendar.get(Calendar.YEAR))
+		.append(calendar.get(Calendar.MONTH)+1)
+		.append(calendar.get(Calendar.DAY_OF_MONTH))
+		.append(calendar.get(Calendar.HOUR))
+		.append(calendar.get(Calendar.MINUTE))
+		.append(calendar.get(Calendar.SECOND));
+		
+		return Integer.parseInt(sb.toString());
 	}
 
 }

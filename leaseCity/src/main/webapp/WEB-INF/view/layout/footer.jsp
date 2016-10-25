@@ -39,12 +39,12 @@
 		</div>
 	</footer>
 	<!--/Footer-->
-	<script src="js/vendor/jquery-1.9.1.min.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="js/main.js"></script>
+	<script src="<%=request.getContextPath()%>/js/vendor/jquery-1.9.1.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/vendor/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/main.js"></script>
 	<!-- Required javascript files for Slider -->
-	<script src="js/jquery.ba-cond.min.js"></script>
-	<script src="js/jquery.slitslider.js"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.ba-cond.min.js"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.slitslider.js"></script>
 	<!-- /Required javascript files for Slider -->
 </body>
 </html>

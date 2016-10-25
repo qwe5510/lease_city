@@ -43,9 +43,8 @@
 				});
 			</script>
 		</div>
-		<c:url value="/board_write" var="board_write" />
-		<div class="board_read_main">
 
+		<div class="board_read_main">
 				<div class="board_read_line">
 					<table class="board_read_table">
 						<tr>
@@ -82,12 +81,15 @@
 							pattern="yyyy-MM-dd  hh:mm:ss" var="commentRegDate" />
 						<tr>
 							<td width="2px" class="boardLine"></td>
-							<td colspan="6" align="left"><span
-								class="board_read_comment_author"> <c:out
-										value="${comment.companyName}"></c:out> <span
-									class="board_read_comment_userId"> (<c:out
-											value="${comment.outputId}"></c:out>)
-								</span>
+							<td colspan="6" align="left">
+							
+								<span class="board_read_comment_author"> 
+									${comment.companyName}
+								<c:if test="${comment.userId != 'admin'}"> 
+									<span class="board_read_comment_userId">
+										(${comment.outputId})
+									</span>
+								</c:if>
 							</span></td>
 							<td colspan="5" align="right"><b><c:out
 										value="${commentRegDate}"></c:out></b></td>
@@ -108,7 +110,7 @@
 						</tr>
 					</table>
 					<div style="text-align: left; padding: 10px;">
-						<span id="comment_reply_count">댓글 <b><c:out value="${comment.replyCount }"></c:out></b>개</span>
+						<span id="comment_reply_count">댓글 <b>${comment.replyCount}</b>개</span>
 					</div>
 
 					<div class="comment_reply">
@@ -128,9 +130,19 @@
 									</div>
 									<!-- 이부분 Session Filter 해야 함 -->
 									<div class="reply_option">
-										<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
-										<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
-										<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
+										<c:if test="${!empty admin}">
+											<c:if test="${admin.userId eq reply.userId}">
+											<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
+											<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
+										</c:if>
+											<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
+										</c:if>
+										
+										<c:if test="${!empty loginUser and loginUser.userId eq reply.userId}">
+											<button title="댓글 수정" class="reply_adjust"><i class="icon-eraser"></i></button>
+											<button title="댓글 수정 취소" style="display: none;" class="reply_adjust_cancel"><i class="icon-eraser"></i></button>
+											<button title="댓글 삭제" id="reply_remove" class="reply_remove"><i class="icon-remove"></i></button>
+										</c:if>
 									</div>
 									<div class="reply_date">
 										${replyRegDate}
@@ -222,29 +234,53 @@
 		<button id="board_read_write">
 			<i class="icon-pencil"></i>글쓰기</button>
 
+			<c:if test="${empty admin}">
+				<c:if test="${comment.userId eq loginUser.userId}">
+					<c:url value="/board/adjust" var="boardAdjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardAdjust}" method="POST">
+					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
+					<sform:hidden path="commentNo"/>
+					<sform:hidden path="commentContent"/>
+					<sform:hidden path="commentTitle"/>
+					<sform:hidden path="locale"/>
+					<sform:hidden path="kind"/>
+					<input name="currentPage" type="hidden" value="${page.currentPage}">
+					</sform:form>
+				</c:if>
 			
-			<c:if test="${comment.userId eq loginUser.userId}">
-				<c:url value="/board_adjust" var="board_adjust" />
-				<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
-				<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
-				<sform:hidden path="commentNo"/>
-				<sform:hidden path="commentContent"/>
-				<sform:hidden path="commentTitle"/>
-				<sform:hidden path="locale"/>
-				<sform:hidden path="kind"/>
-				<input name="userId" type="hidden" value="${loginUser.userId}" />
-				<input name="currentPage" type="hidden" value="${page.currentPage}">
-				</sform:form>
+				<!-- 관리자가 로그인했을 때도 출력되게 해야함 -->
+				<c:if test="${comment.userId eq loginUser.userId}">
+					<c:url value="/boardRemove" var="boardRemove" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardRemove}" method="POST">
+					<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
+					<sform:hidden path="commentNo"/>
+					<sform:hidden path="commentTitle"/>
+					<input name="currentPage" type="hidden" value="${page.currentPage}">
+					</sform:form>
+				</c:if>
 			</c:if>
 			
-			<!-- 관리자가 로그인했을 때도 출력되게 해야함 -->
-			<c:if test="${comment.userId eq loginUser.userId}">
+			<!-- 관리자 로그인 시-->
+			<c:if test="${!empty admin}">
+				
+				<c:if test="${comment.userId eq admin.userId}">
+					<c:url value="/board/adjust" var="boardAdjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardAdjust}" method="POST">
+					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>path="commentNo"/>
+					<sform:hidden path="commentContent"/>
+					<sform:hidden path="commentTitle"/>
+					<sform:hidden path="locale"/>
+					<sform:hidden path="kind"/>
+					<input name="userId" type="hidden" value="${admin.userId}" />
+					<input name="currentPage" type="hidden" value="${page.currentPage}">
+					</sform:form>
+				</c:if>
+				
 				<c:url value="/boardRemove" var="boardRemove" />
 				<sform:form id="board_edit_form" modelAttribute="comment" action="${boardRemove}" method="POST">
 				<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
 				<sform:hidden path="commentNo"/>
 				<sform:hidden path="commentTitle"/>
-				<input name="userId" type="hidden" value="${loginUser.userId}" />
 				<input name="currentPage" type="hidden" value="${page.currentPage}">
 				</sform:form>
 			</c:if>
@@ -292,28 +328,28 @@
                   
                   <c:choose>
 	                  <c:when test="${!empty page.keyword and !empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.keyword}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:otherwise>
                		</c:choose>
 
-                      <c:if test="${comment.hits >= 100}">
+                     <c:if test="${comment.hits >= 100 and (strRegDate eq today)}">
                      	<span class="label label-important">
                      		hot
                      	</span>
@@ -325,8 +361,18 @@
                      	</span>
                      </c:if>
                   </td>
-                  <td><c:out value="${comment.companyName}" /></td>
-                  <td><c:out value="${comment.hits}" /></td>               
+                  
+                  <td>
+                  <c:choose>
+                  	<c:when test="${comment.userId eq 'admin'}">
+                  	<b>${comment.companyName}</b>
+                  	</c:when>
+                  	<c:otherwise>
+                  		${comment.companyName}
+                  	</c:otherwise>
+                  </c:choose>
+                  </td>
+                  <td>${comment.hits}</td>               
                   
                   <fmt:formatDate value="${comment.regDate}"
                         pattern="yyyy-MM-dd"
@@ -512,12 +558,8 @@
          </sform:form>
          </div>
       </div>
-	
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
-
-
-
 </body>
 <script>
 
@@ -561,10 +603,10 @@
 		location.href="${board}";
 	});
 	
-	<c:url value="/board_write" var="board_write"/>
+	<c:url value="/board/write" var="boardWrite"/>
 	$("#board_read_write").on("click", function(e){
 		e.preventDefault();
-		location.href="${board_write}";
+		location.href="${boardWrite}";
 	});
 	
 	//게시글 삭제
@@ -607,13 +649,28 @@
 					str+=("<li>");
 					str+=("<div class='reply_author'>");
 					str+=(reply.companyName+"</div>");
+					<c:if test="${!empty admin}">
 					str+=("<div class='reply_option'>");
-					str+=("<button title='댓글 수정' style='margin-right:3px;' class='reply_adjust'>");
-					str+=("<i class='icon-eraser'></i></button>");
-					str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
-					str+=("<i class='icon-eraser'></i></button>");
+					if("${admin.userId}" == reply.userId){
+						str+=("<button title='댓글 수정' style='margin-right:3px;' class='reply_adjust'>");
+						str+=("<i class='icon-eraser'></i></button>");
+						str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
+						str+=("<i class='icon-eraser'></i></button>");
+					}
 					str+=("<button title='댓글 삭제' id='reply_remove' class='reply_remove'>");
 					str+=("<i class='icon-remove'></i></button></div>");
+					</c:if>
+					<c:if test="${!empty loginUser}">
+						if("${loginUser.userId}" == reply.userId){
+							str+=("<div class='reply_option'>");
+							str+=("<button title='댓글 수정' style='margin-right:3px;' class='reply_adjust'>");
+							str+=("<i class='icon-eraser'></i></button>");
+							str+=("<button title='댓글 수정 취소' style='margin-right:3px; display: none;' class='reply_adjust_cancel'>");
+							str+=("<i class='icon-eraser'></i></button>");
+							str+=("<button title='댓글 삭제' id='reply_remove' class='reply_remove'>");
+							str+=("<i class='icon-remove'></i></button></div>");
+						}
+					</c:if>
 					str+=("<div class='reply_date'>");
 					str+=(new Date(reply.regDate).format("yyyy-MM-dd hh:mm:ss"));
 					str+=("</div>");
@@ -699,7 +756,7 @@
 			url : "${replyRegistryAjax}",
 			data : {
 				commentNo : ${comment.commentNo},
-				userId : "${loginUser.userId}",
+				userId : "${!empty admin?admin.userId:loginUser.userId}",
 				replyContent : inputArea				
 			},
 			success : function(page){
@@ -777,7 +834,7 @@
 			url : "${replyAdjustAjax}",
 			data : {
 				commentNo : commentNo,
-				userId : "${loginUser.userId}",
+				userId : "${!empty admin?admin.userId:loginUser.userId}",
 				replyNo : replyNo,
 				replyContent : inputArea				
 			},
@@ -813,7 +870,7 @@
 				url : "${replyRemoveAjax}",
 				data : {
 					commentNo : commentNo,
-					userId : "${loginUser.userId}",
+					userId : "${admin==null?loginUser.userId:admin.userId}",
 					replyNo : replyNo			
 				},
 				success : function(page){

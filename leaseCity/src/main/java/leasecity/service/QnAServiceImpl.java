@@ -143,13 +143,13 @@ public class QnAServiceImpl implements QnAService{
 	public void removeQuestion(Comment comment) throws RemoveFailException {
 		int result = answerRepo.getCountQuestionAnswer(comment.getCommentNo());
 		if(result >= 1){
-			logger.trace("게시글 삭제 실패 : 질문글에 대해 답변이 달려있음.");
+			logger.trace("질문 삭제 실패 : 질문글에 대해 답변이 달려있음.");
 			throw new RemoveFailException(comment.getCommentTitle() + "게시글");
 		}
 		
 		result = questionRepo.deleteQuestionAndAnswer(comment);
 		if(result != 1){
-			logger.trace("게시글 삭제 실패 : 대상 게시글 번호가 없음");
+			logger.trace("질문 삭제 실패 : 대상 게시글 번호가 없음");
 			throw new RemoveFailException(comment.getCommentTitle() + "게시글");
 		}
 	}
@@ -192,7 +192,7 @@ public class QnAServiceImpl implements QnAService{
 	//페이지 리턴
 	//----------------------------------------------------------------
 	@Override
-	public Page getCommentPage(Integer currentPage, Integer pageSize) {
+	public Page getQuestionPage(Integer currentPage, Integer pageSize) {
 		Page page = new Page();
 		page.setServiceKind("Q_AND_A");
 		page.setTotalCount(questionRepo.getCountAllQuestions());		
@@ -205,7 +205,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 
 	@Override
-	public Page getSearchCommentPage(Integer currentPage, Integer pageSize, String search, String keyword,
+	public Page getSearchQuestionPage(Integer currentPage, Integer pageSize, String search, String keyword,
 			String order) {
 		Page page = new Page();
 		page.setServiceKind("Q_AND_A");
@@ -222,7 +222,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 
 	@Override
-	public Page getFirstReplyPage(Integer commentNo, Integer pageSize) {
+	public Page getFirstAnswerPage(Integer commentNo, Integer pageSize) {
 		Page page = new Page();
 		page.setSuperNo(commentNo);
 		page.setTotalCount(answerRepo.getCountQuestionAnswer(commentNo));
@@ -235,7 +235,7 @@ public class QnAServiceImpl implements QnAService{
 	}
 
 	@Override
-	public Page getReplyPage(Integer commentNo, Integer currentPage, Integer pageSize) {
+	public Page getAnswerPage(Integer commentNo, Integer currentPage, Integer pageSize) {
 		Page page = new Page();
 		page.setSuperNo(commentNo);
 		page.setTotalCount(answerRepo.getCountQuestionAnswer(commentNo));

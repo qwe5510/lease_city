@@ -1102,13 +1102,13 @@ label {
    	position: absolute;
    	padding: 10px;
 }
-.board_read_line{
+.board_read_line, .qna_read_line{
 	border-style: solid;
     border-width: 2px;
     border-color: #e5e5e5;
     padding: 10px;
 }
-.board_read_table{
+.board_read_table, .qna_read_table{
 	width: 580px;
 }
 .board_read_comment{
@@ -1126,13 +1126,13 @@ label {
 }
 
 
-.board_read_comment_author{
+.board_read_comment_author, .qna_read_comment_author{
 	margin-left: 5px;
 	font-weight: bold;
 	font-size: 1.2em;
 }
 
-.board_read_comment_userId{
+.board_read_comment_userId, .qna_read_comment_userId{
 	font-size: 11px;
 }
 
@@ -1284,12 +1284,10 @@ button{
 	width : 780px;
 	font-size: 15px;
 	letter-spacing: 10px;
-	
 }
 /*board 검색부분  */
 .boardBottom{
 	width: 500px;
-	display: inline-block;
 	margin-left: 80px;
 }
 .boardBottom select{
@@ -1309,10 +1307,9 @@ button{
    background: #e5e5e5;
 }
 
-.communityTable{
+.communityTable, .QnATable{
    width : 780px;
    margin-right: 40px;
-   
 }
 .communityTable select{
 	margin-bottom: 20px;
@@ -1327,6 +1324,7 @@ button{
 	width: 600px;
 }
 .boardWriteTable textarea, .boardAdjustTable textarea{
+	padding: 0px;
 	width: 600px;
 	height: 500px;
 }
@@ -1523,7 +1521,8 @@ button{
 	background-size: cover;
 	min-width : 1200px;
 	min-height : 800px;
-	padding-top: 30px;
+	text-align: center;
+	padding-top: 80px;
     position: relative;
     overflow: auto;
 }
@@ -1532,9 +1531,9 @@ button{
 	min-height : 800px;
 	margin-left : 50px;
 	float : left;
+	min-width : 30%;
 	width : 30%;
-	position: fixed;
-    
+	position: fixed;    
 }
 .help_baseLine{
     padding: 0;
@@ -1545,10 +1544,12 @@ button{
     
 }
 .help_main{
-	float : right;
+	float: right;
+	margin-right: 50px;
 	min-height : 800px;
-	width : 65%;
-	margin-right: 30px;
+	width : 60%;
+	display: inline-block;
+	text-align: left;
 }
 .help_menu_inner1{
 	background: url(../images/help/help_menu1.png)
@@ -1604,7 +1605,8 @@ button{
 .helpWriteTable input[type="text"]{
 	width: 600px;
 }
-.helpWriteTable textarea{
+.helpWriteTable textarea, .helpAdjustTable textarea{
+	padding : 0px;
 	width: 600px;
 	height: 500px;
 }
@@ -1626,16 +1628,17 @@ button{
       width: 600px;
  }
  .manager_answer{
-  background: white;
+  	padding: 0px;
  }
  .manager_answer textarea {
 	width: 450px;
 }
 .manager_answer button {
-	width: 56px;
+	width: 480px;
     height: 46px;
     margin-bottom: 10px;
 }
+
 .faq_bold{
 	font-size: 19px;
 	font-weight: 100px;
@@ -1647,6 +1650,24 @@ button{
 	font-weight: 300px;
 	color: #228B22;
 }
+
+.qna_list{
+	float: right;
+	clear: both;
+	margin-top: 30px;
+	min-width: 60%;
+	text-align: center;
+}
+
+.qna_buttonForm{
+	display: inline;
+}
+
+.qna_read_bottom{
+	float: right;
+}
+
+
 #menu{
 	margin-top: 20px;
 }

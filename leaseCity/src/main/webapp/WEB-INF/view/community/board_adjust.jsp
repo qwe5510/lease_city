@@ -29,8 +29,8 @@
 			</div>
 			<div class="community">
 				<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
-				<c:url value="/board_read" var="board_read"/>
-				<sform:form id="board_adjust_form" action="adjustComment" method="post" modelAttribute="comment">
+				<c:url value="/adjustComment" var="adjustComment"/>
+				<sform:form id="board_adjust_form" action="${adjustComment}" method="post" modelAttribute="comment">
 					<table class="boardAdjustTable">
 						<tr>
 							<td colspan="4" class="boardLine" style="height: 4px !important;"></td>
@@ -111,7 +111,16 @@ $("#adjust").on("click",function(e){
 	var commentTitle = $("#commentTitle").val();
 	var commentContent = $("#commentContent").val();
 	
-	$("#board_adjust_form").append("<input type='hidden' name='userId' value='${loginUser.userId}'/>")
+	<c:choose>
+	<c:when test="${!empty admin}">
+		$("#board_adjust_form").append("<input type='hidden' name='userId' value='${admin.userId}'/>")
+	</c:when>
+	<c:otherwise>
+		$("#board_adjust_form").append("<input type='hidden' name='userId' value='${loginUser.userId}'/>")
+	</c:otherwise>
+	</c:choose>
+	
+	
 	
 	if(commentTitle==null || commentTitle==""){
 		alert("제목을 입력해주세요.");

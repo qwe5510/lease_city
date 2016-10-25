@@ -12,6 +12,10 @@ public interface UserService {
 	//회원가입
 	public void join(User user) throws JoinFailException;
 	
+	//관리자 로그인
+	public User adminLogin(String userId, String password)
+								throws LoginFailException;
+	
 	//로그인
 	public User login(String userId, String password)
 								throws LoginFailException;

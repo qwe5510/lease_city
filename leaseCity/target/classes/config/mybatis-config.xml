@@ -12,7 +12,7 @@
 	</settings>
 	
 	<typeAliases>
-	    <!-- 1.유저 (건설업체 - 자격증 / 중기업체 - 중장비)-->
+	    <!-- 1.유저 (관리자 (아무데도 속하지 않음) / 건설업체 - 자격증 / 중기업체 - 중장비)-->
 		<typeAlias type="leasecity.dto.user.User" alias="user"/>
 		<typeAlias type="leasecity.dto.user.ConstructionCompany" alias="constructionCompany"/>
 		<typeAlias type="leasecity.dto.user.License" alias="license" />
@@ -30,8 +30,7 @@
 		<typeAlias type="leasecity.dto.community.Comment" alias="comment" />
 		<typeAlias type="leasecity.dto.community.Reply" alias="reply" />
 		
-		<!--  4.관리자 기능(알림, 대기유저, 작업기록, 관리자 -->
-		<typeAlias type="leasecity.dto.adminwork.LeasecityAdmin" alias="leasecityAdmin" />
+		<!--  4.관리자 기능(알림, 대기유저, 작업기록 -->
 		<typeAlias type="leasecity.dto.adminwork.Notify" alias="notify" />
 		<typeAlias type="leasecity.dto.adminwork.StandByUser" alias="standByUser" />
 		<typeAlias type="leasecity.dto.adminwork.WorkLog" alias="workLog" />
@@ -55,7 +54,7 @@
 		<mapper resource="mybatis/mapper/community/replyRepo.xml" />
 		
 		<!-- 3.관리자작업 mapping -->
-		<mapper resource="mybatis/mapper/adminwork/leasecityAdminRepo.xml" />
+		<mapper resource="mybatis/mapper/adminwork/adminRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/standByUserRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/questionRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/answerRepo.xml" />

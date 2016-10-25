@@ -33,6 +33,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 		
 		registry.addResourceHandler("/font/**")
 		.addResourceLocations("/WEB-INF/font/");
+		
 	}
 	
 	@Bean
@@ -44,5 +45,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 		
 		return resolver;
 	}
+	
+	
 	
 }
