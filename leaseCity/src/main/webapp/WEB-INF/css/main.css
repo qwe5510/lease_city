@@ -1102,13 +1102,13 @@ label {
    	position: absolute;
    	padding: 10px;
 }
-.board_read_line{
+.board_read_line, .qna_read_line{
 	border-style: solid;
     border-width: 2px;
     border-color: #e5e5e5;
     padding: 10px;
 }
-.board_read_table{
+.board_read_table, .qna_read_table{
 	width: 580px;
 }
 .board_read_comment{
@@ -1126,13 +1126,13 @@ label {
 }
 
 
-.board_read_comment_author{
+.board_read_comment_author, .qna_read_comment_author{
 	margin-left: 5px;
 	font-weight: bold;
 	font-size: 1.2em;
 }
 
-.board_read_comment_userId{
+.board_read_comment_userId, .qna_read_comment_userId{
 	font-size: 11px;
 }
 
@@ -1284,12 +1284,10 @@ button{
 	width : 780px;
 	font-size: 15px;
 	letter-spacing: 10px;
-	
 }
 /*board 검색부분  */
 .boardBottom{
 	width: 500px;
-	display: inline-block;
 	margin-left: 80px;
 }
 .boardBottom select{
@@ -1309,10 +1307,9 @@ button{
    background: #e5e5e5;
 }
 
-.communityTable{
+.communityTable, .QnATable{
    width : 780px;
    margin-right: 40px;
-   
 }
 .communityTable select{
 	margin-bottom: 20px;
@@ -1327,6 +1324,7 @@ button{
 	width: 600px;
 }
 .boardWriteTable textarea, .boardAdjustTable textarea{
+	padding: 0px;
 	width: 600px;
 	height: 500px;
 }
@@ -1521,18 +1519,23 @@ button{
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	width : 1200px;
+	min-width : 1200px;
 	min-height : 800px;
+	text-align: center;
 	padding-top: 80px;
     position: relative;
     overflow: auto;
 }
 .help_menu{
+	background: url("../images/help/help_menu.png") no-repeat;
+	background-size: 260px 400px;
+	margin-top : 20px;
 	min-height : 800px;
 	margin-left : 50px;
 	float : left;
+	min-width : 30%;
 	width : 30%;
-    
+	position: fixed;
 }
 .help_baseLine{
     padding: 0;
@@ -1543,25 +1546,26 @@ button{
     
 }
 .help_main{
-	float : right;
+	float: right;
+	margin-right: 50px;
 	min-height : 800px;
 	width : 60%;
-	margin-right: 30px;
+	display: inline-block;
+	text-align: left;
 }
 .help_menu_inner1{
 	background: url(../images/help/help_menu1.png)
 	no-repeat 10% 30%;
 	padding: 55px;
 	margin-top: 23px;
-	margin-left: 50px;
+	margin-left: 10px;
 }
 .help_menu_ul{
 	list-style: none;
 	text-align: left;
 }
 .help_menu_ul li{
-	margin-left : 30px;
-	margin-top : 40px;
+	margin-top : 60px;
 	font-size: 25px;
 	font-family: NanumGothic,나눔고딕,'Helvetica Neue',Helvetica,'Apple SD Gothic Neo',AppleGothic,Dotum,돋움,Arial,sans-serif;
 }
@@ -1576,7 +1580,7 @@ button{
 }
 .help_table{
 	margin-top: 40px;
-	width: 780px;
+	width: 800px;
 	text-align: center;
 }
 .help_table .td1{
@@ -1603,7 +1607,8 @@ button{
 .helpWriteTable input[type="text"]{
 	width: 600px;
 }
-.helpWriteTable textarea{
+.helpWriteTable textarea, .helpAdjustTable textarea{
+	padding : 0px;
 	width: 600px;
 	height: 500px;
 }
@@ -1625,16 +1630,17 @@ button{
       width: 600px;
  }
  .manager_answer{
-  background: white;
+  	padding: 0px;
  }
  .manager_answer textarea {
 	width: 450px;
 }
 .manager_answer button {
-	width: 56px;
+	width: 480px;
     height: 46px;
     margin-bottom: 10px;
 }
+
 .faq_bold{
 	font-size: 19px;
 	font-weight: 100px;
@@ -1646,7 +1652,70 @@ button{
 	font-weight: 300px;
 	color: #228B22;
 }
-/* introduce 페이징 부분 설정 */
-.introduce{
+
+.qna_list{
+	float: right;
+	clear: both;
+	margin-top: 30px;
+	min-width: 60%;
 	text-align: center;
+}
+
+.qna_buttonForm{
+	display: inline;
+}
+
+.qna_read_bottom{
+	float: right;
+}
+
+
+#menu{
+	margin-top: 20px;
+}
+.introduce{
+	padding : 80px;
+	min-height : 500px;
+	text-align: center;
+}
+.lease{
+	background: url("../images/help_main.png")
+	no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width : 1200px;
+	min-height : 800px;
+	padding-top: 30px;
+    position: relative;
+    overflow: auto;
+}
+.lease_menu{
+	margin-top : 20px;
+	min-height : 800px;
+	margin-left : 50px;
+	float : left;
+	width : 30%;
+	position: fixed;
+    
+}
+.lease_main{
+	float : right;
+	min-height : 800px;
+	width : 65%;
+	margin-right: 30px;
+}
+.lease_main fieldset{
+	width: 700px;
+}
+#lease_request_form textarea{
+	width: 690px;
+	height : 60px;
+	padding: 0px;
+}
+.lease_write_bottom{
+	margin-top : 20px;
+	margin-right : 110px;
+	float: right;
 }

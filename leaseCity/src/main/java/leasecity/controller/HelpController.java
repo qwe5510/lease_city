@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,7 +19,10 @@ import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 import leasecity.dto.user.User;
 import leasecity.exception.NotFoundDataException;
+import leasecity.exception.RemoveFailException;
 import leasecity.exception.ServiceFailException;
+import leasecity.exception.WriteFailException;
+import leasecity.service.AdminService;
 import leasecity.service.QnAService;
 
 @Controller
@@ -31,23 +35,17 @@ public class HelpController {
 	@Autowired
 	QnAService qnaService;
 	
-	@RequestMapping(value="/FAQ")
+	@Autowired
+	AdminService adminService;
+	
+	@RequestMapping(value="/help/FAQ")
 	public String FAQ(Model model){
 		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
+		logger.trace("자주 묻는 질문 입장");
 		return "help/FAQ";
-		
-	}
-	@RequestMapping(value="/information")
-	public String information(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
-		return "help/information";
 	}
 	
-	@RequestMapping(value="/question_answer_read")
+	@RequestMapping(value="/help/qna/read")
 	public String question_answer_read(Model model, HttpSession session, 
 			RedirectAttributes redir, Page searchPage, 
 			@RequestParam(value="currentPage", required=false) Integer currentPage,
@@ -70,19 +68,20 @@ public class HelpController {
 		try {
 
 			if (searchPage != null) {
-				page = qnaService.getSearchCommentPage(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
+				page = qnaService.getSearchQuestionPage(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
 						searchPage.getKeyword(), order);
 				logger.trace("page : {}", page);
 				comments = qnaService.loadPageQuestions(page);
 			} else if (searchPage == null) {
-				page = qnaService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+				page = qnaService.getQuestionPage(currentPage, COMMENT_PAGE_SIZE);
 				comments = qnaService.loadPageQuestions(page);
 			}
 
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 
 			// 로그인 중인 유저 탐색
-			User loginUser = (User) session.getAttribute("loginUser");
+			User loginUser = (User) session.getAttribute("loginUser")==null?
+									(User)session.getAttribute("admin"):(User)session.getAttribute("loginUser");
 
 			try {
 				loginUser = isUserLogin(loginUser);
@@ -91,7 +90,6 @@ public class HelpController {
 				return "redirect:/index";
 			}
 
-			logger.trace("들어온 commentNo : {}", commentNo);
 			comment = qnaService.viewQuestion(commentNo, loginUser.getUserId());
 			logger.trace("보는 게시글 : {}", comment);
 
@@ -99,18 +97,18 @@ public class HelpController {
 			comment.setCommentContent(commentContent);
 
 			if (search != null && keyword != null) {
-				page = qnaService.getSearchCommentPage(currentPage, COMMENT_PAGE_SIZE, search, keyword, order);
+				page = qnaService.getSearchQuestionPage(currentPage, COMMENT_PAGE_SIZE, search, keyword, order);
 			} else if (search == null || keyword == null) {
-				page = qnaService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+				page = qnaService.getQuestionPage(currentPage, COMMENT_PAGE_SIZE);
 			}
 		} catch (NotFoundDataException e) {
-			redir.addFlashAttribute("board_message", "비공개 또는 삭제된 게시글입니다.");
-			return "redirect:/question_answer";
+			redir.addFlashAttribute("qna_message", "비공개 또는 삭제된 게시글입니다.");
+			return "redirect:/help/qna";
 		}
 
 		// 3.댓글 정보 입력
 		try {
-			replyPage = qnaService.getFirstReplyPage(comment.getCommentNo(), REPLY_PAGE_SIZE);
+			replyPage = qnaService.getFirstAnswerPage(comment.getCommentNo(), REPLY_PAGE_SIZE);
 			replys = qnaService.loadQuestionAnswers(replyPage);
 
 			for (Reply reply : replys) {
@@ -123,23 +121,112 @@ public class HelpController {
 			model.addAttribute("errorMsg", "등록된 댓글이 없습니다.");
 		}
 
-		model.addAttribute("comments", comments);
-		model.addAttribute("comment", comment);
+		model.addAttribute("Q_AND_A", comments);
+		model.addAttribute("question", comment);
 		model.addAttribute("page", page);
 
-		model.addAttribute("replyPage", replyPage);
-		model.addAttribute("replys", replys);
+		model.addAttribute("answerPage", replyPage);
+		model.addAttribute("answers", replys);
 
 		return "help/question_answer_read";
 	}
 	
-	@RequestMapping(value="/question_answer_write")
-	public String question_answer_write(Model model){
+	@RequestMapping(value="/help/qna/write")
+	public String questionAnswerWrite(Model model){
+		Comment question = new Comment();
+		model.addAttribute("question", question);
+		logger.trace("질문글 작성 페이지 이동");
 		return "help/question_answer_write";
 	}
 	
-	@RequestMapping(value="/question_answer")
-	public String question_answer(Model model, Page searchPage,
+	// 게시글 작성
+	@RequestMapping(value = "/writeQuestion", method = RequestMethod.POST)
+	public String writeQuestion(Model model, HttpSession session, 
+			RedirectAttributes redir, Comment comment) {
+
+		// 1. 유저가 로그인 되있는지 확인
+		User user = null;
+		// 1-2. 유저가 없을 시 관리자 대입
+		Object userObj = session.getAttribute("loginUser") == null ? session.getAttribute("admin")
+				: session.getAttribute("loginUser");
+		try {
+			user = isUserLogin(userObj);
+		} catch (ServiceFailException e) {
+			redir.addFlashAttribute("join_message", "로그인 세션이 만료 되었습니다.");
+			return "redirect:/index";
+		}
+
+		logger.trace("userObj 확인 : {}", userObj);
+
+		// 2. 게시물에 필요 정보 넣기
+		comment.setUserId(user.getUserId()); // 로그인된 유저
+		logger.trace("작성한 게시물 내용 : {}", comment);
+
+		// 3. 게시물 작성
+		try {
+			qnaService.writeQuestion(comment);
+			logger.trace("글 작성 성공");
+		} catch (WriteFailException e) {
+			redir.addFlashAttribute("qna_message", "글 작성 실패.");
+			logger.trace("글 작성 실패");
+			return "redirect:/help/qna";
+		}
+		// 4. 끝
+		logger.trace("글 작성 페이지 이동");
+		return "redirect:/help/qna/read?commentNo=" + comment.getCommentNo();
+	}
+	
+	// 게시글 작성
+	@RequestMapping(value = "/writeAnswer", method = RequestMethod.POST)
+	public String writeAnswer(Model model, HttpSession session, 
+			RedirectAttributes redir, Comment comment,
+			@RequestParam String content) {
+		
+		User admin = (User)session.getAttribute("admin");
+		if(adminService.isAdmin(admin.getUserId())){
+			try {
+				Reply reply = new Reply
+						(null, comment.getCommentNo(), 
+								admin.getUserId(), admin.getCompanyName(), 
+								content, null);
+				qnaService.writeAnswer(reply);
+			} catch (WriteFailException e) {
+				redir.addFlashAttribute("qna_message", 	"답변 등록에 실패 하였습니다.");
+			}
+		}else{
+			redir.addFlashAttribute("qna_message", 	"권한이 없습니다.");
+			return "redirect:/help/qna";
+		}
+		
+		return "redirect:/help/qna/read?commentNo=" + comment.getCommentNo();			
+	}
+	
+	@RequestMapping(value = "/removeQuestion", method = RequestMethod.POST)
+	public String removeQuestion(Model model, HttpSession session,
+			RedirectAttributes redir, Comment comment){
+		
+		User user = session.getAttribute("loginUser")==null?
+				(User)session.getAttribute("admin")
+				:(User)session.getAttribute("loginUser");
+		
+			try {
+				if(adminService.isAdmin(user.getUserId())){
+					adminService.removeQuestion(comment.getCommentNo());
+				}else{
+					qnaService.removeQuestion(comment);
+				}
+				redir.addFlashAttribute("qna_message", "질문글을 삭제 하였습니다.");
+			} catch (RemoveFailException e) {
+				logger.error("게시글 삭제 실패");
+				redir.addFlashAttribute("qna_message", "답변이 달린 질문 글은 삭제할 수 없습니다.");
+				return "redirect:/help/qna/read?commentNo=" + comment.getCommentNo();
+			}
+			
+		return "redirect:/help/qna";
+	}
+	
+	@RequestMapping(value="/help/qna", method=RequestMethod.GET)
+	public String questionAnswer(Model model, Page searchPage,
 			@RequestParam(value="currentPage", required=false) 
 			Integer currentPage,
 			@RequestParam(value="order", required=false)
@@ -154,13 +241,13 @@ public class HelpController {
 		
 		try {
 			if(searchPage != null){
-				page = qnaService.getSearchCommentPage
+				page = qnaService.getSearchQuestionPage
 						(currentPage, COMMENT_PAGE_SIZE, searchPage.getSearch(),
 								searchPage.getKeyword(), order);
 				logger.trace("page : {}", page);
 				comments = qnaService.loadTermsQuestions(page);
 			}else if(searchPage == null){
-				page = qnaService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
+				page = qnaService.getQuestionPage(currentPage, COMMENT_PAGE_SIZE);
 				comments = qnaService.loadPageQuestions(page);
 			}			
 				//model.addAttribute("comments", comments);
@@ -170,8 +257,6 @@ public class HelpController {
 			logger.error("게시글이 없음");
 			model.addAttribute("errorMsg", "게시글이 없습니다.");
 		}
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
 		return "help/question_answer";
 	}
 	

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.adminRepo">
+ 	
+ 	<!-- 관리자 인증 -->
+ 	<!-- 두 테이블 다 속하지 않을 경우 -> 관리자 -->
+ 	<select id="isAdminSelect" parameterType="String" resultType="user">
+		SELECT * 
+		FROM users u LEFT JOIN construction_company cc ON u.user_id = cc.user_id
+        LEFT JOIN heavy_equipment_company hec ON u.user_id = hec.user_id
+        WHERE u.user_id = #{userId} AND cc.user_id IS NULL AND hec.user_id IS NULL
+ 	</select>
+ 	
+ 	<!-- 커뮤니티  -->
+ 	<!-- 게시글 삭제 -->
+ 	<delete id="deleteCommunityComment" parameterType="int">
+ 		DELETE FROM comments
+ 		WHERE comment_no = #{commentNo}
+ 			  AND attribute = 'COMMUNITY'
+ 	</delete>
+ 	
+ 	<!-- 댓글 삭제 -->
+ 	<delete id="deleteCommunityReply" parameterType="int">
+ 		DELETE FROM replys
+ 		WHERE reply_no = #{replyNo}
+ 	</delete>
+ 	
+ 	
+ 	<!-- 질문과 답변 -->
+ 	<!-- 질문 삭제 -->
+ 	<delete id="deleteQuestion" parameterType="int">
+ 		DELETE FROM comments
+ 		WHERE comment_no = #{commentNo}
+ 			  AND attribute = 'Q_AND_A'
+ 	</delete>
+ 	
+ 	<!-- 답변 삭제 -->
+ 	<delete id="deleteAnswer" parameterType="int">
+ 		DELETE FROM replys
+ 		WHERE reply_no = #{replyNo}
+ 	</delete>
+ 	
+ 	
+ 	 
+ </mapper>

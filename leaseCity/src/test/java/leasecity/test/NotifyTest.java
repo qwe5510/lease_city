@@ -1,27 +1,17 @@
 package leasecity.test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
-import leasecity.dto.adminwork.LeasecityAdmin;
 import leasecity.dto.adminwork.Notify;
-import leasecity.repo.adminwork.LeasecityAdminRepo;
 import leasecity.repo.adminwork.NotifyRepo;
-import leasecity.repo.user.UserRepo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ApplicationConfig.class})
@@ -41,7 +31,7 @@ public class NotifyTest {
 
 		logger.trace("session : {}", session);
 		
-		Notify notify = new Notify(null, "yhjcom78", null, null, null, null, null, null, null, null);
+		Notify notify = new Notify(null, "yhjcom78", null, null, null, null, null, null, null, null, null);
 		
 		
 		System.out.println(notify);

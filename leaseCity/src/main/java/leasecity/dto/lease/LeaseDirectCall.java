@@ -37,5 +37,11 @@ public class LeaseDirectCall implements Serializable {
 
 	/** 직접요청 내용. */
 	private String directCallContent;
+	
+	/** 하한가격 (~부터). */
+	private Integer fromprice;
+
+	/** 상한가격 (~까지). */
+	private Integer toprice;
 
 }

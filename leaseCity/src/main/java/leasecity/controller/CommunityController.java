@@ -1,15 +1,12 @@
 package leasecity.controller;
 
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,11 +28,11 @@ import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 import leasecity.dto.user.User;
 import leasecity.exception.ChangeValueFailException;
-//github.com/qwe5510/lease_city.git
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.RemoveFailException;
 import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
+import leasecity.service.AdminService;
 import leasecity.service.CommunityService;
 
 @Controller
@@ -47,6 +43,9 @@ public class CommunityController {
 	
 	@Autowired
 	CommunityService communityService;
+	
+	@Autowired
+	AdminService adminService;
 	
 	@InitBinder
 	public void setBindingFormat(WebDataBinder binder){
@@ -100,8 +99,8 @@ public class CommunityController {
 		}
 	
 	//게시판 글 , 댓글 확인
-	@RequestMapping(value="/board_read", method = RequestMethod.GET)
-	public String board_read(Model model, HttpSession session, 
+	@RequestMapping(value="/board/read", method = RequestMethod.GET)
+	public String boarRead(Model model, HttpSession session, 
 			RedirectAttributes redir, Page searchPage, 
 			@RequestParam(value="currentPage", required=false) Integer currentPage,
 			@RequestParam(value="commentNo", required=false) Integer commentNo,
@@ -137,7 +136,12 @@ public class CommunityController {
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 			
 			//로그인 중인 유저 탐색
-			User loginUser = (User)session.getAttribute("loginUser");
+			User loginUser = (User) session.getAttribute("loginUser");
+			
+			//loginUser가 null이면 관리자로 대입.
+			if(loginUser == null){
+				loginUser = (User) session.getAttribute("admin");
+			}
 			
 			try {
 				loginUser = isUserLogin(loginUser);
@@ -146,11 +150,9 @@ public class CommunityController {
 				return "redirect:/index";
 			}
 			
-			
 			logger.trace("들어온 commentNo : {}", commentNo);
 			comment = communityService.viewComment(commentNo, loginUser.getUserId());
 			logger.trace("보는 게시글 : {}", comment);
-			
 			String commentContent = comment.getCommentContent().replaceAll("\n", "<br>");
 			comment.setCommentContent(commentContent);
 			
@@ -190,7 +192,7 @@ public class CommunityController {
 		
 	}
 	
-	@RequestMapping(value="/board_adjust", method = RequestMethod.POST)
+	@RequestMapping(value="/board/adjust", method = RequestMethod.POST)
 	public String boardAdjust(Model model, Comment comment, RedirectAttributes redir,
 			@RequestParam Integer currentPage, @RequestParam String userId){
 		
@@ -206,7 +208,7 @@ public class CommunityController {
 			communityService.isCommentUser(comment);
 		} catch (NotFoundDataException e) {
 			redir.addFlashAttribute("board_message", "회원님의 게시글이 아닙니다.");
-			return "redirect:/board_read?currentPage"+currentPage + "&commentNo="+comment.getCommentNo();
+			return "redirect:/board/read?currentPage"+currentPage + "&commentNo="+comment.getCommentNo();
 		}
 		
 		model.addAttribute("comment", comment);
@@ -292,44 +294,57 @@ public class CommunityController {
 			@RequestParam String userId,
 			@RequestParam Integer replyNo){
 		Page page = null;
-		Reply reply = new Reply(replyNo, commentNo, userId, null, null, null);
 		
-		try {
-			communityService.removeReply(reply);
-			page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
-		} catch (RemoveFailException e) {
-			logger.trace("댓글 삭제 실패", e);
-			return null;
+		if(adminService.isAdmin(userId)){
+			try {
+				adminService.removeCommunityReply(replyNo);
+				page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
+			} catch (RemoveFailException e) {
+				logger.trace("댓글 삭제 실패", e);
+				return null;
+			}
+		}else{
+			Reply reply = new Reply(replyNo, commentNo, userId, null, null, null);
+			try {
+				communityService.removeReply(reply);
+				page = communityService.getFirstReplyPage(commentNo, REPLY_PAGE_SIZE);
+			} catch (RemoveFailException e) {
+				logger.trace("댓글 삭제 실패", e);
+				return null;
+			}
 		}
+		
 		return page;
 	}
 
 	//게시글 댓글 작성 페이지 이동 ( 기능 X )
-	@RequestMapping(value="/board_write")
-	public String board_write(Model model){
+	@RequestMapping(value="/board/write")
+	public String boardWrite(Model model){
 		Comment comment = new Comment();
 		model.addAttribute("comment", comment);
 		logger.trace("글 작성 페이지 이동");
 		return "community/board_write";
 	}
 	
-	// 게시글 댓글 작성
+	// 게시글 작성
 	@RequestMapping(value = "/writeComment", method = RequestMethod.POST)
 	public String writeComment(Model model, HttpSession session,
 			RedirectAttributes redir, Comment comment) {
 		
 		// 1. 유저가 로그인 되있는지 확인
-		User user = new User();
+		User user = null;
+		// 1-2. 유저가 없을 시 관리자 대입
+		Object userObj = session.getAttribute("loginUser")==null?
+							session.getAttribute("admin"):session.getAttribute("loginUser");
 		try {
-			user = isUserLogin(session.getAttribute("loginUser"));
+			user = isUserLogin(userObj);
 		} catch (ServiceFailException e) {
-			redir.addFlashAttribute("join_message", "로그인이 만료됬습니다.");
+			redir.addFlashAttribute("join_message", "로그인 세션이 만료 되었습니다.");
 			return "redirect:/index";
 		}
 
 		// 2. 게시물에 필요 정보 넣기
 		comment.setUserId(user.getUserId()); // 로그인된 유저
-		//comment.setUserId("ysh5586"); // 임시 아이디
 		comment.setCommentCategory(comment.getLocale() + "/" + comment.getKind()); // board 페이지에서 보여줄 정보
 		logger.trace("작성한 게시물 내용 : {}", comment);
 		
@@ -344,7 +359,7 @@ public class CommunityController {
 		} 
 		// 4. 끝
 		logger.trace("글 작성 페이지 이동");
-		return "redirect:/board_read?commentNo="+comment.getCommentNo();
+		return "redirect:/board/read?commentNo="+comment.getCommentNo();
 	}
 	
 	//게시글 수정
@@ -361,23 +376,33 @@ public class CommunityController {
 			return "redirect:/board";
 		}
 		
-		return "redirect:/board_read?currentPage="+ currentPage +"&commentNo="+comment.getCommentNo();
+		return "redirect:/board/read?currentPage="+ currentPage +"&commentNo="+comment.getCommentNo();
 	}
 	
 	//게시글 삭제
 	@RequestMapping(value="/boardRemove", method = RequestMethod.POST)
-	public String boardRemove(Model model, Comment comment, RedirectAttributes redir,
-			@RequestParam Integer currentPage, @RequestParam String userId){
+	public String boardRemove(Model model, Comment comment, HttpSession session, 
+			RedirectAttributes redir, @RequestParam Integer currentPage){
+		
+		// 로그인된 유저가 없으면 관리자 속성 return
+		User user = session.getAttribute("loginUser")==null?
+				(User)session.getAttribute("admin")
+				:(User)session.getAttribute("loginUser");
+		
 		try {
-			comment.setUserId(userId);
-			communityService.removeComment(comment);
+			//관리자로 로그인 했을 경우.
+			if(adminService.isAdmin(user.getUserId())){
+				adminService.removeCommunityComment(comment.getCommentNo());
+			}else{
+				communityService.removeComment(comment);
+			}
 			redir.addFlashAttribute("board_message", "게시글 삭제가 완료되었습니다.");
 		} catch (RemoveFailException e) {
-			redir.addFlashAttribute("board_message", "권한이 없습니다.");
+			redir.addFlashAttribute("board_message", "게시글을 삭제 할 수 없습니다.");
 			logger.trace("글 삭제 실패");
 		}
 		
-		return "redirect:/board_read";
+		return "redirect:/board";
 	}
 	
 	// 함수 1 : 유저가 로그인 되어있는지 확인
