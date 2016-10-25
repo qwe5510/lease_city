@@ -43,18 +43,15 @@ public class Notify implements Serializable {
 
 	/** 임대 양도 번호. */
 	private Integer leaseTransferNo;
+	
+	/** 글 속성 : 게시글 / 댓글 or 질문/답변 */
+	private String attribute;
 
 	/** 게시글 번호. */
 	private Integer commentNo;
 
 	/** 댓글 인식번호. */
 	private Integer replyNo;
-
-	/** 질문글 번호. */
-	private Integer questionNo;
-
-	/** 답변글 번호. */
-	private Integer answerNo;
 
 	/** 알림날짜. */
 	private Date notifyDate;
