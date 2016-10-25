@@ -43,9 +43,8 @@
 				});
 			</script>
 		</div>
-		<c:url value="/board_write" var="board_write" />
-		<div class="board_read_main">
 
+		<div class="board_read_main">
 				<div class="board_read_line">
 					<table class="board_read_table">
 						<tr>
@@ -237,15 +236,14 @@
 
 			<c:if test="${empty admin}">
 				<c:if test="${comment.userId eq loginUser.userId}">
-					<c:url value="/board_adjust" var="board_adjust" />
-					<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
+					<c:url value="/board/adjust" var="boardAdjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardAdjust}" method="POST">
 					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
 					<sform:hidden path="commentNo"/>
 					<sform:hidden path="commentContent"/>
 					<sform:hidden path="commentTitle"/>
 					<sform:hidden path="locale"/>
 					<sform:hidden path="kind"/>
-					<input name="userId" type="hidden" value="${loginUser.userId}" />
 					<input name="currentPage" type="hidden" value="${page.currentPage}">
 					</sform:form>
 				</c:if>
@@ -257,7 +255,6 @@
 					<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
 					<sform:hidden path="commentNo"/>
 					<sform:hidden path="commentTitle"/>
-					<input name="userId" type="hidden" value="${loginUser.userId}" />
 					<input name="currentPage" type="hidden" value="${page.currentPage}">
 					</sform:form>
 				</c:if>
@@ -267,10 +264,9 @@
 			<c:if test="${!empty admin}">
 				
 				<c:if test="${comment.userId eq admin.userId}">
-					<c:url value="/board_adjust" var="board_adjust" />
-					<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
-					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
-					<sform:hidden path="commentNo"/>
+					<c:url value="/board/adjust" var="boardAdjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardAdjust}" method="POST">
+					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>path="commentNo"/>
 					<sform:hidden path="commentContent"/>
 					<sform:hidden path="commentTitle"/>
 					<sform:hidden path="locale"/>
@@ -285,7 +281,6 @@
 				<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
 				<sform:hidden path="commentNo"/>
 				<sform:hidden path="commentTitle"/>
-				<input name="userId" type="hidden" value="${comment.userId}" />
 				<input name="currentPage" type="hidden" value="${page.currentPage}">
 				</sform:form>
 			</c:if>
@@ -333,28 +328,28 @@
                   
                   <c:choose>
 	                  <c:when test="${!empty page.keyword and !empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.keyword}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:otherwise>
                		</c:choose>
 
-                      <c:if test="${comment.hits >= 100}">
+                     <c:if test="${comment.hits >= 100 and (strRegDate eq today)}">
                      	<span class="label label-important">
                      		hot
                      	</span>
@@ -563,12 +558,8 @@
          </sform:form>
          </div>
       </div>
-	
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
-
-
-
 </body>
 <script>
 
@@ -612,10 +603,10 @@
 		location.href="${board}";
 	});
 	
-	<c:url value="/board_write" var="board_write"/>
+	<c:url value="/board/write" var="boardWrite"/>
 	$("#board_read_write").on("click", function(e){
 		e.preventDefault();
-		location.href="${board_write}";
+		location.href="${boardWrite}";
 	});
 	
 	//게시글 삭제

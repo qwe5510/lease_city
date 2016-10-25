@@ -30,14 +30,14 @@
  	
  	<!-- 질문과 답변 -->
  	<!-- 질문 삭제 -->
- 	<delete id="QuestionDelete" parameterType="int">
+ 	<delete id="deleteQuestion" parameterType="int">
  		DELETE FROM comments
  		WHERE comment_no = #{commentNo}
  			  AND attribute = 'Q_AND_A'
  	</delete>
  	
  	<!-- 답변 삭제 -->
- 	<delete id="AnswerDelete" parameterType="int">
+ 	<delete id="deleteAnswer" parameterType="int">
  		DELETE FROM replys
  		WHERE reply_no = #{replyNo}
  	</delete>

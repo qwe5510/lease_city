@@ -1126,13 +1126,13 @@ label {
 }
 
 
-.board_read_comment_author{
+.board_read_comment_author, .qna_read_comment_author{
 	margin-left: 5px;
 	font-weight: bold;
 	font-size: 1.2em;
 }
 
-.board_read_comment_userId{
+.board_read_comment_userId, .qna_read_comment_userId{
 	font-size: 11px;
 }
 
@@ -1653,6 +1653,9 @@ button{
 
 .qna_list{
 	float: right;
+	clear: both;
+	margin-top: 30px;
+	min-width: 60%;
 	text-align: center;
 }
 

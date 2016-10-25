@@ -16,7 +16,7 @@
 
 	<c:if test="${!empty qna_message }">
       <script type="text/javascript">
-         alert('${qna_message }');
+         alert('${qna_message}');
       </script>
    </c:if>
 	
@@ -101,7 +101,7 @@
                		</c:choose>
                		
 
-                      <c:if test="${comment.hits >= 100}">
+                     <c:if test="${comment.hits >= 100 and (strRegDate eq today)}">
                      	<span class="label label-important">
                      		hot
                      	</span>

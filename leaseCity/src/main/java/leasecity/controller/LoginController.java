@@ -71,7 +71,7 @@ public class LoginController {
 		try {
 			admin = UService.adminLogin(userId, password);
 			session.setAttribute("admin", admin);
-			redir.addFlashAttribute("join_message", "");
+			redir.addFlashAttribute("join_message", "관리자님 반갑습니다.");
 		} catch (LoginFailException e1) { // 관리자 로그인이 실패했을 경우
 			try {
 				user = UService.login(userId, password);
@@ -79,7 +79,7 @@ public class LoginController {
 				session.setAttribute("loginUser", user);
 				redir.addFlashAttribute("join_message", userId + "님 로그인 하셨습니다.");
 			} catch (LoginFailException e) {
-				redir.addFlashAttribute("join_message", "로그인에 실패하였습니다.");
+				redir.addFlashAttribute("join_message", "로그인 실패 - 아이디 혹은 비밀번호가 올바르지 않습니다.");
 				return "redirect:/login";
 			}
 		}

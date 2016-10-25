@@ -99,8 +99,8 @@ public class CommunityController {
 		}
 	
 	//게시판 글 , 댓글 확인
-	@RequestMapping(value="/board_read", method = RequestMethod.GET)
-	public String board_read(Model model, HttpSession session, 
+	@RequestMapping(value="/board/read", method = RequestMethod.GET)
+	public String boarRead(Model model, HttpSession session, 
 			RedirectAttributes redir, Page searchPage, 
 			@RequestParam(value="currentPage", required=false) Integer currentPage,
 			@RequestParam(value="commentNo", required=false) Integer commentNo,
@@ -193,7 +193,7 @@ public class CommunityController {
 		
 	}
 	
-	@RequestMapping(value="/board_adjust", method = RequestMethod.POST)
+	@RequestMapping(value="/board/adjust", method = RequestMethod.POST)
 	public String boardAdjust(Model model, Comment comment, RedirectAttributes redir,
 			@RequestParam Integer currentPage, @RequestParam String userId){
 		
@@ -209,7 +209,7 @@ public class CommunityController {
 			communityService.isCommentUser(comment);
 		} catch (NotFoundDataException e) {
 			redir.addFlashAttribute("board_message", "회원님의 게시글이 아닙니다.");
-			return "redirect:/board_read?currentPage"+currentPage + "&commentNo="+comment.getCommentNo();
+			return "redirect:/board/read?currentPage"+currentPage + "&commentNo="+comment.getCommentNo();
 		}
 		
 		model.addAttribute("comment", comment);
@@ -319,8 +319,8 @@ public class CommunityController {
 	}
 
 	//게시글 댓글 작성 페이지 이동 ( 기능 X )
-	@RequestMapping(value="/board_write")
-	public String board_write(Model model){
+	@RequestMapping(value="/board/write")
+	public String boardWrite(Model model){
 		Comment comment = new Comment();
 		model.addAttribute("comment", comment);
 		logger.trace("글 작성 페이지 이동");
@@ -360,7 +360,7 @@ public class CommunityController {
 		} 
 		// 4. 끝
 		logger.trace("글 작성 페이지 이동");
-		return "redirect:/board_read?commentNo="+comment.getCommentNo();
+		return "redirect:/board/read?commentNo="+comment.getCommentNo();
 	}
 	
 	//게시글 수정
@@ -377,19 +377,29 @@ public class CommunityController {
 			return "redirect:/board";
 		}
 		
-		return "redirect:/board_read?currentPage="+ currentPage +"&commentNo="+comment.getCommentNo();
+		return "redirect:/board/read?currentPage="+ currentPage +"&commentNo="+comment.getCommentNo();
 	}
 	
 	//게시글 삭제
 	@RequestMapping(value="/boardRemove", method = RequestMethod.POST)
-	public String boardRemove(Model model, Comment comment, RedirectAttributes redir,
-			@RequestParam Integer currentPage, @RequestParam String userId){
+	public String boardRemove(Model model, Comment comment, HttpSession session, 
+			RedirectAttributes redir, @RequestParam Integer currentPage){
+		
+		// 로그인된 유저가 없으면 관리자 속성 return
+		User user = session.getAttribute("loginUser")==null?
+				(User)session.getAttribute("admin")
+				:(User)session.getAttribute("loginUser");
+		
 		try {
-			comment.setUserId(userId);
-			communityService.removeComment(comment);
+			//관리자로 로그인 했을 경우.
+			if(adminService.isAdmin(user.getUserId())){
+				adminService.removeCommunityComment(comment.getCommentNo());
+			}else{
+				communityService.removeComment(comment);
+			}
 			redir.addFlashAttribute("board_message", "게시글 삭제가 완료되었습니다.");
 		} catch (RemoveFailException e) {
-			redir.addFlashAttribute("board_message", "권한이 없습니다.");
+			redir.addFlashAttribute("board_message", "게시글을 삭제 할 수 없습니다.");
 			logger.trace("글 삭제 실패");
 		}
 		

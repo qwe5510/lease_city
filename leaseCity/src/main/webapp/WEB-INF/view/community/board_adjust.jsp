@@ -29,8 +29,8 @@
 			</div>
 			<div class="community">
 				<img alt="" src="<%=request.getContextPath()%>/images/logo/logo3.png">
-				<c:url value="/board_read" var="board_read"/>
-				<sform:form id="board_adjust_form" action="adjustComment" method="post" modelAttribute="comment">
+				<c:url value="/adjustComment" var="adjustComment"/>
+				<sform:form id="board_adjust_form" action="${adjustComment}" method="post" modelAttribute="comment">
 					<table class="boardAdjustTable">
 						<tr>
 							<td colspan="4" class="boardLine" style="height: 4px !important;"></td>

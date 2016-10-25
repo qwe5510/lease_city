@@ -87,29 +87,35 @@
                   
                   <c:choose>
 	                  <c:when test="${!empty page.keyword and !empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.keyword}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:otherwise>
                		</c:choose>
-               		
-
-                      <c:if test="${comment.hits >= 100}">
+               		<fmt:formatDate value="${comment.regDate}"
+                        pattern="yyyy-MM-dd"
+                        var="strRegDate"/>
+                  
+                 	 <fmt:formatDate value="${comment.regDate}"
+                        pattern="hh:mm:ss"
+                        var="strRegTime"/>
+                        
+                     <c:if test="${comment.hits >= 100 and (strRegDate eq today)}">
                      	<span class="label label-important">
                      		hot
                      	</span>
@@ -132,15 +138,6 @@
                   </c:choose>
                   </td>
                   <td><c:out value="${comment.hits}" /></td>               
-                  
-                  <fmt:formatDate value="${comment.regDate}"
-                        pattern="yyyy-MM-dd"
-                        var="strRegDate"/>
-                  
-                  <fmt:formatDate value="${comment.regDate}"
-                        pattern="hh:mm:ss"
-                        var="strRegTime"/>
-                  
                   <c:choose>
                   <c:when test="${strRegDate eq today}">
                      <td><c:out value="${strRegTime}" /></td>
@@ -165,8 +162,8 @@
                <td colspan="5">
                </td>
                <td colspan="1">
-               <c:url value="/board_write" var="board_write"/>
-               <a href="${board_write}"><button><i class="icon-pencil"></i>글쓰기</button></a>
+               <c:url value="/board/write" var="boardWrite"/>
+               <a href="${boardWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
                </td>
             </tr>
             

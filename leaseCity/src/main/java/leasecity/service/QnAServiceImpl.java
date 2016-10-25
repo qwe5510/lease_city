@@ -143,13 +143,13 @@ public class QnAServiceImpl implements QnAService{
 	public void removeQuestion(Comment comment) throws RemoveFailException {
 		int result = answerRepo.getCountQuestionAnswer(comment.getCommentNo());
 		if(result >= 1){
-			logger.trace("게시글 삭제 실패 : 질문글에 대해 답변이 달려있음.");
+			logger.trace("질문 삭제 실패 : 질문글에 대해 답변이 달려있음.");
 			throw new RemoveFailException(comment.getCommentTitle() + "게시글");
 		}
 		
 		result = questionRepo.deleteQuestionAndAnswer(comment);
 		if(result != 1){
-			logger.trace("게시글 삭제 실패 : 대상 게시글 번호가 없음");
+			logger.trace("질문 삭제 실패 : 대상 게시글 번호가 없음");
 			throw new RemoveFailException(comment.getCommentTitle() + "게시글");
 		}
 	}
