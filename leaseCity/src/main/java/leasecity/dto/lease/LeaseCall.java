@@ -26,7 +26,7 @@ public class LeaseCall implements Serializable {
 	/** 임대 요청 번호. */
 	private Integer leaseCallNo;
 
-	/** 회원ID. */
+	/** 회원 아이디 */
 	private String userId;
 
 	/** 임대 분류. */
@@ -55,6 +55,12 @@ public class LeaseCall implements Serializable {
 
 	/** 요청글 등록날짜. */
 	private Date regDate;
+
+	/** 하한가격 (~부터). */
+	private Integer fromPrice;
+
+	/** 상한가격 (~까지). */
+	private Integer toPrice;
 
 	/** 임대 직접신청 목록. */
 	private List<LeaseDirectCall> leaseDirectCallsList;

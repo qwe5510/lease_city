@@ -109,7 +109,7 @@
                      
                      <c:if test="${!(comment.replyCount eq 0)}">
                      	<span class="label label-warning">
-                     		+${comment.replyCount}
+                     		답변 : ${comment.replyCount}
                      	</span>
                      </c:if>
                   </td>

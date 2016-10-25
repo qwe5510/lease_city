@@ -1527,13 +1527,15 @@ button{
     overflow: auto;
 }
 .help_menu{
+	background: url("../images/help/help_menu.png") no-repeat;
+	background-size: 260px 400px;
 	margin-top : 20px;
 	min-height : 800px;
 	margin-left : 50px;
 	float : left;
 	min-width : 30%;
 	width : 30%;
-	position: fixed;    
+	position: fixed;
 }
 .help_baseLine{
     padding: 0;

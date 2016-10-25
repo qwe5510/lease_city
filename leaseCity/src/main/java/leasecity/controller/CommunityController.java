@@ -136,7 +136,6 @@ public class CommunityController {
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 			
 			//로그인 중인 유저 탐색
-			
 			User loginUser = (User) session.getAttribute("loginUser");
 			
 			//loginUser가 null이면 관리자로 대입.
