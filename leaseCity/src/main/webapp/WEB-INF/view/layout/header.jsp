@@ -68,7 +68,7 @@
 							class="dropdown-toggle" data-toggle="dropdown">임대 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/lease_request">임대 신청/조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/lease_call">임대 신청/조회</a></li>
 								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
