@@ -185,7 +185,8 @@ public class HelpController {
 	@RequestMapping(value = "/writeAnswer", method = RequestMethod.POST)
 	public String writeAnswer(Model model, HttpSession session, 
 			RedirectAttributes redir, Comment comment,
-			@RequestParam String content) {
+			@RequestParam String content,
+			@RequestParam String userId) {
 		
 		User admin = (User)session.getAttribute("admin");
 		if(adminService.isAdmin(admin.getUserId())){
@@ -206,14 +207,14 @@ public class HelpController {
 		try {
 			// 1. notify에 값 저장
 			Notify notify = new Notify();
-			notify.setUserId(comment.getUserId());
+			notify.setUserId(userId);
 			notify.setAttribute(comment.getAttribute());
 			notify.setCommentNo(comment.getCommentNo());
 			notify.setNotifyLink("http://localhost:9090/leaseCity/help/qna/read?commentNo=" + comment.getCommentNo());
 
 			// 2. notify 저장 ( admin )
 			logger.trace("session에 저장된 로그인 유저 : {}", admin);
-			if ( !admin.getUserId().equals(comment.getUserId())) {
+			if ( admin != null && !admin.getUserId().equals(comment.getUserId())) {
 				notifyService.insertNotifyByLoginUser(notify);
 			}
 

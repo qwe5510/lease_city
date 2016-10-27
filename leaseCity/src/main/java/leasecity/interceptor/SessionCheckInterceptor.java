@@ -13,7 +13,7 @@ public class SessionCheckInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		HttpSession session = request.getSession();
 		
-		Object userObj = session.getAttribute("LoginUser");
+		Object userObj = session.getAttribute("loginUser");
 		Object adminObj = session.getAttribute("admin");
 		
 		if(userObj ==null && adminObj == null){

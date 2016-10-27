@@ -69,7 +69,7 @@
  		#{companyName},#{representName},
  		#{representPhone},#{handPhone},
  		#{email},#{zipNo}, #{address},
- 		#{notifyOnOff},#{url},#{evaluation}
+ 		#{notifyOnOff},#{url},#{creditGrade}
  		<choose>
  			<when test="regDate != null">,#{regDate}</when>
  			<otherwise>, null</otherwise>

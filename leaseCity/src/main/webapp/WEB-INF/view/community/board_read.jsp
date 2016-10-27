@@ -762,6 +762,7 @@
 			},
 			success : function(page){
 				if(page != null){
+			
 					g_currentPage = page.totalPage;
 					g_totalPage = page.totalPage;
 					moveReplyPage(page.totalPage, ${comment.commentNo});

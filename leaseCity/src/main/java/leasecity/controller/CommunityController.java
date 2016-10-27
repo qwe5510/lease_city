@@ -284,10 +284,11 @@ public class CommunityController {
 			notify.setNotifyLink("http://localhost:9090/leaseCity/board/read?commentNo=" + comment.getCommentNo());
 
 			// 3. notify 저장
-			User loginUser = (User)session.getAttribute("loginUser");
-			User admin = (User)session.getAttribute("admin");
+			User loginUser = session.getAttribute("loginUser") == null ?
+					(User)session.getAttribute("admin")
+					: (User)session.getAttribute("loginUser");
 			logger.trace("session에 저장된 로그인 유저 : {}", loginUser);
-			if ( !loginUser.getUserId().equals(comment.getUserId()) || !admin.getUserId().equals(comment.getUserId())) {
+			if (loginUser != null && loginUser.getUserId().equals(comment.getUserId())) {
 				notifyService.insertNotifyByLoginUser(notify);
 			} 
 

@@ -66,9 +66,6 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public List<Comment> loadTermsCommunityComment(Page page) throws NotFoundDataException {
 		List<Comment> results = commentRepo.getPageCommunityComments(page);
-		if(results.size() <= 0){
-			throw new NotFoundDataException(page.getKeyword());
-		}
 		for(Comment comment : results){
 			comment.setReplyCount(
 					replyRepo.getCountCommentReply
@@ -76,7 +73,31 @@ public class CommunityServiceImpl implements CommunityService{
 			int rowNum = (commentRepo.getCountAllCommunityComments()-comment.getCommentRowNum())+1;
 			comment.setCommentRowNum(rowNum);
 		}
+		
+		if(results.size() <= 0){
+			throw new NotFoundDataException(page.getKeyword());
+		}
+		
 		return results;
+	}
+	
+	/**
+	 * 게시글 번호로 게시글 불러오기.
+	 * @param commentNo
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	@Override
+	public Comment loadComment(Integer commentNo) throws NotFoundDataException {
+		Comment comment = commentRepo.getCommunityComment(commentNo);
+		
+		if(comment == null){
+			throw new NotFoundDataException(commentNo + "번 게시글");
+		}else{
+			comment.setReplyCount(replyRepo.getCountCommentReply(commentNo));
+		}
+		
+		return comment;
 	}
 
 	/**

@@ -113,7 +113,7 @@
 	</header>
 	<!-- /header -->
 </body>
-<script src="js/jquery.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 
