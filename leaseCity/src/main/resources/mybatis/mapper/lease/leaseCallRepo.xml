@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.leaseCallRepo">
+ 	
+ 	<!-- 게시물 전체갯수 조회 : 오늘이 종료기한보다 과거일 경우 -->
+ 	<select id="getCountAllLeaseCalls" resultType="int">
+ 		SELECT COUNT(*) FROM lease_calls
+ 		WHERE SYSDATE-1 &lt; to_date
+ 	</select>
+ 	<!-- 오늘이 종료날짜를 지나지 않은 경우  -->
+ 	
+ 	<!-- 게시물 페이지별 조회 - 검색 정렬한 게시물의 갯수 : 오늘이 종료기한보다 과거일 경우 -->
+ 	<select id="getCountSearchLeaseCalls" parameterType="page" resultType="int">
+ 		SELECT COUNT(*)
+ 		FROM (
+ 				SELECT sub.*, rownum AS comment_row_num			
+ 				 				FROM( SELECT * FROM comments JOIN users USING(user_id) 
+ 					<choose>
+	 					<when test="search == 'AUTHOR' and (keyword != null or keyword !='')">
+	 						WHERE u.company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'TITLE' and (keyword != null or keyword !='')">
+	 						WHERE lc.lease_comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
+	 						WHERE lc.address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' OR
+	 						comment_content LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'CATEGORY' and (keyword != null or keyword !='')">
+	 						WHERE lc.lease_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 						OR	  lc.equipment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+ 					</choose>
+ 					) sub
+ 				)
+ 		WHERE SYSDATE-1 &lt; to_date
+ 	</select>
+ 	
+ 	<!-- 게시물 페이지별 조회 - 검색,정렬 포함 -->
+ 	<select id="getPageLeaseCalls" parameterType="page" resultType="leaseCall">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS rnum
+ 				FROM( SELECT lc.*, u.company_name company_name, u.credit_grade credit_grade
+ 						FROM lease_calls lc JOIN users u ON lc.user_id=u.user_id
+ 					<choose>
+	 					<when test="search == 'AUTHOR' and (keyword != null or keyword !='')">
+	 						WHERE u.company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'TITLE' and (keyword != null or keyword !='')">
+	 						WHERE lc.lease_comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
+	 						WHERE lc.address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%' OR
+	 						comment_content LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'CATEGORY' and (keyword != null or keyword !='')">
+	 						WHERE lc.lease_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 						OR	  lc.equipment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+ 					</choose>
+ 					ORDER BY DESC u.credit_grade
+ 					) sub
+ 				)
+ 			WHERE SYSDATE-1 &lt; to_date
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			AND rnum BETWEEN #{from} AND #{to}
+ 		</if>		
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!-- 임대 요청 번호에 대한 임대 요청글 정보 받기 -->
+ 	<select id="getLeaseCall" parameterType="int" resultType="leaseCall">
+ 		SELECT lc.*, u.company_name company_name
+ 		FROM lease_calls lc JOIN users u ON lc.user_id=u.user_id
+ 		WHERE lease_call_no = #{leaseCallNo}
+ 	</select>
+ 	
+ 	<select id="getUserLeaseCall" parameterType="int" resultType="leaseCall">
+ 		SELECT lc.*, u.company_name company_name 
+ 		FROM lease_calls lc JOIN users u ON lc.user_id=u.user_id
+ 		WHERE lease_call_no = #{leaseCallNo}
+ 		<if test="userId != null">
+ 		AND u.user_id = #{userId}
+ 		</if>
+ 	</select>
+ 	
+ 	
+ 	<!-- 임대 요청 추가 -->
+ 	<!-- lease_call_no는 TRIGGER로 AUTO_INCREMENT취급 받음 -->
+ 	<!-- 기본값 : hits : 0 / reg_date : sysdate  -->
+ 	<insert id="insertLeaseCall" parameterType="leaseCall">
+ 		<selectKey resultType="int" keyProperty="leaseCallNo" order="AFTER"> 
+	 		SELECT SEQ_LC_LEASE_CALL_NO.CURRVAL AS lease_call_no 
+	 		FROM dual
+ 		</selectKey>
+ 		INSERT INTO lease_calls(user_id, lease_category, equipment_category, 
+ 					address, lease_comment_title, lease_comment_content,
+ 					from_date, to_date, from_price, to_price) 
+ 		VALUES(#{userId}, #{leaseCategory}, #{equipmentCategory},
+ 				#{address}, #{leaseCommentTitle}, #{leaseCommentContent},
+ 				#{fromDate}, #{toDate}, #{fromPrice}, #{toPrice})
+ 	</insert>
+ 	
+ 	<!-- 임대 요청 삭제 -->
+ 	<delete id="deleteLeaseCall" parameterType="leaseCall">
+ 		DELETE FROM lease_calls
+ 		WHERE lease_call_no = #{leaseCallNo} AND user_id = #{userId}
+ 		AND	  SYSDATE &lt; to_date
+ 	</delete>
+ 	
+ 	<!-- 임대 요청 수정 -->
+ 	<update id="updateLeaseCall" parameterType="leaseCall">
+ 		UPDATE lease_calls 
+ 		SET lease_category = #{leaseCategory},
+ 			equipment_category = #{equipmentCategory},
+ 			address = #{address},
+ 			lease_comment_title = #{leaseCommentTitle},
+ 			lease_comment_content = #{leaseCommentContent},
+ 			from_date = #{fromDate},
+ 			to_date = #{toDate},
+ 			from_price = #{fromPrice},
+ 			to_price = #{toPrice}
+ 		WHERE lease_call_no = #{leaseCallNo} AND user_id = #{userId}
+ 	</update>
+ 	
+ 	<!-- 임대 요청 조회수 증가 -->
+ 	<update id="hitsUpLeaseCall" parameterType="leaseCall">
+ 		UPDATE lease_calls 
+ 		SET hits = #{hits}
+ 		WHERE lease_call_no = #{leaseCallNo}
+ 	</update>
+
+ </mapper>

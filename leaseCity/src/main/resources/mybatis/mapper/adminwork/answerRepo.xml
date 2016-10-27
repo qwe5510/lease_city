@@ -25,7 +25,7 @@
 	 				) sub 
 	 			)
  		<if test="pageSize != null and to !=null and from != null">
- 			WHERE rnum BETWEEN #{to} AND #{from}
+ 			WHERE rnum BETWEEN #{from} AND #{to}
  		</if>		
  	</select>
  	

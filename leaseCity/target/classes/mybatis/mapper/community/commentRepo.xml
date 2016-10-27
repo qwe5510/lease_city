@@ -50,17 +50,17 @@
  						
  					<choose>
  						<when test="order == 'ASC'">
- 							ORDER BY reg_date ASC
+ 							ORDER BY c.reg_date ASC
  						</when>
  						
  						<when test="order == 'DESC' or order == null">
- 							ORDER BY reg_date DESC
+ 							ORDER BY c.reg_date DESC
  						</when>
  					</choose>
  					) sub
  				)
  		<if test="pageSize != null and to !=null and from != null">
- 			WHERE comment_row_num BETWEEN #{to} AND #{from}
+ 			WHERE comment_row_num BETWEEN #{from} AND #{to}
  		</if>		
  	</select>
  	

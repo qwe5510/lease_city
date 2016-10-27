@@ -26,22 +26,22 @@ public class LeaseDirectCall implements Serializable {
 	/** 임대 직접 요청 번호. */
 	private Integer leaseDirectNo;
 
-	/** 회원. */
-	private User constructionIdusers;
+	/** 건설업체 회원 ID. (송신자) */
+	private String constructionId;
 
-	/** 회원. */
-	private User equipmentIdusers;
+	/** 중기업체 회원 ID. (수신자) */
+	private String equipmentId;
 
-	/** 임대요청. */
-	private LeaseCall leaseCalls;
+	/** 임대요청 번호 */
+	private Integer leaseCallNo;
 
 	/** 직접요청 내용. */
 	private String directCallContent;
 	
 	/** 하한가격 (~부터). */
-	private Integer fromprice;
+	private Integer fromPrice;
 
 	/** 상한가격 (~까지). */
-	private Integer toprice;
+	private Integer toPrice;
 
 }

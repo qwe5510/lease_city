@@ -68,8 +68,8 @@ public class Page {
 	
 	// From과 To
 	public void setFromTo() {
-		this.to = (this.currentPage-1)*this.pageSize+1;
-		this.from = (this.to-1)+this.pageSize;
+		this.from = (this.currentPage-1)*this.pageSize+1;
+		this.to = (this.from-1)+this.pageSize;
 	}
 	
 }

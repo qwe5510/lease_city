@@ -86,7 +86,7 @@ public class CommunityController {
 					comments = communityService.loadTermsCommunityComment(page);
 				}else if(searchPage == null){
 					page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-					comments = communityService.loadPageCommunityCommentList(page);
+					comments = communityService.loadPageCommunityComment(page);
 				}			
 					model.addAttribute("comments", comments);
 					model.addAttribute("page", page);
@@ -130,7 +130,7 @@ public class CommunityController {
 				comments = communityService.loadTermsCommunityComment(page);
 			}else if(searchPage == null){
 				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-				comments = communityService.loadPageCommunityCommentList(page);
+				comments = communityService.loadPageCommunityComment(page);
 			}			
 
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.

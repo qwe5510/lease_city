@@ -163,7 +163,9 @@
                </td>
                <td colspan="1">
                <c:url value="/board/write" var="boardWrite"/>
+               <c:url value="/board" var="boardList"/>
                <a href="${boardWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
+               <a href="${boardList}"><button><i class="icon-list"></i>목록</button></a>
                </td>
             </tr>
             
