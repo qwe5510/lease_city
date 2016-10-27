@@ -1707,18 +1707,19 @@ button{
 	margin-right: 30px;
 }
 .lease_main fieldset{
-	width: 700px;
+	width: 780px;
 }
 #lease_request_form textarea{
-	width: 690px;
+	width: 760px;
 	height : 60px;
 	padding: 0px;
 }
 .lease_write_bottom{
 	margin-top : 20px;
-	margin-right : 110px;
+	margin-right : 30px;
 	float: right;
 }
+<<<<<<< HEAD
 
 
 /* 로딩 화면 설정 */
@@ -1958,3 +1959,17 @@ button{
 		transform: rotate(-214deg);
 	}
 }
+
+.lease_request_read_table td{
+	padding-right: 100px;
+}
+.equipmentCategoryList label {
+	width: 150px;
+}
+.fromToDate label {
+	width: 70px;
+}
+.constructionAddress input[type="text"]{
+	width: 550px;
+}
+
