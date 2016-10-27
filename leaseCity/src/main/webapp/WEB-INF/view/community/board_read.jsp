@@ -58,11 +58,11 @@
 							<td width="2px" class="boardLine"></td>
 							<th>분류</th>
 							<td width="2px" class="boardLine"></td>
-							<td><c:out value="${comment.kind }"></c:out></td>
+							<td>${comment.kind }</td>
 							<td width="2px" class="boardLine"></td>
 							<th><span>조회수</span></th>
 							<td width="2px" class="boardLine"></td>
-							<td width="100px"><c:out value="${comment.hits }"></c:out></td>
+							<td width="100px">${comment.hits}</td>
 							<td width="2px" class="boardLine"></td>
 						</tr>
 						<tr>
@@ -266,7 +266,8 @@
 				<c:if test="${comment.userId eq admin.userId}">
 					<c:url value="/board/adjust" var="boardAdjust" />
 					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardAdjust}" method="POST">
-					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>path="commentNo"/>
+					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
+					<sform:hidden path="commentNo"/>
 					<sform:hidden path="commentContent"/>
 					<sform:hidden path="commentTitle"/>
 					<sform:hidden path="locale"/>
@@ -761,7 +762,6 @@
 			},
 			success : function(page){
 				if(page != null){
-					alert("덧글 등록이 완료되었습니다.");
 					g_currentPage = page.totalPage;
 					g_totalPage = page.totalPage;
 					moveReplyPage(page.totalPage, ${comment.commentNo});

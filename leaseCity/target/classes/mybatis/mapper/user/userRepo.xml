@@ -69,12 +69,11 @@
  		#{companyName},#{representName},
  		#{representPhone},#{handPhone},
  		#{email},#{zipNo}, #{address},
- 		#{notifyOnOff},#{url}
+ 		#{notifyOnOff},#{url},#{evaluation}
  		<choose>
  			<when test="regDate != null">,#{regDate}</when>
  			<otherwise>, null</otherwise>
  		</choose>
- 		,#{evaluation}
  		<choose>
  			<when test="withdrawDate != null">,#{withdrawDate})</when>
  			<otherwise>, null)</otherwise>

@@ -86,7 +86,7 @@
 					</table>
 					<div class="board_write_bottom">
 						<sform:button id="write"> <i class="icon-pencil"></i>작성</sform:button>
-						<sform:button id="cancel"><i class="icon-link"></i>취소</sform:button>
+						<sform:button id="cancel"><i class="icon-remove"></i>취소</sform:button>
 					</div>
 				</sform:form>
 			</div>

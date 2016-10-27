@@ -283,6 +283,12 @@ public class HelpController {
 		return "help/question_answer";
 	}
 	
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public String questionAnswer(Model model){
+		
+		return "error/test";
+	}
+	
 	// 함수 1 : 유저가 로그인 되어있는지 확인
 	public User isUserLogin(Object obj) throws ServiceFailException {
 
@@ -299,4 +305,6 @@ public class HelpController {
 
 		return user;
 	}
+	
+	
 }

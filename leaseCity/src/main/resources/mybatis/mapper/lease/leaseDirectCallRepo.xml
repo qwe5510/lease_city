@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.leaseDirectCallRepo">
+ 	
+ 	
+ 	<select id="getAllLeaseDirectCalls" parameterType="String" resultType="leaseDirectCall">
+ 		SELECT * FROM lease_direct_calls
+ 		WHERE equipment_id = #{equipmentId}
+ 	</select>
+ 	
+ 	<select id="getLeaseDirectCall" parameterType="int" resultType="leaseDirectCall">
+ 		SELECT * FROM lease_direct_calls
+ 		WHERE lease_direct_no = #{leaseDirectNo}
+ 	</select> 	
+ 	
+ 	<insert id="insertLeaseDirectCall" parameterType="leaseDirectCall">
+ 		<selectKey keyProperty="leaseDirectNo" resultType="int" order="AFTER">
+ 			SELECT SEQ_LDC_LEASE_DIRECT_NO.CURRVAL AS lease_direct_no
+ 			FROM dual
+ 		</selectKey>
+ 		INSERT INTO lease_direct_calls (
+ 			construction_id, equipment_id, lease_call_no,
+ 			direct_call_content, from_price, to_price)
+ 		VALUES(
+ 			#{constructionId}, #{equipmentId}, #{leaseCallNo}, 
+ 			#{directCallContent}, #{fromPrice}, #{toPrice})
+ 	</insert>
+ 	
+ 	
+ 	<delete id="deleteLeaseDirectCall" parameterType="leaseDirectCall">
+ 		DELETE FROM lease_direct_calls
+ 		WHERE lease_direct_no = #{leaseDirectNo} AND equipment_id = #{equipmentId}
+ 	</delete>
+ 	
+
+ </mapper>

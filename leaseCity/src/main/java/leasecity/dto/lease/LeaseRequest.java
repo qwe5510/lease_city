@@ -27,11 +27,11 @@ public class LeaseRequest implements Serializable {
 	/** 임대 신청 번호. */
 	private Integer leaseRequestNo;
 
-	/** 임대요청. */
-	private LeaseCall leaseCalls;
-
-	/** 중장비. */
-	private HeavyEquipment heavyEquipment;
+	/** 임대 요청 번호. */
+	private Integer leaseCallNo;
+	
+	/** 중장비. 차 번호 */
+	private String idNumber;
 
 	/** 회원. */
 	private String userId;

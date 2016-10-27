@@ -2,6 +2,7 @@ package leasecity.util;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 //날짜를 문자열로 리턴
 public class DateUtil {
@@ -89,5 +90,50 @@ public class DateUtil {
 		
 		return Integer.parseInt(sb.toString());
 	}
-
+	
+	
+	public static Date dateFormat(String dateStr){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		
+		StringTokenizer st = new StringTokenizer(dateStr, " ");
+		
+		while(st.hasMoreTokens()){
+			String dateTime = st.nextToken();
+				
+			if(dateTime.indexOf(":") != -1){
+				StringTokenizer timeToken = new StringTokenizer(dateTime, ":");
+				
+				int[] timeArray = {Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND};
+				int count=0;
+				
+				while(timeToken.hasMoreTokens()){
+					calendar.set(timeArray[count++], 
+							Integer.parseInt(timeToken.nextToken())); 
+				}
+				
+			}else if(dateTime.indexOf("-") != -1){
+				StringTokenizer dateToken = new StringTokenizer(dateTime, "-");
+				
+				int[] dateArray = {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH};
+				int count=0;
+				
+				while(dateToken.hasMoreTokens()){
+					
+					if(dateArray[count] == Calendar.MONTH){
+						calendar.set(dateArray[count++], 
+						Integer.parseInt(dateToken.nextToken())-1);
+					}
+					else{
+						calendar.set(dateArray[count++], 
+								Integer.parseInt(dateToken.nextToken()));
+					}
+				}
+			}
+		}
+		
+		return calendar.getTime();
+	}
 }
