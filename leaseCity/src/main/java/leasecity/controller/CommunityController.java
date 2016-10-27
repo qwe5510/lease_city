@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import leasecity.dto.adminwork.Notify;
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
@@ -34,6 +35,7 @@ import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.AdminService;
 import leasecity.service.CommunityService;
+import leasecity.service.NotifyService;
 
 @Controller
 public class CommunityController {
@@ -46,6 +48,9 @@ public class CommunityController {
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	NotifyService notifyService;
 	
 	@InitBinder
 	public void setBindingFormat(WebDataBinder binder){
@@ -86,7 +91,7 @@ public class CommunityController {
 					comments = communityService.loadTermsCommunityComment(page);
 				}else if(searchPage == null){
 					page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-					comments = communityService.loadPageCommunityCommentList(page);
+					comments = communityService.loadPageCommunityComment(page);
 				}			
 					model.addAttribute("comments", comments);
 					model.addAttribute("page", page);
@@ -130,7 +135,7 @@ public class CommunityController {
 				comments = communityService.loadTermsCommunityComment(page);
 			}else if(searchPage == null){
 				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-				comments = communityService.loadPageCommunityCommentList(page);
+				comments = communityService.loadPageCommunityComment(page);
 			}			
 
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
@@ -251,6 +256,7 @@ public class CommunityController {
 	
 	@RequestMapping(value="/replyRegistryAjax", method=RequestMethod.GET)
 	public @ResponseBody Page ReplyRegistryAjax(
+			HttpSession session,
 			@RequestParam Integer commentNo,
 			@RequestParam String userId,
 			@RequestParam String replyContent){
@@ -263,6 +269,33 @@ public class CommunityController {
 		} catch (WriteFailException e) {
 			logger.trace("댓글 작성 실패");
 			return null;
+		}
+		
+		// Notify insert 처리
+		// 1. 댓글을 단 게시물
+		try {
+			Comment comment = communityService.loadComment(commentNo);
+
+			// 2. notify에 값 저장
+			Notify notify = new Notify();
+			notify.setUserId(comment.getUserId());
+			notify.setAttribute(comment.getAttribute());
+			notify.setCommentNo(comment.getCommentNo());
+			notify.setNotifyLink("http://localhost:9090/leaseCity/board/read?commentNo=" + comment.getCommentNo());
+
+			// 3. notify 저장
+			User loginUser = session.getAttribute("loginUser") == null ?
+					(User)session.getAttribute("admin")
+					: (User)session.getAttribute("loginUser");
+			logger.trace("session에 저장된 로그인 유저 : {}", loginUser);
+			if (loginUser != null && loginUser.getUserId().equals(comment.getUserId())) {
+				notifyService.insertNotifyByLoginUser(notify);
+			} 
+
+		} catch (NotFoundDataException e) {
+			logger.trace("게시물 갖고오기 실패");
+		} catch (ServiceFailException e) {
+			logger.trace("notify 등록 실패");
 		}
 		
 		return page;

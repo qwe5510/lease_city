@@ -193,13 +193,13 @@ public class JoinController {
 			return "redirect:/login";
 		}
 
-		return "redirect:/loginFromJoin";
+		return "redirect:/login";
 	}
-
+/*
 	@RequestMapping(value = "/loginFromJoin", method = RequestMethod.GET)
 	public String loginFromJoin(Model model) {
 		return "join/login";
-	}
+	}*/
 
 	//동의 눌렀을 때 이동하는 컨트롤러
 	@RequestMapping(value = "/join_input", method = RequestMethod.POST)

@@ -20,7 +20,7 @@
 		<select name="heavy_category" id="heavy_category">
 			<option value="aa">지역</option>
 			<option value="bb">업체명</option>
-			<option value="cc" onselect="bbb()">신용도</option>
+			<option value="cc">신용도</option>
 		</select>
 	</div>
 	<div class="heavy_search">

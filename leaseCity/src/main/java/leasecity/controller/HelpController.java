@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import leasecity.dto.adminwork.Notify;
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
@@ -23,6 +24,7 @@ import leasecity.exception.RemoveFailException;
 import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.AdminService;
+import leasecity.service.NotifyService;
 import leasecity.service.QnAService;
 
 @Controller
@@ -37,6 +39,9 @@ public class HelpController {
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	NotifyService notifyService;
 	
 	@RequestMapping(value="/help/FAQ")
 	public String FAQ(Model model){
@@ -180,7 +185,8 @@ public class HelpController {
 	@RequestMapping(value = "/writeAnswer", method = RequestMethod.POST)
 	public String writeAnswer(Model model, HttpSession session, 
 			RedirectAttributes redir, Comment comment,
-			@RequestParam String content) {
+			@RequestParam String content,
+			@RequestParam String userId) {
 		
 		User admin = (User)session.getAttribute("admin");
 		if(adminService.isAdmin(admin.getUserId())){
@@ -196,6 +202,24 @@ public class HelpController {
 		}else{
 			redir.addFlashAttribute("qna_message", 	"권한이 없습니다.");
 			return "redirect:/help/qna";
+		}
+		// Notify insert 처리
+		try {
+			// 1. notify에 값 저장
+			Notify notify = new Notify();
+			notify.setUserId(userId);
+			notify.setAttribute(comment.getAttribute());
+			notify.setCommentNo(comment.getCommentNo());
+			notify.setNotifyLink("http://localhost:9090/leaseCity/help/qna/read?commentNo=" + comment.getCommentNo());
+
+			// 2. notify 저장 ( admin )
+			logger.trace("session에 저장된 로그인 유저 : {}", admin);
+			if ( admin != null && !admin.getUserId().equals(comment.getUserId())) {
+				notifyService.insertNotifyByLoginUser(notify);
+			}
+
+		} catch (ServiceFailException e) {
+			logger.trace("notify 등록 실패");
 		}
 		
 		return "redirect:/help/qna/read?commentNo=" + comment.getCommentNo();			
@@ -260,6 +284,12 @@ public class HelpController {
 		return "help/question_answer";
 	}
 	
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public String questionAnswer(Model model){
+		
+		return "error/test";
+	}
+	
 	// 함수 1 : 유저가 로그인 되어있는지 확인
 	public User isUserLogin(Object obj) throws ServiceFailException {
 
@@ -276,4 +306,6 @@ public class HelpController {
 
 		return user;
 	}
+	
+	
 }

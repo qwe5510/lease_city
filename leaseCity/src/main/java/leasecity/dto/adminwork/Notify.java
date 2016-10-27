@@ -55,4 +55,10 @@ public class Notify implements Serializable {
 
 	/** 알림날짜. */
 	private Date notifyDate;
+	
+	/** 알림링크. */
+	private String notifyLink;
+	
+	/** 알림체크. */
+	private String notifyCheck = "N";
 }

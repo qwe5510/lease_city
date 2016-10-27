@@ -65,7 +65,7 @@ public class User implements Serializable {
 	private Date regDate;
 
 	/** 평가점수. */
-	private Double evaluation;
+	private Double creditGrade;
 	
 	/** 회원탈퇴 날짜. */
 	private Date withdrawDate;
@@ -106,7 +106,7 @@ public class User implements Serializable {
 			String email, String zipNo,
 			String address,	String notifyOnOff, 
 			String url,	Date regDate, 
-			Double evaluation, Date withdrawDate){	
+			Double creditGrade, Date withdrawDate){	
 		this.userId = userId;
 		this.password = password;
 		this.companyName = companyName;
@@ -119,7 +119,7 @@ public class User implements Serializable {
 		this.notifyOnOff = notifyOnOff;
 		this.url = url;
 		this.regDate = regDate;
-		this.evaluation = evaluation;
+		this.creditGrade = creditGrade;
 		this.withdrawDate = withdrawDate;
 		
 		this.commentsList = new ArrayList<Comment>();
@@ -144,7 +144,7 @@ public class User implements Serializable {
 		this.notifyOnOff = user.notifyOnOff;
 		this.url = user.url;
 		this.regDate = user.regDate;
-		this.evaluation = user.evaluation;
+		this.creditGrade = user.creditGrade;
 		this.withdrawDate = user.withdrawDate;
 		
 		this.commentsList = new ArrayList<Comment>();
@@ -171,7 +171,7 @@ public class User implements Serializable {
 				.append(", url="+url)
 				.append(", regDate="+
 				DateUtil.getDateString(regDate))
-				.append(", evaluation="+evaluation)
+				.append(", creditGrade="+creditGrade)
 				.append(", withdrawDate="+DateUtil.getDateString(withdrawDate))
 				.append(")");
 				

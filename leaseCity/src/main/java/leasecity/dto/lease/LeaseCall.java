@@ -30,6 +30,9 @@ public class LeaseCall implements Serializable {
 	/** 회원 아이디 */
 	private String userId;
 
+	/** 업체 명 (DB 칼럼에는 없음) */
+	private String companyName;
+	
 	/** 임대 분류. */
 	private String leaseCategory;
 
@@ -62,10 +65,19 @@ public class LeaseCall implements Serializable {
 
 	/** 상한가격 (~까지). */
 	private Integer toPrice;
+	
+	/** 신용도 점수 */
+	private Integer creditGrade;
 
 	/** 임대 직접신청 목록. */
 	private List<LeaseDirectCall> leaseDirectCallsList;
 
+	/** 임대 신청 대기자 명수 */
+	private Integer standByLRCount; 
+	
+	/** 임대 신청 선발자 명수 */
+	private Integer choiceLRCount;
+	
 	/** 임대신청 목록. */
 	private List<LeaseRequest> leaseRequestsList;
 
@@ -77,4 +89,25 @@ public class LeaseCall implements Serializable {
 		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 	}
 
+	public LeaseCall(Integer leaseCallNo, String userId, String companyName, String leaseCategory,
+			String equipmentCategory, String address, String leaseCommentTitle, String leaseCommentContent,
+			Integer hits, Date fromDate, Date toDate, Date regDate, Integer fromPrice, Integer toPrice) {
+		this.leaseCallNo = leaseCallNo;
+		this.userId = userId;
+		this.companyName = companyName;
+		this.leaseCategory = leaseCategory;
+		this.equipmentCategory = equipmentCategory;
+		this.address = address;
+		this.leaseCommentTitle = leaseCommentTitle;
+		this.leaseCommentContent = leaseCommentContent;
+		this.hits = hits;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.regDate = regDate;
+		this.fromPrice = fromPrice;
+		this.toPrice = toPrice;
+		
+		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
+		this.leaseRequestsList = new ArrayList<LeaseRequest>();
+	}
 }

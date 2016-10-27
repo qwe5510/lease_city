@@ -489,7 +489,7 @@
 			return false;
 		}else{
 			$("#help_read_form")
-			.append("")
+			.append("<input type='hidden' name='userId' value='${question.userId}'/>")
 			.append("<input type='hidden' name='content' value='"
 					+ manager_answer_letter +"'/ >");
 		}
