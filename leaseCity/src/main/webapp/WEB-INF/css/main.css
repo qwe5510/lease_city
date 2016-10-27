@@ -1795,15 +1795,14 @@ button{
 	width: 760px;
 	height : 60px;
 	padding: 0px;
+	margin-bottom: 15px;
 }
 .lease_write_bottom{
 	margin-top : 20px;
 	margin-right : 30px;
+	margin-bottom : 15px;
 	float: right;
 }
-<<<<<<< HEAD
-
-
 /* 로딩 화면 설정 */
 .cssload-cssload-wrap2 {
 	width: 169px;
@@ -1811,8 +1810,6 @@ button{
 	overflow: hidden;
 	text-align: center;
 }
-
-
 
 .cssload-wrap {
 	position: absolute;
@@ -1948,10 +1945,6 @@ button{
 		-moz-transform: rotate(80deg);
 }
 
-
-
-
-
 @keyframes cssload-rotLeft {
 	from {
 		transform: rotate(-30deg);
@@ -2043,15 +2036,75 @@ button{
 }
 
 .lease_request_read_table td{
-	padding-right: 100px;
+	padding-right: 90px;
+	font-size: 13px;
+}
+.lease_request_read_table label{
+	width : 70px;
+	font-size: 14px;
+	text-align: left;
+	margin-right: 20px;
 }
 .equipmentCategoryList label {
 	width: 150px;
 }
 .fromToDate label {
+	margin-top : 20px;
 	width: 70px;
+}
+.fromToDate input{
+	margin-top : 20px;
+	height: 30px;
 }
 .constructionAddress input[type="text"]{
 	width: 550px;
 }
-
+.constructionAddress label{
+	font-weight: bold;
+}
+.fromToPrice{
+	
+	font-size: 16px;
+}
+.fromToPrice input{
+	width: 	150px;
+	height: 30px;
+	float: none;
+	display: inline-block;
+}
+.fromToPrice label {
+	width: 70px;
+}
+.priceCheck{
+	font-size: 20px;
+	text-align: center;
+}
+.leaseCategory label{
+	width: 150px;
+}
+.lease_request_table td{
+	padding-right: 30px;
+}
+.lease_request_table{
+	font-size: 13px;
+}
+.lease_label label{
+	font-weight: bold;
+}
+.heavy_select{
+	width: 150px;
+	display: inline;
+}
+.heavy_search{
+	width: 250px;
+	display: inline;
+}
+.heavy_search select{
+	padding-left : 15px;
+	padding-right : 15px;
+	width: 240px;
+}
+.heavy_button{
+	width: 100px;
+	display: inline;
+}
