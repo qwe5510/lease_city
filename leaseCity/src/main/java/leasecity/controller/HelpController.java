@@ -208,7 +208,7 @@ public class HelpController {
 			// 1. notify에 값 저장
 			Notify notify = new Notify();
 			notify.setUserId(userId);
-			notify.setAttribute(comment.getAttribute());
+			notify.setAttribute("Q_AND_A");
 			notify.setCommentNo(comment.getCommentNo());
 			notify.setNotifyLink("http://localhost:9090/leaseCity/help/qna/read?commentNo=" + comment.getCommentNo());
 

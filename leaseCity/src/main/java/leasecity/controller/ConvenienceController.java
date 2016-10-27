@@ -83,6 +83,30 @@ public class ConvenienceController {
 		return "success";
 	}
 	
+	// notify 모두 삭제 클릭 시, 로그인 아이디 notify 모두 delete
+	@RequestMapping(value = "/deleteAllNotify", method = RequestMethod.POST)
+	public @ResponseBody String deleteAllNotify(Model model, @RequestParam String userId) {
+
+		logger.trace("모두 삭제할 아이디 : {}", userId);
+
+		List<Notify> notifyList = null;
+		try {
+			notifyList = nService.searchHeaderNotifyByLoginUser(userId);
+			logger.trace("모두 삭제할 List : {}", notifyList);
+			for (Notify notify : notifyList) {
+				nService.deleteNotifyByLoginUser(notify.getNotifyNo());
+			}
+		} catch (NotFoundDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoveFailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "success";
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////
 	
 	// 로그인 유저가 notify 있는지 확인 및 던지기

@@ -51,7 +51,7 @@
 					<ul class="notificationContent"></ul>
 				</div>
 				<div id="notificationFooter">
-					<a href="#">See All</a>
+					<a href="#" onclick="deleteAllNotify()">모두 삭제</a>
 				</div>
 			</div>
 		</div></div>
@@ -130,7 +130,7 @@
 	}
 	// 반복 함수
 	function repeatloop() {
-		setTimeout("repeatloop()", 1000 * 5); //refresh 빈도 1000 = 1초
+		setTimeout("repeatloop()", 1000 * 1); //refresh 빈도 1000 = 1초
 		if ("${sessionScope.loginUser.userId}" != null) {
 			//alert("유저 로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 			footNotification("${sessionScope.loginUser.userId}");
@@ -279,6 +279,7 @@
 								document.getElementById("notification_count").innerHTML = res.length;
 								if (res.length > 0) {
 									//var html = "";
+									$(".notificationContent").html('');
 									$(res).each(function(idx, data) {
 										var date = new Date(data.notifyDate);
 										// 임대 업무에 관한 notify 필터
@@ -328,6 +329,28 @@
 						}
 					});
 				}
+	<c:url value="/deleteAllNotify" var="deleteAllNotify"/>
+	function deleteAllNotify() {
+		
+		var userId = "${sessionScope.loginUser.userId}";
+		
+		$.ajax({
+			// type을 설정합니다.
+			type : 'post',
+			url : "${deleteAllNotify }",
+			// 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+			data : {
+				userId : userId
+			},
+			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+			success : function(res) {
+				$(".notificationContent").html('');
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+	}
 	
 	$(document).ready(function() {
 		$("#notificationLink").click(function() {
