@@ -43,9 +43,15 @@ public class NotifyRepoImpl implements NotifyRepo{
 
 	// 알림 삭제
 	@Override
-	public int deleteNotify(String userId) {
+	public int deleteNotify(int notifyNo) {
 		String stmt = N_NS + "deleteNotify";
-		return session.delete(stmt, userId);
+		return session.delete(stmt, notifyNo);
+	}
+
+	@Override
+	public int updateNotify(int notifyNo) {
+		String stmt = N_NS + "updateNotify";
+		return session.update(stmt, notifyNo);
 	}
 
 }

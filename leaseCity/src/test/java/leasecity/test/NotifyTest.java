@@ -27,16 +27,19 @@ public class NotifyTest {
 	NotifyRepo repo;
 
 	@Test
-	public void passwordTest() {
+	public void notifyTest() {
 
 		logger.trace("session : {}", session);
 		
-		Notify notify = new Notify(null, "yhjcom78", null, null, null, null, null, null, null, null, null);
-		
+		Notify notify = new Notify(null, "yhjcom7", null, null, null, null, null, null, null, null, null, "http://localhost:9090/leaseCity/board/read?commentNo=2", "N");
 		
 		System.out.println(notify);
 		
 		int result = repo.insertNotify(notify);
+		logger.trace("추가 확인 : {}", result);
+		
+		result = repo.updateNotify(notify.getNotifyNo());
+		logger.trace("업뎃 확인 : {}", result);
 		/*logger.trace("notify 생성 : {}", result);
 		logger.trace("userId : {}", notify.getUserId());*/
 		

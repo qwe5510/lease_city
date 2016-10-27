@@ -15,7 +15,10 @@ public interface NotifyRepo {
 	// 새 알림 추가
 	public int insertNotify(Notify notify);
 	
+	// 새 알림 수정
+	public int updateNotify(int notifyNo);
+	
 	// 새 알림 삭제
-	public int deleteNotify(String userId);
+	public int deleteNotify(int notifyNo);
 
 }

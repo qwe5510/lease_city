@@ -2,11 +2,14 @@ package leasecity.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import leasecity.dto.adminwork.Notify;
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
@@ -14,6 +17,7 @@ import leasecity.exception.ChangeValueFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.RemoveFailException;
 import leasecity.exception.WriteFailException;
+import leasecity.repo.adminwork.NotifyRepo;
 import leasecity.repo.community.CommentRepo;
 import leasecity.repo.community.ReplyRepo;
 
