@@ -120,22 +120,20 @@
 	// (반복문 초기 실행)
 	window.onload = function() {
 		repeatloop();
-		if ("${sessionScope.loginUser.userId}" != null) {
+		if ("${sessionScope.loginUser.userId}" != "") {
 			//alert("로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 			headerNotification("${sessionScope.loginUser.userId}");
-		} 
-		if("${sessionScope.admin.userId}" != null) {
+		} else if("${sessionScope.admin.userId}" != "") {
 			headerNotification("${sessionScope.admin.userId}");
 		}
 	}
 	// 반복 함수
 	function repeatloop() {
 		setTimeout("repeatloop()", 1000 * 1); //refresh 빈도 1000 = 1초
-		if ("${sessionScope.loginUser.userId}" != null) {
+		if ("${sessionScope.loginUser.userId}" != "") {
 			//alert("유저 로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 			footNotification("${sessionScope.loginUser.userId}");
-		} 
-		if("${sessionScope.admin.userId}" != null) {
+		} else if("${sessionScope.admin.userId}" != "") {
 			//alert("관리자 로그인 아이디 : " + "${sessionScope.admin.userId}");
 			footNotification("${sessionScope.admin.userId}");
 		}
@@ -154,22 +152,23 @@
 			},
 			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 			success : function(res) {
+				
+				//alert(res);
+				
 				// 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
 				var notify = ""; // (test용 변수)
 				var title = userId + " 님"; // notification의 title
 				var iconDataURI = "http://vehicle-free.com/highresolution/l_023.jpg";
 				// notify가 있다면
-
 				if (res != "") {
 					// 1. notification 에 보여줄 정보
 					// ( notify가 1개 이상 있으면 표시 )
 					if (res.length > 0) {
 						// 알림 시, 바로 HeaderNotify 생성
-						if ("${sessionScope.loginUser.userId}" != null) {
+						if ("${sessionScope.loginUser.userId}" != "") {
 							//alert("로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 							headerNotification("${sessionScope.loginUser.userId}");
-						} 
-						if("${sessionScope.admin.userId}" != null) {
+						} else if("${sessionScope.admin.userId}" != "") {
 							headerNotification("${sessionScope.admin.userId}");
 						}
 						var options = {
@@ -329,10 +328,17 @@
 						}
 					});
 				}
+				
 	<c:url value="/deleteAllNotify" var="deleteAllNotify"/>
 	function deleteAllNotify() {
 		
-		var userId = "${sessionScope.loginUser.userId}";
+		var deleteAllUserId = "";
+		
+		if( "${sessionScope.admin.userId}" != "") {
+			deleteAllUserId = "${sessionScope.admin.userId}"
+		} else if( "${sessionScope.loginUser.userId}" != "" ) {
+			deleteAllUserId = "${sessionScope.loginUser.userId}"
+		} 
 		
 		$.ajax({
 			// type을 설정합니다.
@@ -340,7 +346,7 @@
 			url : "${deleteAllNotify }",
 			// 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
 			data : {
-				userId : userId
+				userId : deleteAllUserId
 			},
 			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 			success : function(res) {
