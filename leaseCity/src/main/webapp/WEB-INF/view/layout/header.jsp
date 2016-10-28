@@ -51,7 +51,7 @@
 						<ul class="notificationContent"></ul>
 					</div>
 					<div id="notificationFooter">
-						<a href="#" onclick="deleteAllNotify()">모두 삭제</a>
+						<a href="#" onclick="deleteAllNotify()"id="notificationFooterButton">모두 삭제</a>
 					</div>
 				</div>
 			</div>
@@ -126,10 +126,7 @@
 			headerNotification("${sessionScope.loginUser.userId}");
 		} else if("${sessionScope.admin.userId}" != "") {
 			headerNotification("${sessionScope.admin.userId}");
-		} else {
-			// 로그아웃 시에는 notify 숨기기
-			$(".notification").hide();
-		}
+		} 
 	}
 	// 반복 함수
 	function repeatloop() {
@@ -190,10 +187,17 @@
 							deleteNotify(res[res.length-1].notifyNo);
 							notification.close();
 						};
+						$(".notificationContent").click(function() {
+							notification.close();
+						});
+						$("#notificationFooterButton").click(function() {
+							notification.close();
+						});
 						// 5초뒤 얼람 메시지 닫기
 						setTimeout(function() {
 							notification.close();
 						}, 5000);
+						
 						//document.getElementById("notificationLink").innerHTML = res.length + "개의 알람";
 					}
 
@@ -282,7 +286,9 @@
 								if (res.length > 0) {
 									//var html = "";
 									document.getElementById("notification_count").innerHTML = res.length;
-									$(".notification").show();
+									$(".notification").css("display", "block");
+									//document.getElementById("notification").style.display = "block";
+									//$(".notification").show();
 									$(".notificationContent").html('');
 									$(res).each(function(idx, data) {
 										var date = new Date(data.notifyDate);
@@ -325,7 +331,9 @@
 									});
 								}
 							} else {
-								$(".notification").hide();
+								//document.getElementById("notification").style.display = "none";
+								$(".notification").css("display", "none");
+								//$(".notification").hide();
 								//alert("headerNotify 없음");
 							}
 						},
@@ -357,7 +365,8 @@
 			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 			success : function(res) {
 				$(".notificationContent").html('');
-				$(".notification").hide();
+				document.getElementById("notification").style.display = "none";
+				//$(".notification").hide();
 				//$(".notification").hide();
 			},
 			error : function(xhr, status, error) {
@@ -369,17 +378,12 @@
 	$(document).ready(function() {
 		$("#notificationLink").click(function() {
 			$("#notificationContainer").fadeToggle(300);
-			$("#notification_count").fadeOut("slow");
 			return false;
 		});
 
 		//Document Click
 		$(document).click(function() {
 			$("#notificationContainer").hide();
-		});
-		//Popup Click
-		$("#notificationContainer").click(function() {
-			//return false
 		});
 
 	});

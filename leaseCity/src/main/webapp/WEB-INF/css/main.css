@@ -262,10 +262,11 @@ ul.tag-cloud li {
    color: #fff
 }
 
-header.notification {
-   background: #333;
-   padding-top: 15px;
-   padding-bottom: 15px;
+.notification {
+   background: #e9eaed;
+   padding-top: 1px;
+   padding-bottom: 1px;
+   display: none;
 }
 
 header #notification_li
