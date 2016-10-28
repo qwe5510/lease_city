@@ -49,5 +49,17 @@
  		DELETE FROM heavy_equipment
  		WHERE user_id = #{userId} AND id_number = #{idNumber}
  	</delete>
+ 	
+ 	<!-- 중장비 사용 여부 변경 -->
+ 	<update id="heavyEquipmentUsedYes" parameterType="heavyEquipment">
+ 	UPDATE heavy_equipment SET used_yes_no = 'Y'
+ 	WHERE id_number = #{idNumber} AND user_id = #{userId}
+ 	</update>
+ 	
+ 	<update id="heavyEquipmentUsedNo" parameterType="heavyEquipment">
+ 	UPDATE heavy_equipment SET used_yes_no = 'N'
+ 	WHERE id_number = #{idNumber} AND user_id = #{userId}
+ 	</update>
+ 	
  
  </mapper>

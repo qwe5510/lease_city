@@ -31,7 +31,7 @@ public class LeaseDirectCallTest {
 	public void test(){
 		System.out.println(repo);
 		
-		LeaseRequest leaseRequest = new LeaseRequest(null, 9, "53구 1281", "raven92", new Date(), new Date(), null, 4000);
+		/*LeaseRequest leaseRequest = new LeaseRequest(null, 9, "53구 1281", "raven92", new Date(), new Date(), null, 4000);
 		int result = repo.insertLeaseRequest(leaseRequest);
 		logger.trace("임대신청 추가 : {}", result);
 		
@@ -42,6 +42,6 @@ public class LeaseDirectCallTest {
 		logger.trace("선발 중기업체 : {}", list);
 		
 		list = repo.getAllStandByLeaseRequests(9);
-		logger.trace("대기 중기업체 : {}", list);
+		logger.trace("대기 중기업체 : {}", list);*/
 	}
 }

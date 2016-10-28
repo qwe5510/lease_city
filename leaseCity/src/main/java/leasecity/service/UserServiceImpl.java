@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipment;
@@ -24,6 +25,7 @@ import leasecity.repo.user.UserRepo;
 import leasecity.util.HashingUtil;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);

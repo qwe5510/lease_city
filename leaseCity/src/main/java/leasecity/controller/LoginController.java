@@ -38,14 +38,7 @@ public class LoginController {
 
 	// 메인 페이지 PRG
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(Model model, Locale locale, HttpSession session) {
-		
-		// 로그인할 회원 정보 불러오는거 테스트 (session 이용)
-		Object obj = session.getAttribute("loginUser");
-		User user = (User) obj;
-
-		logger.trace("로그인한 회원 정보 : {}", user);
-		
+	public String index(Model model) {		
 		return "index";	
 	}
 	

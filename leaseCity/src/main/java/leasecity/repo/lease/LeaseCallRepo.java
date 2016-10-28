@@ -5,6 +5,11 @@ import java.util.List;
 import leasecity.dto.etc.Page;
 import leasecity.dto.lease.LeaseCall;
 
+/**
+ * 임대 요청 Repository
+ * @author 1-718-8
+ *
+ */
 public interface LeaseCallRepo {
 	
 	/**

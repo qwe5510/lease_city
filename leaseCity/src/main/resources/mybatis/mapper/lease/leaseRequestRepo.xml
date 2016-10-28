@@ -68,7 +68,8 @@
  		VALUES(#{leaseCallNo}, #{idNumber}, #{userId}, #{fromDate}, #{toDate}, #{price})
  	</insert>
  	
- 	<!-- 임대 신청 삭제 - 종속성에 의해 댓글도 같이 자동삭제 -->
+ 	
+ 	<!-- 임대 신청 삭제 -->
  	<delete id="deleteLeaseRequest" parameterType="leaseRequest">
  		DELETE FROM lease_requests
  		WHERE lease_request_no = #{leaseRequestNo} AND user_id = #{userId}

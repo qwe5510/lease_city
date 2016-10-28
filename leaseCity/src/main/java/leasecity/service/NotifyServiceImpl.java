@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.adminwork.Notify;
 import leasecity.exception.NotFoundDataException;
@@ -15,6 +16,7 @@ import leasecity.exception.ServiceFailException;
 import leasecity.repo.adminwork.NotifyRepo;
 
 @Service
+@Transactional
 public class NotifyServiceImpl implements NotifyService {
 
 	static Logger logger = LoggerFactory.getLogger(NotifyServiceImpl.class);

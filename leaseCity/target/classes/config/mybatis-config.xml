@@ -24,7 +24,6 @@
 		<typeAlias type="leasecity.dto.lease.LeaseDirectCall" alias="leaseDirectCall" />
 		<typeAlias type="leasecity.dto.lease.LeaseRequest" alias="leaseRequest" />
 		<typeAlias type="leasecity.dto.lease.LeaseTransfer" alias="leaseTransfer" />
-		<typeAlias type="leasecity.dto.lease.LeaseSelection" alias="leaseSelection" />
 		
 		<!--  3.커뮤니티 (게시글, 댓글) / Q&A 겸용 -->
 		<typeAlias type="leasecity.dto.community.Comment" alias="comment" />

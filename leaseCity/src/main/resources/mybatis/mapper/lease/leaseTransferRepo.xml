@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.leaseTransferRepo">
+ 	
+ 	<!-- 유저 별 임대 양도 받은 목록 출력 -->
+ 	<select id="getCountSelectAllAcceptLeaseTransfers" parameterType="String">
+ 		SELECT COUNT(*)
+ 		FROM lease_transfer
+ 		WHERE accept_user_id = #{acceptUserId}
+ 		AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date;
+ 	</select>
+ 	
+ 	<select id="getSelectPageAcceptLeaseTransfers" parameterType="page" resultType="leaseTransfer">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS lease_transfer_row_num
+ 				FROM( SELECT *						 
+ 						FROM lease_transfer
+ 						WHERE accept_user_id = #{userId}
+ 						AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date;
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE lease_transfer_row_num BETWEEN #{from} AND #{to}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 임대 양도 번호와 임대 받은 회원 아이디로 임대 양도 정보 검색 -->
+ 	<select id="getSelectAcceptLeaseTransfer" parameterType="map" resultType="leaseTransfer">
+ 		SELECT *
+ 		FROM lease_transfer
+ 		WHERE lease_transfer_no = #{leaseTransferNo} AND accept_user_id = #{acceptUserId}
+ 	</select>
+ 	
+ 	<!-- 임대 양도 추가 -->
+ 	<insert id="insertLeaseTransfer" parameterType="leaseTransfer">
+ 		INSERT INTO lease_transfer(
+ 					send_user_id, send_id_number, 
+ 					accept_user_id, accept_id_number, 
+ 					equipment_category, address, content, 
+ 					from_date, to_date, price)
+ 		VALUES(#{sendUserId}, #{sendIdNumber}, #{acceptUserId}, #{acceptIdNumber}, 
+ 				#{equipmentCategory}, #{address}, #{content}, 
+ 				#{fromDate}, #{toDate}, #{price})
+ 	</insert>
+ 	
+ 	<!-- 임대 양도 삭제 : 단 수락 날짜가 정해졌으면 삭제 불가능 -->
+ 	<delete id="deleteLeaseTransfer" parameterType="leaseTransfer">
+ 		DELETE FROM lease_transfer
+ 		WHERE lease_transfer_no = #{LeaseTransferNo}
+ 		AND	permission_date IS NULL
+ 	</delete>
+ 	
+ 	<!-- 임대 양도 확정 : 수락날짜 갱신-->
+ 	<update id="permissionUpdateLeaseTransfer" parameterType="leaseTransfer">
+ 		UPDATE lease_transfer SET
+ 			permission_date = SYSDATE
+ 		WHERE lease_transfer_no = #{leaseTransferNo}
+ 	</update>
+
+ </mapper>

@@ -33,5 +33,8 @@ public interface LeaseDirectCallRepo {
 	 * @return
 	 */
 	public int deleteLeaseDirectCall(LeaseDirectCall leaseDirectCall);
+	
+	
+	
 
 }

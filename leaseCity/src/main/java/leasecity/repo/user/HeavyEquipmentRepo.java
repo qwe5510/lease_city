@@ -26,5 +26,23 @@ public interface HeavyEquipmentRepo {
 	
 	// 증장비 삭제
 	public int deleteHeavyEquipment(HeavyEquipment HE);
+	
+	/**
+	 * 중장비 사용여부 Y로 변경
+	 * @param idNumber
+	 * @param userId
+	 * @return
+	 */
+	public int heavyEquipmentUsedYes(HeavyEquipment HE);
+	
+	/**
+	 * 중장비 사용여부 N으로 변경
+	 * @param idNumber
+	 * @param userId
+	 * @return
+	 */
+	public int heavyEquipmentUsedNo(HeavyEquipment HE);
+	
+	
 
 }

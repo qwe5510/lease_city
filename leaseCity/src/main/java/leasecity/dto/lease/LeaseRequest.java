@@ -47,5 +47,8 @@ public class LeaseRequest implements Serializable {
 
 	/** 비용. */
 	private Integer price;
+	
+	/** 양도여부. */
+	private String transferCheck;
 
 }
