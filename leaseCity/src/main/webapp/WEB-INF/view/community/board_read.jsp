@@ -681,7 +681,7 @@
 					str+=("<div class='reply_data' style='display: none;'>");
 					str+=("<span>${comment.commentNo}</span>");
 					str+=("<span>"+reply.replyNo+"</span></div></li>");
-					str+=("<li class='replyBaseLine'></li>");			
+					str+=("<li class='replyBaseLine'></li>");	
 				})
 				
 				$(".board_read_reply").html(str);
@@ -690,14 +690,14 @@
 				var nextPage = prevPage+11;
 				
 				$(".replyPage").html("");
-				
+
 				if(prevPage >0){
 					pageStr+=("<a href='#' id='replyPage"+prevPage+"'")
-					pageStr+=("onclick='moveReplyPage("+prevPage+", "+page.superNo+")'></a>");
+					pageStr+=("onclick='moveReplyPage("+prevPage+", "+page.superNo+")'><i class='icon-arrow-left'></i>이전</a>");
 				}else{
 					pageStr+=("<a style='color: black;'><i class='icon-arrow-left'>처음</i></a>");
 				}
-				
+
 				if(page.totalPage != null){
 					g_currentPage = page.currentPage;
 					g_totalPage = page.totalPage;
@@ -713,21 +713,23 @@
 							}							
 						}
 					}else{
-						for(var i=prevPage+1; i<page.nextPage-1; i++){
+						for(var i=prevPage+1; i<=nextPage-1; i++){
 							if(i == page.currentPage){
 								pageStr+="<b> "+i+" </b>";
 							}
 							else{
-								pageStr+=" <a href='#' id='replyPage"+i+"'";
+								pageStr+="<a href='#' id='replyPage"+i+"'";
 								pageStr+="onclick='moveReplyPage("+i+", "+page.superNo+")'>"+ i +"</a> ";
 							}
 						}
 					}
 				}
 				
+				console.log(pageStr);
+				
 				if(nextPage <= page.totalPage){
 					pageStr+=("<a href='#' id='replyPage"+nextPage+"'")
-					pageStr+=("onclick='moveReplyPage("+nextPage+", "+page.superNo+")'></a>");
+					pageStr+=("onclick='moveReplyPage("+nextPage+", "+page.superNo+")'>다음<i class='icon-arrow-right'></i></a>");
 				}else{
 					pageStr+=("<a style='color: black;'>끝<i class='icon-arrow-right'></i></a>");
 				}
@@ -768,6 +770,7 @@
 					moveReplyPage(page.totalPage, ${comment.commentNo});
 					$("#comment_reply_count").html("댓글 <b>"+ page.totalCount +"</b>개</span>");
 					$(".reply_input_area")[0].value="";
+					$(".reply_input_area").focus();
 					//덧글등록 안내 후 페이지 가장 끝단으로 이동.
 				}else{
 					alert("덧글 등록 실패");

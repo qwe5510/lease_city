@@ -37,11 +37,10 @@
 <link rel="apple-touch-icon-precomposed"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
 </head>
-
 <body>
 	<!--Header-->
 	<header class="navbar navbar-fixed-top">
-		<div class="notification">
+		<div class="notification" style="display: none;">
 			<div id="notification_li">
 				<span id="notification_count"></span> 
 				<a href="#" id="notificationLink">새 알림</a>
@@ -383,5 +382,9 @@
 		});
 
 	});
+	
+	
+	
+	
 </script>
 </html>

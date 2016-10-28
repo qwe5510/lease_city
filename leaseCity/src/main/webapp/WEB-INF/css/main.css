@@ -262,21 +262,21 @@ ul.tag-cloud li {
    color: #fff
 }
 
-header.notification {
-   background: #333;
-   padding-top: 15px;
-   padding-bottom: 15px;
+.notification {
+	background: #333;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
-header #notification_li
+#notification_li
 {
-position:relative;
-margin-left: 100px;
-padding-top: 15px;
-padding-bottom: 15px;	
+	position:relative;
+	margin-left: 100px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
-header #notificationContainer 
+#notificationContainer 
 {
 background-color: #fff;
 border: 1px solid rgba(100, 100, 100, .4);
@@ -290,7 +290,7 @@ z-index: 500;
 display: none; // Enable this after jquery implementation 
 }
 
-header #notificationContainer:before {
+#notificationContainer:before {
 content: '';
 display: block;
 position: absolute;
@@ -302,7 +302,7 @@ border-color: transparent transparent white;
 margin-top: -20px;
 margin-left: 188px;
 }
-header #notificationTitle
+#notificationTitle
 {
 font-weight: bold;
 padding: 8px;
@@ -313,13 +313,13 @@ z-index: 1000;
 width: 384px;
 border-bottom: 1px solid #dddddd;
 }
-header #notificationsBody
+#notificationsBody
 {
 padding: 33px 0px 0px 0px !important;
 min-height:300px;
 z-index: -1;
 }
-header #notificationFooter
+#notificationFooter
 {
 background-color: #e9eaed;
 text-align: center;
@@ -329,7 +329,7 @@ font-size: 12px;
 border-top: 1px solid #dddddd;
 }
 
-header #notification_count 
+#notification_count 
 {
 padding: 3px 7px 3px 7px;
 background: #cc0000;
@@ -344,7 +344,7 @@ margin-top: -11px;
 font-size: 11px;
 }
 
-header.navbar .navbar-inner {
+.navbar .navbar-inner {
    background: #fff !important;
    border: 0;
    -webkit-box-shadow: none;
@@ -352,7 +352,7 @@ header.navbar .navbar-inner {
    box-shadow: none
 }
 
-header #logo {
+ #logo {
    margin-top: 20px;
    margin-right: 10px;
    margin-bottom: 10px;
@@ -362,21 +362,21 @@ header #logo {
    background: url(../images/logo/logo.png) no-repeat 0 50%
 }
 
-header.navbar {
+.navbar {
    margin-bottom: 0
 }
 
-header.navbar .nav {
+.navbar .nav {
    margin-top: 20px
 }
 
-header.navbar .nav>li {
+.navbar .nav>li {
    margin-left: 1px
 }
 
 //
 헤더 폰트조정
-header.navbar .nav>li>a {
+.navbar .nav>li>a {
    color: #333;
    font-family: "Fjalla One";
    font-size: 30px;
@@ -384,7 +384,7 @@ header.navbar .nav>li>a {
    text-shadow: none
 }
 
-header.navbar .nav>li>a:hover {
+.navbar .nav>li>a:hover {
    background: transparent;
    color: #2dcc70;
    -webkit-box-shadow: none;
@@ -392,7 +392,7 @@ header.navbar .nav>li>a:hover {
    box-shadow: none
 }
 
-header.navbar .nav>li.active>a, header.navbar .nav>li.active>a:hover {
+.navbar .nav > li.active> a, .navbar .nav> li.active>a:hover {
    background: transparent;
    color: #2dcc70;
    -webkit-box-shadow: none;
@@ -400,20 +400,21 @@ header.navbar .nav>li.active>a, header.navbar .nav>li.active>a:hover {
    box-shadow: none
 }
 
-header.navbar .nav>li.dropdown.open>a.dropdown-toggle {
+.navbar .nav>li.dropdown.open>a.dropdown-toggle {
    background: transparent;
    color: #2dcc70
 }
 
-header.navbar .nav>li.login>a {
+
+.navbar .nav>li.login>a {
    border-left: 1px solid #e5e5e5
 }
 
-header .dropdown-menu {
+.dropdown-menu {
    margin-top: 20px
 }
 
-header .dropdown-menu:before {
+.dropdown-menu:before {
    display: none !important
 }
 
