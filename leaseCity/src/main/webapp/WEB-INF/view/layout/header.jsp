@@ -42,19 +42,20 @@
 	<!--Header-->
 	<header class="navbar navbar-fixed-top">
 		<div class="notification">
-		<div id="notification_li">
-			<span id="notification_count"></span> 
-			<a href="#" id="notificationLink">새 알림</a>
-			<div id="notificationContainer">
-				<div id="notificationTitle">Notifications</div>
-				<div id="notificationsBody" class="notifications">
-					<ul class="notificationContent"></ul>
-				</div>
-				<div id="notificationFooter">
-					<a href="#" onclick="deleteAllNotify()">모두 삭제</a>
+			<div id="notification_li">
+				<span id="notification_count"></span> 
+				<a href="#" id="notificationLink">새 알림</a>
+				<div id="notificationContainer">
+					<div id="notificationTitle">Notifications</div>
+					<div id="notificationsBody" class="notifications">
+						<ul class="notificationContent"></ul>
+					</div>
+					<div id="notificationFooter">
+						<a href="#" onclick="deleteAllNotify()">모두 삭제</a>
+					</div>
 				</div>
 			</div>
-		</div></div>
+		</div>
 		<div class="navbar-inner">
 			<div class="container">
 				<!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -125,6 +126,9 @@
 			headerNotification("${sessionScope.loginUser.userId}");
 		} else if("${sessionScope.admin.userId}" != "") {
 			headerNotification("${sessionScope.admin.userId}");
+		} else {
+			// 로그아웃 시에는 notify 숨기기
+			$(".notification").hide();
 		}
 	}
 	// 반복 함수
@@ -275,9 +279,10 @@
 							if (res != "") {
 								// 1. notification 에 보여줄 정보
 								// ( notify가 1개 이상 있으면 표시 )
-								document.getElementById("notification_count").innerHTML = res.length;
 								if (res.length > 0) {
 									//var html = "";
+									document.getElementById("notification_count").innerHTML = res.length;
+									$(".notification").show();
 									$(".notificationContent").html('');
 									$(res).each(function(idx, data) {
 										var date = new Date(data.notifyDate);
@@ -320,6 +325,7 @@
 									});
 								}
 							} else {
+								$(".notification").hide();
 								//alert("headerNotify 없음");
 							}
 						},
@@ -351,6 +357,8 @@
 			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 			success : function(res) {
 				$(".notificationContent").html('');
+				$(".notification").hide();
+				//$(".notification").hide();
 			},
 			error : function(xhr, status, error) {
 				alert(error);
