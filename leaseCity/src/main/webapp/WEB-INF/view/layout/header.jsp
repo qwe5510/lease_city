@@ -42,19 +42,20 @@
 	<!--Header-->
 	<header class="navbar navbar-fixed-top">
 		<div class="notification">
-		<div id="notification_li">
-			<span id="notification_count"></span> 
-			<a href="#" id="notificationLink">새 알림</a>
-			<div id="notificationContainer">
-				<div id="notificationTitle">Notifications</div>
-				<div id="notificationsBody" class="notifications">
-					<ul class="notificationContent"></ul>
-				</div>
-				<div id="notificationFooter">
-					<a href="#">See All</a>
+			<div id="notification_li">
+				<span id="notification_count"></span> 
+				<a href="#" id="notificationLink">새 알림</a>
+				<div id="notificationContainer">
+					<div id="notificationTitle">Notifications</div>
+					<div id="notificationsBody" class="notifications">
+						<ul class="notificationContent"></ul>
+					</div>
+					<div id="notificationFooter">
+						<a href="#" onclick="deleteAllNotify()">모두 삭제</a>
+					</div>
 				</div>
 			</div>
-		</div></div>
+		</div>
 		<div class="navbar-inner">
 			<div class="container">
 				<!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -83,7 +84,7 @@
 							class="dropdown-toggle" data-toggle="dropdown">임대 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/lease_request">임대 신청/조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/lease_call">임대 신청/조회</a></li>
 								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
@@ -120,22 +121,23 @@
 	// (반복문 초기 실행)
 	window.onload = function() {
 		repeatloop();
-		if ("${sessionScope.loginUser.userId}" != null) {
+		if ("${sessionScope.loginUser.userId}" != "") {
 			//alert("로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 			headerNotification("${sessionScope.loginUser.userId}");
-		} 
-		if("${sessionScope.admin.userId}" != null) {
+		} else if("${sessionScope.admin.userId}" != "") {
 			headerNotification("${sessionScope.admin.userId}");
+		} else {
+			// 로그아웃 시에는 notify 숨기기
+			$(".notification").hide();
 		}
 	}
 	// 반복 함수
 	function repeatloop() {
-		setTimeout("repeatloop()", 1000 * 5); //refresh 빈도 1000 = 1초
-		if ("${sessionScope.loginUser.userId}" != null) {
+		setTimeout("repeatloop()", 1000 * 1); //refresh 빈도 1000 = 1초
+		if ("${sessionScope.loginUser.userId}" != "") {
 			//alert("유저 로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 			footNotification("${sessionScope.loginUser.userId}");
-		} 
-		if("${sessionScope.admin.userId}" != null) {
+		} else if("${sessionScope.admin.userId}" != "") {
 			//alert("관리자 로그인 아이디 : " + "${sessionScope.admin.userId}");
 			footNotification("${sessionScope.admin.userId}");
 		}
@@ -154,22 +156,23 @@
 			},
 			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
 			success : function(res) {
+				
+				//alert(res);
+				
 				// 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
 				var notify = ""; // (test용 변수)
 				var title = userId + " 님"; // notification의 title
 				var iconDataURI = "http://vehicle-free.com/highresolution/l_023.jpg";
 				// notify가 있다면
-
 				if (res != "") {
 					// 1. notification 에 보여줄 정보
 					// ( notify가 1개 이상 있으면 표시 )
 					if (res.length > 0) {
 						// 알림 시, 바로 HeaderNotify 생성
-						if ("${sessionScope.loginUser.userId}" != null) {
+						if ("${sessionScope.loginUser.userId}" != "") {
 							//alert("로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 							headerNotification("${sessionScope.loginUser.userId}");
-						} 
-						if("${sessionScope.admin.userId}" != null) {
+						} else if("${sessionScope.admin.userId}" != "") {
 							headerNotification("${sessionScope.admin.userId}");
 						}
 						var options = {
@@ -276,9 +279,11 @@
 							if (res != "") {
 								// 1. notification 에 보여줄 정보
 								// ( notify가 1개 이상 있으면 표시 )
-								document.getElementById("notification_count").innerHTML = res.length;
 								if (res.length > 0) {
 									//var html = "";
+									document.getElementById("notification_count").innerHTML = res.length;
+									$(".notification").show();
+									$(".notificationContent").html('');
 									$(res).each(function(idx, data) {
 										var date = new Date(data.notifyDate);
 										// 임대 업무에 관한 notify 필터
@@ -320,6 +325,7 @@
 									});
 								}
 							} else {
+								$(".notification").hide();
 								//alert("headerNotify 없음");
 							}
 						},
@@ -328,6 +334,37 @@
 						}
 					});
 				}
+				
+	<c:url value="/deleteAllNotify" var="deleteAllNotify"/>
+	function deleteAllNotify() {
+		
+		var deleteAllUserId = "";
+		
+		if( "${sessionScope.admin.userId}" != "") {
+			deleteAllUserId = "${sessionScope.admin.userId}"
+		} else if( "${sessionScope.loginUser.userId}" != "" ) {
+			deleteAllUserId = "${sessionScope.loginUser.userId}"
+		} 
+		
+		$.ajax({
+			// type을 설정합니다.
+			type : 'post',
+			url : "${deleteAllNotify }",
+			// 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+			data : {
+				userId : deleteAllUserId
+			},
+			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+			success : function(res) {
+				$(".notificationContent").html('');
+				$(".notification").hide();
+				//$(".notification").hide();
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+	}
 	
 	$(document).ready(function() {
 		$("#notificationLink").click(function() {

@@ -284,13 +284,17 @@ public class CommunityController {
 			notify.setNotifyLink("http://localhost:9090/leaseCity/board/read?commentNo=" + comment.getCommentNo());
 
 			// 3. notify 저장
-			User loginUser = session.getAttribute("loginUser") == null ?
-					(User)session.getAttribute("admin")
-					: (User)session.getAttribute("loginUser");
+			User loginUser = null;
+			if ( session.getAttribute("loginUser") == null) {
+				loginUser = (User)session.getAttribute("admin");
+			} else {
+				loginUser = (User)session.getAttribute("loginUser");
+			}
 			logger.trace("session에 저장된 로그인 유저 : {}", loginUser);
-			if (loginUser != null && loginUser.getUserId().equals(comment.getUserId())) {
+			if (loginUser != null && !loginUser.getUserId().equals(comment.getUserId())) {
 				notifyService.insertNotifyByLoginUser(notify);
 			} 
+			//notifyService.insertNotifyByLoginUser(notify);
 
 		} catch (NotFoundDataException e) {
 			logger.trace("게시물 갖고오기 실패");
