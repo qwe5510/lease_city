@@ -69,7 +69,8 @@
 					</td>
 					<td colspan="2" class="fromToDate">
 						<label>시작일자</label><sform:input path="fromDate" type="date"/>
-						<label>종료일자</label> <sform:input path="toDate" type="date"/>
+						<label>종료일자</label><sform:input path="toDate" type="date"/>
+						<span></span>
 					</td>
 				</tr>
 				<tr>
