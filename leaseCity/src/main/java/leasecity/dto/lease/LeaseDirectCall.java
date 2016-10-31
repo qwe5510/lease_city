@@ -43,5 +43,4 @@ public class LeaseDirectCall implements Serializable {
 
 	/** 상한가격 (~까지). */
 	private Integer toPrice;
-
 }

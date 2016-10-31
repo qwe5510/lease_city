@@ -246,9 +246,15 @@ public class LeaseController {
 	
 	@RequestMapping(value="/inquery_heavy")
 	public String inquery_heavy(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러aa!!");
-		System.out.println("컨틀롤러들어옴!");
+		HeavyEquipmentCompany heavyEquipmentCompany = new HeavyEquipmentCompany();
+		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
 		return "lease/inquery_heavy";
+	}
+	
+	@RequestMapping(value="/heavy_request")
+	public String heavy_request(Model model){
+		HeavyEquipmentCompany heavyEquipmentCompany = new HeavyEquipmentCompany();
+		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
+		return "lease/heavy_request";
 	}
 }

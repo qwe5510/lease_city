@@ -1,11 +1,15 @@
 package leasecity.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import leasecity.dto.user.User;
 
 @Controller
 public class MypageController {
@@ -16,12 +20,15 @@ public class MypageController {
 		logger.trace("컨트롤러!!");
 		System.out.println("컨틀롤러들어옴!");
 		return "mypage/history";
-		
 	}
 	
 	@RequestMapping(value="/myinfo",method=RequestMethod.GET)
-	public String myinfo(Model model){
-		model.addAttribute("message", "Good Morning");
+	public String myinfo(Model model, HttpSession session){
+		
+		User user = new User();
+		if( session.getAttribute("loginUser") != null) {
+			
+		}
 		logger.trace("컨트롤러!!");
 		System.out.println("컨틀롤러들어옴!");
 		return "mypage/myinfo";
