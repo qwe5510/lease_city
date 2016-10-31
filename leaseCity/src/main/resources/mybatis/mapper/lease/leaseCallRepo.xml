@@ -7,7 +7,7 @@
  	<!-- 게시물 전체갯수 조회 : 오늘이 종료기한보다 과거일 경우 -->
  	<select id="getCountAllLeaseCalls" resultType="int">
  		SELECT COUNT(*) FROM lease_calls
- 		WHERE SYSDATE-1 &lt; to_date
+ 		WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
  	</select>
  	<!-- 오늘이 종료날짜를 지나지 않은 경우  -->
  	
@@ -35,8 +35,9 @@
  					</choose>
  					) sub
  				)
- 		WHERE SYSDATE-1 &lt; to_date
+ 		WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
  	</select>
+ 	<!-- 현재 날짜에서 시간을 0시 0분 0초로 하여 날짜타입으로 변환 -->
  	
  	<!-- 게시물 페이지별 조회 - 검색,정렬 포함 -->
  	<select id="getPageLeaseCalls" parameterType="page" resultType="leaseCall">
@@ -64,7 +65,7 @@
  					ORDER BY DESC u.credit_grade
  					) sub
  				)
- 			WHERE SYSDATE-1 &lt; to_date
+ 			WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
  		<if test="pageSize != null and to !=null and from != null">
  			AND rnum BETWEEN #{from} AND #{to}
  		</if>		
@@ -109,7 +110,7 @@
  	<delete id="deleteLeaseCall" parameterType="leaseCall">
  		DELETE FROM lease_calls
  		WHERE lease_call_no = #{leaseCallNo} AND user_id = #{userId}
- 		AND	  SYSDATE &lt; to_date
+ 		AND	  TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
  	</delete>
  	
  	<!-- 임대 요청 수정 -->

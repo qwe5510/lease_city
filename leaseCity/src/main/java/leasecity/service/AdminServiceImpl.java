@@ -2,12 +2,14 @@ package leasecity.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.user.User;
 import leasecity.exception.RemoveFailException;
 import leasecity.repo.adminwork.AdminRepo;
 
 @Service
+@Transactional
 public class AdminServiceImpl implements AdminService{
 	
 	@Autowired

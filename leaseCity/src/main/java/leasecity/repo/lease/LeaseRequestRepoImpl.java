@@ -72,6 +72,8 @@ public class LeaseRequestRepoImpl implements LeaseRequestRepo{
 		String stmt = LEASE_REQUEST_NS + "choiceLeaseRequest";
 		return session.update(stmt, leaseRequest);
 	}
+	
+	
 
 	
 }

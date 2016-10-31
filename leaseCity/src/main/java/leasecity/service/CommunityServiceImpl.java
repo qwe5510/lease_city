@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.adminwork.Notify;
 import leasecity.dto.community.Comment;
@@ -22,6 +23,7 @@ import leasecity.repo.community.CommentRepo;
 import leasecity.repo.community.ReplyRepo;
 
 @Service
+@Transactional
 public class CommunityServiceImpl implements CommunityService{
 
 	static Logger logger = LoggerFactory.getLogger(CommunityServiceImpl.class);

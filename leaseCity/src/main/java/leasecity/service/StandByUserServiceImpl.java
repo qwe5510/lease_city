@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.adminwork.StandByUser;
 import leasecity.exception.DuplicateValueException;
@@ -15,6 +16,7 @@ import leasecity.repo.adminwork.StandByUserRepo;
 import leasecity.util.HashingUtil;
 
 @Service
+@Transactional
 public class StandByUserServiceImpl implements StandByUserService{
 	
 

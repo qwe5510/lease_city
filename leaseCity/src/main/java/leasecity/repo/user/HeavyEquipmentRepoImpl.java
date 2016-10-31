@@ -1,6 +1,8 @@
 package leasecity.repo.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +62,16 @@ public class HeavyEquipmentRepoImpl implements HeavyEquipmentRepo{
 		return session.delete(stmt, HE);
 	}
 	
+	@Override
+	public int heavyEquipmentUsedYes(HeavyEquipment HE) {
+		String stmt = HE_NS + "heavyEquipmentUsedYes";
+		return session.update(stmt, HE);
+	}
+	
+	@Override
+	public int heavyEquipmentUsedNo(HeavyEquipment HE) {
+		String stmt = HE_NS + "heavyEquipmentUsedNo";
+		return session.update(stmt, HE);
+	}
 	
 }

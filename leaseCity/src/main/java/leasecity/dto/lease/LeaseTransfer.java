@@ -24,13 +24,22 @@ public class LeaseTransfer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 임대 양도 번호. */
-	private Integer leaseTransferNo;
+	private Integer LeaseTransferNo;
+	
+	/** 임대 양도 행 번호 */
+	private Integer leaseTransferRowNum;
 
-	/** 회원. */
-	private String userId;
+	/** 임대 양도 하는 아이디. */
+	private String sendUserId;
 
-	/** 중장비. */
-	private String id_number;
+	/** 임대 양도 하는 차량 번호. */
+	private String sendIdNumber;
+
+	/** 임대 양도 받는 아이디. */
+	private String acceptUserId;
+
+	/** 임대 양도 받는 차량 번호. */
+	private String acceptIdNumber;
 
 	/** 중장비 종류. */
 	private String equipmentCategory;
