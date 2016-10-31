@@ -57,12 +57,6 @@
 			</div>
 		</div>
 		<div class="navbar-inner">
-			<div class="container">
-				<!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a> -->
 				<a id="logo" class="pull-left" href="<%=request.getContextPath()%>/index"></a>
 				<div class="nav-collapse collapse pull-right">
 					<ul class="nav">
@@ -113,7 +107,6 @@
 				</div>
 				<!--/.nav-collapse -->
 			</div>
-		</div>
 	</header>
 	<!-- /header -->
 </body>

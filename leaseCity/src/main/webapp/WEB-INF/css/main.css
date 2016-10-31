@@ -350,7 +350,8 @@ header.navbar .navbar-inner {
 	border: 0;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
-	box-shadow: none
+	box-shadow: none;
+	padding-left: 40px;
 }
 
 header #logo {
@@ -1276,8 +1277,11 @@ label {
 }
 
 .reply_author {
+	width: 400px;
+	text-align : left;
 	float: left;
 	font-weight: bold;
+	font-size: 13px;
 }
 
 .reply_date {
@@ -1766,7 +1770,20 @@ button {
 	position: relative;
 	width: 600px;
 }
-
+#answer_title{
+	display: inline-block;
+	float: left;
+}
+#answer_title h5{
+	margin-top : 10px;
+	margin-bottom: 0px;
+	font-size: 16px;
+}
+.answer_content{
+	text-align : left;
+	width : 580px;
+	display: inline-block;
+}
 .manager_answer {
 	padding: 0px;
 }

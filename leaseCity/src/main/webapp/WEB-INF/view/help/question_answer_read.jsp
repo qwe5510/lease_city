@@ -105,7 +105,8 @@
             <div id="manager_answer_show">
             	<c:forEach var="answer" items="${answers}">
             	<div id="answer_${answer.replyNo}">
-            	<div id="answer_title"><h3 style="float: left;">Re:${question.commentTitle}</h3></div>
+            	<div id="answer_title"><h5>Re:${question.commentTitle}</h5></div>
+            	<br><br>
             	<fmt:formatDate value="${answer.regDate}"
 					pattern="yyyy-MM-dd  hh:mm:ss" var="answerRegDate" />
 						<div class="reply_author">

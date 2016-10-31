@@ -268,14 +268,6 @@
 		<!--/Modal Body-->
 	</div>
 	<!--  /Login form -->
-	<script src="<%=request.getContextPath()%>/js/vendor/jquery-1.9.1.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/vendor/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/main.js"></script>
-	<!-- Required javascript files for Slider -->
-	<script src="<%=request.getContextPath()%>/js/jquery.ba-cond.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery.slitslider.js"></script>
-	<!-- /Required javascript files for Slider -->
-
 	<!-- SL Slider -->
 	<script type="text/javascript"> 
 $(function() {
