@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.myPageRepo">
+ 	
+ 	<!-- ====================================조회==================================== -->
+ 	<!-- 유저 전체 조회-->
+ 	<select id="getAllSelectUsers" resultType="user">
+ 		SELECT * FROM users
+ 	</select>
+ 	
+ 	<!-- 등록된 회원정보와 중복되는 게 있는 지 확인 -->
+ 	<!-- 유저 ID로 조회 -->
+ 	<select id="getSelectUserCheckId" parameterType="String" 
+ 								resultType="user">
+ 		SELECT * FROM users WHERE user_id = #{userId}
+ 	</select>
+ 	<!-- 유저 업체명으로 조회 (공백무시) -->
+ 	<select id="getSelectUserCheckCompanyName" parameterType="String" 
+ 								resultType="user">
+ 		SELECT * FROM users
+ 		WHERE REPLACE(company_name, ' ', '') = REPLACE(#{companyName}, ' ', '')
+ 	</select>
+ 	<!-- 유저 email로 조회 -->
+ 	<select id="getSelectUserCheckEmail" parameterType="String" 
+ 								resultType="user">
+ 		SELECT * FROM users WHERE email = #{email}
+ 	</select>
+ 	
+ 	<!-- 유저 ID와 password로 검색 (로그인) -->
+ 	<select id="getSelectUserIdAndPassword" parameterType="Map" 
+ 								resultType="user">
+ 		SELECT * FROM users 
+ 		WHERE user_id = #{userId} AND password= #{password}
+ 	</select>
+ 	
+ 	<!-- 유저 ID찾기 : ID 출력 (뒷 2자리 *처리) -->
+ 	<select id="searchUserId" parameterType="user"
+ 								resultType="user">
+ 		SELECT RPAD(SUBSTR(user_id, 1, LENGTH(user_id)-2)
+ 					, LENGTH(user_id), '*') AS user_id
+ 					, company_name, represent_name, email
+ 		FROM users
+ 		WHERE 
+ 			REPLACE(company_name, ' ', '') = REPLACE(#{companyName}, ' ', '') AND
+ 			represent_name = #{representName} AND
+ 			email = #{email}		
+ 	</select>
+ 	
+ 	<!-- 유저 PASSWORD찾기 : 유저 정보가 부합한게 존재하는 지 찾기 -->
+ 	<select id="searchUserPassword" parameterType="user"
+ 									resultType="user">
+ 		SELECT *
+ 		FROM users
+ 		WHERE
+ 			user_id = #{userId} AND 
+ 			REPLACE(company_name, ' ', '') = REPLACE(#{companyName}, ' ', '') AND
+ 			represent_name = #{representName} AND
+ 			email = #{email}
+ 	</select>
+ 	
+ 	<!-- ====================================삽입==================================== -->
+ 	<!-- 유저 추가 -->
+ 	<insert id="insertUser" parameterType="user">
+ 		INSERT INTO users 
+ 		VALUES(
+ 		#{userId},#{password},
+ 		#{companyName},#{representName},
+ 		#{representPhone},#{handPhone},
+ 		#{email},#{zipNo}, #{address},
+ 		#{notifyOnOff},#{url},#{creditGrade}
+ 		<choose>
+ 			<when test="regDate != null">,#{regDate}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		<choose>
+ 			<when test="withdrawDate != null">,#{withdrawDate})</when>
+ 			<otherwise>, null)</otherwise>
+ 		</choose>
+ 	</insert>
+ 	
+ 	<!-- 유저 정보 수정 -->
+ 	<update id="updateInfoUser" parameterType="user">
+ 		UPDATE users
+ 		SET represent_phone = #{representPhone}
+ 			hand_phone = #{handPhone}
+ 			address = #{address}
+ 			notify_on_off = #{notifyOnOff}
+ 			url = ${url}
+ 		WHERE user_id = #{userId}
+ 	</update>
+ 	
+ 	<!-- 유저 패스워드 변경 -->
+ 	<update id="updatePasswordUser" parameterType="user">
+ 		UPDATE users
+ 		SET password = #{password}
+ 		WHERE user_id = #{userId}
+ 	</update>
+ 	
+ 	<!-- 유저 삭제 -->
+ 	<delete id="deleteUser" parameterType="user">
+ 		DELETE FROM users
+ 		WHERE user_id = #{userId}
+ 	</delete>
+ 	
+ 	
+ 
+ </mapper>

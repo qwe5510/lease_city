@@ -46,6 +46,7 @@
 		<mapper resource="mybatis/mapper/user/constructionCompanyRepo.xml" />
 		<mapper resource="mybatis/mapper/user/heavyEquipmentRepo.xml" />
 		<mapper resource="mybatis/mapper/user/licenseRepo.xml" />
+		<mapper resource="mybatis/mapper/user/mypageRepo.xml" />
 		
 		<!-- 2.임대 작업 mapping -->
 		<mapper resource="mybatis/mapper/lease/leaseCallRepo.xml" />
