@@ -8,6 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+<c:if test="${!empty lease_message }">
+	<script>
+		alert('${lease_message }');
+	</script>
+</c:if>
+
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
@@ -22,34 +29,64 @@
 			<table class="lease_request_read_table">
 				<tr>
 					<td class="lease_label"><sform:label path="companyName">회사명</sform:label>
-						<span>대한건설</span>
+						<span>${constructionCompany.companyName}</span>
 					</td>
 					<td class="lease_label"><sform:label path="representName">대표자</sform:label>
-						<span>대표자</span>
+						<span>${constructionCompany.representName}</span>
 					</td>
 					<td class="lease_label">
-						<sform:label path="representPhone">대표연락처</sform:label>
-						<span>010-7799-4657</span>
+						<sform:label path="representPhone">
+						대표연락처
+						</sform:label>
+						<span>
+						<c:choose>
+							<c:when test="${!empty constructionCompany.representPhone}">
+								${constructionCompany.representPhone}
+							</c:when>
+							<c:otherwise>
+								미입력
+							</c:otherwise>
+						</c:choose>
+						</span>
 					</td>
 				</tr>
 				<tr>
 					<td class="lease_label"><sform:label path="companyCategory">회사분류</sform:label>
-						<span>분류 분류</span>
+						<span>${constructionCompany.companyCategory }</span>
 					</td>
 					<td colspan="2" class="lease_label"><sform:label path="address">소재지</sform:label>
-						<span>경기도 안양시 만안구 석수1동 대림아파트 113동 1803호</span>
+						<span>${constructionCompany.address}</span>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="lease_label"><sform:label path="licenseList">자격증목록</sform:label>
-						<span>자격증목록</span>
+					<td colspan="3" class="lease_label"><sform:label path="licenseList">자격증목록</sform:label></td>
+				</tr>
+				
+				<tr>
+					<td colspan="3" style="padding: 0px; margin: 0px;">
+						<table border="1" style="width: 100%">
+							<tr>
+								<th>자격증 이름</th>
+								<th>발급처</th>
+								<th>발급 날짜</th>
+							</tr>
+							<c:forEach var="license" items="${constructionCompany.licenseList}">
+							<fmt:formatDate value="${license.licenseDate}" pattern="YYYY-MM-dd" var="StrDate"/>
+							
+							<tr>
+								<td>${license.licenseName}</td>
+								<td>${license.licenser}</td>
+								<td>${StrDate}</td>
+							</tr>
+							</c:forEach>
+						</table>
 					</td>
 				</tr>
 			</table>
 			</fieldset>
 			</sform:form>
-			<c:url value="/lease_request" var="lease_request"></c:url>
-			<sform:form id="lease_call_read_form" action="${lease_request }" method="post" modelAttribute="leaseCall">
+			<c:url value="/leaseCall/leaseRequest" var="leaseRequest"></c:url>
+			<sform:form id="lease_call_read_form" action="${leaseRequest}" method="post" modelAttribute="leaseCall">
 			<fieldset>
 			<legend>임대요청</legend>
 			<table class="lease_request_lease_table">
@@ -57,36 +94,42 @@
 					<td style="width: 90px;" class="lease_label"><sform:label path="leaseCategory">공사업종</sform:label>
 					</td>
 					<td colspan="2" class="leaseCategory">
-							<span> 토건 토목 건축 산업설비</span>
+							<span>${leaseCall.leaseCategory}</span>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="3" class="constructionAddress"><sform:label path="address">작업장소</sform:label>
-						<span>경기도 안양시 만안구 석수1동 대림아파트 113동 1803호</span>
+						<span>${leaseCall.address}</span>
 					</td>
 				</tr>
 				<tr>
 					<td class="lease_label"><sform:label path="equipmentCategory">필요차량</sform:label>
 					</td>
 					<td colspan="2" class="equipmentCategoryList">
-						<span>트럭 로더 그레이더 트랙</span>
+						<span>${leaseCall.equipmentCategory}</span>
 					</td>
 					
 				</tr>
 				<tr>
 					<td class="lease_label"><sform:label path="regDate">기간</sform:label>
 					</td>
+					
+					<fmt:formatDate value="${leaseCall.fromDate}" pattern="YYYY-MM-dd" var="strFromDate"/>
+					<fmt:formatDate value="${leaseCall.toDate}" pattern="YYYY-MM-dd" var="strToDate"/>
+					
 					<td colspan="2" class="fromToDate">
-						<label>시작일자</label><span>2016.10.26</span>
-						<label>종료일자</label><span>2016.11.10</span>
+						<span>${strFromDate}</span>
+						 ~ 
+						<span>${strToDate}</span>
 					</td>
 				</tr>
 				<tr>
 					<td class="lease_label"><sform:label path="regDate">금액</sform:label>
 					</td>
 					<td colspan="2" class="fromToPrice">
-						<sform:label path="fromPrice">최소금액</sform:label><span>50</span>
-						<sform:label path="toPrice">최대금액</sform:label><span>100</span>단위(만원)
+						<span>${leaseCall.fromPrice}</span>
+						 ~ 
+						<span>${leaseCall.toPrice}</span>(만원)
 					</td>
 				</tr>
 				<tr>
@@ -97,12 +140,16 @@
 			<br>
 			<fieldset>
 				<legend>참고사항</legend>
-				<span>참고사항!!!!</span>
+				<span>${leaseCall.leaseCommentContent}</span>
 			</fieldset>
 			<div class="lease_write_bottom">
 				<button id="lease_read"> <i class="icon-pencil"></i>임대신청</button>
-				<button id="lease_read_cancel"><i class="icon-link"></i>취소</button>
+				<button id="lease_read_cancel"><i class="icon-list"></i>목록</button>
 			</div>
+			<sform:hidden path="leaseCallNo"/>
+			<sform:hidden path="equipmentCategory"/>
+			<sform:hidden path="fromDate"/>
+			<sform:hidden path="toDate"/>
 			</sform:form>
 		</div>
 	</div>
@@ -110,10 +157,11 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
-	<c:url value="/lease_call" var="lease_call"></c:url>
+	<c:url value="/leaseCall" var="leaseCall"></c:url>
 	$("#lease_read_cancel").on("click",function(e){
 		e.preventDefault();
-		$("#lease_call_read_form").attr("action","${lease_call}");
+		$("#lease_call_read_form").attr("action","${leaseCall}");
+		$("#lease_call_read_form").attr("method", "GET");
 		$("#lease_call_read_form").submit();
 	})
 </script>

@@ -3,7 +3,6 @@ package leasecity.dto.lease;
 import java.io.Serializable;
 import java.util.Date;
 
-import leasecity.dto.user.HeavyEquipment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

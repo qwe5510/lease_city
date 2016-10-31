@@ -83,7 +83,7 @@
 							class="dropdown-toggle" data-toggle="dropdown">임대 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/lease_call">임대 신청/조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/leaseCall">임대 신청/조회</a></li>
 								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
@@ -132,7 +132,7 @@
 	}
 	// 반복 함수
 	function repeatloop() {
-		setTimeout("repeatloop()", 1000 * 1); //refresh 빈도 1000 = 1초
+		setTimeout("repeatloop()", 1000 * 5); //refresh 빈도 1000 = 5초
 		if ("${sessionScope.loginUser.userId}" != "") {
 			//alert("유저 로그인 아이디 : " + "${sessionScope.loginUser.userId}");
 			footNotification("${sessionScope.loginUser.userId}");

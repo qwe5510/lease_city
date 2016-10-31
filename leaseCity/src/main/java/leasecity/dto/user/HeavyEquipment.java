@@ -35,7 +35,7 @@ public class HeavyEquipment implements Serializable {
 	private String heavyEquipmentUri;
 	
 	/** 중장비 사용유무 */
-	private String usedOnOff;
+	private String usedYesNo;
 
 	/** 임대신청 목록. */
 	private List<LeaseRequest> leaseRequestsList;
@@ -55,14 +55,19 @@ public class HeavyEquipment implements Serializable {
 			String idNumber, 
 			String userId, 
 			String equipmentCategory,
-			String usedOnOff){
+			String usedYesNo){
 		
 		this.idNumber = idNumber;
 		this.userId = userId;
 		this.equipmentCategory = equipmentCategory;
-		this.usedOnOff = usedOnOff;
+		this.usedYesNo = usedYesNo;
 		
 		this.leaseRequestsList = new ArrayList<LeaseRequest>();
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
+	}
+	
+	
+	public String getInfo(){
+		return this.equipmentCategory + "(" + this.idNumber + ")";
 	}
 }

@@ -23,7 +23,7 @@
 			<br>
 			</div>
 			<ul class="help_menu_ul">
-			<li class="help_menu_first"><a id="help_frequenty" href="#"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></a></li>
+			<li class="help_menu_first"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></li>
 			<li><a id="help_question" href="${qna}"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4.png"></a></li>
 			</ul>
 		</div>

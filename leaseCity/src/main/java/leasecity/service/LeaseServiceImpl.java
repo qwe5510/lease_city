@@ -1,6 +1,7 @@
 package leasecity.service;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import leasecity.dto.lease.LeaseRequest;
 import leasecity.dto.lease.LeaseTransfer;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipment;
+import leasecity.dto.user.User;
 import leasecity.exception.ChangeValueFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.RemoveFailException;
@@ -24,6 +26,7 @@ import leasecity.repo.lease.LeaseRequestRepo;
 import leasecity.repo.lease.LeaseTransferRepo;
 import leasecity.repo.user.ConstructionCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentRepo;
+import leasecity.repo.user.UserRepo;
 
 @Service
 @Transactional
@@ -47,6 +50,9 @@ public class LeaseServiceImpl implements LeaseService {
 	@Autowired
 	HeavyEquipmentRepo heavyEquipmentRepo;
 	
+	@Autowired
+	UserRepo userRepo;
+	
 	
 	//임대 요청-----------------------------------------------------------------------------
 	
@@ -66,6 +72,54 @@ public class LeaseServiceImpl implements LeaseService {
 			leaseCall.setStandByLRCount(
 					leaseRequestRepo
 					.getCountStandByLeaseRequests(leaseCall.getLeaseCallNo()));
+			
+			//유저 정보 호출 후 신용도 가져오기
+			User user = userRepo.getUserCheckId(leaseCall.getUserId());
+			leaseCall.setTempGrade(user.getCreditGrade());
+			
+			StringTokenizer st = null;
+			String temp = null;
+			
+			//임대 분류 문자열 재정렬
+			String leaseCategory = leaseCall.getLeaseCategory();
+			st = new StringTokenizer(leaseCategory, ",");
+			
+			int count = 0;
+			while(st.hasMoreTokens()){
+				if(count==0){
+					temp = st.nextToken();
+				}else{
+					st.nextToken();
+				}
+				count++;
+			}
+			
+			if(count == 1){
+				leaseCall.setLeaseCategory(temp);
+			}
+			else{
+				leaseCall.setLeaseCategory(temp + " 외 " + (count-1) + "종");
+			}
+			
+			//필요 차량 종류 재분류
+			String equipmentCategory = leaseCall.getEquipmentCategory();
+			st = new StringTokenizer(equipmentCategory, ",");
+			count = 0;
+			while(st.hasMoreTokens()){
+				if(count==0){
+					temp = st.nextToken();
+				}else{
+					st.nextToken();
+				}
+				count++;
+			}
+			
+			if(count == 1){
+				leaseCall.setEquipmentCategory(temp);
+			}
+			else{
+				leaseCall.setEquipmentCategory(temp + " 외 " + (count-1) + "종");
+			}		
 		}
 		
 		return result;

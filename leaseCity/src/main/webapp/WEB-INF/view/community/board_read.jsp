@@ -112,7 +112,6 @@
 					<div style="text-align: left; padding: 10px;">
 						<span id="comment_reply_count">댓글 <b>${comment.replyCount}</b>개</span>
 					</div>
-
 					<div class="comment_reply">
 						<ul class="board_read_reply">
 
@@ -170,7 +169,7 @@
 						</fmt:parseNumber>
 						<fmt:parseNumber value="${prevPage+11}" var="nextPage">
 						</fmt:parseNumber>
-
+						<c:set value="${comment.commentNo}" var="checkNo" ></c:set>
 
 						<c:choose>
 							<c:when test="${prevPage > 0}">
@@ -373,7 +372,16 @@
                   	</c:otherwise>
                   </c:choose>
                   </td>
-                  <td>${comment.hits}</td>               
+                  <td>
+	                  <c:choose>
+	                  <c:when test="${checkNo == comment.commentNo}">
+	                  	${comment.hits+1}
+	                  </c:when>
+	                  <c:otherwise>
+	                    ${comment.hits}
+	                  </c:otherwise>
+	                  </c:choose>
+                  </td>               
                   
                   <fmt:formatDate value="${comment.regDate}"
                         pattern="yyyy-MM-dd"

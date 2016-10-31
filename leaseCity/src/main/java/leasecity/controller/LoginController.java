@@ -44,7 +44,14 @@ public class LoginController {
 	
 	// 로그인 폼 ( 이동만 )
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Model model, HttpSession session) {
+		
+		//로그인 되어있는 유저 혹은 관리자가 있는 지 확인.
+		User loginUser = session.getAttribute("loginUser")==null?
+						(User)session.getAttribute("admin"):
+						(User)session.getAttribute("loginUser");						
+		if(loginUser != null){return "redirect:/index";}
+		
 		User user = new User();
 		model.addAttribute("user", user);
 		return "join/login";

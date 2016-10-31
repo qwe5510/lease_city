@@ -2037,7 +2037,7 @@ button{
 }
 
 .lease_request_read_table td{
-	padding-right: 90px;
+	padding-right: 20px;
 	font-size: 13px;
 }
 .lease_request_read_table label{
@@ -2092,6 +2092,12 @@ button{
 .lease_label label{
 	font-weight: bold;
 }
+
+#leaseCommentContent{
+	padding:0px;
+	width: 750px;
+}
+
 .heavy_select{
 	width: 150px;
 	display: inline;

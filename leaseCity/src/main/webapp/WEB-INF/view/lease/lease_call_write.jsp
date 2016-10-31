@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
@@ -16,40 +16,73 @@
 		</div>
 		<div class="lease_main">
 			<br><br>
-			<c:url value="/lease_call_read" var="lease_call_read"></c:url>
+			
 			<sform:form action="#" method="post" modelAttribute="constructionCompany">
 			<fieldset>
 			<legend>기업개요</legend>
 			<table class="lease_request_read_table">
 				<tr>
 					<td class="lease_label"><sform:label path="companyName">회사명</sform:label>
-						<span>대한건설</span>
+						<span>${constructionCompany.companyName}</span>
 					</td>
 					<td class="lease_label"><sform:label path="representName">대표자</sform:label>
-						<span>대표자</span>
+						<span>${constructionCompany.representName}</span>
 					</td>
 					<td class="lease_label">
-						<sform:label path="representPhone">대표연락처</sform:label>
-						<span>010-7799-4657</span>
+						<sform:label path="representPhone">
+						대표연락처
+						</sform:label>
+						<span>
+						<c:choose>
+							<c:when test="${!empty constructionCompany.representPhone}">
+								${constructionCompany.representPhone}
+							</c:when>
+							<c:otherwise>
+								미입력
+							</c:otherwise>
+						</c:choose>
+						</span>
 					</td>
 				</tr>
 				<tr>
 					<td class="lease_label"><sform:label path="companyCategory">회사분류</sform:label>
-						<span>분류 분류</span>
+						<span>${constructionCompany.companyCategory}</span>
 					</td>
 					<td colspan="2" class="lease_label"><sform:label path="address">소재지</sform:label>
-						<span>경기도 안양시 만안구 석수1동 대림아파트 113동 1803호</span>
+						<span>${constructionCompany.address}</span>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="lease_label"><sform:label path="licenseList">자격증목록</sform:label>
-						<span>자격증목록</span>
+					<td colspan="3" class="lease_label"><sform:label path="licenseList">자격증목록</sform:label></td>
+				</tr>
+				
+				<tr>
+					<td colspan="3" style="padding: 0px; margin: 0px;">
+						<table border="1" style="width: 100%">
+							<tr>
+								<th>자격증 이름</th>
+								<th>발급처</th>
+								<th>발급 날짜</th>
+							</tr>
+							<c:forEach var="license" items="${constructionCompany.licenseList}">
+							<fmt:formatDate value="${license.licenseDate}" pattern="YYYY-MM-dd" var="StrDate"/>
+							
+							<tr>
+								<td>${license.licenseName}</td>
+								<td>${license.licenser}</td>
+								<td>${StrDate}</td>
+							</tr>
+							</c:forEach>
+						</table>
 					</td>
 				</tr>
 			</table>
 			</fieldset>
 			</sform:form>
-			<sform:form id="lease_call_write_form" action="${lease_call_read }" method="post" modelAttribute="leaseCall">
+			
+			<c:url value="/leaseCallWrite" var="leaseCallWrite"></c:url>
+			<sform:form id="lease_call_write_form" action="${leaseCallWrite }" 
+								method="post" modelAttribute="leaseCall">
 			<fieldset>
 			<legend>임대요청</legend>
 			<table class="lease_request_lease_table">
@@ -73,8 +106,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="constructionAddress lease_label"><sform:label path="address">작업장소</sform:label>
-						<sform:input path="address"/>
+					<td colspan="3" class="constructionAddress lease_label">
+						<sform:label path="address">작업장소</sform:label>
+						<sform:input path="address" readonly="true" style="background:white;"/>
 						<input type="button" value="검색" id="conAddressSearch"/>
 					</td>
 				</tr>
@@ -98,19 +132,25 @@
 					
 				</tr>
 				<tr>
-					<td class="lease_label"><sform:label path="regDate">기간</sform:label>
+					<td class="lease_label">
+					<sform:label path="regDate">기간</sform:label>
 					</td>
 					<td colspan="2" class="fromToDate">
-						<label>시작일자</label><sform:input path="fromDate" type="date"/>
-						<label>종료일자</label> <sform:input path="toDate" type="date"/>
+						<sform:label path="fromDate">시작일자</sform:label>
+						<input id="fromDate" name="strFromDate" type="date"/>
+						<sform:label path="toDate">종료일자</sform:label>
+						<input id="toDate" name="strToDate" type="date"/>
 					</td>
 				</tr>
 				<tr>
-					<td class="lease_label"><sform:label path="regDate">금액</sform:label>
+					<td class="lease_label">
+					<sform:label path="regDate">금액</sform:label>
 					</td>
 					<td colspan="2" class="fromToPrice">
-						<sform:label path="fromPrice">최소금액</sform:label><sform:input id="lease_fromprice" path="fromPrice" type="number"/>
-						<sform:label path="toPrice">최대금액</sform:label><sform:input id="lease_toprice" path="toPrice" type="number"/>단위(만원)
+						<sform:label path="fromPrice">최소금액</sform:label>
+						<sform:input path="fromPrice" type="number"/>
+						<sform:label path="toPrice">최대금액</sform:label>
+						<sform:input path="toPrice" type="number"/>단위(만원)
 					</td>
 				</tr>
 				<tr>
@@ -121,11 +161,11 @@
 			<br>
 			<fieldset>
 				<legend>참고사항</legend>
-				<textarea></textarea>
+				<sform:textarea path="leaseCommentContent" cols="50" rows="5"/>
 			</fieldset>
 			<div class="lease_write_bottom">
 				<button id="lease_call_write"> <i class="icon-pencil"></i>작성</button>
-				<button id="lease_call_write_cancel"><i class="icon-link"></i>취소</button>
+				<button id="lease_call_write_cancel"><i class="icon-list"></i>목록</button>
 			</div>
 			</sform:form>
 		</div>
@@ -141,53 +181,49 @@
  
  	function jusoCallBack(roadFullAddr){
     	$("#address").val(roadFullAddr);
-    	$("#address").attr("reonly","");
  	}
- 	<c:url value="/lease_call" var="lease_call"/>
+ 	
+ 	<c:url value="/leaseCall" var="leaseCall"/>
  	$(document).on("click","#lease_call_write_cancel",function(e) {
    		e.preventDefault();
-   		$("#lease_request_form").attr("action","${lease_call}");
-   		$("#lease_request_form").submit();
+   		location.href="${leaseCall}";
  	});
  	
- 	$("#lease_fromprice").on("blur",function(){
+ 	$("#fromPrice").on("blur",function(){
  		var priceReg = /^[1-9][0-9]*$/;
- 		var lease_fromprice = $("#lease_fromprice").val();
+ 		var lease_fromprice = $("#fromPrice").val();
  		if(!priceReg.test(lease_fromprice)){
  			$(".priceCheck").html("공백 & 음수는 입력이 불가능합니다.");
- 			$("#lease_fromprice").focus();
+ 			$("#fromPrice").focus();
  			return false;
  		}else{
  			$(".priceCheck").html("");
  		}
  	});
- 	$("#lease_toprice").on("blur",function(){
- 		var lease_fromprice = $("#lease_fromprice").val();
- 		var lease_toprice = $("#lease_toprice").val();
+ 	$("#toPrice").on("blur",function(){
+ 		var lease_fromprice = $("#fromPrice").val();
+ 		var lease_toprice = $("#toPrice").val();
  		
  		if(lease_fromprice>lease_toprice){
  			$(".priceCheck").html("최소금액보다는 커야합니다.");
- 			$("#lease_toprice").focus();
+ 			$("#toPrice").focus();
  			return false;
  		}else{
  			$(".priceCheck").html("");
  		}
  	})
  	$("#lease_call_write").on("click",function(e){
- 		e.preventDefault();
  		var priceReg = /^[1-9][0-9]*$/;
- 		var lease_fromprice = $("#lease_fromprice").val();
- 		var lease_toprice = $("#lease_toprice").val();
+ 		var lease_fromprice = $("#fromPrice").val();
+ 		var lease_toprice = $("#toPrice").val();
  		if(!priceReg.test(lease_fromprice)){
  			$(".priceCheck").html("최소금액보다는 커야합니다.");
- 			$("#lease_toprice").focus();
+ 			$("#toPrice").focus();
  			return false;
  		}else if(lease_fromprice>lease_toprice){
  			$(".priceCheck").html("최소금액보다는 커야합니다.");
- 			$("#lease_toprice").focus();
+ 			$("#toPrice").focus();
  			return false;
- 		}else{
- 			$("#lease_call_write_form").submit();
  		}
  	});
  </script>

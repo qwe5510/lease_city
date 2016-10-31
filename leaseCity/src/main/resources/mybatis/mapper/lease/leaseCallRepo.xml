@@ -62,7 +62,7 @@
 	 						OR	  lc.equipment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
  					</choose>
- 					ORDER BY DESC u.credit_grade
+ 					ORDER BY u.credit_grade DESC
  					) sub
  				)
  			WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
@@ -75,13 +75,13 @@
  	
  	<!-- 임대 요청 번호에 대한 임대 요청글 정보 받기 -->
  	<select id="getLeaseCall" parameterType="int" resultType="leaseCall">
- 		SELECT lc.*, u.company_name company_name
+ 		SELECT lc.*, u.company_name company_name, u.represent_name represent_name
  		FROM lease_calls lc JOIN users u ON lc.user_id=u.user_id
  		WHERE lease_call_no = #{leaseCallNo}
  	</select>
  	
  	<select id="getUserLeaseCall" parameterType="int" resultType="leaseCall">
- 		SELECT lc.*, u.company_name company_name 
+ 		SELECT lc.*, u.company_name company_name, u.represent_name represent_name
  		FROM lease_calls lc JOIN users u ON lc.user_id=u.user_id
  		WHERE lease_call_no = #{leaseCallNo}
  		<if test="userId != null">

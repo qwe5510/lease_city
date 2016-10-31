@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -8,6 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+
+
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
@@ -23,19 +26,19 @@
 			<table class="lease_request_table">
 				<tr>
 					<td class="lease_label"><sform:label path="companyName">회사명</sform:label>
-						<span>대한건설</span>
+						<span>${heavyEquipmentCompany.companyName}</span>
 					</td>
 					<td class="lease_label"><sform:label path="representName">대표자</sform:label>
-						<span>대표자</span>
+						<span>${heavyEquipmentCompany.representName}</span>
 					</td>
 					<td class="lease_label">
 						<sform:label path="representPhone">대표연락처</sform:label>
-						<span>010-7799-4657</span>
+						<span>${heavyEquipmentCompany.representPhone}</span>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="3" class="lease_label"><sform:label path="address">소재지</sform:label>
-						<span>경기도 안양시 만안구 석수1동 대림아파트 113동 1803호</span>
+						<span>${heavyEquipmentCompany.address}</span>
 					</td>
 				</tr>
 				<tr>
@@ -52,13 +55,13 @@
 			<legend>임대신청</legend>
 			<table class="lease_request_lease_table">
 				<tr>
-					<td class="lease_label"><sform:label path="heavyEquipment">필요차량</sform:label>
+					<td class="lease_label">
+					<sform:label path="idNumber">필요차량</sform:label>
 					</td>
-					<td colspan="2" class="heavyEquipment" >
-						<sform:checkbox path="heavyEquipment" value="트럭" label="트럭" id="checked"/>
-						<sform:checkbox path="heavyEquipment" value="로더" label="로더"/>
-						<sform:checkbox path="heavyEquipment" value="그레이더" label="그레이더"/>
-						<sform:checkbox path="heavyEquipment" value="트랙" label="트랙"/>
+					<td colspan="2" class="heavyEquipmentArea" >
+						<sform:select path="idNumber" style="width: 350px;">
+							<sform:options items="${idNumbers}"/>
+						</sform:select>
 					</td>
 				</tr>
 				<tr>
