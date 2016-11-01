@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.adminwork.Notify;
@@ -101,6 +104,26 @@ public class LeaseController {
 		return "lease/lease_call";
 	}
 	
+	@RequestMapping(value="/moreCallPageAjax", method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> leaseCallWrite(
+			@RequestParam Integer currentPage,
+			@RequestParam String search,
+			@RequestParam String keyword) throws NotFoundDataException{
+
+		Page page = leaseService.getMoreViewSearchPage(
+				currentPage, LEASE_CALL_PAGE_SIZE, 
+				search, keyword);
+		List<LeaseCall> leaseCalls = leaseService.loadLeaseCalls(page);
+		
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("leaseCalls", leaseCalls);
+		map.put("pageCount", page.getTotalCount());
+		map.put("pageSize", page.getPageSize());
+		
+		return map;
+	}
+	
 	@RequestMapping(value="/leaseCall/write", method=RequestMethod.GET)
 	public String leaseCall_write(
 			Model model, HttpSession session, RedirectAttributes redir){
@@ -117,7 +140,7 @@ public class LeaseController {
 		}
 		return "lease/lease_call_write";
 	}
-	
+
 	
 	//임대 요청 작성
 	@RequestMapping(value="/leaseCallWrite", method = RequestMethod.POST)

@@ -461,6 +461,8 @@ public class LeaseServiceImpl implements LeaseService {
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
 		page.setFromTo();
+		page.setTotalCount(leaseCallRepo.getCountSearchLeaseCalls(page));
+		
 		return page;
 	}
 	
