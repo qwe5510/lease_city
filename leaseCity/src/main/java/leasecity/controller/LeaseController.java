@@ -30,6 +30,7 @@ import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
 import leasecity.exception.NotFoundDataException;
+import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.LeaseService;
 import leasecity.service.UserService;
@@ -196,6 +197,7 @@ public class LeaseController {
 		
 		HeavyEquipmentCompany heavyEquipmentCompany = null;
 		List<String> idNumbers = new ArrayList<>();
+				
 		
 		User loginUser = (User)session.getAttribute("loginUser");
 		if(loginUser instanceof HeavyEquipmentCompany){
@@ -207,15 +209,19 @@ public class LeaseController {
 				System.out.println("임대 요청글 차량 : " + leaseCall.getEquipmentCategory());
 				StringTokenizer st = new StringTokenizer(leaseCall.getEquipmentCategory(), ",");
 				
+				
 				while(st.hasMoreTokens()){
 					String token = st.nextToken();
-					System.out.println("TOKEN : " + token);
-					for(HeavyEquipment HE : heavyEquipmentCompany.getHeavyEquipmentList()){
+					
+					for(HeavyEquipment HE : heavyEquipmentCompany.getHeavyEquipmentList()){						
 						if(HE.getUsedYesNo().equals("N") && 
-							token.indexOf(HE.getEquipmentCategory()) != -1){
+							token.equals(HE.getEquipmentCategory().split("/")[0])){
 								idNumbers.add(HE.getInfo());
+								HE.setCheckRequest("Y");
+						}else if(HE.getCheckRequest() == null){
+							HE.setCheckRequest("N");
 						}
-					}
+					}					
 				}
 				
 				if(idNumbers.size() <= 0){
@@ -234,7 +240,8 @@ public class LeaseController {
 			return "redirect:/leaseCall";
 		}
 		
-		LeaseRequest leaseRequest = new LeaseRequest();
+		LeaseRequest leaseRequest = new LeaseRequest(); //신청글 양식 불러오기
+		leaseRequest.setLeaseCallNo(leaseCall.getLeaseCallNo());
 		
 		model.addAttribute("leaseCall", leaseCall);
 		model.addAttribute("leaseRequest", leaseRequest);
@@ -242,6 +249,31 @@ public class LeaseController {
 		model.addAttribute("idNumbers", idNumbers);
 
 		return "lease/lease_request";
+	}
+	
+	@RequestMapping(value="/leaseCall/RequestWrite", method=RequestMethod.POST)
+	public String leaseRequestWrite(Model model, HttpSession session,
+			RedirectAttributes redir, LeaseRequest leaseRequest){
+		
+		
+		User user = (User) session.getAttribute("loginUser");
+		
+		if(user != null){
+			leaseRequest.setUserId(user.getUserId());
+			//차량번호 다시받기
+			String idNumber = leaseRequest.getIdNumber();
+			idNumber = idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
+			leaseRequest.setIdNumber(idNumber);
+		}
+		
+		try {
+			leaseService.doLeaseRequest(leaseRequest);
+			redir.addFlashAttribute("lease_message", "임대 신청이 완료되었습니다.");
+		} catch (ServiceFailException e) {
+			redir.addFlashAttribute("lease_message", "임대 신청에 실패하였습니다.");
+		}
+				
+		return "redirect:/leaseCall";
 	}
 	
 	@RequestMapping(value="/inquery_heavy")

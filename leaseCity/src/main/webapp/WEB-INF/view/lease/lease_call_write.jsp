@@ -92,18 +92,18 @@
 					</td>
 					<td class="leaseCategory">
 							<sform:checkbox path="leaseCategory" value="토건" label="토건"/>
-							<sform:checkbox path="leaseCategory" value="토목" label="토목" id="checked"/>
+							<sform:checkbox path="leaseCategory" value="토목" label="토목" />
 							<sform:checkbox path="leaseCategory" value="건축" label="건축"/>
-							<sform:checkbox path="leaseCategory" value="산업설비" label="산업설비" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="토공" label="토공" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="철콘" label="철콘" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="금속구조" label="금속구조" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="철강" label="철강" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="시설물" label="시설물" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="주택건설" label="주택건설" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="문화재" label="문화재" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="해외" label="해외" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="기타" label="기타" id="checked"/>
+							<sform:checkbox path="leaseCategory" value="산업설비" label="산업설비"/>
+							<sform:checkbox path="leaseCategory" value="토공" label="토공"/>
+							<sform:checkbox path="leaseCategory" value="철콘" label="철콘"/>
+							<sform:checkbox path="leaseCategory" value="금속구조" label="금속구조"/>
+							<sform:checkbox path="leaseCategory" value="철강" label="철강"/>
+							<sform:checkbox path="leaseCategory" value="시설물" label="시설물" />
+							<sform:checkbox path="leaseCategory" value="주택건설" label="주택건설" />
+							<sform:checkbox path="leaseCategory" value="문화재" label="문화재" />
+							<sform:checkbox path="leaseCategory" value="해외" label="해외" />
+							<sform:checkbox path="leaseCategory" value="기타" label="기타" />
 					</td>
 				</tr>
 				<tr>
@@ -117,7 +117,7 @@
 					<td class="lease_label"><sform:label path="equipmentCategory" >필요차량</sform:label>
 					</td>
 					<td colspan="2" class="equipmentCategoryList">
-						<sform:checkbox path="equipmentCategory" value="트럭" label="트럭" id="checked"/>
+						<sform:checkbox path="equipmentCategory" value="트럭" label="트럭" />
 						<sform:checkbox path="equipmentCategory" value="로더" label="로더"/>
 						<sform:checkbox path="equipmentCategory" value="그레이더" label="그레이더"/>
 						<sform:checkbox path="equipmentCategory" value="트랙" label="트랙"/>
@@ -139,9 +139,13 @@
 					<td colspan="2" class="fromToDate">
 						<sform:label path="fromDate">시작일자</sform:label>
 						<input id="fromDate" name="strFromDate" type="date"/>
+						<br>
 						<sform:label path="toDate">종료일자</sform:label>
 						<input id="toDate" name="strToDate" type="date"/>
 					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="dateCheck"></td>
 				</tr>
 				<tr>
 					<td class="lease_label">
@@ -149,9 +153,9 @@
 					</td>
 					<td colspan="2" class="fromToPrice">
 						<sform:label path="fromPrice">최소금액</sform:label>
-						<sform:input path="fromPrice" type="number"/>
+						<sform:input path="fromPrice" type="number" min="0"/><br>						
+						<sform:input path="toPrice" type="number" min="0"/>단위(만원)
 						<sform:label path="toPrice">최대금액</sform:label>
-						<sform:input path="toPrice" type="number"/>단위(만원)
 					</td>
 				</tr>
 				<tr>
@@ -194,7 +198,7 @@
  		var priceReg = /^[1-9][0-9]*$/;
  		var lease_fromprice = $("#fromPrice").val();
  		if(!priceReg.test(lease_fromprice)){
- 			$(".priceCheck").html("공백 & 음수는 입력이 불가능합니다.");
+ 			$(".priceCheck").html("공백 또는 0값은 입력이 불가능합니다.");
  			$("#fromPrice").focus();
  			return false;
  		}else{
@@ -217,7 +221,13 @@
  		var priceReg = /^[1-9][0-9]*$/;
  		var lease_fromprice = $("#fromPrice").val();
  		var lease_toprice = $("#toPrice").val();
- 		if(!priceReg.test(lease_fromprice)){
+
+ 		var fromDate = $("#fromDate").val();
+ 		var toDate = $("#toDate").val();
+ 		
+ 		if(!_jsDateCheck(fromDate,toDate)){
+ 			return false;
+ 		}else if(!priceReg.test(lease_fromprice)){
  			$(".priceCheck").html("최소금액보다는 커야합니다.");
  			$("#toPrice").focus();
  			return false;
@@ -227,5 +237,73 @@
  			return false;
  		}
  	});
+ 	
+ 	$("#toDate").on("blur", function(e){
+ 		var toDate = $(this).val();
+ 		var fromDate = $("#fromDate").val();
+ 		
+ 		if(!_jsDateCheck(fromDate,toDate)){
+ 		}else{$(".dateCheck").html("");}
+ 	});
+ 	
+ 	$("#fromDate").on("blur", function(e){
+ 		var toDate = $("#toDate").val();
+ 		var fromDate = $(this).val();
+ 		
+ 		if(!_jsDateCheck(fromDate,toDate)){
+ 			$(this).focus();
+ 		}else{$(".dateCheck").html("");}
+ 	});
+ 	
+ 	function _jsDateCheck(fromDate, toDate){
+ 	    var arySrtDt = fromDate.split("-"); // ex) 시작일자(2007-10-09)
+ 	    var aryEndDt = toDate.split("-"); // ex) 종료일자(2007-12-05)
+
+ 	  	var temp = new Date(); // temp
+ 	  	
+ 	  	var today = new Date(Number(temp.getFullYear()), Number(temp.getMonth()), Number(temp.getDate())); 	  	
+ 		var startDt = new Date(Number(arySrtDt[0]),Number(arySrtDt[1])-1,Number(arySrtDt[2]));
+	    var endDt	= new Date(Number(aryEndDt[0]),Number(aryEndDt[1])-1,Number(aryEndDt[2]));
+	    
+	    
+	    subFromDt 	= Math.floor(startDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
+	   	subToDt 	= Math.floor(endDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
+	   	
+ 	   	if(subFromDt < 0){
+	   	 	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
+	    	$("#toDate").focus();
+	    	return false; 
+	    }else if(subToDt < 0){
+	    	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
+	    	$("#toDate").focus();
+	    	return false;
+	    }
+ 	    
+ 	    if(fromDate == "" && toDate == ""){
+ 	    	$(".dateCheck").html("날짜가 공백입니다 날짜를 설정 해주세요.");
+ 	    	$("#fromDate").focus();
+ 	    	return false;
+ 	    }
+ 	    else if(fromDate == ""){
+ 	    	$(".dateCheck").html("시작 날짜를 설정 해주세요.");
+ 	    	$("#fromDate").focus();
+ 	    	return false;
+ 	    }else if(toDate == ""){
+ 	    	console.log("통과");
+ 	    	$(".dateCheck").html("종료 날짜를 설정 해주세요.");
+ 	    	$("#toDate").focus();
+ 	    	return false;
+ 	    }
+ 	    
+ 	  	resultDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- startDt.valueOf()/(24*60*60*1000));
+ 	 
+ 	  	if(resultDt < 0 ){
+ 	    	$(".dateCheck").html("종료날짜가 시작날짜보다 나중이어야 합니다.");
+ 	    	$("#toDate").focus();
+ 	    	return false; 
+ 	    }
+ 	  	
+ 	  	return true;
+ 	}
  </script>
 </html>

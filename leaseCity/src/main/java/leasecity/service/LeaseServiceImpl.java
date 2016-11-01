@@ -224,7 +224,7 @@ public class LeaseServiceImpl implements LeaseService {
 		HeavyEquipment heavyEquipment = heavyEquipmentRepo.getHeavyEquipment(leaseRequest.getIdNumber());
 		
 		int result = heavyEquipmentRepo.heavyEquipmentUsedYes(heavyEquipment);
-		//임대 신청 실패 시, 사용여부 N으로 돌리기
+		//임대 신청 실패 시, 자동롤백됨
 		result = leaseRequestRepo.insertLeaseRequest(leaseRequest);
 		
 		if(result != 1){

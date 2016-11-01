@@ -36,6 +36,8 @@ public class HeavyEquipment implements Serializable {
 	
 	/** 중장비 사용유무 */
 	private String usedYesNo;
+	
+	private String checkRequest;
 
 	/** 임대신청 목록. */
 	private List<LeaseRequest> leaseRequestsList;
