@@ -57,6 +57,7 @@ public class LeaseController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat,true));
 	}
 	
+	
 	@RequestMapping(value="/leaseCall", method=RequestMethod.GET)
 	public String leaseCall(Model model, Page searchPage,
 			@RequestParam(required=false) Integer currentPage){
@@ -113,6 +114,7 @@ public class LeaseController {
 	}
 	
 	
+	//임대 요청 작성
 	@RequestMapping(value="/leaseCallWrite", method = RequestMethod.POST)
 	public String leaseCallWrite(Model model, HttpSession session,
 			RedirectAttributes redir, LeaseCall leaseCall,
@@ -163,7 +165,7 @@ public class LeaseController {
 			return "redirect:/leaseCall";
 		}
 		
-		return "redirect:/leaseCall/read?commentNo="+leaseCall.getLeaseCallNo();
+		return "redirect:/leaseCall/read?leaseCallNo="+leaseCall.getLeaseCallNo();
 	}
 	
 	@RequestMapping(value="/leaseCall/read", method=RequestMethod.GET)
@@ -191,6 +193,7 @@ public class LeaseController {
 		return "lease/lease_call_read";
 	}
 	
+	//
 	@RequestMapping(value="/leaseCall/leaseRequest", method=RequestMethod.POST)
 	public String lease_request(Model model, HttpSession session,
 			RedirectAttributes redir, LeaseCall leaseCall){
@@ -198,7 +201,6 @@ public class LeaseController {
 		HeavyEquipmentCompany heavyEquipmentCompany = null;
 		List<String> idNumbers = new ArrayList<>();
 				
-		
 		User loginUser = (User)session.getAttribute("loginUser");
 		if(loginUser instanceof HeavyEquipmentCompany){
 			try {
@@ -206,9 +208,8 @@ public class LeaseController {
 				heavyEquipmentCompany.setHeavyEquipmentList(
 						userService.loadUserHeavyEquipment(loginUser.getUserId()));
 
-				System.out.println("임대 요청글 차량 : " + leaseCall.getEquipmentCategory());
+				//임대 요청 차량 가능 여부 조사.
 				StringTokenizer st = new StringTokenizer(leaseCall.getEquipmentCategory(), ",");
-				
 				
 				while(st.hasMoreTokens()){
 					String token = st.nextToken();
@@ -247,10 +248,13 @@ public class LeaseController {
 		model.addAttribute("leaseRequest", leaseRequest);
 		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
 		model.addAttribute("idNumbers", idNumbers);
+		model.addAttribute("curtLineDate", leaseCall.getFromDate());
 
 		return "lease/lease_request";
 	}
 	
+	
+	//임대 요청 작성 등록
 	@RequestMapping(value="/leaseCall/RequestWrite", method=RequestMethod.POST)
 	public String leaseRequestWrite(Model model, HttpSession session,
 			RedirectAttributes redir, LeaseRequest leaseRequest){

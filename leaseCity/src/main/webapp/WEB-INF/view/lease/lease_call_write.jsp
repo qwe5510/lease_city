@@ -197,10 +197,14 @@
  	$("#fromPrice").on("blur",function(){
  		var priceReg = /^[1-9][0-9]*$/;
  		var lease_fromprice = $("#fromPrice").val();
+ 		var lease_toprice = $("#toPrice").val();
  		if(!priceReg.test(lease_fromprice)){
  			$(".priceCheck").html("공백 또는 0값은 입력이 불가능합니다.");
  			$("#fromPrice").focus();
  			return false;
+ 		}else if(Number(lease_fromprice) > Number(lease_toprice)){
+ 			$(".priceCheck").html("최소금액보다는 커야합니다.");
+ 			$("#toPrice").focus();
  		}else{
  			$(".priceCheck").html("");
  		}
@@ -209,7 +213,7 @@
  		var lease_fromprice = $("#fromPrice").val();
  		var lease_toprice = $("#toPrice").val();
  		
- 		if(lease_fromprice>lease_toprice){
+ 		if(Number(lease_fromprice) > Number(lease_toprice)){
  			$(".priceCheck").html("최소금액보다는 커야합니다.");
  			$("#toPrice").focus();
  			return false;
@@ -228,14 +232,24 @@
  		if(!_jsDateCheck(fromDate,toDate)){
  			return false;
  		}else if(!priceReg.test(lease_fromprice)){
+ 			$(".priceCheck").html("공백 또는 0값은 입력이 불가능합니다.");
+ 			$("#toPrice").focus();
+ 			return false;
+ 		}else if(Number(lease_fromprice)>Number(lease_toprice)){
  			$(".priceCheck").html("최소금액보다는 커야합니다.");
  			$("#toPrice").focus();
  			return false;
- 		}else if(lease_fromprice>lease_toprice){
- 			$(".priceCheck").html("최소금액보다는 커야합니다.");
- 			$("#toPrice").focus();
- 			return false;
+ 		}else{
+ 			var res = confirm("작성 후 수정이 불가능합니다.\n정말로 요청글 작성이 완료되었습니까?");
+ 			
+ 			if(res){
+ 				alert("임대 요청글 작성이 완료되었습니다.");
+ 			}else{
+ 				return false;
+ 			}
  		}
+ 		
+ 		
  	});
  	
  	$("#toDate").on("blur", function(e){

@@ -22,6 +22,30 @@
 		<div class="cssload-overlay"></div>
 
 		<div class="cssload-cogWheel cssload-one">
+		<div class="cssload-cog cssload-one"></div>
+		<div class="cssload-cog cssload-two"></div>
+		<div class="cssload-cog cssload-three"></div>
+		<div class="cssload-cog cssload-four"></div>
+		<div class="cssload-cog cssload-five"></div>
+		<div class="cssload-center"></div>
+		</div>
+
+		<div class="cssload-cogWheel cssload-two">
+		<div class="cssload-cog cssload-one"></div>
+		<div class="cssload-cog cssload-two"></div>
+		<div class="cssload-cog cssload-three"></div>
+		<div class="cssload-cog cssload-four"></div>
+		<div class="cssload-cog cssload-five"></div>
+		<div class="cssload-center"></div>
+		</div>
+	</div>
+</div>
+
+<div class="cssload-cssload-wrap2">
+	<div class="cssload-wrap">
+		<div class="cssload-overlay"></div>
+
+		<div class="cssload-cogWheel cssload-one">
 		
 		<div class="cssload-cog cssload-one"></div>
 		<div class="cssload-cog cssload-two"></div>
@@ -30,7 +54,7 @@
 		<div class="cssload-cog cssload-five"></div>
 		<div class="cssload-center"></div>
 		</div>
-		<h4>loading</h4>	
+		<h5 style="margin-left:25px; margin-top: 40px; color: black;">loading</h5>
 		<div class="cssload-cogWheel cssload-two">
 		
 		<div class="cssload-cog cssload-one"></div>

@@ -17,9 +17,19 @@ public class DateUtil {
 			calendar = Calendar.getInstance();
 			calendar.setTime(date);
 			//Date가 null이 아니면
-			return calendar.get(Calendar.YEAR) + "-"
-					+ (calendar.get(Calendar.MONTH)+1) + "-"
-					+ calendar.get(Calendar.DAY_OF_MONTH);
+			
+			int year = calendar.get(Calendar.YEAR);
+			int month = calendar.get(Calendar.MONTH)+1;
+			int dateOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+			
+			String strYear = year+"";
+			String strMonth = month+"";
+			String strDate = dateOfMonth+"";
+			
+			if(month < 10){strMonth = "0"+strMonth;}
+			if(dateOfMonth < 10){strDate = "0"+strDate;}
+			
+			return strYear+"-"+strMonth+"-"+strDate;
 		}
 	}
 	

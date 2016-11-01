@@ -23,7 +23,6 @@
 	request.setAttribute("today", today);
 %>
 
-
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>

@@ -225,7 +225,7 @@ public class LeaseServiceImpl implements LeaseService {
 		
 		int result = heavyEquipmentRepo.heavyEquipmentUsedYes(heavyEquipment);
 		//임대 신청 실패 시, 자동롤백됨
-		result = leaseRequestRepo.insertLeaseRequest(leaseRequest);
+		result = leaseRequestRepo.insertLeaseRequest(leaseRequest);		
 		
 		if(result != 1){
 			throw new ServiceFailException();

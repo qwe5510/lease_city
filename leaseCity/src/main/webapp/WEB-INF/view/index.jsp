@@ -6,6 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <head>
+<title>HOME | LEASE CITY</title>
 </head>
 <body>
 	<!-- 가입 절차 설명 메시지 -->

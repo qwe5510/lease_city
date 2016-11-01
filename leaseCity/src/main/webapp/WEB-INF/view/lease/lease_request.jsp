@@ -127,6 +127,7 @@
 				<button id="lease_request"> <i class="icon-pencil"></i>신청</button>
 				<button id="lease_request_cancel"><i class="icon-link"></i>취소</button>
 				<sform:hidden path="leaseCallNo"/>
+				<fmt:formatDate value="${curtLineDate}" pattern="yyyy-MM-dd" var="curtLineDate"/>
 			</div>
 			</sform:form>
 		</div>
@@ -198,13 +199,14 @@
  	function _jsDateCheck(fromDate, toDate){
  	    var arySrtDt = fromDate.split("-"); // ex) 시작일자(2007-10-09)
  	    var aryEndDt = toDate.split("-"); // ex) 종료일자(2007-12-05)
+ 	    var arycurtLine = "${curtLine}";
 
+ 	    
  	  	var temp = new Date(); // temp
  	  	
- 	  	var today = new Date(Number(temp.getFullYear()), Number(temp.getMonth()), Number(temp.getDate())); 	  	
+ 	  	var today = new Date(Number(temp.getFullYear()), Number(temp.getMonth()), Number(temp.getDate()));
  		var startDt = new Date(Number(arySrtDt[0]),Number(arySrtDt[1])-1,Number(arySrtDt[2]));
 	    var endDt	= new Date(Number(aryEndDt[0]),Number(aryEndDt[1])-1,Number(aryEndDt[2]));
-	    
 	    
 	    subFromDt 	= Math.floor(startDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
 	   	subToDt 	= Math.floor(endDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
@@ -242,6 +244,19 @@
  	    	$("#toDate").focus();
  	    	return false; 
  	    }
+ 	  	
+ 	  	var curtLineDt = new Date(Number(arycurtLine[0]),Number(arycurtLine[1])-1,Number(arycurtLine[2]));
+ 	  	
+ 	  	subCurtLineFromDt = Math.floor(startDt.valueOf()/(24*60*60*1000)- curtLineDt.valueOf()/(24*60*60*1000));
+ 	  	subCurtLineToDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- curtLineDt.valueOf()/(24*60*60*1000));
+ 	  	
+ 	  	if(subCurtLineFromDt < 0){
+ 	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
+ 	    	$("#fromDate").focus();
+ 	  	}else if(subCurtLineToDt < 0){
+ 	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
+ 	    	$("#toDate").focus();
+ 	  	}
  	  	
  	  	return true;
  	}
