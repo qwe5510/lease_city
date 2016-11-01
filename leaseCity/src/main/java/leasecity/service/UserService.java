@@ -55,6 +55,12 @@ public interface UserService {
 	
 	public List<License> loadUserLicense(String userId)
 								throws NotFoundDataException;
+	
+	/**
+	 * 유저 신용도 점수 계산
+	 * @param userId
+	 */
+	public void calcCreditGrade(User user);
 								
 }
 

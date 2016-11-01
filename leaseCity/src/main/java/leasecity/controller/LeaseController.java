@@ -99,8 +99,6 @@ public class LeaseController {
 			logger.error("임대 요청글이 없음");
 			model.addAttribute("errorMsg", "임대 요청글이 없습니다.");
 		}
-
-		model.addAttribute("page", searchPage);
 		return "lease/lease_call";
 	}
 	
@@ -113,6 +111,10 @@ public class LeaseController {
 		Page page = leaseService.getMoreViewSearchPage(
 				currentPage, LEASE_CALL_PAGE_SIZE, 
 				search, keyword);
+		
+		logger.trace("Search : {}", search);
+		logger.trace("keyword : {}", keyword);
+		
 		List<LeaseCall> leaseCalls = leaseService.loadLeaseCalls(page);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -197,19 +199,22 @@ public class LeaseController {
 	}
 	
 	@RequestMapping(value="/leaseCall/read", method=RequestMethod.GET)
-	public String lease_call_read(Model model, RedirectAttributes redir,
+	public String lease_call_read(Model model, RedirectAttributes redir, HttpSession session,
 			@RequestParam(required=false) Integer leaseCallNo){
 		
 		LeaseCall leaseCall = null;
 		User constructionCompany = null;
-		
 		
 		try {
 			if (leaseCallNo == null) {
 				redir.addFlashAttribute("lease_message", "요청글이 삭제되었거나 존재하지 않습니다.");
 				return "redirect:/leaseCall";
 			}
-			leaseCall = leaseService.viewLeaseCall(leaseCallNo);
+			
+			User user = session.getAttribute("loginUser")==null?
+						(User)session.getAttribute("admin"):(User)session.getAttribute("loginUser");
+			
+			leaseCall = leaseService.viewLeaseCall(leaseCallNo, user.getUserId());
 			constructionCompany = (User) userService.loadUserInfo(leaseCall.getUserId());
 		} catch (NotFoundDataException e) {
 			redir.addFlashAttribute("lease_message", "요청글이 삭제되었거나 존재하지 않습니다.");
@@ -303,7 +308,7 @@ public class LeaseController {
 		
 		try {
 			// 1. 건설업체 요청 갖고 오기
-			LeaseCall leaseCall = leaseService.viewLeaseCall(leaseRequest.getLeaseCallNo());
+			LeaseCall leaseCall = leaseService.viewLeaseCall(leaseRequest.getLeaseCallNo(), null);
 			
 			// 2. notify 에 정보 추가
 			notify.setUserId(leaseCall.getUserId());

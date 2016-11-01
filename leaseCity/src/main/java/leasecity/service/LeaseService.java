@@ -8,6 +8,8 @@ import leasecity.dto.lease.LeaseDirectCall;
 import leasecity.dto.lease.LeaseRequest;
 import leasecity.dto.lease.LeaseTransfer;
 import leasecity.dto.user.ConstructionCompany;
+import leasecity.dto.user.HeavyEquipmentCompany;
+import leasecity.dto.user.User;
 import leasecity.exception.ChangeValueFailException;
 import leasecity.exception.DuplicateValueException;
 import leasecity.exception.NotFoundDataException;
@@ -30,7 +32,7 @@ public interface LeaseService {
 	 * @param lease
 	 * @return
 	 */
-	public LeaseCall viewLeaseCall(Integer leaseCallNo) throws NotFoundDataException;
+	public LeaseCall viewLeaseCall(Integer leaseCallNo, String userId) throws NotFoundDataException;
 	
 	/**
 	 * 임대 요청 작성 (같은 지역 중기업체에게 알림)
@@ -196,14 +198,38 @@ public interface LeaseService {
 	
 
 	// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+	//현재 미사용 영역
 	
 	/**
 	 * 건설업체에 대한 정보 출력을 위한 메서드
 	 * @param ConstructionId
 	 * @return
-	 */
+	 *//*
 	public ConstructionCompany viewConstructionCompanyInfo(String constructionId)
+														throws NotFoundDataException;*/
+	
+	// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+	//중기업체 조회 영역
+	
+	/**
+	 * 유저 별 중기업체 페이지 단위 리스트 출력
+	 * @param user : 로그인 중인 회원 정보
+	 * @param page : 페이지 정보.
+	 * @return
+	 */
+	public List<HeavyEquipmentCompany> lookUpHeavyEquipmentCompanies(User user, Page page)
 														throws NotFoundDataException;
+	
+	/**
+	 * 중기업체 정보 열람. 로그인중인 회원과 열람대상 회원 Id를 파라미터로 받음
+	 * @param user
+	 * @param equipmentId
+	 * @return
+	 */
+	public HeavyEquipmentCompany viewHeavyEquipment(String equipmentId)
+														throws NotFoundDataException;
+	
+	
 	
 	// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 	//페이지 영역

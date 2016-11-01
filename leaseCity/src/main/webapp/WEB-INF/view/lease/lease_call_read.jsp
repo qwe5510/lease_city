@@ -160,9 +160,7 @@
 	<c:url value="/leaseCall" var="leaseCall"></c:url>
 	$("#lease_read_cancel").on("click",function(e){
 		e.preventDefault();
-		$("#lease_call_read_form").attr("action","${leaseCall}");
-		$("#lease_call_read_form").attr("method", "GET");
-		$("#lease_call_read_form").submit();
+		location.href="${leaseCall}";		
 	})
 </script>
 </html>

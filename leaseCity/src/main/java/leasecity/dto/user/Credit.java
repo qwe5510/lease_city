@@ -21,5 +21,5 @@ public class Credit implements Serializable {
 	private String acceptUserId;
 
 	/** 평가점수. */
-	private Float evaluation;
+	private Double evaluation;
 }

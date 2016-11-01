@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.user.ConstructionCompany;
+import leasecity.dto.user.Credit;
 import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.License;
@@ -18,6 +19,7 @@ import leasecity.exception.LoginFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
 import leasecity.repo.user.ConstructionCompanyRepo;
+import leasecity.repo.user.CreditRepo;
 import leasecity.repo.user.HeavyEquipmentCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentRepo;
 import leasecity.repo.user.LicenseRepo;
@@ -44,6 +46,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	LicenseRepo licenseRepo;
+	
+	@Autowired
+	CreditRepo creditRepo;
 
 	// 유저 회원가입
 	public void join(User user) throws JoinFailException {
@@ -262,5 +267,25 @@ public class UserServiceImpl implements UserService {
 		return results;
 	}
 	
-	
+	@Override
+	public void calcCreditGrade(User user) {
+		List<Credit> credits = 
+				creditRepo.getSelectAcceptCredits(user.getUserId());
+		
+		double creditSum = 0;
+		double creditAvg = 0;
+		int count = credits.size();
+		
+		for(Credit credit : credits){
+			creditSum += credit.getEvaluation();
+		}
+		
+		if(count==0){
+			user.setCreditGrade(0.0);
+		}else{
+			creditAvg = creditSum / count;
+			double creditGrade = (creditAvg + count) / (5.0 + count);
+			user.setCreditGrade(creditGrade);
+		}
+	}
 }

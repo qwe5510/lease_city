@@ -14,6 +14,7 @@ import leasecity.dto.lease.LeaseRequest;
 import leasecity.dto.lease.LeaseTransfer;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipment;
+import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
 import leasecity.exception.ChangeValueFailException;
 import leasecity.exception.NotFoundDataException;
@@ -26,6 +27,7 @@ import leasecity.repo.lease.LeaseRequestRepo;
 import leasecity.repo.lease.LeaseTransferRepo;
 import leasecity.repo.user.ConstructionCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentRepo;
+import leasecity.repo.user.LookUpHeavyEquipmentRepo;
 import leasecity.repo.user.UserRepo;
 
 @Service
@@ -51,6 +53,9 @@ public class LeaseServiceImpl implements LeaseService {
 	HeavyEquipmentRepo heavyEquipmentRepo;
 	
 	@Autowired
+	LookUpHeavyEquipmentRepo lookUpHeavyEquipmentRepo;
+	
+	@Autowired
 	UserRepo userRepo;
 	
 	
@@ -59,6 +64,8 @@ public class LeaseServiceImpl implements LeaseService {
 	@Override
 	public List<LeaseCall> loadLeaseCalls(Page page) throws NotFoundDataException {
 		List<LeaseCall> result = leaseCallRepo.getPageLeaseCalls(page);
+		
+		System.out.println("result : " + result);
 		
 		if(result.size() <= 0){
 			throw new NotFoundDataException("임대 요청글 목록");
@@ -126,7 +133,7 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 
 	@Override
-	public LeaseCall viewLeaseCall(Integer leaseCallNo) throws NotFoundDataException {
+	public LeaseCall viewLeaseCall(Integer leaseCallNo, String userId) throws NotFoundDataException {
 		
 		if(leaseCallNo == null){
 			throw new NotFoundDataException("임대 요청글");
@@ -136,6 +143,10 @@ public class LeaseServiceImpl implements LeaseService {
 		
 		if(result == null){
 			throw new NotFoundDataException(leaseCallNo + "번 임대 요청글 ");
+		}
+		
+		if(userId != null && !result.getUserId().equals(userId)){
+			leaseCallRepo.hitsUpLeaseCall(result); //조회수 증가
 		}
 		
 		return result;
@@ -436,11 +447,51 @@ public class LeaseServiceImpl implements LeaseService {
 		}
 	}
 	
-	
 	//------------------------------------------------------------------------------------
-	//기타 영역 (업체 정보 출력 등)
+	//중기업체 조회 영역
+	@Override
+	public List<HeavyEquipmentCompany> lookUpHeavyEquipmentCompanies(User user, Page page) 
+											throws NotFoundDataException{
+		
+		List<HeavyEquipmentCompany> results = null;
+		
+		if(user != null && user instanceof HeavyEquipmentCompany){			
+			results = lookUpHeavyEquipmentRepo.getPageHelpOnHeavyEquipmentCompanies(page);
+			
+		}else if(user != null && user instanceof ConstructionCompany){
+			results = lookUpHeavyEquipmentRepo.getPageInfoOnHeavyEquipmentCompanies(page);
+		}
+		else{
+			throw new NotFoundDataException("중기업체 조회 정보");
+		}
+		
+		if(results == null || results.size() <= 0){
+			throw new NotFoundDataException("중기업체 조회 정보");
+		}
+		
+		return results;
+	}
+	
 	
 	@Override
+	public HeavyEquipmentCompany viewHeavyEquipment(String equipmentId) {
+		HeavyEquipmentCompany result =
+				lookUpHeavyEquipmentRepo.
+						getHeavyEquipmentCompany(equipmentId);
+		
+		List<HeavyEquipment> HEList =
+					lookUpHeavyEquipmentRepo.getCompanyHeavyEquipments(equipmentId);
+		
+		//중장비 리스트 가져오기
+		result.setHeavyEquipmentList(HEList);
+		
+		return result;
+	}
+	
+	//------------------------------------------------------------------------------------
+	//기타 영역 (페이지 정보 출력 등)
+	
+	/*@Override
 	public ConstructionCompany viewConstructionCompanyInfo(String constructionId) throws NotFoundDataException {
 		if(constructionId == null){
 			throw new NotFoundDataException("건설업체 정보");
@@ -451,13 +502,21 @@ public class LeaseServiceImpl implements LeaseService {
 		}
 		
 		return result;
-	}
+	}*/
 	
 	//페이지 리턴 메소드 영역
 	@Override
 	public Page getMoreViewSearchPage
 		(Integer currentPage, Integer pageSize,	String search, String keyword) {
-		Page page = new Page(search, keyword);
+		
+		Page page;
+		
+		if(search!=null && keyword != null){
+			page = new Page(search, keyword);
+		}else{
+			page = new Page();
+		}
+		
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
 		page.setFromTo();

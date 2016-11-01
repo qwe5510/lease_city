@@ -47,7 +47,15 @@
                   <td colspan="6" class="boardLine" style="height: 4px !important;"></td>
                </tr>
                <tr class="boardShow">
-                  <td>${leaseCall.tempGrade}</td>
+               
+               <fmt:formatNumber value="${leaseCall.tempGrade/5 * 100}" var="creditPercent" type="percent"></fmt:formatNumber>
+               <fmt:formatNumber value="${leaseCall.tempGrade}" pattern="0.00" var="credit"></fmt:formatNumber>
+                  <td>
+                  <div class="credit-min-area_leaseCall">
+                  <i class="credit-max-area_leaseCall" style="width: ${creditPercent}"></i>
+                  </div>
+                  <strong>${credit}</strong>
+                  </td>
                   <td>
                   ${leaseCall.leaseCategory}<br>
                   ${leaseCall.equipmentCategory}
@@ -204,6 +212,13 @@
 	String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 	Number.prototype.zf = function(len){return this.toString().zf(len);};
 	
+	$(window).on("load", function(){
+
+		if(Number(${page.pageSize}) >= Number(${page.totalCount})){
+			$("#morePage").css("display", "none");
+		}
+	});
+	
 	$("#morePage").on("click", function(e){
 		e.preventDefault();	
 		
@@ -223,7 +238,12 @@
 				
 				$(leaseCallList).each(function(idx, leaseCall){
 					
-					str+= "<tr class='boardShow'><td>"+leaseCall.tempGrade+"</td>";
+					var creditPercent = (leaseCall.tempGrade/5 * 100);
+                    var credit = leaseCall.tempGrade.toFixed(2);
+                    
+					str+= "<tr class='boardShow'><td><div class='credit-min-area_leaseCall'>";
+					str+= "<i class='credit-max-area_leaseCall' style='width:"+ creditPercent + "%'></i>";
+					str+= "</div><strong>"+credit+"</strong></td>";
 					str+= "<td>"+leaseCall.leaseCategory+"<br>"+leaseCall.equipmentCategory+"</td>";
 					str+= "<td class='leaseCallTitle'>";					
 					str+= "<a href='<%=request.getContextPath() %>/leaseCall/read?leaseCallNo="+ leaseCall.leaseCallNo + "'>";
