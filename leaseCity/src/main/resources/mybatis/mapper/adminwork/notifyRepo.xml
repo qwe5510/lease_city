@@ -18,7 +18,7 @@
 	 		SELECT SEQ_NOTIFY_NOTIFY_NO.CURRVAL AS notify_no 
 	 		FROM dual 
  		</selectKey>
- 		INSERT INTO notify (user_id, lease_call_no, lease_direct_no, lease_request_no, lease_selection_no, lease_transfer_no, attribute, comment_no, reply_no, notify_link)
+ 		INSERT INTO notify (user_id, lease_call_no, lease_direct_no, lease_request_no, lease_transfer_no, attribute, comment_no, reply_no, notify_link)
  		VALUES( 
  		#{userId}
  		<choose>
@@ -31,10 +31,6 @@
  		</choose>
  		<choose>
  			<when test="leaseRequestNo != null">,#{leaseRequestNo}</when>
- 			<otherwise>, null</otherwise>
- 		</choose>
- 		<choose>
- 			<when test="leaseSelectionNo != null">,#{leaseSelectionNo}</when>
  			<otherwise>, null</otherwise>
  		</choose>
  		<choose>
