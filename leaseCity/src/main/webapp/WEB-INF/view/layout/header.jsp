@@ -37,11 +37,10 @@
 <link rel="apple-touch-icon-precomposed"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
 </head>
-
 <body>
 	<!--Header-->
 	<header class="navbar navbar-fixed-top">
-		<div class="notification">
+		<div class="notification" style="display: none;">
 			<div id="notification_li">
 				<span id="notification_count"></span> 
 				<a href="#" id="notificationLink">새 알림</a>
@@ -78,7 +77,7 @@
 							class="dropdown-toggle" data-toggle="dropdown">임대 <i
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/lease_call">임대 신청/조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/leaseCall">임대 신청/조회</a></li>
 								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
@@ -128,6 +127,7 @@
 	function repeatloop() {
 		setTimeout("repeatloop()", 1000 * 5); //refresh 빈도 1000 = 1초
 		// (로그인 확인 후) footNotification 실행 
+
 		if ("${sessionScope.loginUser.userId}" != "") {
 			footNotification("${sessionScope.loginUser.userId}");
 		} else if("${sessionScope.admin.userId}" != "") {
@@ -357,5 +357,9 @@
 		});
 
 	});
+	
+	
+	
+	
 </script>
 </html>

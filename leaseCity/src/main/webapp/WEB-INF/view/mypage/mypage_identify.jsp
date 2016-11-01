@@ -85,18 +85,48 @@
             <fieldset>
 			   <c:choose>
 			   		<c:when test="${compare eq '중기'}">
-			   			<div class="heavy" ></div>
+			   		<sform:form id="mypage_identify_cc" action="#" method="post" modelAttribute="constructionCompany">
                			<div class="companySelector">
+               			<div>
+               			<sform:label path="yearlySale">연매출</sform:label>
+               			<sform:input path="yearlySale" type="number"/>
                			</div>
-               			<div class="numbervali"></div>
+               			<div>
+               			<sform:label path="yearlyAoor">연수주량</sform:label>
+               			<sform:input path="yearlyAoor" type="number"/>
+               			</div>
+               			<sform:label path="licenseList">자격증</sform:label>
+               			<sform:input path="licenseList"/> <sform:input path="licenseList"/> <sform:input path="licenseList"/>
+               			</div>
+               			<div>
+               			<sform:label path="companyCategory">회사분류</sform:label>
+               			<br>
+               			<sform:checkbox class="cc_label" path="companyCategory" value="토건" label="토건"/>
+                    	<sform:checkbox class="cc_label" path="companyCategory" value="토목" label="토목" />
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="건축" label="건축"/>
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="산업설비" label="산업설비"/>
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="토공" label="토공"/>
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="철콘" label="철콘"/>
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="금속구조" label="금속구조"/>
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="철강" label="철강"/>
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="시설물" label="시설물" />
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="주택건설" label="주택건설" />
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="문화재" label="문화재" />
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="해외" label="해외" />
+                     	<sform:checkbox class="cc_label" path="companyCategory" value="기타" label="기타" />
+               			</div>
              			<div class="checked"></div>
+             		</sform:form>	
 			   		</c:when>
 			   		<c:otherwise>
-			   			<div class="heavy" ></div>
+			   			<div class="heavy">
+			   			</div>
                			<div class="companySelector">
                			</div>
-               			<div class="numbervali"></div>
-             			<div class="checked"></div>
+               			<div class="numbervali">
+               			</div>
+             			<div class="checked">
+             			</div>
 			   		</c:otherwise>
 			   </c:choose>
             </fieldset>

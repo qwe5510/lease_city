@@ -1,5 +1,9 @@
 package leasecity.service;
 
+import java.util.List;
+
+import leasecity.dto.user.HeavyEquipment;
+import leasecity.dto.user.License;
 import leasecity.dto.user.User;
 import leasecity.exception.JoinFailException;
 import leasecity.exception.LoginFailException;
@@ -36,5 +40,21 @@ public interface UserService {
 	//유저정보변경, keyword를 통해 비밀번호, 정보 중 하나 변경 
 	public void changeInfo(String keyword, User user)
 								throws ServiceFailException;
+	
+	/**
+	 * 유저 정보 리턴
+	 * @param userId
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	public User loadUserInfo(String userId)
+								throws NotFoundDataException;
+	
+	public List<HeavyEquipment> loadUserHeavyEquipment(String userId)
+								throws NotFoundDataException;
+	
+	public List<License> loadUserLicense(String userId)
+								throws NotFoundDataException;
+								
 }
 

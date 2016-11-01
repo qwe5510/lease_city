@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import leasecity.dto.user.ConstructionCompany;
+import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
 
 @Controller
@@ -37,9 +39,13 @@ public class MypageController {
 	@RequestMapping(value="/mypage_identify")
 	public String mypage_identify(Model model){
 		User user = new User();
+		ConstructionCompany constructionCompany = new ConstructionCompany();
+		HeavyEquipmentCompany heavyEquipmentCompany = new HeavyEquipmentCompany();
 		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
 		model.addAttribute("user", user);
 		model.addAttribute("compare", compare);
+		model.addAttribute("constructionCompany", constructionCompany);
+		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
 		return "mypage/mypage_identify";
 	}
 	

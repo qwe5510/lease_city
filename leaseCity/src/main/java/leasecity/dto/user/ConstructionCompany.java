@@ -9,7 +9,6 @@ import leasecity.dto.lease.LeaseDirectCall;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * 건설업체 모델 클래스.

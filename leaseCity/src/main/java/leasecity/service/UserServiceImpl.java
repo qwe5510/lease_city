@@ -208,4 +208,59 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	
+	@Override
+	public User loadUserInfo(String userId) throws NotFoundDataException {
+		
+		User result = constructionCompanyRepo.getConstructionCompany(userId);
+	
+		if(result==null){
+			HeavyEquipmentCompany hResult = heavyEquipmentCompanyRepo.getHECUser(userId);
+			
+			List<HeavyEquipment> HE = heavyEquipmentRepo.getUserHeavyEquipments(userId);
+			hResult.setHeavyEquipmentList(HE);
+			
+			return hResult;
+		}else{
+			ConstructionCompany cResult = constructionCompanyRepo.getCCUser(userId);
+			List<License> license = licenseRepo.getUserLicense(userId);
+			cResult.setLicenseList(license);
+
+			return cResult;
+		}
+	}
+	
+	@Override
+	public List<HeavyEquipment> loadUserHeavyEquipment(String userId) throws NotFoundDataException {
+		
+		if(userId == null){
+			throw new NotFoundDataException(userId + "회원의 중장비 리스트");
+		}
+		
+		List<HeavyEquipment> results = heavyEquipmentRepo.getUserHeavyEquipments(userId);
+		
+		if(results.size() <= 0){
+			throw new NotFoundDataException(userId + "회원의 중장비 리스트");
+		}
+		
+		return results;
+	}
+	
+	
+	@Override
+	public List<License> loadUserLicense(String userId) throws NotFoundDataException {
+		if(userId == null){
+			throw new NotFoundDataException(userId + "회원의 자격증 리스트");
+		}
+		
+		List<License> results = licenseRepo.getUserLicense(userId);
+		
+		if(results.size() <= 0){
+			throw new NotFoundDataException(userId + "회원의 자격증 리스트");
+		}
+		
+		return results;
+	}
+	
+	
 }

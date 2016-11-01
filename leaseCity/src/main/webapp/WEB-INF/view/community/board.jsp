@@ -11,22 +11,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src='//uchat.co.kr/uchat.php' charset='UTF-8'></script>
 <title>COMMUNITY | LEASECITY</title>
+
+<c:if test="${!empty board_message }">
+	<script>
+		alert('${board_message }');
+	</script>
+</c:if>
+
+<%
+	Date todayDate = new Date();
+	String today = DateUtil.getDateString(todayDate);
+	request.setAttribute("today", today);
+%>
+
 </head>
 <body>
-
-   <c:if test="${!empty board_message }">
-      <script type="text/javascript">
-         alert('${board_message }');
-      </script>
-   </c:if>
-
-   <%
-      Date todayDate = new Date();
-      String today = DateUtil.getDateString(todayDate);
-      request.setAttribute("today", today);
-   %>
-
-
    <jsp:include page="../layout/header.jsp"></jsp:include>
    <div class="board">
       <div class="uchat">

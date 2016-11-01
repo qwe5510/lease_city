@@ -1,14 +1,13 @@
 package leasecity.dto.lease;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * 임대요청 모델 클래스.
@@ -26,12 +25,18 @@ public class LeaseCall implements Serializable {
 
 	/** 임대 요청 번호. */
 	private Integer leaseCallNo;
+	
+	/** 회원의 신용도 */
+	private Double tempGrade;
 
 	/** 회원 아이디 */
 	private String userId;
 
 	/** 업체 명 (DB 칼럼에는 없음) */
 	private String companyName;
+	
+	/** 대표자 명 (칼럼 값에는 없음) */
+	private String representName;
 	
 	/** 임대 분류. */
 	private String leaseCategory;
