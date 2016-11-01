@@ -38,9 +38,6 @@ public class Notify implements Serializable {
 	/** 임대 신청 번호. */
 	private Integer leaseRequestNo;
 
-	/** 임대 선정 번호. */
-	private Integer leaseSelectionNo;
-
 	/** 임대 양도 번호. */
 	private Integer leaseTransferNo;
 	

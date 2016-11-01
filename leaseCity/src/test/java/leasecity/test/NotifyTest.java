@@ -31,7 +31,7 @@ public class NotifyTest {
 
 		logger.trace("session : {}", session);
 		
-		Notify notify = new Notify(null, "yhjcom7", null, null, null, null, null, null, null, null, null, "http://localhost:9090/leaseCity/board/read?commentNo=2", "N");
+		Notify notify = new Notify(null, "yhjcom7", null, null, null, null, null, null, null, null, "http://localhost:9090/leaseCity/board/read?commentNo=2", "N");
 		
 		System.out.println(notify);
 		
