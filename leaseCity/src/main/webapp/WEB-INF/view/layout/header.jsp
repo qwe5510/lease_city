@@ -282,11 +282,7 @@
 										if ( res[res.length - (1 + idx)].leaseRequestNo != null ) {
 											$(".notificationContent").append("<li><a href="+ res[res.length - (1 + idx)].notifyLink + " onClick=deleteNotify("+ res[res.length - (1 + idx)].notifyNo + ")>"  + res[res.length - (1 + idx)].userId + "님! 새로운 임대 신청 메시지가 도착했습니다.<br>" + date.toLocaleString() + "</a></li>");
 										}
-										// 1-4. 임대 선정이 도착했을 때,
-										if ( res[res.length - (1 + idx)].leaseSelectionNo != null ) {
-											$(".notificationContent").append("<li><a href="+ res[res.length - (1 + idx)].notifyLink + " onClick=deleteNotify("+ res[res.length - (1 + idx)].notifyNo + ")>"  + res[res.length - (1 + idx)].userId + "님! 새로운 임대 선정 메시지가 도착했습니다.<br>" + date.toLocaleString() + "</a></li>");
-										}
-										// 1-5. 임대 양도가 도착했을 때,
+										// 1-4. 임대 양도가 도착했을 때,
 										if ( res[res.length - (1 + idx)].leaseTransferNo != null ) {
 											$(".notificationContent").append("<li><a href="+ res[res.length - (1 + idx)].notifyLink + " onClick=deleteNotify("+ res[res.length - (1 + idx)].notifyNo + ")>"  + res[res.length - (1 + idx)].userId + "님! 새로운 임대 양도 메시지가 도착했습니다.<br>" + date.toLocaleString() + "</a></li>");
 										}

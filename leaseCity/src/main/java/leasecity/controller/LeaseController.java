@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import leasecity.dto.adminwork.Notify;
 import leasecity.dto.etc.Page;
 import leasecity.dto.lease.LeaseCall;
 import leasecity.dto.lease.LeaseRequest;
@@ -33,6 +34,7 @@ import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.LeaseService;
+import leasecity.service.NotifyService;
 import leasecity.service.UserService;
 import leasecity.util.DateUtil;
 
@@ -44,6 +46,9 @@ public class LeaseController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	NotifyService notifyService;
 	
 	public static final int LEASE_CALL_PAGE_SIZE = 5; 
 	
@@ -270,12 +275,28 @@ public class LeaseController {
 			leaseRequest.setIdNumber(idNumber);
 		}
 		
+		// Notify 추가
+		Notify notify = new Notify();
+		
 		try {
+			// 1. 건설업체 요청 갖고 오기
+			LeaseCall leaseCall = leaseService.viewLeaseCall(leaseRequest.getLeaseCallNo());
+			
+			// 2. notify 에 정보 추가
+			notify.setUserId(leaseCall.getUserId());
+			notify.setLeaseCallNo(leaseCall.getLeaseCallNo());
+			notify.setNotifyLink("http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo=" + leaseCall.getLeaseCallNo());
+			
+			// 3. notify 저장
+			notifyService.insertNotifyByLoginUser(notify);
+			
 			leaseService.doLeaseRequest(leaseRequest);
 			redir.addFlashAttribute("lease_message", "임대 신청이 완료되었습니다.");
 		} catch (ServiceFailException e) {
 			redir.addFlashAttribute("lease_message", "임대 신청에 실패하였습니다.");
-		}
+		} catch (NotFoundDataException e1) {
+			redir.addFlashAttribute("lease_message", "임대 신청에 실패하였습니다.");
+		} 
 				
 		return "redirect:/leaseCall";
 	}

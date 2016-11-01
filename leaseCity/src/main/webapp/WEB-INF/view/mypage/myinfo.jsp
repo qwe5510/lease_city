@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="leasecity.dto.user.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,28 +20,16 @@
 					<table>
 						<tr> 
 							<td><sform:label path="userId" class="join_input">아이디</sform:label></td>
-							<td><sform:input type="text" placeholder="아이디" path="userId"/>
-							<span id="vali" class="userId">영어 숫자 혼용 6~15글자</span>
+							<td><sform:input type="text" placeholder="아이디" path="userId" readonly="true"/>
 							</td>
 						</tr>
-						<%-- <tr>
-							<td><sform:label path="password" class="join_input">비밀번호</sform:label></td>
-							<td><sform:input class="join_input" type="password" placeholder="패스워드" path="password" onblur="passvali()" /> 
-							<span id="vali" class="password">영어 숫자 특수문자 혼용 8~16글자</span></td>
-						</tr>
 						<tr>
-							<td><sform:label path="password2" class="join_input">비밀번호확인</sform:label></td>
-							<td><sform:input type="password" placeholder="패스워드 확인" path="password2" onblur="passvali()" /> 
-							<span id="vali" class="password2"></span></td>
-						</tr>
-						 --%>
-						 <tr>
 							<td><sform:label path="companyName" class="join_input">업체명</sform:label></td>
-							<td><sform:input type="text" path="companyName" placeholder="업체명"/></td>
+							<td><sform:input type="text" path="companyName" placeholder="업체명" readonly="true"/></td>
 						</tr>
 						<tr>
 							<td><sform:label path="representName" class="join_input">대표자명</sform:label></td>
-							<td><sform:input type="text" path="representName" placeholder="대표자명" /></td>
+							<td><sform:input type="text" path="representName" placeholder="대표자명" readonly="true"/></td>
 						</tr>
 						<tr>
 						</tr>
@@ -56,7 +45,7 @@
 						</tr>
 						<tr>
 							<td><sform:label path="email" class="join_input">Email</sform:label></td>
-							<td><sform:input type="email" path="email" placeholder="Email" /></td>
+							<td><sform:input type="email" path="email" placeholder="Email" readonly="true"/></td>
 						</tr>
 						<tr>
 							<td><sform:label path="zipNo" class="join_input">주소</sform:label></td>
@@ -75,21 +64,26 @@
 							<td><sform:input type="text" path="url" placeholder="홈페이지 주소"/> 
 							<span id="vali" class="url">사이트 주소 형식으로 입력(혹은 공백)</span></td>
 						</tr>
-						<tr>
-							<td><sform:label path="notifyOnOff" class="join_input">알람 여부</sform:label></td>
-							<sform:radiobutton path="notifyOnOff" value="ON" checked="checked" label="ON"/> 
-							<sform:radiobutton path="notifyOnOff" value="OFF" label="OFF"/></td>
-							<td><div id="vali" class="company"></div></td>
-						</tr>
 					</table>
 				</fieldset>
 				<br>
 				<fieldset>
-					<legend>상세정보 입력</legend>
-					<div class="heavy"></div>
-					<div class="companySelector"></div>
-					<div class="numbervali"></div>
-					<div class="checked"></div>
+				<legend>상세정보 조회</legend>
+				<div class="heavy"></div>
+				<div class="companySelector"></div>
+				<div class="numbervali"></div>
+				<div class="checked"></div>
+				<%
+					User user = (User)session.getAttribute("loginUser");
+					if(user != null && user instanceof HeavyEquipmentCompany){
+				%>
+					<sform:label path="representPhone" class="join_input">대표자연락처</sform:label>
+					<sform:input type="text" path="representPhone" placeholder="ex)031-xxx-xxxx"/> 
+				<%
+					}else if(user != null && user instanceof ConstructionCompany){
+				%>
+				
+				<%}%>
 				</fieldset>
 				<br> 
 				<sform:button value="가입"/>
@@ -108,9 +102,6 @@ var CC_arr = ["토건","토목","건축","산업설비","토공","철콘","금�
 
 
 function cscInfoOutput(){
-   //중기업체 span 공백으로 설정
-   $(".checked").html("");
-   
    var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input id='sales' name='yearlySale' type='number' min='0' placeholder='연매출'><span id= 'vali' class='sales'>단위(억)</span>";
    var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input id='obtain' name='yearlyAoor' type='number' min='0' placeholder='연 수주량'><span id= 'vali' class='obtain'>단위(건)</span>";
    var str3 ="<br><div class='license'><label class='join_input'>자격증</label><button id='btn2'>추가</button><span class='licenseCheck'>자격증은 최대 3개까지 작성 가능</span></div></div>";
@@ -158,10 +149,6 @@ function hecInfoOutput(){
    //자격증 개수
    var license_cnt=0;
    
-   //건설업체, 중기업체에 대한 이벤트 처리.
-   $("#CSC").on("click", cscInfoOutput);
-   $("#HEC").on("click", hecInfoOutput);
-   
    $(document).on("ready", function(){
       var isCSC = $("#CSC").attr("checked");
       var isHEC = $("#HEC").attr("checked");
@@ -202,29 +189,6 @@ function validateform() {
    var obtain = $("#obtain").val();
    var num = $("#num").val();
    var isHEC = $("#HEC")[0].checked;
-   
-   //특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
-   var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-   if(!passRegExp.test(password)){
-      $(".password").html("패스워드 조건 불일치");
-      $(".password").css("color", "#FF0000");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-      return false;
-   }else if(password2==""){
-      $(".password").html("패스워드 확인값을 입력해주세요.");
-      $(".password").css("color", "#FF0000");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-      return false;
-   }else if(password != password2){
-      $(".password").html("패스워드가 일치하지 않습니다.");
-      $(".password").css("color", "#FF0000");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-      return false;
-   }else if(password == password2) {
-      $(".password").html("패스워드가 확인되었습니다.");
-      $(".password").css("color", "#0000FF");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-   }   
    
    //일반전화 정규표현식
    var repreRegExp = /^(02|0[3-9]{1}[0-9]{1})-[0-9]{3,4}-[0-9]{4}$/;
@@ -379,75 +343,6 @@ function validateform() {
    }
    return true;
 }
-
-
-   var res; //결과를 리턴받는 변수
-   <c:url value="/validateId" var="validateId"/>
-   $("#userId").blur(ajaxIdCheck);
-   function ajaxIdCheck() {   
-         var inputUserId = $("#userId").val();
-         $.ajax({
-              // type을 설정합니다.
-              type : 'post',
-              url : "${validateId }",
-              // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-              data : {inputUserId : inputUserId},
-              // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
-              success : function(data){
-                  // 서버에서 Return된 값으로 중복 여부를 사용자에게 알려줍니다.
-                if (data) {
-                   $(".userId").html("이미 등록된 아이디 입니다.");
-                   $(".userId").css("color", "#FF0000");
-                   res = false;
-                } else if (!data) {
-                  //ID 6글자 ~ 15글자
-                  var userId = $("#userId").val();
-                   var idRegExp = /^[a-zA-Z0-9_]{6,15}$/; 
-                    if(!idRegExp.test(userId)){
-                       $(".userId").html("아이디 조건 불일치");
-                       $(".userId").css("color", "#FF0000");
-                       res = false;
-                    }else if(idRegExp.test(userId)){
-                       $(".userId").html("등록 가능한 아이디입니다.");
-                       $(".userId").css("color", "#0000FF");
-                       res = true;
-                    }                    
-                }      
-            },
-            error : function(xhr, status, error) {
-            alert(error);
-         }
-      });
-       
-         return res;
-   }
-
-//password 검사
-function passvali(){
-   var password = $("#password").val();
-   var password2 = $("#password2").val();
-   
-   //특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
-   var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-   if(!passRegExp.test(password)){
-      $(".password").html("패스워드 조건 불일치");
-      $(".password").css("color", "#FF0000");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-   }else if(password2==""){
-      $(".password").html("패스워드 확인값을 입력해주세요.");
-      $(".password").css("color", "#0000FF");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-   }else if(password != password2){
-      $(".password").html("패스워드가 일치하지 않습니다.");
-      $(".password").css("color", "#FF0000");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-   }else if(password == password2) {
-      $(".password").html("패스워드가 확인되었습니다.")
-      $(".password").css("color", "#0000FF");
-      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
-   }
-}
-
    
    //중기업체 차량 추가 버튼 클릭 시 이벤트
    $(document).on("click","#btn1",   function(e) {
@@ -526,12 +421,6 @@ function passvali(){
       }else{
          $("#size").html(str4);
       }
-   });
-
-         
-   $("#userId").click(function() {
-      $("#userId").val('');
-       $("#userId").css("color", "black");
    });
    
    

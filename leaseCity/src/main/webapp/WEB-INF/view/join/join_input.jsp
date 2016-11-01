@@ -370,10 +370,6 @@ function validateform() {
          return false;
       }
       
-      
-      
-      
-      
       var isChecked = false;
       for(var idx of CC_arr){
          var item = $("#"+idx)[0].checked
@@ -392,8 +388,6 @@ function validateform() {
    }
    return true;
 }
-
-
    var res; //결과를 리턴받는 변수
    <c:url value="/validateId" var="validateId"/>
    $("#userId").blur(ajaxIdCheck);
