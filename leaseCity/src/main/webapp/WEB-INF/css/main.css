@@ -616,7 +616,7 @@ header .dropdown-menu:before {
 	-moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
 	padding: 20px;
-	display: inline-block
+	display: inline-block;
 }
 
 #bottom {
@@ -2263,4 +2263,42 @@ to {
 	height: 30px;
 	float: none;
 	display: inline-block;
+}
+.mypage{
+	background: url("../images/help_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
+.mypage_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
+	position: fixed;
+}
+.mypage_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 60%;
+	display: inline-block;
+	text-align: left;
+}
+.mypage_main h4{
+	color: black;
+}
+.mypage_main button {
+	margin-left : 30px;
+	padding : 10px;
+	width: 100px;
 }

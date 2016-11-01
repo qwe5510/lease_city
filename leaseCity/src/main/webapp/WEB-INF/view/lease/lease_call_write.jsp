@@ -58,18 +58,18 @@
 					</td>
 					<td class="leaseCategory">
 							<sform:checkbox path="leaseCategory" value="토건" label="토건"/>
-							<sform:checkbox path="leaseCategory" value="토목" label="토목" id="checked"/>
+							<sform:checkbox path="leaseCategory" value="토목" label="토목"/>
 							<sform:checkbox path="leaseCategory" value="건축" label="건축"/>
-							<sform:checkbox path="leaseCategory" value="산업설비" label="산업설비" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="토공" label="토공" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="철콘" label="철콘" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="금속구조" label="금속구조" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="철강" label="철강" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="시설물" label="시설물" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="주택건설" label="주택건설" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="문화재" label="문화재" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="해외" label="해외" id="checked"/>
-							<sform:checkbox path="leaseCategory" value="기타" label="기타" id="checked"/>
+							<sform:checkbox path="leaseCategory" value="산업설비" label="산업설비"/>
+							<sform:checkbox path="leaseCategory" value="토공" label="토공"/>
+							<sform:checkbox path="leaseCategory" value="철콘" label="철콘"/>
+							<sform:checkbox path="leaseCategory" value="금속구조" label="금속구조"/>
+							<sform:checkbox path="leaseCategory" value="철강" label="철강"/>
+							<sform:checkbox path="leaseCategory" value="시설물" label="시설물"/>
+							<sform:checkbox path="leaseCategory" value="주택건설" label="주택건설"/>
+							<sform:checkbox path="leaseCategory" value="문화재" label="문화재"/>
+							<sform:checkbox path="leaseCategory" value="해외" label="해외"/>
+							<sform:checkbox path="leaseCategory" value="기타" label="기타"/>
 					</td>
 				</tr>
 				<tr>
@@ -82,7 +82,7 @@
 					<td class="lease_label"><sform:label path="equipmentCategory" >필요차량</sform:label>
 					</td>
 					<td colspan="2" class="equipmentCategoryList">
-						<sform:checkbox path="equipmentCategory" value="트럭" label="트럭" id="checked"/>
+						<sform:checkbox path="equipmentCategory" value="트럭" label="트럭"/>
 						<sform:checkbox path="equipmentCategory" value="로더" label="로더"/>
 						<sform:checkbox path="equipmentCategory" value="그레이더" label="그레이더"/>
 						<sform:checkbox path="equipmentCategory" value="트랙" label="트랙"/>

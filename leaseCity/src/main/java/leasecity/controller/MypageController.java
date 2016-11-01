@@ -34,19 +34,19 @@ public class MypageController {
 		return "mypage/myinfo";
 	}
 	
-	@RequestMapping(value="/mypage_identify",method=RequestMethod.GET)
+	@RequestMapping(value="/mypage_identify")
 	public String mypage_identify(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
+		User user = new User();
+		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
+		model.addAttribute("user", user);
+		model.addAttribute("compare", compare);
 		return "mypage/mypage_identify";
 	}
 	
 	@RequestMapping(value="/mypage",method=RequestMethod.GET)
 	public String mypage(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
+		User user = new User();
+		model.addAttribute("user",user);
 		return "mypage/mypage";
 	}
 	

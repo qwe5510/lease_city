@@ -110,7 +110,7 @@
 												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/introduction"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
@@ -123,7 +123,7 @@
 									<ul class="thumbnails">
 										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
@@ -140,7 +140,7 @@
 												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath() %>introduction"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
