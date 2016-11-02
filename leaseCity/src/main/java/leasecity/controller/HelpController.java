@@ -87,11 +87,13 @@ public class HelpController {
 
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 
-			// 로그인 중인 유저 탐색
-			User loginUser = (User) session.getAttribute("loginUser");
-
+			// 로그인 중인 유저 탐색 - 로그인유저 값이 null이면 admin값을 불러온다.
+			Object userObj = session.getAttribute("loginUser")==null?
+					session.getAttribute("admin"):session.getAttribute("loginUser");
+			User loginUser = null;
+					
 			try {
-				loginUser = isUserLogin(loginUser);
+				loginUser = isUserLogin(userObj);
 			} catch (ServiceFailException e) {
 				redir.addFlashAttribute("join_message", "로그인 세션이 만료되었습니다.");
 				return "redirect:/index";
@@ -161,10 +163,7 @@ public class HelpController {
 			} catch (ServiceFailException e) {
 				redir.addFlashAttribute("join_message", "로그인 세션이 만료 되었습니다.");
 				return "redirect:/index";
-			}
-			
-			logger.trace("userObj 확인 : {}", userObj);
-			
+			}			
 
 			// 2. 게시물에 필요 정보 넣기
 			comment.setUserId(user.getUserId()); // 로그인된 유저

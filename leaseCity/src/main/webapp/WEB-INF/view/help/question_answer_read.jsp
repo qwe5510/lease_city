@@ -41,7 +41,7 @@
 		<div class="help_read_main">
 			<c:url value="/help/qna/adjust" var="qnaAdjust"/>
 			<div class="help_read_main_inner">
-			<sform:form id="help_read_form" action="${qnaAdjusta }" method="post" modelAttribute="question">
+			<sform:form id="help_read_form" action="${qnaAdjust}" method="post" modelAttribute="question">
 			<div class="qna_read_line">
 				<table class="qna_read_table">
 						<tr>
@@ -151,6 +151,7 @@
 				
 				<c:if test="${question.userId eq admin.userId}">
 					<c:url value="/help/qna/adjust" var="qna_adjust" />
+					]
 					<sform:form id="board_edit_form" modelAttribute="question" action="${qna_adjust}" method="POST">
 					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
 					<sform:hidden path="commentNo"/>
@@ -163,7 +164,7 @@
 				</c:if>
 				
 				<c:url value="/qnaRemove" var="qnaRemove" />
-				<sform:form id="board_edit_form" modelAttribute="" action="${qnaRemove}" method="POST">
+				<sform:form id="board_edit_form" modelAttribute="question" action="${qnaRemove}" method="POST">
 				<sform:button id="board_read_delete"><i class="icon-remove"></i>삭제</sform:button>
 				<sform:hidden path="commentNo"/>
 				<sform:hidden path="commentTitle"/>

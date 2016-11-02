@@ -1652,8 +1652,10 @@ button{
 }
 
 .qna_list{
+	margin-top: 50px;
+	clear: both;
+	width: 60%;
 	float: right;
-	text-align: center;
 }
 
 .qna_buttonForm{

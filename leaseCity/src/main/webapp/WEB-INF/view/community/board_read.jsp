@@ -43,7 +43,7 @@
 				});
 			</script>
 		</div>
-		<c:url value="/board_write" var="board_write" />
+		<c:url value="/board/write" var="boardWrite" />
 		<div class="board_read_main">
 
 				<div class="board_read_line">
@@ -237,8 +237,8 @@
 
 			<c:if test="${empty admin}">
 				<c:if test="${comment.userId eq loginUser.userId}">
-					<c:url value="/board_adjust" var="board_adjust" />
-					<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
+					<c:url value="/board/adjust" var="boardAdjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardAdjust}" method="POST">
 					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
 					<sform:hidden path="commentNo"/>
 					<sform:hidden path="commentContent"/>
@@ -267,8 +267,8 @@
 			<c:if test="${!empty admin}">
 				
 				<c:if test="${comment.userId eq admin.userId}">
-					<c:url value="/board_adjust" var="board_adjust" />
-					<sform:form id="board_edit_form" modelAttribute="comment" action="${board_adjust}" method="POST">
+					<c:url value="/board/adjust" var="boardAdjust" />
+					<sform:form id="board_edit_form" modelAttribute="comment" action="${boardAdjust}" method="POST">
 					<sform:button id="board_read_adjust"><i class="icon-edit"></i>수정</sform:button>
 					<sform:hidden path="commentNo"/>
 					<sform:hidden path="commentContent"/>
@@ -333,22 +333,22 @@
                   
                   <c:choose>
 	                  <c:when test="${!empty page.keyword and !empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:when test="${!empty page.keyword}">
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <a href="<%=request.getContextPath() %>/board_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
+	                    <a href="<%=request.getContextPath() %>/board/read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
                      		${comment.commentTitle}
                      	</a>
 	                  </c:otherwise>
@@ -612,10 +612,10 @@
 		location.href="${board}";
 	});
 	
-	<c:url value="/board_write" var="board_write"/>
+	<c:url value="/board/write" var="boardWrite"/>
 	$("#board_read_write").on("click", function(e){
 		e.preventDefault();
-		location.href="${board_write}";
+		location.href="${boardWrite}";
 	});
 	
 	//게시글 삭제
