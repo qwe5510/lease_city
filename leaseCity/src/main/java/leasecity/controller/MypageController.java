@@ -33,7 +33,7 @@ public class MypageController {
 		return "mypage/history";
 	}
 	
-	@RequestMapping(value="/myinfo",method=RequestMethod.GET)
+	@RequestMapping(value="/myinfo")
 	public String myinfo(Model model, RedirectAttributes redir,HttpSession session){
 		
 		User user = (User)session.getAttribute("loginUser");
