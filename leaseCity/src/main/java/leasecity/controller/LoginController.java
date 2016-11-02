@@ -38,20 +38,20 @@ public class LoginController {
 
 	// 메인 페이지 PRG
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(Model model, Locale locale, HttpSession session) {
-		
-		// 로그인할 회원 정보 불러오는거 테스트 (session 이용)
-		Object obj = session.getAttribute("loginUser");
-		User user = (User) obj;
-
-		logger.trace("로그인한 회원 정보 : {}", user);
-		
+	public String index(Model model) {		
 		return "index";	
 	}
 	
 	// 로그인 폼 ( 이동만 )
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login(Model model, HttpSession session) {
+		
+		//로그인 되어있는 유저 혹은 관리자가 있는 지 확인.
+		User loginUser = session.getAttribute("loginUser")==null?
+						(User)session.getAttribute("admin"):
+						(User)session.getAttribute("loginUser");						
+		if(loginUser != null){return "redirect:/index";}
+		
 		User user = new User();
 		model.addAttribute("user", user);
 		return "join/login";
@@ -71,7 +71,7 @@ public class LoginController {
 		try {
 			admin = UService.adminLogin(userId, password);
 			session.setAttribute("admin", admin);
-			redir.addFlashAttribute("join_message", "");
+			redir.addFlashAttribute("join_message", "관리자님 반갑습니다.");
 		} catch (LoginFailException e1) { // 관리자 로그인이 실패했을 경우
 			try {
 				user = UService.login(userId, password);
@@ -79,7 +79,7 @@ public class LoginController {
 				session.setAttribute("loginUser", user);
 				redir.addFlashAttribute("join_message", userId + "님 로그인 하셨습니다.");
 			} catch (LoginFailException e) {
-				redir.addFlashAttribute("join_message", "로그인에 실패하였습니다.");
+				redir.addFlashAttribute("join_message", "로그인 실패 - 아이디 혹은 비밀번호가 올바르지 않습니다.");
 				return "redirect:/login";
 			}
 		}

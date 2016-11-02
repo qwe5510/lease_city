@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
@@ -18,6 +19,7 @@ import leasecity.repo.community.CommentRepo;
 import leasecity.repo.community.ReplyRepo;
 
 @Service
+@Transactional
 public class CommunityServiceImpl implements CommunityService{
 
 	static Logger logger = LoggerFactory.getLogger(CommunityServiceImpl.class);
@@ -35,7 +37,7 @@ public class CommunityServiceImpl implements CommunityService{
 	 * @throws NotFoundDataException
 	 */
 	@Override
-	public List<Comment> loadPageCommunityCommentList(Page page) throws NotFoundDataException {
+	public List<Comment> loadPageCommunityComment(Page page) throws NotFoundDataException {
 		List<Comment> results = commentRepo.getPageCommunityComments(page);
 		
 		if(results.size() <= 0){

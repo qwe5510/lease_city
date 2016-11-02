@@ -55,7 +55,7 @@
  					) sub
  				)
  		<if test="pageSize != null and to !=null and from != null">
- 			WHERE comment_row_num BETWEEN #{to} AND #{from}
+ 			WHERE comment_row_num BETWEEN #{from} AND #{to}
  		</if>		
  	</select>
  	

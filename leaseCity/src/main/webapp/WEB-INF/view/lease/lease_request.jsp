@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,282 +15,252 @@
 		<div class="lease_menu">
 		</div>
 		<div class="lease_main">
-			<table class="help_table">
+			<br><br>
+			
+			<sform:form action="#" method="post" modelAttribute="heavyEquipmentCompany">
+			<fieldset>
+			<legend>기업개요</legend>
+			<table class="lease_request_table">
 				<tr>
-					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
+					<td class="lease_label"><sform:label path="companyName">회사명</sform:label>
+						<span>${heavyEquipmentCompany.companyName}</span>
+					</td>
+					<td class="lease_label"><sform:label path="representName">대표자</sform:label>
+						<span>${heavyEquipmentCompany.representName}</span>
+					</td>
+					<td class="lease_label">
+						<sform:label path="representPhone">대표연락처</sform:label>
+						<span>${heavyEquipmentCompany.representPhone}</span>
+					</td>
 				</tr>
-				<tr class="notify">
-					<td class="td1">글번호</td>
-					<td class="td2">분류</td>
-					<td class="td3">제목</td>
-					<td class="td4">글쓴이</td>
-					<td class="td5">조회수</td>
-					<!-- <td class="td6"><a href="#">날짜<i class="icon-sort"></i></a></td> -->
-					<c:choose>
-						<c:when test="${!empty page.keyword and page.order eq 'ASC'}">
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=DESC"><i
-									class="icon-sort"></i></a></td>
-						</c:when>
-						<c:when test="${!empty page.keyword}">
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=ASC"><i
-									class="icon-sort"></i></a></td>
-						</c:when>
-						<c:when test="${page.order eq 'ASC' }">
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?order=DESC"><i
-									class="icon-sort"></i></a></td>
-						</c:when>
-						<c:otherwise>
-							<td>날짜<a
-								href="<%=request.getContextPath()%>/question_answer?order=ASC"><i
-									class="icon-sort"></i></a></td>
-						</c:otherwise>
-					</c:choose>
+				<tr>
+					<td colspan="3" class="lease_label"><sform:label path="address">소재지</sform:label>
+						<span>${heavyEquipmentCompany.address}</span>
+					</td>
 				</tr>
-				<c:forEach var="comment" items="${Q_AND_A}">
-               <tr>
-                  <td colspan="6" class="boardLine" style="height: 4px !important;"></td>
-               </tr>
-               <tr class="boardShow">
-                  <td><c:out value="${comment.commentRowNum}" /></td>
-                  <td><c:out value="${comment.commentCategory}" /></td>
-                  <td class='communityTitle'>
-                  
-                  <c:choose>
-	                  <c:when test="${!empty page.keyword and !empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&order=${page.order}&commentNo=${comment.commentNo}">
-                     		${comment.commentTitle}
-                     	</a>
-	                  </c:when>
-	                  <c:when test="${!empty page.order}">
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&order=${page.order}&commentNo=${comment.commentNo}">
-                     		${comment.commentTitle}
-                     	</a>
-	                  </c:when>
-	                  <c:when test="${!empty page.keyword}">
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&search=${page.search}&keyword=${page.keyword}&commentNo=${comment.commentNo}">
-                     		${comment.commentTitle}
-                     	</a>
-	                  </c:when>
-	                  <c:otherwise>
-	                    <a href="<%=request.getContextPath() %>/question_answer_read?currentPage=${page.currentPage}&commentNo=${comment.commentNo}">
-                     		${comment.commentTitle}
-                     	</a>
-	                  </c:otherwise>
-               		</c:choose>
+				<tr>
+					<td colspan="3" class="lease_label">
+					<sform:label path="heavyEquipmentList">중장비 목록</sform:label>						
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" style="padding: 0px; margin: 0px;">
+						<table border="1" style="width: 100%">
+							<tr>
+								<th>차량 분류</th>
+								<th>차량 번호</th>
+								<th>사용 여부</th>
+								<th>신청 가능 여부</th>
+							</tr>
+							<c:forEach var="heavyEquipment" items="${heavyEquipmentCompany.heavyEquipmentList}">
+							<tr>
+								<td>${heavyEquipment.equipmentCategory}</td>
+								<td>${heavyEquipment.idNumber}</td>
+								<td>${heavyEquipment.usedYesNo}</td>
 
-                      <c:if test="${comment.hits >= 100}">
-                     	<span class="label label-important">
-                     		hot
-                     	</span>
-                     </c:if>
-                     
-                     <c:if test="${!(comment.replyCount eq 0)}">
-                     	<span class="label label-warning">
-                     		+${comment.replyCount}
-                     	</span>
-                     </c:if>
-                  </td>
-                  <td><c:out value="${comment.companyName}" /></td>
-                  <td><c:out value="${comment.hits}" /></td>               
-                  
-                  <fmt:formatDate value="${comment.regDate}"
-                        pattern="yyyy-MM-dd"
-                        var="strRegDate"/>
-                  
-                  <fmt:formatDate value="${comment.regDate}"
-                        pattern="hh:mm:ss"
-                        var="strRegTime"/>
-                  
-                  <c:choose>
-                  <c:when test="${strRegDate eq today}">
-                     <td><c:out value="${strRegTime}" /></td>
-                  </c:when>
-                  <c:otherwise>
-                     <td><c:out value="${strRegDate}" /></td>
-                  </c:otherwise>
-                  </c:choose>                           
-               </tr>
-            </c:forEach>
-            
-            <c:if test="${empty page.totalPage and !empty errorMsg }">
-               <tr>
-                  <td colspan="6"><c:out value="${errorMsg}"></c:out></td>
-               </tr>
-            </c:if>
-				<tr>
-					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
-				</tr>
-				<tr class="board_write">
-					<td colspan="5">
+								<c:choose>
+									<c:when test="${heavyEquipment.checkRequest eq 'N'}">
+										<td style="background-color: red; color: white;">
+											신청 불가
+										</td>
+									</c:when>
+									
+									<c:otherwise>
+										<td style="background-color: blue; color: white;">
+											신청 가능
+										</td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+							</c:forEach>
+						</table>
 					</td>
-					<td colspan="1">
-					<c:url value="/lease_request_write" var="lease_request_write"/>
-					<a href="${lease_request_write}"><button><i class="icon-pencil"></i>글작성</button></a>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" class="boardLine" style="height: 3px !important;"></td>
 				</tr>
 			</table>
-			<div class="boardSearch">
-         <div class="boardPage" style="display: inline-block;">
-            
-            <!-- 이전 페이지, 다음 페이지 변수 선언 -->
-            <fmt:parseNumber 
-               value="${(((page.currentPage-1)/10)-(((page.currentPage-1)/10)%1))*10}" 
-               var="prevPage">
-            </fmt:parseNumber>
-            <fmt:parseNumber 
-               value="${prevPage+11}" 
-               var="nextPage">
-            </fmt:parseNumber>
-               
-            
-            <c:choose>
-            <c:when test="${prevPage > 0}">
-                           
-               <c:choose>
-                  <c:when test="${!empty page.keyword and !empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:when>
-                  <c:when test="${!empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:when>
-                  <c:when test="${!empty page.keyword}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:when>
-                  <c:otherwise>
-                     <a href="<%=request.getContextPath()%>/question_answer?currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:otherwise>
-               </c:choose>
-            </c:when>
-            <c:otherwise>
-            <a style="color: black;"><i class="icon-arrow-left">처음</i></a>
-            </c:otherwise>
-            </c:choose>            
-            
-            <c:if test="${!empty page.totalPage}">
-               <c:choose>
-                  <c:when test="${(nextPage-1) >= page.totalPage }">
-                     <c:forEach var="i" begin="${prevPage+1}" end = "${page.totalPage}">
-                        <c:choose>
-                           <c:when test="${i eq page.currentPage}">
-                              <b><c:out value="${i}"></c:out></b>
-                           </c:when>
-                           <c:otherwise>
-                              <c:choose>
-                                 <c:when test="${!empty page.keyword and !empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.keyword}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>                        
-                                 </c:when>
-                                 <c:otherwise>
-                                    <a href="<%=request.getContextPath()%>/question_answer?currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:otherwise>
-                              </c:choose>
-                           </c:otherwise>
-                        </c:choose>
-                     </c:forEach>
-                  </c:when>
-                  <c:otherwise>
-                     <c:forEach var="i" begin="${prevPage+1}" end = "${nextPage-1}">
-                        <c:choose>
-                           <c:when test="${i eq page.currentPage}">
-                              <b><c:out value="${i}"></c:out></b>
-                           </c:when>
-                           <c:otherwise>
-                              <c:choose>
-                                 <c:when test="${!empty page.keyword and !empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.keyword}">
-                                    <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>                        
-                                 </c:when>
-                                 <c:otherwise>
-                                    <a href="<%=request.getContextPath()%>/question_answer?currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:otherwise>
-                              </c:choose>
-                           </c:otherwise>
-                        </c:choose>
-                     </c:forEach>
-                  </c:otherwise>
-               </c:choose>
-            </c:if>
-            
-            <c:choose>
-            <c:when test="${nextPage <= page.totalPage}">
-               <c:choose>
-               <c:when test="${!empty page.keyword and !empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:when>
-                  <c:when test="${!empty page.order}">
-                     <a href="<%=request.getContextPath()%>/question_answer?order=${page.order}&currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:when>
-                  <c:when test="${!empty page.keyword}">
-                     <a href="<%=request.getContextPath()%>/question_answer?search=${page.search}&keyword=${page.keyword}&currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:when>
-                  <c:otherwise>
-                     <a href="<%=request.getContextPath()%>/question_answer?currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:otherwise>
-               </c:choose>
-            </c:when>
-            <c:otherwise>
-               <a style="color: black;">끝<i class="icon-arrow-right"></i></a>
-            </c:otherwise>
-            </c:choose>
-         </div>
-         
-         <c:url value="/question_answer" var="question_answer"/> 
-         <sform:form method="get" modelAttribute="page" action="${question_answer }">
-                  
-                  <div class="boardBottom">
-                     <sform:select path="search">
-                        <sform:option value="COMPANY_NAME">글쓴이</sform:option>
-                        <sform:option value="TITLE">제목</sform:option>
-                        <sform:option value="TITLE_AND_CONTENT">제목+내용</sform:option>
-                        <sform:option value="LOCAL">지역명</sform:option>
-                     </sform:select>
-                     <sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
-                     <button id="boardBtn"><i class="icon-search"></i>검색</button>
-                  </div>
-         </sform:form>
-         </div>
+			</fieldset>
+			</sform:form>
+			<c:url value="/leaseCall/RequestWrite" var="leaseRequestWrite"></c:url>
+			<sform:form id="lease_request_form" action="${leaseRequestWrite}" method="post" modelAttribute="leaseRequest">
+			<fieldset>
+			<legend>임대신청</legend>
+			<table class="lease_request_lease_table">
+				<tr>
+					<td class="lease_label">
+					<sform:label path="idNumber">필요차량</sform:label>
+					</td>
+					<td colspan="2" class="heavyEquipmentArea" >
+						<sform:select path="idNumber" style="width: 350px;">
+							<sform:options items="${idNumbers}"/>
+						</sform:select>
+					</td>
+				</tr>
+				<tr>
+					<td class="lease_label"><sform:label path="regDate">기간</sform:label>
+					</td>
+					<td colspan="2" class="fromToDate">
+						<label>시작일자</label><sform:input path="fromDate" type="date"/><br>
+						<label>종료일자</label><sform:input path="toDate" type="date"/>
+						<span></span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="dateCheck"></td>
+				</tr>
+				<tr>
+					<td class="lease_label"><sform:label path="regDate">금액</sform:label>
+					</td>
+					<td colspan="2" class="fromToPrice">
+						<sform:input path="price" type="number" min="0"/><h4 style="margin-top: 25px; color: black;">만원(단위)</h4>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="priceCheck"></td>
+				</tr>
+			</table>
+			</fieldset>
+			<br>
+			<fieldset>
+				<legend>참고사항</legend>
+				<textarea></textarea>
+			</fieldset>
+			<div class="lease_write_bottom">
+				<button id="lease_request"> <i class="icon-pencil"></i>신청</button>
+				<button id="lease_request_cancel"><i class="icon-link"></i>취소</button>
+				<sform:hidden path="leaseCallNo"/>
+				<fmt:formatDate value="${curtLineDate}" pattern="yyyy-MM-dd" var="curtLineDate"/>
+			</div>
+			</sform:form>
 		</div>
 	</div>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+ 	<c:url value="/leaseCall/read?leaseCallNo=${leaseRequest.leaseCallNo}" var="leaseCallRead"/>
+ 	$(document).on("click","#lease_request_cancel",function(e) {
+   		e.preventDefault();
+   		location.href="${leaseCallRead}";
+ 	});
+ 	
+ 	$("#price").on("blur",function(){
+ 		var priceReg = /^[1-9][0-9]*$/;
+ 		var price = $("#price").val();
+ 		if(!priceReg.test(price)){
+ 			$(".priceCheck").html("공백 입력은 불가능합니다.");
+ 			$("#price").focus();
+ 			return false;
+ 		}else{
+ 			$(".priceCheck").html("");
+ 		}
+ 	});
+ 	
+ 	$("#lease_request").on("click",function(e){
+ 		e.preventDefault();
+ 		var priceReg = /^[1-9][0-9]*$/;
+ 		var price = $("#price").val();
+ 		
+ 		var toDate = $("#toDate").val();
+ 		var fromDate = $("#fromDate").val();
+ 		
+ 		if(!_jsDateCheck(fromDate,toDate)){
+ 			return false;
+ 		}
+ 		else if(!priceReg.test(price)){
+ 			$(".priceCheck").html("공백 입력은 불가능합니다.");
+ 			$("#price").focus();
+ 			return false;
+ 		}
+ 		else{
+			if(confirm("확인 클릭시 수정이 불가능합니다.")==true){
+				$("#lease_request_form").submit();
+			}else{
+				return false;
+			}
+ 		}
+ 	});
+ 	
+ 	$("#toDate").on("blur", function(e){
+ 		var toDate = $(this).val();
+ 		var fromDate = $("#fromDate").val();
+ 		
+ 		if(!_jsDateCheck(fromDate,toDate)){
+ 		}else{$(".dateCheck").html("");}
+ 	});
+ 	
+ 	$("#fromDate").on("blur", function(e){
+ 		var toDate = $("#toDate").val();
+ 		var fromDate = $(this).val();
+ 		
+ 		if(!_jsDateCheck(fromDate,toDate)){
+ 			$(this).focus();
+ 		}else{$(".dateCheck").html("");}
+ 	});
+ 	
+ 	function _jsDateCheck(fromDate, toDate){
+ 	    var arySrtDt = fromDate.split("-"); // ex) 시작일자(2007-10-09)
+ 	    var aryEndDt = toDate.split("-"); // ex) 종료일자(2007-12-05)
+ 	    var arycurtLine = "${curtLine}";
+
+ 	    
+ 	  	var temp = new Date(); // temp
+ 	  	
+ 	  	var today = new Date(Number(temp.getFullYear()), Number(temp.getMonth()), Number(temp.getDate()));
+ 		var startDt = new Date(Number(arySrtDt[0]),Number(arySrtDt[1])-1,Number(arySrtDt[2]));
+	    var endDt	= new Date(Number(aryEndDt[0]),Number(aryEndDt[1])-1,Number(aryEndDt[2]));
+	    
+	    subFromDt 	= Math.floor(startDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
+	   	subToDt 	= Math.floor(endDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
+	   	
+ 	   	if(subFromDt < 0){
+	   	 	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
+	    	$("#toDate").focus();
+	    	return false; 
+	    }else if(subToDt < 0){
+	    	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
+	    	$("#toDate").focus();
+	    	return false;
+	    }
+ 	    
+ 	    if(fromDate == "" && toDate == ""){
+ 	    	$(".dateCheck").html("날짜가 공백입니다 날짜를 설정 해주세요.");
+ 	    	$("#fromDate").focus();
+ 	    	return false;
+ 	    }
+ 	    else if(fromDate == ""){
+ 	    	$(".dateCheck").html("시작 날짜를 설정 해주세요.");
+ 	    	$("#fromDate").focus();
+ 	    	return false;
+ 	    }else if(toDate == ""){
+ 	    	console.log("통과");
+ 	    	$(".dateCheck").html("종료 날짜를 설정 해주세요.");
+ 	    	$("#toDate").focus();
+ 	    	return false;
+ 	    }
+ 	    
+ 	  	resultDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- startDt.valueOf()/(24*60*60*1000));
+ 	 
+ 	  	if(resultDt < 0 ){
+ 	    	$(".dateCheck").html("종료날짜가 시작날짜보다 나중이어야 합니다.");
+ 	    	$("#toDate").focus();
+ 	    	return false; 
+ 	    }
+ 	  	
+ 	  	var curtLineDt = new Date(Number(arycurtLine[0]),Number(arycurtLine[1])-1,Number(arycurtLine[2]));
+ 	  	
+ 	  	subCurtLineFromDt = Math.floor(startDt.valueOf()/(24*60*60*1000)- curtLineDt.valueOf()/(24*60*60*1000));
+ 	  	subCurtLineToDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- curtLineDt.valueOf()/(24*60*60*1000));
+ 	  	
+ 	  	if(subCurtLineFromDt < 0){
+ 	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
+ 	    	$("#fromDate").focus();
+ 	  	}else if(subCurtLineToDt < 0){
+ 	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
+ 	    	$("#toDate").focus();
+ 	  	}
+ 	  	
+ 	  	return true;
+ 	}
+ 	
+ 	
+ </script>
 </html>

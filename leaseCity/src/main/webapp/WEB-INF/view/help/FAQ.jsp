@@ -6,15 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath() %>/css/accordionImageMenu.css" rel="stylesheet">
-
-<script>
-	console.log("<%=request.getContextPath()%>");
-</script>
-
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../layout/header.jsp"></jsp:include>	
 	<c:url value="/help/qna" var="qna"/>
 	<div class="help">
 		<div class="help_menu">
@@ -23,11 +18,38 @@
 			<br>
 			</div>
 			<ul class="help_menu_ul">
-			<li class="help_menu_first"><a id="help_frequenty" href="#"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></a></li>
+			<li class="help_menu_first"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></li>
 			<li><a id="help_question" href="${qna}"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4.png"></a></li>
 			</ul>
 		</div>
-		<div class="help_main">
+
+		<div class="cssload-cssload-wrap2">
+			<div class="cssload-wrap">
+				<div class="cssload-overlay"></div>
+				<div class="cssload-cogWheel cssload-one">
+
+					<div class="cssload-cog cssload-one"></div>
+					<div class="cssload-cog cssload-two"></div>
+					<div class="cssload-cog cssload-three"></div>
+					<div class="cssload-cog cssload-four"></div>
+					<div class="cssload-cog cssload-five"></div>
+					<div class="cssload-center"></div>
+				</div>
+				<h5 style="margin-top: 40px; color: black;">loading</h5>
+				<div class="cssload-cogWheel cssload-two">
+
+					<div class="cssload-cog cssload-one"></div>
+					<div class="cssload-cog cssload-two"></div>
+					<div class="cssload-cog cssload-three"></div>
+					<div class="cssload-cog cssload-four"></div>
+					<div class="cssload-cog cssload-five"></div>
+					<div class="cssload-center"></div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="help_main" style="display: none;">
 			<ul id='menu'>
 				<li><a id="a1" href='#'><b class="faq_bold">임대요청</b><span>임대요청</span><img
 								src="<%=request.getContextPath()%>/images/FAQ/임대요청.png"
@@ -62,6 +84,10 @@
 <script src="<%=request.getContextPath() %>/js/accordion/jquery-ui-1.10.3.custom.min.js"></script>
 <script src="<%=request.getContextPath() %>/js/accordion/jquery.accordionImageMenu.js"></script>
 <script>
+
+
+
+
 	$("#help_question").on("mouseover",function(){
 		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4_1.png");
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2.png");
@@ -160,7 +186,14 @@
 	           	idmenu.slideDown();
 	           }
 			});
-		});
+		
+		setTimeout(function(){
+			$(".cssload-cssload-wrap2").css("display", "none");
+			$(".help_main").css("display", "block");
+		}, 500);
+		
+		
+	});
 
 </script>
 </html>

@@ -5,8 +5,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <head>
+<<<<<<< HEAD
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Home | LEASECITY</title>
@@ -35,10 +35,11 @@
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
+=======
+<title>HOME | LEASE CITY</title>
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 </head>
-
 <body>
-
 	<!-- 가입 절차 설명 메시지 -->
 	<c:if test="${!empty join_message }">
 		<script type="text/javascript">
@@ -46,67 +47,7 @@
 			alert(msg);
 		</script>
 	</c:if>
-	
-	<!--Header-->
-	<header class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<!-- <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a> -->
-				<a id="logo" class="pull-left" href="<%=request.getContextPath()%>/index"></a>
-				<div class="nav-collapse collapse pull-right">
-					<ul class="nav">
-						<li>
-							<table>
-								<tr>
-									<th><select>
-											<option>임대</option>
-											<option>커뮤니티</option>
-											<option>Q&A</option>
-											<option>중기업체</option>
-									</select></th>
-									<th><input type="text" placeholder="검색어를 입력해주세요."></th>
-									<th><input type="button" value="검색"></th>
-								</tr>
-							</table>
-						</li>
-						<li class="dropdown" id="con"><a href="#"
-							class="dropdown-toggle" data-toggle="dropdown">임대 <i
-								class="icon-angle-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/lease_request">임대 신청/조회</a></li>
-								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
-							</ul></li>
-						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
-						<li class="dropdown" id="con"><a href="<%=request.getContextPath() %>/FAQ"
-							class="dropdown-toggle" data-toggle="dropdown">고객센터 <i
-								class="icon-angle-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="<%=request.getContextPath() %>/help/FAQ">자주 묻는 질문</a></li>
-								<li><a href="<%=request.getContextPath() %>/help/qna">Q&A</a></li>
-							</ul></li>
-						<li id="con"><a href="<%=request.getContextPath() %>/board">소개</a></li>
-						<c:url value="/login" var="login"></c:url>
-						<c:url value="/logout" var="logout"></c:url>
-						<c:choose>
-							<c:when test="${!empty loginUser or !empty admin}">
-								<li id="con"><a href=${logout }><i class="icon-signout"></i></a></li>
-							</c:when>
-							<c:otherwise>
-								<li id="con"><a href=${login }><i class="icon-lock"></i></a></li>
-							</c:otherwise>
-						</c:choose>
-					</ul>
-				</div>
-				<!--/.nav-collapse -->
-			</div>
-		</div>
-	</header>
-	<!-- /header -->
-
+	<jsp:include page="./layout/header.jsp"></jsp:include>
 	<section id="slide-show">
 		<div id="slider" class="sl-slider-wrapper">
 			Slider Items
@@ -201,7 +142,7 @@
 												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/introduction"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
@@ -214,7 +155,7 @@
 									<ul class="thumbnails">
 										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
@@ -231,7 +172,7 @@
 												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
 												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question_answer"><img
+										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
 												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
 										<li class="span3"><a href="<%=request.getContextPath() %>introduction"><img
 												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
@@ -336,40 +277,7 @@
 
 	</section>
 	<!--/bottom-->
-
-	<!--Footer-->
-	<footer id="footer">
-		<div class="container">
-			<div class="row-fluid">
-				<div class="span5 cp">Kongju National University Jang Pil Sik
-					Yoon Hyun Joon Yang suo Ho CopyRighter</div>
-				<!--/Copyright-->
-				<div class="span6">
-					<ul class="social pull-right">
-						<li><a href="#"><i class="icon-facebook"></i></a></li>
-						<li><a href="#"><i class="icon-twitter"></i></a></li>
-						<li><a href="#"><i class="icon-pinterest"></i></a></li>
-						<li><a href="#"><i class="icon-linkedin"></i></a></li>
-						<li><a href="#"><i class="icon-google-plus"></i></a></li>
-						<li><a href="#"><i class="icon-youtube"></i></a></li>
-						<li><a href="#"><i class="icon-tumblr"></i></a></li>
-						<li><a href="#"><i class="icon-dribbble"></i></a></li>
-						<li><a href="#"><i class="icon-rss"></i></a></li>
-						<li><a href="#"><i class="icon-github-alt"></i></a></li>
-						<li><a href="#"><i class="icon-instagram"></i></a></li>
-					</ul>
-				</div>
-
-				<div class="span1">
-					<a id="gototop" class="gototop pull-right" href="#"><i
-						class="icon-angle-up"></i></a>
-				</div>
-				<!--/Goto Top-->
-			</div>
-		</div>
-	</footer>
-	<!--/Footer-->
-
+	<jsp:include page="./layout/footer.jsp"></jsp:include>
 	<!--  Login form -->
 	<div class="modal hide fade in" id="loginForm" aria-hidden="false">
 		<div class="modal-header">
@@ -392,14 +300,6 @@
 		<!--/Modal Body-->
 	</div>
 	<!--  /Login form -->
-	<script src="<%=request.getContextPath()%>/js/vendor/jquery-1.9.1.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/vendor/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/main.js"></script>
-	<!-- Required javascript files for Slider -->
-	<script src="<%=request.getContextPath()%>/js/jquery.ba-cond.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery.slitslider.js"></script>
-	<!-- /Required javascript files for Slider -->
-
 	<!-- SL Slider -->
 	<script type="text/javascript"> 
 $(function() {

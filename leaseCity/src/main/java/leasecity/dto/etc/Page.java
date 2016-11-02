@@ -32,6 +32,11 @@ public class Page {
 	// 총괄검색에서 사용하는 기능.
 	
 	/**
+	 * 유저 ID를 담는 문자열 변수
+	 */
+	private String userId;
+	
+	/**
 	 * 검색 조건을 명시하는 멤버
 	 * TITLE : 제목으로 검색 (기본값) 
 	 * COMPANY_NAME : 업체명으로 검색
@@ -68,8 +73,8 @@ public class Page {
 	
 	// From과 To
 	public void setFromTo() {
-		this.to = (this.currentPage-1)*this.pageSize+1;
-		this.from = (this.to-1)+this.pageSize;
+		this.from = (this.currentPage-1)*this.pageSize+1;
+		this.to = (this.from-1)+this.pageSize;
 	}
 	
 }

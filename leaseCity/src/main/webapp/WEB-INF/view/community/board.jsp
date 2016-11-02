@@ -11,22 +11,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src='//uchat.co.kr/uchat.php' charset='UTF-8'></script>
 <title>COMMUNITY | LEASECITY</title>
+
+<c:if test="${!empty board_message }">
+	<script>
+		alert('${board_message }');
+	</script>
+</c:if>
+
+<%
+	Date todayDate = new Date();
+	String today = DateUtil.getDateString(todayDate);
+	request.setAttribute("today", today);
+%>
+
 </head>
 <body>
-
-   <c:if test="${!empty board_message }">
-      <script type="text/javascript">
-         alert('${board_message }');
-      </script>
-   </c:if>
-
-   <%
-      Date todayDate = new Date();
-      String today = DateUtil.getDateString(todayDate);
-      request.setAttribute("today", today);
-   %>
-
-
    <jsp:include page="../layout/header.jsp"></jsp:include>
    <div class="board">
       <div class="uchat">
@@ -107,9 +106,15 @@
                      	</a>
 	                  </c:otherwise>
                		</c:choose>
-               		
-
-                      <c:if test="${comment.hits >= 100}">
+               		<fmt:formatDate value="${comment.regDate}"
+                        pattern="yyyy-MM-dd"
+                        var="strRegDate"/>
+                  
+                 	 <fmt:formatDate value="${comment.regDate}"
+                        pattern="hh:mm:ss"
+                        var="strRegTime"/>
+                        
+                     <c:if test="${comment.hits >= 100 and (strRegDate eq today)}">
                      	<span class="label label-important">
                      		hot
                      	</span>
@@ -132,15 +137,6 @@
                   </c:choose>
                   </td>
                   <td><c:out value="${comment.hits}" /></td>               
-                  
-                  <fmt:formatDate value="${comment.regDate}"
-                        pattern="yyyy-MM-dd"
-                        var="strRegDate"/>
-                  
-                  <fmt:formatDate value="${comment.regDate}"
-                        pattern="hh:mm:ss"
-                        var="strRegTime"/>
-                  
                   <c:choose>
                   <c:when test="${strRegDate eq today}">
                      <td><c:out value="${strRegTime}" /></td>
@@ -166,7 +162,13 @@
                </td>
                <td colspan="1">
                <c:url value="/board/write" var="boardWrite"/>
+<<<<<<< HEAD
                <a href="${boardWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
+=======
+               <c:url value="/board" var="boardList"/>
+               <a href="${boardWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
+               <a href="${boardList}"><button><i class="icon-list"></i>목록</button></a>
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
                </td>
             </tr>
             

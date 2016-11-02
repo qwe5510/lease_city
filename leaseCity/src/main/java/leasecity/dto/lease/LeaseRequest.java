@@ -3,7 +3,6 @@ package leasecity.dto.lease;
 import java.io.Serializable;
 import java.util.Date;
 
-import leasecity.dto.user.HeavyEquipment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,11 +26,11 @@ public class LeaseRequest implements Serializable {
 	/** 임대 신청 번호. */
 	private Integer leaseRequestNo;
 
-	/** 임대요청. */
-	private LeaseCall leaseCalls;
-
-	/** 중장비. */
-	private HeavyEquipment heavyEquipment;
+	/** 임대 요청 번호. */
+	private Integer leaseCallNo;
+	
+	/** 중장비. 차 번호 */
+	private String idNumber;
 
 	/** 회원. */
 	private String userId;
@@ -47,5 +46,8 @@ public class LeaseRequest implements Serializable {
 
 	/** 비용. */
 	private Integer price;
+	
+	/** 양도여부. */
+	private String transferCheck;
 
 }

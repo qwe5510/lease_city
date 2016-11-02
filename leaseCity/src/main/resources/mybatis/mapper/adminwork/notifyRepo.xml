@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.notifyRepo">
+ 	
+ 	<select id="getAllSelectNotify" resultType="notify">
+ 		SELECT * FROM notify
+ 	</select>
+ 	
+ 	<select id="getSelectNotify" parameterType="String" 
+ 								resultType="notify">
+ 		SELECT * FROM notify WHERE user_id = #{userId}
+ 	</select>
+ 	
+ 	<insert id="insertNotify" parameterType="notify">
+ 		<selectKey resultType="int" keyProperty="notifyNo" order="AFTER"> 
+	 		SELECT SEQ_NOTIFY_NOTIFY_NO.CURRVAL AS notify_no 
+	 		FROM dual 
+ 		</selectKey>
+ 		INSERT INTO notify (user_id, lease_call_no, lease_direct_no, lease_request_no, lease_transfer_no, attribute, comment_no, reply_no, notify_link)
+ 		VALUES( 
+ 		#{userId}
+ 		<choose>
+ 			<when test="leaseCallNo != null">,#{leaseCallNo}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		<choose>
+ 			<when test="leaseDirectNo != null">,#{leaseDirectNo}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		<choose>
+ 			<when test="leaseRequestNo != null">,#{leaseRequestNo}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		<choose>
+ 			<when test="leaseTransferNo != null">,#{leaseTransferNo}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		<choose>
+ 			<when test="attribute != null">,#{attribute}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		<choose>
+ 			<when test="commentNo != null">,#{commentNo}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		<choose>
+ 			<when test="replyNo != null">,#{replyNo}</when>
+ 			<otherwise>, null</otherwise>
+ 		</choose>
+ 		,#{notifyLink})
+ 	</insert>
+ 	
+ 	<update id="updateNotify" parameterType="int">
+ 		UPDATE notify 
+ 		SET 
+ 			notify_check = 'Y' 
+ 		WHERE notify_no = #{notifyNo}
+ 	</update>
+ 	
+ 	<delete id="deleteNotify" parameterType="int">
+ 		DELETE FROM notify
+ 		WHERE notify_no = #{notifyNo}
+ 	</delete>
+ 	 
+ </mapper>

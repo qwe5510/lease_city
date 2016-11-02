@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.LookUpHeavyEquipmentCompanyRepo">
+ 	
+ 	<!-- 중기업체 - 중기업체 : 도움 여부가 ON된 중기업체 개수만 리턴 -->
+ 	<select id="getCountHelpOnHeavyEquipment" parameterType="page"
+ 											resultType="int">
+ 		SELECT COUNT(*) 
+ 		FROM users 
+ 		JOIN heavy_equipment_company USING(user_id)
+ 		WHERE help_on_off = 'ON'
+ 	</select>
+ 	
+ 	<!-- 건설업체 - 중기업체 : 도움 여부가 ON된 중기업체 개수만 리턴 -->
+ 	<select id="getCountInfoOnHeavyEquipment" parameterType="page"
+ 											resultType="int">
+ 		SELECT COUNT(*) 
+ 		FROM users 
+ 		JOIN heavy_equipment_company USING(user_id)
+ 		WHERE info_on_off = 'ON'
+ 	</select>
+ 	
+ 	<!-- 중기업체 - 중기업체 : 정보 공개 여부가 ON된 중기업체 리스트를 리턴 -->
+ 	<select id="getPageHelpOnHeavyEquipmentCompanies" parameterType="page" 
+ 											resultType="heavyEquipmentCompany">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS rnum
+ 				FROM( SELECT *
+ 						FROM heavy_equipment_company
+ 						JOIN users USING(user_id)
+ 					<choose>
+	 					<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
+	 						WHERE address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'COMPANY_NAME' and (keyword != null or keyword !='')">
+	 						WHERE company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'CREDIT' and (keyword != null or keyword !='')">
+	 						WHERE credit_grade LIKE #{keyword}||'%'
+	 					</when>
+ 					</choose>
+ 					ORDER BY credit_grade DESC
+ 					) sub
+ 				)
+ 			WHERE help_on_off = 'ON'
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			AND rnum BETWEEN #{from} AND #{to}
+ 		</if>		
+ 	</select>
+ 	
+ 	<!-- 건설업체 - 중기업체 : 정보 공개 여부가 ON된 중기업체 리스트를 리턴 -->
+ 	<select id="getPageInfoOnHeavyEquipmentCompanies" parameterType="page" 
+ 											resultType="heavyEquipmentCompany">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS rnum
+ 				FROM( SELECT *
+ 						FROM heavy_equipment_company
+ 						JOIN users USING(user_id)
+ 					<choose>
+	 					<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
+	 						WHERE address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'COMPANY_NAME' and (keyword != null or keyword !='')">
+	 						WHERE company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'CREDIT' and (keyword != null or keyword !='')">
+	 						WHERE credit_grade LIKE #{keyword}||'%'
+	 					</when>
+ 					</choose>
+ 					ORDER BY credit_grade DESC
+ 					) sub
+ 				)
+ 			WHERE info_on_off = 'ON'
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			AND rnum BETWEEN #{from} AND #{to}
+ 		</if>		
+ 	</select>
+ 	
+ 	
+ 	<!-- 중기업체 아이디로 검색하여 정보 리턴 -->
+ 	<select id="getHeavyEquipmentCompany" parameterType="String" 
+ 											resultType="heavyEquipmentCompany">
+ 		SELECT *
+ 		FROM heavy_equipment_company
+ 		JOIN users USING(user_id)
+ 		WHERE user_id = #{userId}
+ 	</select>
+ 	
+ 	
+ 	<!-- 아이디로 검색, 중장비 목록을 받아들입니다. -->
+ 	<select id="getCompanyHeavyEquipments" parameterType="String"
+ 											resultType="heavyEquipment">
+ 		SELECT *
+ 		FROM heavy_equipment
+ 		WHERE user_id = #{userId}
+ 	</select>
+
+ 
+ </mapper>

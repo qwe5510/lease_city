@@ -68,19 +68,6 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 		this.leaseTransferList = new ArrayList<LeaseTransfer>();
 	}
 	
-	/*public HeavyEquipmentCompany(HeavyEquipmentCompany HEC){
-		super(HEC);
-		
-		this.helpOnOff = HEC.helpOnOff;
-		this.infoOnOff = HEC.infoOnOff;
-		
-		this.heavyEquipmentList = new ArrayList<HeavyEquipment>();
-		this.leaseDirectCallsList = new ArrayList<LeaseDirectCall>();
-		this.leaseRequestsList = new ArrayList<LeaseRequest>();
-		this.leaseTransferList = new ArrayList<LeaseTransfer>();
-	}*/
-
-	
 	/**
 	 * UserId도 같이 출력되게 임의 설정
 	 */

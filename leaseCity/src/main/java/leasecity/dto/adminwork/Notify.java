@@ -38,11 +38,11 @@ public class Notify implements Serializable {
 	/** 임대 신청 번호. */
 	private Integer leaseRequestNo;
 
-	/** 임대 선정 번호. */
-	private Integer leaseSelectionNo;
-
 	/** 임대 양도 번호. */
 	private Integer leaseTransferNo;
+	
+	/** 글 속성 : 게시글 / 댓글 or 질문/답변 */
+	private String attribute;
 
 	/** 게시글 번호. */
 	private Integer commentNo;
@@ -50,12 +50,12 @@ public class Notify implements Serializable {
 	/** 댓글 인식번호. */
 	private Integer replyNo;
 
-	/** 질문글 번호. */
-	private Integer questionNo;
-
-	/** 답변글 번호. */
-	private Integer answerNo;
-
 	/** 알림날짜. */
 	private Date notifyDate;
+	
+	/** 알림링크. */
+	private String notifyLink;
+	
+	/** 알림체크. */
+	private String notifyCheck = "N";
 }

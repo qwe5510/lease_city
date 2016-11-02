@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.user.ConstructionCompany;
+import leasecity.dto.user.Credit;
 import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.License;
@@ -17,6 +19,7 @@ import leasecity.exception.LoginFailException;
 import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
 import leasecity.repo.user.ConstructionCompanyRepo;
+import leasecity.repo.user.CreditRepo;
 import leasecity.repo.user.HeavyEquipmentCompanyRepo;
 import leasecity.repo.user.HeavyEquipmentRepo;
 import leasecity.repo.user.LicenseRepo;
@@ -24,6 +27,7 @@ import leasecity.repo.user.UserRepo;
 import leasecity.util.HashingUtil;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 	static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -42,6 +46,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	LicenseRepo licenseRepo;
+	
+	@Autowired
+	CreditRepo creditRepo;
 
 	// 유저 회원가입
 	public void join(User user) throws JoinFailException {
@@ -206,4 +213,79 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	
+	@Override
+	public User loadUserInfo(String userId) throws NotFoundDataException {
+		
+		User result = constructionCompanyRepo.getConstructionCompany(userId);
+	
+		if(result==null){
+			HeavyEquipmentCompany hResult = heavyEquipmentCompanyRepo.getHECUser(userId);
+			
+			List<HeavyEquipment> HE = heavyEquipmentRepo.getUserHeavyEquipments(userId);
+			hResult.setHeavyEquipmentList(HE);
+			
+			return hResult;
+		}else{
+			ConstructionCompany cResult = constructionCompanyRepo.getCCUser(userId);
+			List<License> license = licenseRepo.getUserLicense(userId);
+			cResult.setLicenseList(license);
+
+			return cResult;
+		}
+	}
+	
+	@Override
+	public List<HeavyEquipment> loadUserHeavyEquipment(String userId) throws NotFoundDataException {
+		
+		if(userId == null){
+			throw new NotFoundDataException(userId + "회원의 중장비 리스트");
+		}
+		
+		List<HeavyEquipment> results = heavyEquipmentRepo.getUserHeavyEquipments(userId);
+		
+		if(results.size() <= 0){
+			throw new NotFoundDataException(userId + "회원의 중장비 리스트");
+		}
+		
+		return results;
+	}
+	
+	
+	@Override
+	public List<License> loadUserLicense(String userId) throws NotFoundDataException {
+		if(userId == null){
+			throw new NotFoundDataException(userId + "회원의 자격증 리스트");
+		}
+		
+		List<License> results = licenseRepo.getUserLicense(userId);
+		
+		if(results.size() <= 0){
+			throw new NotFoundDataException(userId + "회원의 자격증 리스트");
+		}
+		
+		return results;
+	}
+	
+	@Override
+	public void calcCreditGrade(User user) {
+		List<Credit> credits = 
+				creditRepo.getSelectAcceptCredits(user.getUserId());
+		
+		double creditSum = 0;
+		double creditAvg = 0;
+		int count = credits.size();
+		
+		for(Credit credit : credits){
+			creditSum += credit.getEvaluation();
+		}
+		
+		if(count==0){
+			user.setCreditGrade(0.0);
+		}else{
+			creditAvg = creditSum / count;
+			double creditGrade = (creditAvg + count) / (5.0 + count);
+			user.setCreditGrade(creditGrade);
+		}
+	}
 }

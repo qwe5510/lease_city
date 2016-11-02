@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
@@ -18,6 +19,7 @@ import leasecity.repo.adminwork.AnswerRepo;
 import leasecity.repo.adminwork.QuestionRepo;
 
 @Service
+@Transactional
 public class QnAServiceImpl implements QnAService{
 
 	static Logger logger = LoggerFactory.getLogger(QnAServiceImpl.class);
@@ -143,13 +145,13 @@ public class QnAServiceImpl implements QnAService{
 	public void removeQuestion(Comment comment) throws RemoveFailException {
 		int result = answerRepo.getCountQuestionAnswer(comment.getCommentNo());
 		if(result >= 1){
-			logger.trace("게시글 삭제 실패 : 질문글에 대해 답변이 달려있음.");
+			logger.trace("질문 삭제 실패 : 질문글에 대해 답변이 달려있음.");
 			throw new RemoveFailException(comment.getCommentTitle() + "게시글");
 		}
 		
 		result = questionRepo.deleteQuestionAndAnswer(comment);
 		if(result != 1){
-			logger.trace("게시글 삭제 실패 : 대상 게시글 번호가 없음");
+			logger.trace("질문 삭제 실패 : 대상 게시글 번호가 없음");
 			throw new RemoveFailException(comment.getCommentTitle() + "게시글");
 		}
 	}

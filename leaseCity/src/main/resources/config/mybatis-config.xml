@@ -18,13 +18,13 @@
 		<typeAlias type="leasecity.dto.user.License" alias="license" />
 		<typeAlias type="leasecity.dto.user.HeavyEquipmentCompany" alias="heavyEquipmentCompany"/>
 		<typeAlias type="leasecity.dto.user.HeavyEquipment" alias="heavyEquipment" />
+		<typeAlias type="leasecity.dto.user.Credit" alias="credit"/>
 		
 		<!-- 2.임대 업무(임대요청 / 직접요청 / 신청 / 양도 /  -->
 		<typeAlias type="leasecity.dto.lease.LeaseCall" alias="leaseCall" />
 		<typeAlias type="leasecity.dto.lease.LeaseDirectCall" alias="leaseDirectCall" />
 		<typeAlias type="leasecity.dto.lease.LeaseRequest" alias="leaseRequest" />
 		<typeAlias type="leasecity.dto.lease.LeaseTransfer" alias="leaseTransfer" />
-		<typeAlias type="leasecity.dto.lease.LeaseSelection" alias="leaseSelection" />
 		
 		<!--  3.커뮤니티 (게시글, 댓글) / Q&A 겸용 -->
 		<typeAlias type="leasecity.dto.community.Comment" alias="comment" />
@@ -47,17 +47,26 @@
 		<mapper resource="mybatis/mapper/user/constructionCompanyRepo.xml" />
 		<mapper resource="mybatis/mapper/user/heavyEquipmentRepo.xml" />
 		<mapper resource="mybatis/mapper/user/licenseRepo.xml" />
+		<mapper resource="mybatis/mapper/user/creditRepo.xml" />
+		<mapper resource="mybatis/mapper/user/mypageRepo.xml" />
+		
+		<!-- 2.임대 작업 mapping -->
+		<mapper resource="mybatis/mapper/lease/leaseCallRepo.xml" />
+		<mapper resource="mybatis/mapper/lease/leaseRequestRepo.xml" />
+		<mapper resource="mybatis/mapper/lease/leaseDirectCallRepo.xml" />
+		<mapper resource="mybatis/mapper/lease/lookUpHeavyEquipmentCompanyRepo.xml" />
 		
 		
-		<!-- 2.커뮤니티 mapping -->
+		<!-- 3.커뮤니티 mapping -->
 		<mapper resource="mybatis/mapper/community/commentRepo.xml" />
 		<mapper resource="mybatis/mapper/community/replyRepo.xml" />
 		
-		<!-- 3.관리자작업 mapping -->
+		<!-- 4.관리자작업 mapping -->
 		<mapper resource="mybatis/mapper/adminwork/adminRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/standByUserRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/questionRepo.xml" />
 		<mapper resource="mybatis/mapper/adminwork/answerRepo.xml" />
+		<mapper resource="mybatis/mapper/adminwork/notifyRepo.xml" />
 		
 	</mappers>	
 	

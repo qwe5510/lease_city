@@ -1,7 +1,5 @@
 package leasecity.test;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -12,10 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
-import leasecity.dto.user.ConstructionCompany;
-import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
-import leasecity.dto.user.License;
 import leasecity.dto.user.User;
 import leasecity.exception.LoginFailException;
 import leasecity.exception.ServiceFailException;
@@ -64,6 +59,11 @@ public class UserServiceTest {
 				logger.trace("보유 중장비 : {}", heavyEquipment);
 			}
 		}	*/
+		
+		HeavyEquipmentCompany he = (HeavyEquipmentCompany) user;
+		
+		System.out.println(he.getHeavyEquipmentList());
+		
 	}
 
 }

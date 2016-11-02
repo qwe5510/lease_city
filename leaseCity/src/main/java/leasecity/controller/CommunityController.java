@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import leasecity.dto.adminwork.Notify;
 import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
@@ -34,6 +35,7 @@ import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.AdminService;
 import leasecity.service.CommunityService;
+import leasecity.service.NotifyService;
 
 @Controller
 public class CommunityController {
@@ -46,6 +48,9 @@ public class CommunityController {
 	
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	NotifyService notifyService;
 	
 	@InitBinder
 	public void setBindingFormat(WebDataBinder binder){
@@ -86,7 +91,7 @@ public class CommunityController {
 					comments = communityService.loadTermsCommunityComment(page);
 				}else if(searchPage == null){
 					page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-					comments = communityService.loadPageCommunityCommentList(page);
+					comments = communityService.loadPageCommunityComment(page);
 				}			
 					model.addAttribute("comments", comments);
 					model.addAttribute("page", page);
@@ -130,13 +135,12 @@ public class CommunityController {
 				comments = communityService.loadTermsCommunityComment(page);
 			}else if(searchPage == null){
 				page = communityService.getCommentPage(currentPage, COMMENT_PAGE_SIZE);
-				comments = communityService.loadPageCommunityCommentList(page);
+				comments = communityService.loadPageCommunityComment(page);
 			}			
 
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
 			
 			//로그인 중인 유저 탐색
-			
 			User loginUser = (User) session.getAttribute("loginUser");
 			
 			//loginUser가 null이면 관리자로 대입.
@@ -252,6 +256,7 @@ public class CommunityController {
 	
 	@RequestMapping(value="/replyRegistryAjax", method=RequestMethod.GET)
 	public @ResponseBody Page ReplyRegistryAjax(
+			HttpSession session,
 			@RequestParam Integer commentNo,
 			@RequestParam String userId,
 			@RequestParam String replyContent){
@@ -264,6 +269,37 @@ public class CommunityController {
 		} catch (WriteFailException e) {
 			logger.trace("댓글 작성 실패");
 			return null;
+		}
+		
+		// Notify insert 처리
+		// 1. 댓글을 단 게시물
+		try {
+			Comment comment = communityService.loadComment(commentNo);
+
+			// 2. notify에 값 저장
+			Notify notify = new Notify();
+			notify.setUserId(comment.getUserId());
+			notify.setAttribute(comment.getAttribute());
+			notify.setCommentNo(comment.getCommentNo());
+			notify.setNotifyLink("http://localhost:9090/leaseCity/board/read?commentNo=" + comment.getCommentNo());
+
+			// 3. notify 저장
+			User loginUser = null;
+			if ( session.getAttribute("loginUser") == null) {
+				loginUser = (User)session.getAttribute("admin");
+			} else {
+				loginUser = (User)session.getAttribute("loginUser");
+			}
+			logger.trace("session에 저장된 로그인 유저 : {}", loginUser);
+			if (loginUser != null && !loginUser.getUserId().equals(comment.getUserId())) {
+				notifyService.insertNotifyByLoginUser(notify);
+			} 
+			//notifyService.insertNotifyByLoginUser(notify);
+
+		} catch (NotFoundDataException e) {
+			logger.trace("게시물 갖고오기 실패");
+		} catch (ServiceFailException e) {
+			logger.trace("notify 등록 실패");
 		}
 		
 		return page;
@@ -382,14 +418,24 @@ public class CommunityController {
 	
 	//게시글 삭제
 	@RequestMapping(value="/boardRemove", method = RequestMethod.POST)
-	public String boardRemove(Model model, Comment comment, RedirectAttributes redir,
-			@RequestParam Integer currentPage, @RequestParam String userId){
+	public String boardRemove(Model model, Comment comment, HttpSession session, 
+			RedirectAttributes redir, @RequestParam Integer currentPage){
+		
+		// 로그인된 유저가 없으면 관리자 속성 return
+		User user = session.getAttribute("loginUser")==null?
+				(User)session.getAttribute("admin")
+				:(User)session.getAttribute("loginUser");
+		
 		try {
-			comment.setUserId(userId);
-			communityService.removeComment(comment);
+			//관리자로 로그인 했을 경우.
+			if(adminService.isAdmin(user.getUserId())){
+				adminService.removeCommunityComment(comment.getCommentNo());
+			}else{
+				communityService.removeComment(comment);
+			}
 			redir.addFlashAttribute("board_message", "게시글 삭제가 완료되었습니다.");
 		} catch (RemoveFailException e) {
-			redir.addFlashAttribute("board_message", "권한이 없습니다.");
+			redir.addFlashAttribute("board_message", "게시글을 삭제 할 수 없습니다.");
 			logger.trace("글 삭제 실패");
 		}
 		

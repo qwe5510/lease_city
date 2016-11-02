@@ -60,5 +60,16 @@ public class HeavyEquipmentRepoImpl implements HeavyEquipmentRepo{
 		return session.delete(stmt, HE);
 	}
 	
+	@Override
+	public int heavyEquipmentUsedYes(HeavyEquipment HE) {
+		String stmt = HE_NS + "heavyEquipmentUsedYes";
+		return session.update(stmt, HE);
+	}
+	
+	@Override
+	public int heavyEquipmentUsedNo(HeavyEquipment HE) {
+		String stmt = HE_NS + "heavyEquipmentUsedNo";
+		return session.update(stmt, HE);
+	}
 	
 }

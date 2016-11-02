@@ -7,13 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<div class="lease">
-		<div class="lease_menu">
-		</div>
-		<div class="lease_main">
-		</div>
-	</div>
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
+
 </body>
 </html>

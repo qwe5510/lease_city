@@ -1,6 +1,8 @@
 package leasecity.util;
 
-import javax.mail.*;
+import javax.mail.PasswordAuthentication;
+
+import leasecity.dto.user.User;
 
 //이메일을 전송하는 관리자 계정 등록
 public class AuthenticatorUtil extends javax.mail.Authenticator {
@@ -21,6 +23,19 @@ public class AuthenticatorUtil extends javax.mail.Authenticator {
 		// Gmail의 경우 @gmail.com을 제외한 아이디만 입력한다.
 		// 컨트롤러(윤현준) 이메일로 일단 대체합니다.
 		return new PasswordAuthentication("djsdir159", "1351243");
+	}
+	
+	
+	/**
+	 * 신용도 계산하기
+	 */
+	public void getCalcCreditGrade(User user){
+		
+		Double creditGrade = user.getCreditGrade();
+		
+		
+		
+		
 	}
 	
 	

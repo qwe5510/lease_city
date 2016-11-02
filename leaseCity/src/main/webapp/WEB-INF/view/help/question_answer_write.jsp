@@ -57,8 +57,8 @@
 						</tr>
 					</table>
 						<div class="qna_buttonForm">
-						<sform:button id="question_write_btn"> <i class="icon-pencil"></i>작성</sform:button>
-						<sform:button id="question_write_cancel_btn"><i class="icon-link"></i>취소</sform:button>
+							<sform:button id="question_write_btn"><i class="icon-pencil"></i>작성</sform:button>
+							<sform:button id="question_write_cancel_btn"><i class="icon-remove"></i>취소</sform:button>
 						</div>
 					</sform:form>
 		</div>

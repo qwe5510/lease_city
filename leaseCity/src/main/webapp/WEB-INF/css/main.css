@@ -34,7 +34,6 @@
 }
 
 body {
-   padding-top: 80px;
    font-size: 12px;
    color: #34495e;
    background: #f5f5f5
@@ -262,12 +261,97 @@ ul.tag-cloud li {
    color: #fff
 }
 
+.notification {
+   background: #e9eaed;
+   padding-top: 1px;
+   padding-bottom: 1px;
+   display: none;
+}
+
+header #notification_li {
+   position: relative;
+   padding-top: 10px;
+   background: white;
+}
+
+header #notificationContainer {
+   background-color: #fff;
+   border: 1px solid rgba(100, 100, 100, .4);
+   -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+   overflow: auto;
+   position: absolute;
+   top: 30px;
+   width: 400px;
+   z-index: 500;
+   display: none;
+
+}
+/*    //
+   Enable
+   this
+   after
+   jquery
+   implementation */
+header #notificationContainer:before {
+   content: '';
+   display: block;
+   position: absolute;
+   width: 0;
+   height: 0;
+   color: transparent;
+   border: 10px solid black;
+   border-color: transparent transparent white;
+   margin-top: -20px;
+   margin-left: 188px;
+}
+
+header #notificationTitle {
+   font-weight: bold;
+   padding: 8px;
+   font-size: 13px;
+   background-color: #ffffff;
+   position: fixed;
+   z-index: 1000;
+   width: 384px;
+   border-bottom: 1px solid #dddddd;
+}
+
+header #notificationsBody {
+   padding: 33px 0px 0px 0px !important;
+   min-height: 300px;
+   z-index: -1;
+}
+
+header #notificationFooter {
+   background-color: #e9eaed;
+   text-align: center;
+   font-weight: bold;
+   padding: 8px;
+   font-size: 12px;
+   border-top: 1px solid #dddddd;
+}
+
+header #notification_count {
+   padding: 3px 7px 3px 7px;
+   background: #cc0000;
+   color: #ffffff;
+   font-weight: bold;
+   margin-left: 77px;
+   border-radius: 9px;
+   -moz-border-radius: 9px;
+   -webkit-border-radius: 9px;
+   position: absolute;
+   margin-top: -11px;
+   font-size: 11px;
+}
+
 header.navbar .navbar-inner {
    background: #fff !important;
    border: 0;
    -webkit-box-shadow: none;
    -moz-box-shadow: none;
-   box-shadow: none
+   box-shadow: none;
+   padding-left: 40px;
 }
 
 header #logo {
@@ -446,7 +530,8 @@ header .dropdown-menu:before {
    margin-left: -200px;
    background: #EEE8AA;
 }
-.modal#passChange{
+
+.modal#passChange {
    width: 350px;
    margin-left: -200px;
    background: #EEE8AA;
@@ -524,14 +609,14 @@ header .dropdown-menu:before {
 }
 
 .registration-form {
-   border: 0;
-   background-color: #fff;
-   border-top: 1px solid #f0f0f0;
-   -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-   -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-   padding: 20px;
-   display: inline-block
+	border: 0;
+	background-color: #fff;
+	border-top: 1px solid #f0f0f0;
+	-webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	display: inline-block;
 }
 
 #bottom {
@@ -1041,7 +1126,7 @@ label {
 
 /*로그인 jsp 메인 div 설정 */
 .login {
-   padding-top: 180px;   
+   padding-top: 180px;
    text-align: center;
 }
 
@@ -1053,17 +1138,17 @@ label {
 }
 
 /*커뮤니티 jsp 메인 div 설정  */
-.board{
-	background: url("../images/board_main.png")
-	no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	padding-top: 0px;
-	min-width: 1300px;
-	min-height: 800px;
-	text-align: center;
+.board {
+   background: url("../images/board_main.png") no-repeat center center
+      fixed;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   padding-top: 0px;
+   min-width: 1300px;
+   min-height: 800px;
+   text-align: center;
 }
 
 /* 메뉴창 재설정..(잘 안됩니다)*/
@@ -1074,8 +1159,8 @@ label {
 } */
 
 /*Login창 설정*/
-.login > .inner{
-   display: inline-block;   
+.login>.inner {
+   display: inline-block;
 }
 
 /*유챗 div 설정  */
@@ -1096,142 +1181,147 @@ label {
    position: absolute;
 }
 
-.board_read_main{
-    width: 500px;
-    display: inline-block;
-   	position: absolute;
-   	padding: 10px;
-}
-.board_read_line, .qna_read_line{
-	border-style: solid;
-    border-width: 2px;
-    border-color: #e5e5e5;
-    padding: 10px;
-}
-.board_read_table, .qna_read_table{
-	width: 580px;
-}
-.board_read_comment{
-	height: 400px;
-	overflow: auto;
+.board_read_main {
+   width: 500px;
+   display: inline-block;
+   position: absolute;
+   padding: 10px;
 }
 
-.board_read_comment .comment_content{
-	margin-left: 5px;
-	margin-bottom: 15px;
+.board_read_line, .qna_read_line {
+   border-style: solid;
+   border-width: 2px;
+   border-color: #e5e5e5;
+   padding: 10px;
 }
 
-.board_read_comment .comment_content p{
-	margin: 0px;
+.board_read_table, .qna_read_table {
+   width: 580px;
 }
 
-
-.board_read_comment_author{
-	margin-left: 5px;
-	font-weight: bold;
-	font-size: 1.2em;
+.board_read_comment {
+   height: 400px;
+   overflow: auto;
 }
 
-.board_read_comment_userId{
-	font-size: 11px;
+.board_read_comment .comment_content {
+   margin-left: 5px;
+   margin-bottom: 15px;
 }
 
-#board_read_write, #board_read_list, #board_edit_form{
-	float:right;
-	margin-left: 5px;
+.board_read_comment .comment_content p {
+   margin: 0px;
 }
 
-
-.replyBaseLine{
-	height: 1px;
-    padding: 0;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    font: 0/0 arial;
-    border-bottom-width: 1px;
-    border-bottom-style: dotted;
+.board_read_comment_author, .qna_read_comment_author {
+   margin-left: 5px;
+   font-weight: bold;
+   font-size: 1.2em;
 }
-.board_read_bottom{
-	padding : 10px;
-	float: right;
+
+.board_read_comment_userId, .qna_read_comment_userId {
+   font-size: 11px;
+}
+
+#board_read_write, #board_read_list, #board_edit_form {
+   float: right;
+   margin-left: 5px;
+}
+
+.replyBaseLine {
+   height: 1px;
+   padding: 0;
+   margin-top: 5px;
+   margin-bottom: 10px;
+   overflow: hidden;
+   font: 0/0 arial;
+   border-bottom-width: 1px;
+   border-bottom-style: dotted;
+}
+
+.board_read_bottom {
+   padding: 10px;
+   float: right;
 }
 
 /*Reply div 작업*/
-.comment_reply{
-	background: white;
+.comment_reply {
+   background: white;
 }
 
-.board_read_reply{
-	list-style: none;
-	text-align: left;
-	margin-left: 15px;
-	padding: 10px;
-	border: thin 1px;
+.board_read_reply {
+   list-style: none;
+   text-align: left;
+   margin-left: 15px;
+   padding: 10px;
+   border: thin 1px;
 }
 
-.replyPage a, b{
-	margin-left: 5px;
-	margin-right: 5px;
+.replyPage a, b {
+   margin-left: 5px;
+   margin-right: 5px;
 }
 
-.reply_input_area{
-	padding: 0px;
-	width: 450px;
-	height: 50px;
-	border: solid 1px;
+.reply_input_area {
+   padding: 0px;
+   width: 450px;
+   height: 50px;
+   border: solid 1px;
 }
 
-.reply_registry{
-	width : 50px;
-	height: 55px;
-	margin-left: 5px;
-	margin-bottom: 10px;
+.reply_registry {
+   width: 50px;
+   height: 55px;
+   margin-left: 5px;
+   margin-bottom: 10px;
 }
 
-.reply_author{
-	float: left;
-	font-weight: bold;
+.reply_author {
+   width: 400px;
+   text-align : left;
+   float: left;
+   font-weight: bold;
+   font-size: 13px;
 }
 
-.reply_date{
-	float: right;
-	font-size:x-small;
+.reply_date {
+   float: right;
+   font-size: x-small;
 }
 
-.reply_option{
-	float : right;
-	margin-left: 5px;
-}
-button{
-	border: 0px;
+.reply_option {
+   float: right;
+   margin-left: 5px;
 }
 
-.reply_option button{
-	border: 0px;
-	color: #387db1;
-	padding: 0;
-	width: 20px;
-	height: 20px;
+button {
+   border: 0px;
 }
 
-.reply_option .reply_adjust_cancel{
-	color: #FF3148;
+.reply_option button {
+   border: 0px;
+   color: #387db1;
+   padding: 0;
+   width: 20px;
+   height: 20px;
 }
 
-.reply_content{
-	margin-top: 51px;
-	text-align: left;
-	clear : both;
-	display: block;
+.reply_option .reply_adjust_cancel {
+   color: #FF3148;
+}
+
+.reply_content {
+   margin-top: 51px;
+   text-align: left;
+   clear: both;
+   display: block;
 }
 
 /* 화면사이즈 980px 해상도에서의 설정*/
 @media all and (min-width: 980px) {
-   
    /*커뮤니티 jsp 메인 div 설정  */
    .board {
-      padding-top: 80px;
+      
    }
 
    /*유챗 div 설정  */
@@ -1247,59 +1337,61 @@ button{
 
 /*화면해상도 1200이상에서의 설정 */
 /* @media all and (min-width: 1200px) { */
-   /* 로그인 화면*/
-   .login {
-      padding-top: 80px;   
-      text-align: center;
-   }
-   
-   /* 커뮤니티 전체 */
-   .board{
-      padding-top: 80px;
-      min-height : 800px;
-      position: relative;
-   }
+/* 로그인 화면*/
+.login {
+   padding-top: 80px;
+   text-align: center;
+}
 
-   /*유챗 div 설정  */
-   .uchat {
-      padding-top: 50px;
-   }
-   
-   /*community div 설정  */
-   .community {
-   	  width: 650px;
-      padding-top: 0px;
-      position: relative;
-      margin-left: 80px;
-   }
-   .board_read_main{
-  	  padding-top: 0px;
-      position: relative;
-      margin-left: 200px;
-      width: 600px;
-   }
+/* 커뮤니티 전체 */
+.board {
+   min-height: 800px;
+   position: relative;
+}
+
+/*유챗 div 설정  */
+.uchat {
+   padding-top: 50px;
+}
+
+/*community div 설정  */
+.community {
+   width: 650px;
+   padding-top: 0px;
+   position: relative;
+   margin-left: 80px;
+}
+
+.board_read_main {
+   padding-top: 0px;
+   position: relative;
+   margin-left: 200px;
+   width: 600px;
+}
 /* } */
 /* board 페이징 부분 설정 */
-.boardPage{
-	width : 780px;
-	font-size: 15px;
-	letter-spacing: 10px;
+.boardPage {
+   width: 780px;
+   font-size: 15px;
+   letter-spacing: 10px;
 }
 /*board 검색부분  */
-.boardBottom{
-	width: 500px;
-	margin-left: 80px;
+.boardBottom {
+   width: 500px;
+   margin-left: 80px;
 }
-.boardBottom select{
-	width: 130px;
+
+.boardBottom select {
+   width: 130px;
 }
-.boardBottom button{
-	margin-top : 5px;
-	height: 37px;
+
+.boardBottom button {
+   margin-top: 5px;
+   height: 37px;
 }
 /*board 테이블 작업*/
-.boardLine{
-   height : 2px;
+.boardLine {
+   height: 2px;
    padding: 0px;
    font-size: 0px;
    overflow: hidden;
@@ -1307,42 +1399,53 @@ button{
    background: #e5e5e5;
 }
 
-.communityTable, .QnATable{
-   width : 780px;
+.communityTable, .QnATable {
+   width: 780px;
    margin-right: 40px;
 }
-.communityTable select{
-	margin-bottom: 20px;
+
+.communityTable select {
+   margin-bottom: 20px;
 }
-.communityTable tr{
+
+.communityTable tr {
    padding: 7px;
 }
-.boardWriteTable, .boardAdjustTable{
-	width: 600px;
+
+.boardWriteTable, .boardAdjustTable {
+   width: 600px;
 }
-.boardWriteTable input[type="text"], .boardAdjustTable input[type="text"]{
-	width: 600px;
+
+.boardWriteTable input[type="text"], .boardAdjustTable input[type="text"]
+   {
+   width: 600px;
 }
-.boardWriteTable textarea, .boardAdjustTable textarea{
-	padding: 0px;
-	width: 600px;
-	height: 500px;
+
+.boardWriteTable textarea, .boardAdjustTable textarea {
+   padding: 0px;
+   width: 600px;
+   height: 500px;
 }
-.board_write_bottom, .board_adjust_bottom{
-	padding : 10px;
-	float: right;
+
+.board_write, .board_write_bottom, .board_adjust_bottom {
+   padding: 10px;
+   float: right;
 }
-.searchInput{
-	font-size: 20px;
+
+.searchInput {
+   font-size: 20px;
 }
-.notify{
+
+.notify {
    background: #f9f9f9;
    font-size: 13px;
    height: 40px;
 }
-.boardShow{
+
+.boardShow {
    height: 28px;
 }
+
 .input {
    margin-top: 15px;
 }
@@ -1376,7 +1479,7 @@ button{
    margin-top: 25px;
    width: 600px;
    height: 450px;
-   display:inline-block;
+   display: inline-block;
 }
 
 .agree_inner {
@@ -1425,15 +1528,18 @@ button{
    height: 40px;
    margin-top: 0px;
 }
-.companySelector{
+
+.companySelector {
    margin-left: 10px;
 }
-.companySelector select{
+
+.companySelector select {
    width: 150px;
    height: 45px;
    margin-top: 0px;
    margin-bottom: 0px;
 }
+
 .companySelector input {
    width: 100px;
    float: none;
@@ -1454,265 +1560,822 @@ button{
    border: 1px solid #cacece;
    border-radius: 3px;
 }
+
 .companySelector input[type="date"] {
    width: 150px;
 }
-.category_input{
-   width:60px;
+
+.category_input {
+   width: 60px;
    margin-left: 5px;
 }
-.companyHeavy{
+
+.companyHeavy {
    margin-left: 80px;
 }
-.companyHeavy button{
+
+.companyHeavy button {
    width: 50px;
    height: 40px;
 }
+
 .join_input {
    width: 100px;
    text-align: left;
 }
-.join_input_push{
+
+.join_input_push {
    width: 150px;
    height: 30px;
    background: #E6E6FA;
 }
-.license_add{
+
+.license_add {
    margin-left: 100px;
 }
-.checked{
-   margin-top:20px;
+
+.checked {
+   margin-top: 20px;
    margin-left: 90px;
    font-size: 15px;
 }
-.heavy input{
+
+.heavy input {
    width: 18px;
    margin-right: 30px;
 }
-.heavy lable{
+
+.heavy lable {
    margin-right: 60px;
 }
-.heavy{
+
+.heavy {
    margin-left: 100px;
    margin-bottom: 10px;
    font-size: 15px;
 }
-#vali{
+
+#vali {
    font-size: 15px;
 }
-.numbervali{
-   margin-left : 80px;
+
+.numbervali {
+   margin-left: 80px;
    font-size: 15px;
 }
-.address input{
+
+.address input {
    width: 500px;
 }
-.modal #changeVali{
-   margin-top : 15px;
-   margin-left : 62px;
+
+.modal #changeVali {
+   margin-top: 15px;
+   margin-left: 62px;
    font-size: 15px;
 }
-.help{
-	background: url("../images/help_main.png")
-	no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	min-width : 1200px;
-	min-height : 800px;
-	text-align: center;
-	padding-top: 80px;
-    position: relative;
-    overflow: auto;
+
+.help {
+   background: url("../images/help_main.png") no-repeat center center fixed;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   min-width: 1200px;
+   min-height: 800px;
+   text-align: center;
+   padding-top: 80px;
+   position: relative;
+   overflow: auto;
 }
-.help_menu{
-	margin-top : 20px;
-	min-height : 800px;
-	margin-left : 50px;
-	float : left;
-	min-width : 30%;
-	width : 30%;
-	position: fixed;    
+
+.help_menu {
+   background: url("../images/help/help_menu.png") no-repeat;
+   background-size: 260px 400px;
+   margin-top: 20px;
+   min-height: 800px;
+   margin-left: 50px;
+   float: left;
+   min-width: 30%;
+   width: 30%;
+   position: fixed;
 }
-.help_baseLine{
-    padding: 0;
-    overflow: hidden;
-	border-bottom-width: 1px;
-    border-bottom-style: dotted;
-    font: 0/0 arial;
-    
+
+.help_baseLine {
+   padding: 0;
+   overflow: hidden;
+   border-bottom-width: 1px;
+   border-bottom-style: dotted;
+   font: 0/0 arial;
 }
-.help_main{
-	float: right;
+
+.help_main {
+   float: right;
+   margin-right: 50px;
+   min-height: 800px;
+   width: 60%;
+   display: inline-block;
+   text-align: left;
+}
+
+.help_menu_inner1 {
+   background: url(../images/help/help_menu1.png) no-repeat 10% 30%;
+   padding: 55px;
+   margin-top: 23px;
+   margin-left: 10px;
+}
+
+.help_menu_ul {
+   list-style: none;
+   text-align: left;
+}
+
+.help_menu_ul li {
+   margin-top: 60px;
+   font-size: 25px;
+   font-family: NanumGothic, 나눔고딕, 'Helvetica Neue', Helvetica,
+      'Apple SD Gothic Neo', AppleGothic, Dotum, 돋움, Arial, sans-serif;
+}
+
+.help_menu_ul .help_menu_first {
+   margin-top: 0px;
+}
+
+.help_menu_select {
+   width: 186px;
+   padding-left: 0px;
+   color: #fff;
+}
+
+.help_table {
+   margin-top: 40px;
+   width: 800px;
+   text-align: center;
+}
+
+.help_table .td1 {
+   width: 80px;
+}
+
+.help_table .td2 {
+   width: 100px;
+}
+
+.help_table .td3 {
+   width: 350px;
+}
+
+.help_table .td4 {
+   width: 100px;
+}
+
+.help_table .td5 {
+   width: 80px;
+}
+
+.help_table .td6 {
+   width: 150px;
+}
+
+.helpWriteTable {
+   width: 600px;
+}
+
+.helpWriteTable input[type="text"] {
+   width: 600px;
+}
+
+.helpWriteTable textarea, .helpAdjustTable textarea {
+   padding: 0px;
+   width: 600px;
+   height: 500px;
+}
+
+.helpWriteTable label {
+   width: 200px;
+}
+
+.help_read_table {
+   width: 580px;
+}
+
+.help_read_main {
+   float: right;
+   width: 55%;
+   margin-right: 30px;
+}
+
+.help_read_main_inner {
+   margin-top: 40px;
+   padding-top: 0px;
+   position: relative;
+   width: 600px;
+}
+#answer_title{
+   display: inline-block;
+   float: left;
+}
+#answer_title h5{
+   margin-top : 10px;
+   margin-bottom: 0px;
+   font-size: 16px;
+}
+.answer_content{
+   text-align : left;
+   width : 580px;
+   display: inline-block;
+}
+.manager_answer {
+   padding: 0px;
+}
+
+.manager_answer textarea {
+   width: 450px;
+}
+
+.manager_answer button {
+   width: 480px;
+   height: 46px;
+   margin-bottom: 10px;
+}
+
+.faq_bold {
+   font-size: 19px;
+   font-weight: 100px;
+   color: #228B22;
+}
+
+.search {
+   margin-top: 40px;
+   font-size: 25px;
+   font-weight: 300px;
+   color: #228B22;
+}
+
+.qna_list {
+   float: right;
+   clear: both;
+   margin-top: 30px;
+   min-width: 60%;
+   text-align: center;
+}
+
+.qna_buttonForm {
+   display: inline;
+}
+
+.qna_read_bottom {
+   float: right;
+}
+
+#menu {
+   margin-top: 20px;
+}
+
+.introduce {
+   padding: 80px;
+   min-height: 500px;
+   text-align: center;
+}
+
+.lease {
+   background: url("../images/help_main.png") no-repeat center center fixed;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   min-width: 1200px;
+   min-height: 800px;
+   padding-top: 30px;
+   position: relative;
+   overflow: auto;
+}
+
+.lease_menu {
+   margin-top: 20px;
+   min-height: 800px;
+   margin-left: 50px;
+   float: left;
+   width: 30%;
+   position: fixed;
+}
+
+.lease_main {
+   float: right;
+   min-height: 800px;
+   width: 65%;
+   margin-right: 30px;
+}
+
+.lease_main fieldset {
+   width: 780px;
+}
+
+.lease_request_table span, .lease_request_read_table span{
 	margin-right: 50px;
-	min-height : 800px;
-	width : 60%;
-	display: inline-block;
+}
+
+#lease_request_form textarea {
+   width: 760px;
+   height: 60px;
+   padding: 0px;
+   margin-bottom: 15px;
+}
+
+.lease_write_bottom {
+   margin-top: 20px;
+   margin-right: 30px;
+   margin-bottom: 15px;
+   float: right;
+}
+
+
+/* 로딩 화면 설정 */
+.cssload-cssload-wrap2 {
+	width: 146px;
+	height: 146px;
+	overflow: hidden;
+}
+
+.cssload-wrap-leaseCall{
+	position: absolute;
+	width: 97px;
+	height: 97px;
+	left: 60%;
+	top: 40%;
+	margin-top: -49px;
+	margin-left: -49px;
+	transform: scale(2);
+		-o-transform: scale(2);
+		-ms-transform: scale(2);
+		-webkit-transform: scale(2);
+		-moz-transform: scale(2);
+}
+
+.cssload-wrap {
+
+	position: absolute;
+	width: 97px;
+	height: 97px;
+	left: 60%;
+	top: 35%;
+	margin-top: -49px;
+	margin-left: -49px;
+	transform: scale(2);
+		-o-transform: scale(2);
+		-ms-transform: scale(2);
+		-webkit-transform: scale(2);
+		-moz-transform: scale(2);
+
+}
+.cssload-wrap .cssload-overlay, 
+.cssload-wrap-leaseCall .cssload-overlay{
+
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	box-shadow: 0 0 24px 37px rgb(245,245,245) inset;
+		-o-box-shadow: 0 0 24px 37px rgb(245,245,245) inset;
+		-ms-box-shadow: 0 0 24px 37px rgb(245,245,245) inset;
+		-webkit-box-shadow: 0 0 24px 37px rgb(245,245,245) inset;
+		-moz-box-shadow: 0 0 24px 37px rgb(245,245,245) inset;
+}
+.cssload-wrap .cssload-cogWheel, 
+.cssload-wrap-leaseCall .cssload-cogWheel {
+	position: absolute;
+	top: 50%;
+	margin-top: -24px;
+	width: 49px;
+	height: 49px;
+
+}
+.cssload-wrap .cssload-cogWheel.cssload-one, 
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-one {
+	left: -6.25px;
+	animation: cssload-rotLeft 0.55s infinite linear;
+		-o-animation: cssload-rotLeft 0.55s infinite linear;
+		-ms-animation: cssload-rotLeft 0.55s infinite linear;
+		-webkit-animation: cssload-rotLeft 0.55s infinite linear;
+		-moz-animation: cssload-rotLeft 0.55s infinite linear;
+}
+.cssload-wrap .cssload-cogWheel.cssload-one .cssload-one:before,
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-one .cssload-one:before{
+	border: none;
+}
+.cssload-wrap .cssload-cogWheel.cssload-two,
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-two{
+	right: -6.25px;
+	margin-top: -23px;
+	transform: rotate(196deg);
+		-o-transform: rotate(196deg);
+		-ms-transform: rotate(196deg);
+		-webkit-transform: rotate(196deg);
+		-moz-transform: rotate(196deg);
+	animation: cssload-rotRight 0.55s infinite linear;
+		-o-animation: cssload-rotRight 0.55s infinite linear;
+		-ms-animation: cssload-rotRight 0.55s infinite linear;
+		-webkit-animation: cssload-rotRight 0.55s infinite linear;
+		-moz-animation: cssload-rotRight 0.55s infinite linear;
+}
+.cssload-wrap .cssload-cogWheel.cssload-two .cssload-one:before,
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-two .cssload-one:before{
+	border: none;
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 50%;
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog:after,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog:after{
+	display: block;
+	position: absolute;
+	content: ' ';
+	border: 2px solid rgb(64,64,64);
+	border-left: none;
+	height: 9px;
+	width: 5px;
+	right: -9px;
+	top: -4px;
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog:before,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog:before{
+	display: block;
+	position: absolute;
+	content: ' ';
+	border-left: 2px solid rgb(125,125,125);
+	height: 10px;
+	width: 4px;
+	right: -6px;
+	top: -13px;
+	transform: rotate(-20deg);
+		-o-transform: rotate(-20deg);
+		-ms-transform: rotate(-20deg);
+		-webkit-transform: rotate(-20deg);
+		-moz-transform: rotate(-20deg);
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog.cssload-one,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-one{
+	transform: rotate(-80deg);
+		-o-transform: rotate(-80deg);
+		-ms-transform: rotate(-80deg);
+		-webkit-transform: rotate(-80deg);
+		-moz-transform: rotate(-80deg);
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog.cssload-two,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-two{
+	transform: rotate(-40deg);
+		-o-transform: rotate(-40deg);
+		-ms-transform: rotate(-40deg);
+		-webkit-transform: rotate(-40deg);
+		-moz-transform: rotate(-40deg);
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog.cssload-three,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-three{
+	transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog.cssload-four,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-four{
+	transform: rotate(40deg);
+		-o-transform: rotate(40deg);
+		-ms-transform: rotate(40deg);
+		-webkit-transform: rotate(40deg);
+		-moz-transform: rotate(40deg);
+}
+.cssload-wrap .cssload-cogWheel .cssload-cog.cssload-five,
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-five{
+	transform: rotate(80deg);
+		-o-transform: rotate(80deg);
+		-ms-transform: rotate(80deg);
+		-webkit-transform: rotate(80deg);
+		-moz-transform: rotate(80deg);
+}
+
+
+
+
+
+@keyframes cssload-rotLeft {
+	from {
+		transform: rotate(-30deg);
+	}
+	to {
+		transform: rotate(10deg);
+	}
+}
+
+@-o-keyframes cssload-rotLeft {
+	from {
+		transform: rotate(-30deg);
+	}
+	to {
+		transform: rotate(10deg);
+	}
+}
+
+@-ms-keyframes cssload-rotLeft {
+	from {
+		transform: rotate(-30deg);
+	}
+	to {
+		transform: rotate(10deg);
+	}
+}
+
+@-webkit-keyframes cssload-rotLeft {
+	from {
+		transform: rotate(-30deg);
+	}
+	to {
+		transform: rotate(10deg);
+	}
+}
+
+@-moz-keyframes cssload-rotLeft {
+	from {
+		transform: rotate(-30deg);
+	}
+	to {
+		transform: rotate(10deg);
+	}
+}
+
+@keyframes cssload-rotRight {
+	from {
+		transform: rotate(-174deg);
+	}
+	to {
+		transform: rotate(-214deg);
+	}
+}
+
+@-o-keyframes cssload-rotRight {
+	from {
+		transform: rotate(-174deg);
+	}
+	to {
+		transform: rotate(-214deg);
+	}
+}
+
+@-ms-keyframes cssload-rotRight {
+	from {
+		transform: rotate(-174deg);
+	}
+	to {
+		transform: rotate(-214deg);
+	}
+}
+
+@-webkit-keyframes cssload-rotRight {
+
+	from {
+		transform: rotate(-174deg);
+	}
+	to {
+		transform: rotate(-214deg);
+	}
+}
+
+@-moz-keyframes cssload-rotRight {
+
+   from {
+      transform: rotate(-174deg);
+   }
+   to {
+      transform: rotate(-214deg);
+   }
+}
+
+
+/* 신용도 아이콘 및 표현 */
+.credit-min-area_leaseCall{
+	display:inline-block;
+	background: url("../images/credit/min_building.png") no-repeat;
+	background-size: contain;
 	text-align: left;
+	vertical-align: middle;
+	width: 75px;
+	height: 15px;
 }
-.help_menu_inner1{
-	background: url(../images/help/help_menu1.png)
-	no-repeat 10% 30%;
-	padding: 55px;
-	margin-top: 23px;
-	margin-left: 10px;
+
+.credit-max-area_leaseCall{
+	display:block;
+	background: url("../images/credit/max_building.png") no-repeat;
+	background-size: cover;
+	width: 75px;
+	height: 15px;
 }
-.help_menu_ul{
-	list-style: none;
+
+
+.lease_request_read_table td {
+	padding-right: 90px;
+	font-size: 13px;
+}
+
+.lease_request_read_table label {
+	width: 70px;
+	font-size: 14px;
 	text-align: left;
+	margin-right: 20px;
 }
-.help_menu_ul li{
-	margin-top : 60px;
-	font-size: 25px;
-	font-family: NanumGothic,나눔고딕,'Helvetica Neue',Helvetica,'Apple SD Gothic Neo',AppleGothic,Dotum,돋움,Arial,sans-serif;
-}
-.help_menu_ul .help_menu_first{
-	margin-top : 0px;
-}
-.help_menu_select{
-	width: 186px;
-    padding-left: 0px;
-    color: #fff;
-    
-}
-.help_table{
-	margin-top: 40px;
-	width: 800px;
-	text-align: center;
-}
-.help_table .td1{
-	width: 80px;
-}
-.help_table .td2{
-	width: 100px;
-}
-.help_table .td3{
-	width: 350px;
-}
-.help_table .td4{
-	width: 100px;
-}
-.help_table .td5{
-	width: 80px;
-}
-.help_table .td6{
+
+.equipmentCategoryList label {
 	width: 150px;
 }
-.helpWriteTable{
-	width: 600px;
-}
-.helpWriteTable input[type="text"]{
-	width: 600px;
-}
-.helpWriteTable textarea, .helpAdjustTable textarea{
-	padding : 0px;
-	width: 600px;
-	height: 500px;
-}
-.helpWriteTable label{
-	width: 200px;
-}
-.help_read_table{
-	width: 580px;
-}
-.help_read_main{
-	float : right;
-	width : 55%;
-	margin-right: 30px;
-}
-.help_read_main_inner{
-	  margin-top : 40px;
-  	  padding-top: 0px;
-      position: relative;
-      width: 600px;
- }
- .manager_answer{
-  	padding: 0px;
- }
- .manager_answer textarea {
-	width: 450px;
-}
-.manager_answer button {
-	width: 480px;
-    height: 46px;
-    margin-bottom: 10px;
+
+.fromToDate label {
+	margin-top: 20px;
+	width: 70px;
 }
 
-.faq_bold{
-	font-size: 19px;
-	font-weight: 100px;
-	color: #228B22;
-}
-.search{
-	margin-top : 40px;
-	font-size: 25px;
-	font-weight: 300px;
-	color: #228B22;
+.fromToDate input {
+	margin-top: 20px;
+	height: 30px;
 }
 
+<<<<<<< HEAD
 .qna_list{
 	margin-top: 50px;
 	clear: both;
 	width: 60%;
 	float: right;
+=======
+.constructionAddress input[type="text"] {
+	width: 550px;
 }
 
-.qna_buttonForm{
+.constructionAddress label {
+	font-weight: bold;
+}
+
+.fromToPrice {
+	font-size: 16px;
+}
+
+.fromToPrice input {
+	width: 150px;
+	height: 30px;
+	float: none;
+	display: inline-block;
+}
+
+.fromToPrice label {
+	width: 70px;
+}
+
+.priceCheck {
+	font-size: 20px;
+	text-align: center;
+>>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
+}
+
+.leaseCategory label {
+	width: 150px;
+}
+
+.lease_request_table td {
+	padding-right: 30px;
+}
+
+.lease_request_table {
+	font-size: 13px;
+}
+
+.lease_label label {
+	font-weight: bold;
+}
+
+.heavy_select {
+	width: 150px;
 	display: inline;
 }
 
-.qna_read_bottom{
-	float: right;
+.heavy_search {
+	width: 250px;
+	display: inline;
 }
 
+.heavy_search select {
+	padding-left: 15px;
+	padding-right: 15px;
+	width: 240px;
+}
 
-#menu{
-	margin-top: 20px;
+.heavy_button {
+	width: 100px;
+	display: inline;
 }
-.introduce{
-	padding : 80px;
-	min-height : 500px;
-	text-align: center;
+
+.heavy_table {
+	width: 800px;
 }
-.lease{
-	background: url("../images/help_main.png")
-	no-repeat center center fixed;
+
+.heavy_table label {
+	font-weight: bold;
+}
+
+.heavy_table span {
+	font-size: 13px;
+}
+
+.heavy_request_table td {
+	padding-right: 30px;
+	padding-bottom: 5px;
+}
+
+.possessionheavyEquipment label {
+	width: 150px;
+}
+
+.heavy_request_date label {
+	width: 70px;
+}
+
+.heavy_request_date input {
+	width: 200px;
+	height: 30px;
+}
+
+.heavy_request_price input {
+	height: 30px;
+	float: none;
+	display: inline-block;
+}
+.mypage{
+	background: url("../images/help_main.png") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	min-width : 1200px;
-	min-height : 800px;
-	padding-top: 30px;
-    position: relative;
-    overflow: auto;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
 }
-.lease_menu{
-	margin-top : 20px;
-	min-height : 800px;
-	margin-left : 50px;
-	float : left;
-	width : 30%;
+.mypage_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
 	position: fixed;
-    
 }
-.lease_main{
-	float : right;
-	min-height : 800px;
-	width : 65%;
-	margin-right: 30px;
+.mypage_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 60%;
+	display: inline-block;
+	text-align: left;
 }
-.lease_main fieldset{
+.mypage_main fieldset{
 	width: 700px;
 }
-#lease_request_form textarea{
-	width: 690px;
-	height : 60px;
-	padding: 0px;
+.mypage_main h4{
+	color: black;
 }
-.lease_write_bottom{
-	margin-top : 20px;
-	margin-right : 110px;
-	float: right;
+.mypage_main button {
+	margin-top : 5px;
+	width: 100px;
+	height: 38px;
+}
+
+.cc_label{
+	font-size : 20px;
+	width: 150px;
+}
+.hec_label{
+	float: left;
+}
+#mypage_identify_carown{
+	float : left;
+	width : 600px;
+	margin-left: 100px;
+}
+#mypage_identify_carown div{
+	text-align: center;
+}
+#mypage_identify_carown label{
+	width: 140px;
+	height: 30px;
+	text-align: center;
+	font-size: 14px;
+}
+#mypage_identify_carown button{
+	width: 40px;
+	height : 20px
+	margin-top : 0px;
+	margin-left : 0px;
+	margin-bottom : 5px;
+	padding : 0px;
 }
