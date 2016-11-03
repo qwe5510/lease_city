@@ -85,7 +85,7 @@
             <br>
             <fieldset>
 			   <c:choose>
-			   		<c:when test="${compare eq '중기'}">
+			   		<c:when test="${compare eq '건설'}">
 			   		<sform:form id="mypage_identify_cc" action="#" method="post" modelAttribute="constructionCompany">
                			<div class="companySelector">
                			<div>
@@ -242,7 +242,7 @@ $(document).on("click","#type",function(){
          .append("<input type='hidden' id='idNumber' name='idNumber' value='"+ carNum +"'> ");
 	 } 
  });
-  $("#mypage_identify_confirm").on("click",function(){
+  $(document).on("click","#mypage_identify_confirm",function(){
 	   var password = $("#password").val();
 	   var password2 = $("#password2").val();
 	   var representPhone = $("#representPhone").val();
@@ -255,7 +255,10 @@ $(document).on("click","#type",function(){
 	   var idNumber = $("#idNumber").val();
 	   var yearlySale = $("#yearlySale").val();
 	   var yearlyAoor = $("#yearlyAoor").val();
-	   var companyCategory = $("#companyCategory").val();
+	   var companyCategory = $("input:checkbox[name='companyCategory']").is(":checked");
+	   console.log(companyCategory);
+	   console.log(idNumber==null);
+	   
 	 //특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
 	   var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 	   if(!passRegExp.test(password)){
@@ -325,12 +328,15 @@ $(document).on("click","#type",function(){
 	      $(".url").html("url 형식 일치합니다.");
 	      $(".url").css("color", "#0000FF");
 	   }
-	   /* if(idNumber==null){
+	   
+	   if(idNumber==null){
 		   $(".numbervali").html("중장비는 최소 1개 이상 있어야합니다.");
 		   $(".numbervali").css("color", "#FF0000");
 		      return false;
-		} */
-	   //연매출, 연 수주량 검사
+		}else{
+			$("#mypage_identify_form").submit();
+		}
+	   /* //연매출, 연 수주량 검사
 	   var sOReg = /^[1-9][0-9]*$/;
 	   
 	   if(!sOReg.test(yearlySale)){
@@ -352,10 +358,12 @@ $(document).on("click","#type",function(){
 	         $(".obtain").css("color", "#000000");
 	      }
 	      if(companyCategory==null){
+	    	  console.log("companyCategory 들어옴");
 	    	  $(".checked").html("최소 1개 분야를 선택하셔야 합니다.");
 	      }else{
+	    	  console.log("서밋");
 	    	  $("#mypage_identify_form").submit();
-	      }
+	      } */
  });
  function passvali(){
 	   var password = $("#password").val();
