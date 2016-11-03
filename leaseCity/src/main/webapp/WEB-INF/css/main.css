@@ -2337,10 +2337,9 @@ button {
 	color: black;
 }
 .mypage_main button {
-	margin-left : 30px;
-	margin-bottom : 30px;
-	padding : 10px;
+	margin-top : 5px;
 	width: 100px;
+	height: 38px;
 }
 
 .cc_label{
@@ -2348,6 +2347,31 @@ button {
 	width: 150px;
 }
 
+.hec_label{
+	float: left;
+}
+#mypage_identify_carown{
+	float : left;
+	width : 600px;
+	margin-left: 100px;
+}
+#mypage_identify_carown div{
+	text-align: center;
+}
+#mypage_identify_carown label{
+	width: 140px;
+	height: 30px;
+	text-align: center;
+	font-size: 14px;
+}
+#mypage_identify_carown button{
+	width: 40px;
+	height : 20px
+	margin-top : 0px;
+	margin-left : 0px;
+	margin-bottom : 5px;
+	padding : 0px;
+}
 #SpecialRolling {
 	border: 1px solid gray;
 	text-align: center;

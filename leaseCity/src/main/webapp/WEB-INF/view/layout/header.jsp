@@ -91,12 +91,12 @@
 						<li id="con"><a href="<%=request.getContextPath() %>/introduction">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
 						<c:url value="/logout" var="logout"></c:url>
-						<c:url value="/myinfo" var="myinfo"></c:url>
+						<c:url value="/mypage" var="mypage"></c:url>
 						<%-- <c:url value="/mypage" var="mypage"></c:url> --%>
 						<c:choose>
 							<c:when test="${!empty loginUser or !empty admin}">
 								<li id="con"><a href=${logout }><i class="icon-signout"></i></a></li>
-								<li id="con"><a href=${myinfo }><i class="icon-info-sign"></i></a></li>
+								<li id="con"><a href=${mypage }><i class="icon-info-sign"></i></a></li>
 							</c:when>
 							<c:otherwise>
 								<li id="con"><a href=${login }><i class="icon-lock"></i></a></li>

@@ -242,10 +242,7 @@
  				return false;
  			}
  		}
- 		
- 		
  	});
- 	
  	$("#toDate").on("blur", function(e){
  		var toDate = $(this).val();
  		var fromDate = $("#fromDate").val();
