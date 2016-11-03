@@ -26,7 +26,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 		registry.addInterceptor(new SessionCheckInterceptor())
 		.addPathPatterns("/board", "board/**")
 		.addPathPatterns("/help/qna", "help/qna/**")
-		.addPathPatterns("/leaseCall", "leaseCall/**");
+		.addPathPatterns("/leaseCall", "leaseCall/**")
+		.addPathPatterns("/inquery_heavy", "inquery_heavy/**");
 	}
 	
 	

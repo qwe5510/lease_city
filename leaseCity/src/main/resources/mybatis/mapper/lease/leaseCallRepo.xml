@@ -135,5 +135,11 @@
  		SET hits = #{hits}
  		WHERE lease_call_no = #{leaseCallNo}
  	</update>
+ 	
+ 	<!-- 게시물 전체 조회 : 오늘이 종료기한보다 과거일 경우 -->
+ 	<select id="getAllLeaseCalls" resultType="leaseCall">
+ 		SELECT * FROM lease_calls
+ 		WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
+ 	</select>
 
  </mapper>

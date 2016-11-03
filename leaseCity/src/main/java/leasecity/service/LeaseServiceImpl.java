@@ -534,6 +534,12 @@ public class LeaseServiceImpl implements LeaseService {
 		page.setFromTo();
 		return page;
 	}
+
+	@Override
+	public List<LeaseCall> loadAllLeaseCalls() throws NotFoundDataException {
+		List<LeaseCall> leaseCall = leaseCallRepo.getAllLeaseCalls();
+		return leaseCall;
+	}
 	
 	//------------------------------------------------------------------------------------
 	
