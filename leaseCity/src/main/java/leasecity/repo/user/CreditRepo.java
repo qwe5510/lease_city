@@ -12,5 +12,12 @@ public interface CreditRepo {
 	 * @return
 	 */
 	public List<Credit> getSelectAcceptCredits(String acceptUserId);
+	
+	/**
+	 * 평가 한 유저의 아이디로 검색한 신용도 평가 리스트의 개수
+	 * @param sendUserId
+	 * @return
+	 */
+	public Integer getCountSendCredits(String sendUserId);
 
 }

@@ -1104,7 +1104,7 @@ input[type="number"] {
    float: left;
 }
 
-input[type="button"] {
+input[type="button"], button[type="submit"]{
    margin-top: 15px;
    height: 38px;
    margin-right: 20px;
@@ -1888,6 +1888,29 @@ button {
    float: right;
 }
 
+.direct_call_header{
+	background: url("../images/lease/direct_call_header.png") no-repeat left center;
+	background-size: contain;
+	height: 150px;
+	text-align: left;
+	
+}
+
+.transfer_header{
+	background: url("../images/lease/transfer_header.png") no-repeat left center;
+	background-size: contain;
+	height: 150px;
+	text-align: left;
+	
+}
+
+.heavy_equipment_header{
+	background: url("../images/lease/heavy_equipment_header.png") no-repeat left center;
+	background-size: contain;
+	height: 150px;
+	text-align: left;
+}
+
 
 /* 로딩 화면 설정 */
 .cssload-cssload-wrap2 {
@@ -2155,7 +2178,7 @@ button {
 
 
 /* 신용도 아이콘 및 표현 */
-.credit-min-area_leaseCall{
+.credit-min-area{
 	display:inline-block;
 	background: url("../images/credit/min_building.png") no-repeat;
 	background-size: contain;
@@ -2165,7 +2188,7 @@ button {
 	height: 15px;
 }
 
-.credit-max-area_leaseCall{
+.credit-max-area{
 	display:block;
 	background: url("../images/credit/max_building.png") no-repeat;
 	background-size: cover;
@@ -2282,6 +2305,11 @@ button {
 	padding-bottom: 5px;
 }
 
+
+.HECArea:HOVER, .HECArea:FOCUS{
+	background: white;
+}
+
 .possessionheavyEquipment label {
 	width: 150px;
 }
@@ -2371,3 +2399,7 @@ button {
 	margin-bottom : 5px;
 	padding : 0px;
 }
+
+
+
+

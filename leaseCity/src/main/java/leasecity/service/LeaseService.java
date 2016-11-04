@@ -7,7 +7,6 @@ import leasecity.dto.lease.LeaseCall;
 import leasecity.dto.lease.LeaseDirectCall;
 import leasecity.dto.lease.LeaseRequest;
 import leasecity.dto.lease.LeaseTransfer;
-import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
 import leasecity.exception.ChangeValueFailException;
@@ -244,6 +243,18 @@ public interface LeaseService {
 	 */
 	public Page getMoreViewSearchPage
 		(Integer currentPage, Integer pageSize,	String search, String keyword);
+	
+	/**
+	 * 더 보기 방식의 페이지를 리턴하는 메소드(중기업체 조회 / 검색 포함)
+	 * @param currentPage 현재 페이지
+	 * @param pageSize 페이지 크기
+	 * @param search 검색컨텐츠
+	 * @param keyword 검색어
+	 * @param isCompany (HEC : 중기업체 / CC : 건설업체)
+	 * @return 
+	 */
+	public Page getMoreViewHECPage
+		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany);
 	
 	/**
 	 * 임대 양도에 대한 페이지 (검색없음)

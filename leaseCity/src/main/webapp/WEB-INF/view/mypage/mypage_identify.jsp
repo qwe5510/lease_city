@@ -170,7 +170,6 @@
                						</div>
                				</div>
                				</div>
-               				
                			</div>
              			<div class="checked">
              			</div>
@@ -222,7 +221,7 @@ $(document).on("click","#type",function(){
  });
  $(document).on("click","#mypage_identify_remove",function(e){
 	 e.preventDefault();
-	 $(this).parent().html("삭제완료");
+	 $(this).parent().parent().remove();
  });
 
  $("#mypage_identify_add").on("click",function(e){
@@ -242,7 +241,7 @@ $(document).on("click","#type",function(){
          .append("<input type='hidden' id='idNumber' name='idNumber' value='"+ carNum +"'> ");
 	 } 
  });
-  $(document).on("click","#mypage_identify_confirm",function(){
+  $(document).on("click","#mypage_identify_confirm", function(){
 	   var password = $("#password").val();
 	   var password2 = $("#password2").val();
 	   var representPhone = $("#representPhone").val();
@@ -256,8 +255,6 @@ $(document).on("click","#type",function(){
 	   var yearlySale = $("#yearlySale").val();
 	   var yearlyAoor = $("#yearlyAoor").val();
 	   var companyCategory = $("input:checkbox[name='companyCategory']").is(":checked");
-	   console.log(companyCategory);
-	   console.log(idNumber==null);
 	   
 	 //특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
 	   var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
@@ -333,9 +330,8 @@ $(document).on("click","#type",function(){
 		   $(".numbervali").html("중장비는 최소 1개 이상 있어야합니다.");
 		   $(".numbervali").css("color", "#FF0000");
 		      return false;
-		}else{
-			$("#mypage_identify_form").submit();
 		}
+	   console.log("내가 왜 남아있게?");
 	   /* //연매출, 연 수주량 검사
 	   var sOReg = /^[1-9][0-9]*$/;
 	   
@@ -365,6 +361,8 @@ $(document).on("click","#type",function(){
 	    	  $("#mypage_identify_form").submit();
 	      } */
  });
+  
+  
  function passvali(){
 	   var password = $("#password").val();
 	   var password2 = $("#password2").val();
@@ -398,11 +396,12 @@ $(document).on("click","#type",function(){
      $("#address").val(roadFullAddr);
      $("#zipNo").val(zipNo);
   }
+  
+  
  <c:url value="/myinfo" var="myinfo"/>
  $("#mypage_identify_cancel").on("click",function(e){
 	 e.preventDefault();
-	 $("#mypage_identify_form").attr("action","${myinfo}");
-	 $("#mypage_identify_form").submit();
+	 location.href = "${myinfo}";
  });
 </script>
 </html>

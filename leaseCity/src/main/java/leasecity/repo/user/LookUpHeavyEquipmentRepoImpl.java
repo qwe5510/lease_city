@@ -19,7 +19,6 @@ public class LookUpHeavyEquipmentRepoImpl implements LookUpHeavyEquipmentRepo{
 
 	// mapper연동용 문자열 코드 - 임대 요청
 	private final String LOOKUP_HEC_NS = "leasecity.repo.LookUpHeavyEquipmentCompanyRepo.";
-
 	
 	@Override
 	public Integer getCountHelpOnHeavyEquipment(Page page) {
@@ -42,6 +41,12 @@ public class LookUpHeavyEquipmentRepoImpl implements LookUpHeavyEquipmentRepo{
 	@Override
 	public List<HeavyEquipmentCompany> getPageInfoOnHeavyEquipmentCompanies(Page page) {
 		String stmt = LOOKUP_HEC_NS  +"getPageInfoOnHeavyEquipmentCompanies";
+		return session.selectList(stmt, page);
+	}
+	
+	@Override
+	public List<HeavyEquipmentCompany> getPageAllHeavyEquipmentCompanies(Page page) {
+		String stmt = LOOKUP_HEC_NS +"getPageAllHeavyEquipmentCompanies";
 		return session.selectList(stmt, page);
 	}
 	

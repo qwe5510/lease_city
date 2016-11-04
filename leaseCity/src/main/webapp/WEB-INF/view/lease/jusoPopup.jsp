@@ -22,7 +22,7 @@
 	String bdMgtSn  = request.getParameter("bdMgtSn");
 %>
 </head>
-<script language="javascript">
+<script>
 function init(){	
 	console.log(location.href);
 	console.log(opener);

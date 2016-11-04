@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width">
-<!-- <!-- <link rel="stylesheet" href="css/reset.css"> -->
+
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath() %>/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
@@ -78,7 +78,7 @@
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="<%=request.getContextPath() %>/leaseCall">임대 신청/조회</a></li>
-								<li><a href="<%=request.getContextPath() %>/inquery_heavy">중기업체조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/lookupHeavy">중기업체조회</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
 						<li class="dropdown" id="con"><a href="<%=request.getContextPath() %>/help/FAQ"

@@ -288,4 +288,13 @@ public class UserServiceImpl implements UserService {
 			user.setCreditGrade(creditGrade);
 		}
 	}
+	
+	@Override
+	public Integer getCountWorkLog(User user) {
+		int result = 0;
+		if(user != null){
+			result = creditRepo.getCountSendCredits(user.getUserId());
+		}
+		return result;
+	}
 }

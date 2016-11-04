@@ -25,6 +25,12 @@ public class HeavyEquipmentCompany extends User  implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** 보유 차량 분야 (출력용) */
+	private String outputCategory;
+	
+	/** 작업 회수 (출력용) */
+	private Integer outputWorkLog;
+	
 	/** 업무대기 여부. */
 	private String helpOnOff;
 

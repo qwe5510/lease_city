@@ -100,7 +100,6 @@
 					<td colspan="2" class="fromToDate">
 						<label>시작일자</label><sform:input path="fromDate" type="date"/><br>
 						<label>종료일자</label><sform:input path="toDate" type="date"/>
-						<span></span>
 					</td>
 				</tr>
 				<tr>
@@ -212,26 +211,30 @@
 	   	subToDt 	= Math.floor(endDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
 	   	
  	   	if(subFromDt < 0){
+ 	   		$(".dateCheck").css("color", "red");
 	   	 	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
 	    	$("#toDate").focus();
 	    	return false; 
 	    }else if(subToDt < 0){
+	    	$(".dateCheck").css("color", "red");
 	    	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
 	    	$("#toDate").focus();
 	    	return false;
 	    }
  	    
  	    if(fromDate == "" && toDate == ""){
+ 	    	$(".dateCheck").css("color", "red");
  	    	$(".dateCheck").html("날짜가 공백입니다 날짜를 설정 해주세요.");
  	    	$("#fromDate").focus();
  	    	return false;
  	    }
  	    else if(fromDate == ""){
+ 	    	$(".dateCheck").css("color", "blue");
  	    	$(".dateCheck").html("시작 날짜를 설정 해주세요.");
  	    	$("#fromDate").focus();
  	    	return false;
  	    }else if(toDate == ""){
- 	    	console.log("통과");
+ 	    	$(".dateCheck").css("color", "blue");
  	    	$(".dateCheck").html("종료 날짜를 설정 해주세요.");
  	    	$("#toDate").focus();
  	    	return false;
@@ -240,6 +243,7 @@
  	  	resultDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- startDt.valueOf()/(24*60*60*1000));
  	 
  	  	if(resultDt < 0 ){
+ 	  		$(".dateCheck").css("color", "red");
  	    	$(".dateCheck").html("종료날짜가 시작날짜보다 나중이어야 합니다.");
  	    	$("#toDate").focus();
  	    	return false; 
@@ -251,9 +255,11 @@
  	  	subCurtLineToDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- curtLineDt.valueOf()/(24*60*60*1000));
  	  	
  	  	if(subCurtLineFromDt < 0){
+ 	  		$(".dateCheck").css("color", "red");
  	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
  	    	$("#fromDate").focus();
  	  	}else if(subCurtLineToDt < 0){
+ 	  		$(".dateCheck").css("color", "red");
  	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
  	    	$("#toDate").focus();
  	  	}

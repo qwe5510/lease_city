@@ -14,28 +14,25 @@
  	<!-- 게시물 페이지별 조회 - 검색 정렬한 게시물의 갯수 : 오늘이 종료기한보다 과거일 경우 -->
  	<select id="getCountSearchLeaseCalls" parameterType="page" resultType="int">
  		SELECT COUNT(*)
- 		FROM (
- 				SELECT sub.*	
- 				 	FROM( 
- 				 		SELECT * FROM lease_calls JOIN users USING(user_id)
- 				 		WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date 
- 					<choose>
-	 					<when test="search == 'AUTHOR' and (keyword != null or keyword !='')">
-	 						AND company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
-	 					</when>
-	 					<when test="search == 'TITLE' and (keyword != null or keyword !='')">
-	 						AND lease_comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
-	 					</when>
-	 					<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
-	 						AND address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
-	 					</when>
-	 					<when test="search == 'CATEGORY' and (keyword != null or keyword !='')">
-	 						AND lease_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
-	 					</when>
- 					</choose>
- 					
- 					) sub
- 				)
+ 		FROM ( 
+ 				SELECT lc.*, u.company_name
+ 				FROM lease_calls lc JOIN users u ON lc.user_id=u.user_id
+ 				WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date 
+ 				<choose>
+	 				<when test="search == 'AUTHOR' and (keyword != null or keyword !='')">
+	 					AND u.company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 				</when>
+	 				<when test="search == 'TITLE' and (keyword != null or keyword !='')">
+	 					AND lc.lease_comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 				</when>
+	 				<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
+	 					AND lc.address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 				</when>
+	 				<when test="search == 'CATEGORY' and (keyword != null or keyword !='')">
+	 					AND lc.lease_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 				</when>
+ 				</choose>
+ 			)
  		
  	</select>
  	<!-- 현재 날짜에서 시간을 0시 0분 0초로 하여 날짜타입으로 변환 -->
@@ -45,22 +42,22 @@
  		SELECT *
  		FROM (
  				SELECT sub.*, rownum AS rnum
- 				FROM( SELECT *
- 						FROM lease_calls JOIN users USING(user_id)
+ 				FROM( SELECT lc.*, u.company_name
+ 						FROM lease_calls lc JOIN users u ON lc.user_id = u.user_id
  						WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
  					<choose>
 	 					<when test="search == 'AUTHOR' and (keyword != null or keyword !='')">
-	 						AND company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 						AND u.company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
 	 					<when test="search == 'TITLE' and (keyword != null or keyword !='')">
-	 						AND lease_comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 						AND lc.lease_comment_title LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
 	 					<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
-	 						AND address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 						AND lc.address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
 	 					</when>
 	 					<when test="search == 'CATEGORY' and (keyword != null or keyword !='')">
-	 						AND (lease_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
-	 						OR	  equipment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%')
+	 						AND (lc.lease_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 						OR	 lc.equipment_category LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%')
 	 					</when>
  					</choose>
  					
