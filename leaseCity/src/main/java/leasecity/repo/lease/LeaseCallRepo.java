@@ -13,6 +13,12 @@ import leasecity.dto.lease.LeaseCall;
 public interface LeaseCallRepo {
 	
 	/**
+	 * 모든 임대 요청 리턴
+	 * @return
+	 */
+	public List<LeaseCall> getAllLeaseCalls();
+	
+	/**
 	 * 모든 임대 요청에 대한 개수 리턴
 	 * @return
 	 */

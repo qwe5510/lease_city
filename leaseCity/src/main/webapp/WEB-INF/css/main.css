@@ -2359,6 +2359,7 @@ button {
 	font-size : 20px;
 	width: 150px;
 }
+
 .hec_label{
 	float: left;
 }
@@ -2382,7 +2383,6 @@ button {
 	margin-top : 0px;
 	margin-left : 0px;
 	margin-bottom : 5px;
-	padding : 0px;
 }
 .license button{
 	width: 60px;
@@ -2431,4 +2431,20 @@ button {
 	display : inline-block;
 	width: 30%;
 }
+#SpecialRolling {
+	border: 1px solid gray;
+	text-align: center;
+	width: 617px;
+	height: 28px;
+	overflow: hidden;
+	position: relative;
+	font-weight: bold;
+	color: #1E96DD;
+	z-index: 0;
+}
 
+#SpecialRolling div {
+	width: 617px;
+	height: 28px;
+	position: relative;
+}
