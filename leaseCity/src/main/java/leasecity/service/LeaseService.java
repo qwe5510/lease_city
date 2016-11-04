@@ -264,4 +264,10 @@ public interface LeaseService {
 	 */
 	public Page getTransferPage(Integer currentPage, Integer pageSize, String userId);
 	
+	/**
+	 * 모든 임대 요청 갖고 오기
+	 * @return
+	 */
+	public List<LeaseCall> loadAllLeaseCalls() throws NotFoundDataException;
+	
 }

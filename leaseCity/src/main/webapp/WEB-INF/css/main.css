@@ -2374,6 +2374,7 @@ button {
 	font-size : 20px;
 	width: 150px;
 }
+
 .hec_label{
 	float: left;
 }
@@ -2399,7 +2400,20 @@ button {
 	margin-bottom : 5px;
 	padding : 0px;
 }
+#SpecialRolling {
+	border: 1px solid gray;
+	text-align: center;
+	width: 617px;
+	height: 28px;
+	overflow: hidden;
+	position: relative;
+	font-weight: bold;
+	color: #1E96DD;
+	z-index: 0;
+}
 
-
-
-
+#SpecialRolling div {
+	width: 617px;
+	height: 28px;
+	position: relative;
+}

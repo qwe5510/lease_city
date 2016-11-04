@@ -74,4 +74,10 @@ public class LeaseCallRepoImpl implements LeaseCallRepo {
 		return session.update(stmt, leaseCall);
 	}
 
+	@Override
+	public List<LeaseCall> getAllLeaseCalls() {
+		String stmt = LEASE_CALL_NS + "getAllLeaseCalls";
+		return session.selectList(stmt);
+	}
+
 }
