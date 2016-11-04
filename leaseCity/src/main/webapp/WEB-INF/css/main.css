@@ -2300,6 +2300,19 @@ button {
 	float: none;
 	display: inline-block;
 }
+.mypage_sub{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
 .mypage{
 	background: url("../images/help_main.png") no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -2307,7 +2320,7 @@ button {
 	-o-background-size: cover;
 	background-size: cover;
 	min-width: 1200px;
-	min-height: 500px;
+	min-height: 800px;
 	text-align: center;
 	padding-top: 20px;
 	position: relative;
@@ -2371,3 +2384,51 @@ button {
 	margin-bottom : 5px;
 	padding : 0px;
 }
+.license button{
+	width: 60px;
+}
+.license input{
+	margin-top : 15px;
+	width: 145px;
+	height: 35px;
+}
+.license input[type="date"]{
+	width: 140px;
+}
+.myinfo{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+	font-size: 20px;
+	text-align: center;
+}
+.myinfo_0{
+	margin-left : 10%;
+	width : 1000px;
+	height: 300px;
+	padding-top : 30px;
+	background: #444444;
+	border-radius: 15%/170px;
+	border :solid 5px black;
+}
+.myinfo_1{
+	display : inline-block;
+	width: 30%;
+}
+.myinfo_2{
+	display : inline-block;
+	width: 30%;
+}
+.myinfo_3{
+	display : inline-block;
+	width: 30%;
+}
+
