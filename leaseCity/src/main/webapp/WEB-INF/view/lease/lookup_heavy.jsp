@@ -50,7 +50,7 @@
 	</sform:form>
 	
 	<div>
-		<table class="heavy_table">
+		<table class="heavy_table" style="width: 700px">
 			<tr>
 				<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
 			</tr>

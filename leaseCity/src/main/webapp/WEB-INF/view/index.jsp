@@ -6,7 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <head>
-<<<<<<< HEAD
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>Home | LEASECITY</title>
@@ -19,7 +18,6 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/main.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/sl-slide.css">
-
 
 <script
 	src="<%=request.getContextPath()%>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -35,9 +33,9 @@
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
-=======
+
 <title>HOME | LEASE CITY</title>
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
+
 </head>
 <body>
 	<!-- 가입 절차 설명 메시지 -->

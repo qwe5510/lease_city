@@ -59,10 +59,11 @@ public class LeaseController {
 	 * 임대 요청 기능 페이지 사이즈
 	 */
 	public static final int LEASE_CALL_PAGE_SIZE = 5;
+	
 	/**
 	 * 중기업체 조회 페이지 사이즈
 	 */
-	public static final int LOOK_UP_HEC_PAGE_SIZE = 1;
+	public static final int LOOK_UP_HEC_PAGE_SIZE = 10;
 	
 	static Logger logger = LoggerFactory.getLogger(LeaseController.class);
 	

@@ -17,12 +17,12 @@
 			<h2></h2>
 			<br>
 			</div>
-			<ul class="help_menu_ul">
+		</div>
+		<ul class="help_menu_ul">
 			<li class="help_menu_first"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></li>
 			<li><a id="help_question" href="${qna}"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4.png"></a></li>
-			</ul>
-		</div>
-
+		</ul>
+		
 		<div class="cssload-cssload-wrap2">
 			<div class="cssload-wrap">
 				<div class="cssload-overlay"></div>

@@ -162,13 +162,8 @@
                </td>
                <td colspan="1">
                <c:url value="/board/write" var="boardWrite"/>
-<<<<<<< HEAD
-               <a href="${boardWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
-=======
-               <c:url value="/board" var="boardList"/>
                <a href="${boardWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
                <a href="${boardList}"><button><i class="icon-list"></i>목록</button></a>
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
                </td>
             </tr>
             

@@ -43,12 +43,7 @@
 				});
 			</script>
 		</div>
-<<<<<<< HEAD
 		<c:url value="/board/write" var="boardWrite" />
-		<div class="board_read_main">
-=======
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
-
 		<div class="board_read_main">
 				<div class="board_read_line">
 					<table class="board_read_table">
