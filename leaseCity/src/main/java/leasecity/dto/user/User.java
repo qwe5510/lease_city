@@ -73,12 +73,6 @@ public class User implements Serializable {
 	/** 커뮤니티 게시글 목록. */
 	private List<Comment> commentsList;
 
-	/** 건설업체 목록. */
-	private List<ConstructionCompany> constructionCompanyList;
-
-	/** 중기업체 목록. */
-	private List<HeavyEquipmentCompany> heavyEquipmentCompanyList;
-
 	/** 커뮤니티 댓글 목록. */
 	private List<Reply> replysList;
 
@@ -90,8 +84,6 @@ public class User implements Serializable {
 	 */
 	public User() {
 		this.commentsList = new ArrayList<Comment>();
-		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
-		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 	}
@@ -123,8 +115,6 @@ public class User implements Serializable {
 		this.withdrawDate = withdrawDate;
 		
 		this.commentsList = new ArrayList<Comment>();
-		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
-		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 		
@@ -148,8 +138,6 @@ public class User implements Serializable {
 		this.withdrawDate = user.withdrawDate;
 		
 		this.commentsList = new ArrayList<Comment>();
-		this.constructionCompanyList = new ArrayList<ConstructionCompany>();
-		this.heavyEquipmentCompanyList = new ArrayList<HeavyEquipmentCompany>();
 		this.replysList = new ArrayList<Reply>();
 		this.workLogList = new ArrayList<WorkLog>();
 	}

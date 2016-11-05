@@ -80,6 +80,34 @@
  		</if>		
  	</select>
  	
+ 	<!-- 관리자 - 중기업체 : 모든 중기업체 리스트를 리턴 -->
+ 	<select id="getPageAllHeavyEquipmentCompanies" parameterType="page" 
+ 											resultType="heavyEquipmentCompany">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS rnum
+ 				FROM( SELECT *
+ 						FROM heavy_equipment_company
+ 						JOIN users USING(user_id)
+ 					<choose>
+	 					<when test="search == 'ADDRESS' and (keyword != null or keyword !='')">
+	 						WHERE address LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'COMPANY_NAME' and (keyword != null or keyword !='')">
+	 						WHERE company_name LIKE '%'||REPLACE(#{keyword}, ' ', '%')||'%'
+	 					</when>
+	 					<when test="search == 'CREDIT' and (keyword != null or keyword !='')">
+	 						WHERE credit_grade LIKE #{keyword}||'%'
+	 					</when>
+ 					</choose>
+ 					ORDER BY credit_grade DESC
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE rnum BETWEEN #{from} AND #{to}
+ 		</if>		
+ 	</select>
+ 	
  	
  	<!-- 중기업체 아이디로 검색하여 정보 리턴 -->
  	<select id="getHeavyEquipmentCompany" parameterType="String" 

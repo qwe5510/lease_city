@@ -59,8 +59,7 @@
 					<div class="sl-slide-inner">
 						<div class="container">
 							<img class="pull-right"
-								src="<%=request.getContextPath()%>/images/slider/경복궁.png"
-								alt="" />
+								src="<%=request.getContextPath()%>/images/slider/경복궁.png" alt="" />
 							<h2>경복궁</h2>
 							<h4 class="gap">규모 43만 2702.87</h4>
 							<h4 class="gap">소재지 서울특별시 종로구 세종로1</h4>
@@ -131,59 +130,119 @@
 					<p>website that is able to be a function of medium between
 						construction company's and heavy equipment company's</p>
 				</div>
-				<div class="span10">
-					<div id="myCarousel" class="carousel slide clients">
-						<!-- Carousel items -->
-						<div class="carousel-inner">
-							<div class="active item">
-								<div class="row-fluid">
-									<ul class="thumbnails">
-										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
-												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
-												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
-												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/introduction"><img
-												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
-									</ul>
-								</div>
-							</div>
+				<c:choose>
+					<c:when test="${empty sessionScope.admin and empty sessionScope.loginUser}">
+						<div class="span10">
+							<div id="myCarousel" class="carousel slide clients">
+								<!-- Carousel items -->
+								<div class="carousel-inner">
+									<div class="active item">
+										<div class="row-fluid">
+											<ul class="thumbnails">
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/lease_request"><img
+														src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/board"><img
+														src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/question/answer"><img
+														src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/introduction"><img
+														src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
+											</ul>
+										</div>
+									</div>
 
-							<div class="item">
-								<div class="row-fluid">
-									<ul class="thumbnails">
-										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
-												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
-												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
-												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath() %>introduction"><img
-												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
-									</ul>
-								</div>
-							</div>
+									<div class="item">
+										<div class="row-fluid">
+											<ul class="thumbnails">
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/lease_request"><img
+														src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/question/answer"><img
+														src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/board"><img
+														src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>introduction"><img
+														src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
+											</ul>
+										</div>
+									</div>
 
-							<div class="item">
-								<div class="row-fluid">
-									<ul class="thumbnails">
-										<li class="span3"><a href="<%=request.getContextPath()%>/lease_request"><img
-												src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/board"><img
-												src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath()%>/question/answer"><img
-												src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
-										<li class="span3"><a href="<%=request.getContextPath() %>introduction"><img
-												src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
-									</ul>
+									<div class="item">
+										<div class="row-fluid">
+											<ul class="thumbnails">
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/lease_request"><img
+														src="<%=request.getContextPath()%>/images/menu/임대.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/board"><img
+														src="<%=request.getContextPath()%>/images/menu/커뮤니티.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath()%>/question/answer"><img
+														src="<%=request.getContextPath()%>/images/menu/Q&A.PNG"></a></li>
+												<li class="span3"><a
+													href="<%=request.getContextPath() %>introduction"><img
+														src="<%=request.getContextPath()%>/images/menu/소개.PNG"></a></li>
+											</ul>
+										</div>
+									</div>
 								</div>
+								<!-- /Carousel items -->
+
 							</div>
 						</div>
-						<!-- /Carousel items -->
-
-					</div>
-				</div>
+					</c:when>
+					<c:otherwise>
+						<div>
+							<div id="SpecialRolling">
+								<div id="Prev0"></div>
+								<div id="Next0"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev1"></div>
+								<div id="Next1"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev2"></div>
+								<div id="Next2"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev3"></div>
+								<div id="Next3"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev4"></div>
+								<div id="Next4"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev5"></div>
+								<div id="Next5"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev6"></div>
+								<div id="Next6"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev7"></div>
+								<div id="Next7"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev8"></div>
+								<div id="Next8"></div>
+							</div>
+							<div id="SpecialRolling">
+								<div id="Prev9"></div>
+								<div id="Next9"></div>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</section>
@@ -301,36 +360,157 @@
 	</div>
 	<!--  /Login form -->
 	<!-- SL Slider -->
-	<script type="text/javascript"> 
-$(function() {
-    var Page = (function() {
+	<script type="text/javascript">
+	
+		$(function() {
+			
+			
+			var Page = (function() {
 
-        var $navArrows = $( '#nav-arrows' ),
-        slitslider = $( '#slider' ).slitslider( {
-            autoplay : true
-        } ),
+				var $navArrows = $('#nav-arrows'), slitslider = $('#slider')
+						.slitslider({
+							autoplay : true
+						}),
 
-        init = function() {
-            initEvents();
-        },
-        initEvents = function() {
-            $navArrows.children( ':last' ).on( 'click', function() {
-                slitslider.next();
-                return false;
-            });
+				init = function() {
+					initEvents();
+				}, initEvents = function() {
+					$navArrows.children(':last').on('click', function() {
+						slitslider.next();
+						return false;
+					});
 
-            $navArrows.children( ':first' ).on( 'click', function() {
-                slitslider.previous();
-                return false;
-            });
-        };
+					$navArrows.children(':first').on('click', function() {
+						slitslider.previous();
+						return false;
+					});
+				};
 
-        return { init : init };
+				return {
+					init : init
+				};
 
-    })();
-    Page.init();
-});
-</script>
+			})();
+			Page.init();
+		});
+
+	var leaseCallList;
+	<c:url value="/autoSelectLeaseCalls" var="autoSelectLeaseCalls"/>
+	function testfunction(val) {
+		$.ajax({
+			// type을 설정합니다.
+			type : 'get',
+			url : "${autoSelectLeaseCalls }",
+			// 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+			data : {
+				//leaseCallNo : val
+			},
+			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+			success : function(res) {
+				leaseCallList = res ;
+				console.log("가져온 리스트 : " + res);
+				//return leaseCommentTitle;
+			},
+			error : function(xhr, status, error) {
+				console.log(status);
+			}
+		});
+		return leaseCallList;
+	}
+
+	$(function() {
+		
+		// 밑에 함수 실행
+		RollingText("Prev", "Next", 0);
+		// 함수 1
+		function RollingText(P, N, idx) {
+		
+			var maxcnt = 9;
+
+			// 아이디 갖고오기
+			var Prev = "#" + P + idx;
+			var Next = "#" + N + idx;
+
+			// css 갖고오기
+			var pos1 = $(Prev).css("top").replace("px", "");
+			var pos2 = $(Next).css("top").replace("px", "");
+			//alert('111');
+
+			// animate가 실행될 떄, 올라올 텍스트의 위치 설정
+			if (pos1 <= -28) {
+				$(Prev).css("top", "28px");
+			}
+			if (pos2 <= -56) {
+				$(Next).css("top", "0px");
+			}
+
+			// 첫번째 animate의 값 설정
+			fn_Next(idx);
+
+			// (이전 값들 밀어내기)
+			$(Prev).delay(100).animate({
+				top : "-=28px"
+			}, 600, function() {
+			});
+
+			// (갱신된 값 갖고 오기)
+			$(Next).delay(100).animate({
+				top : "-=28px"
+			}, 600, function() {
+				fn_Next(idx);
+				fn_Prev(idx);
+				idx++;
+				if (idx > maxcnt) {
+					setTimeout(function() {
+						RollingText(P, N, 0);
+				}, 7000);
+					
+				} else {
+					RollingText(P, N, idx);
+				}
+			});
+		}
+		//다음이 지나가고 이전꺼에 다음 순위 불러오는 처리 Ajax
+		function fn_Prev(val) {
+			//console.log("1  : " + testfunction(val) + " and " + val);
+			if( testfunction(val) == undefined) {
+				console.log("undefind ..");
+				//RollingText(vPrev, vNext, 0);
+				return;
+			}
+			
+			var text = testfunction(val);
+			var PrevVal = "#" + "Prev" + val;
+			if( val < testfunction(val).length) {
+				$(PrevVal).empty().append("<li><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[val].leaseCallNo + ">"  + testfunction(val)[val].leaseCommentTitle + "</a></li>");
+			} else {
+				$(PrevVal).empty().append("");
+			}
+		}
+		//다음 순위 불러오는 함수 처리 Ajax
+		function fn_Next(val) {
+			//console.log("2 : " + testfunction(val) + " and " + val);
+			//consolo.log("length : " + testfunction(val).length);
+			if( testfunction(val) == undefined) {
+				console.log("undefind ..");
+				//RollingText(vPrev, vNext, 0);
+				return;
+			}
+			var text = testfunction(val);
+			var NextVal = "#" + "Next" + val;
+			if( val < testfunction(val).length ) {
+				$(NextVal).empty().append("<li><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[val].leaseCallNo + ">"  + testfunction(val)[val].leaseCommentTitle + "</a></li>");
+			} else {
+				$(NextVal).empty().append("");
+			}
+		}
+	});
+	</script>
+
+
+	<!-- 검색어 만들기 -->
+	<script type="text/javascript" language="javascript">
+	</script>
 	<!-- /SL Slider -->
 </body>
 </html>

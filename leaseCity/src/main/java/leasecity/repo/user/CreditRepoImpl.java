@@ -24,4 +24,9 @@ public class CreditRepoImpl implements CreditRepo{
 		return session.selectList(stmt, acceptUserId);
 	}
 
+	@Override
+	public Integer getCountSendCredits(String sendUserId) {
+		String stmt = CREDIT_NS +"getCountSendCredits";
+		return session.selectOne(stmt, sendUserId);
+	}
 }

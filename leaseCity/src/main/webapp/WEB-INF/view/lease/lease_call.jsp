@@ -48,11 +48,11 @@
                </tr>
                <tr class="boardShow">
                
-               <fmt:formatNumber value="${leaseCall.tempGrade/5 * 100}" var="creditPercent" type="percent"></fmt:formatNumber>
+               <fmt:formatNumber value="${leaseCall.tempGrade/5}" var="creditPercent" type="percent"></fmt:formatNumber>
                <fmt:formatNumber value="${leaseCall.tempGrade}" pattern="0.00" var="credit"></fmt:formatNumber>
                   <td>
-                  <div class="credit-min-area_leaseCall">
-                  <i class="credit-max-area_leaseCall" style="width: ${creditPercent}"></i>
+                  <div class="credit-min-area">
+                  <i class="credit-max-area" style="width: ${creditPercent}"></i>
                   </div>
                   <strong>${credit}</strong>
                   </td>
@@ -72,7 +72,7 @@
                      </c:if>
                      
                      <c:if test="${!(leaseCall.choiceLRCount eq 0)}">
-                     	<span class="label label-warning">
+                     	<span class="label label-success">
                      		선발 : ${leaseCall.choiceLRCount}
                      	</span>
                      </c:if>
@@ -241,8 +241,8 @@
 					var creditPercent = (leaseCall.tempGrade/5 * 100);
                     var credit = leaseCall.tempGrade.toFixed(2);
                     
-					str+= "<tr class='boardShow'><td><div class='credit-min-area_leaseCall'>";
-					str+= "<i class='credit-max-area_leaseCall' style='width:"+ creditPercent + "%'></i>";
+					str+= "<tr class='boardShow'><td><div class='credit-min-area'>";
+					str+= "<i class='credit-max-area' style='width:"+ creditPercent + "%'></i>";
 					str+= "</div><strong>"+credit+"</strong></td>";
 					str+= "<td>"+leaseCall.leaseCategory+"<br>"+leaseCall.equipmentCategory+"</td>";
 					str+= "<td class='leaseCallTitle'>";					

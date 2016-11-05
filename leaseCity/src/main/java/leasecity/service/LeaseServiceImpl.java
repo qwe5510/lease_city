@@ -462,11 +462,17 @@ public class LeaseServiceImpl implements LeaseService {
 			results = lookUpHeavyEquipmentRepo.getPageInfoOnHeavyEquipmentCompanies(page);
 		}
 		else{
+			results = lookUpHeavyEquipmentRepo.getPageAllHeavyEquipmentCompanies(page);
+		}
+		
+		if(results.size() <= 0){
 			throw new NotFoundDataException("중기업체 조회 정보");
 		}
 		
-		if(results == null || results.size() <= 0){
-			throw new NotFoundDataException("중기업체 조회 정보");
+		for(HeavyEquipmentCompany item : results){
+			item.setHeavyEquipmentList(
+					lookUpHeavyEquipmentRepo.
+					getCompanyHeavyEquipments(item.getUserId()));
 		}
 		
 		return results;
@@ -526,6 +532,31 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 	
 	@Override
+	public Page getMoreViewHECPage
+		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany) {
+		
+		Page page;
+		
+		if(search!=null && keyword != null){
+			page = new Page(search, keyword);
+		}else{
+			page = new Page();
+		}
+		
+		page.setCurrentPage(currentPage);
+		page.setPageSize(pageSize);
+		page.setFromTo();
+		
+		if(isCompany!=null && isCompany.equals("CC")){
+			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountInfoOnHeavyEquipment(page));
+		}else if(isCompany!=null && isCompany.equals("HEC")){
+			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountHelpOnHeavyEquipment(page));
+		}
+		
+		return page;
+	}
+	
+	@Override
 	public Page getTransferPage(Integer currentPage, Integer pageSize, String userId) {
 		Page page = new Page();
 		page.setCurrentPage(currentPage);
@@ -533,6 +564,12 @@ public class LeaseServiceImpl implements LeaseService {
 		page.setUserId(userId);
 		page.setFromTo();
 		return page;
+	}
+
+	@Override
+	public List<LeaseCall> loadAllLeaseCalls() throws NotFoundDataException {
+		List<LeaseCall> leaseCall = leaseCallRepo.getAllLeaseCalls();
+		return leaseCall;
 	}
 	
 	//------------------------------------------------------------------------------------
