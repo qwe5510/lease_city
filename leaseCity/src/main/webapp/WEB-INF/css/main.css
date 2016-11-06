@@ -1171,6 +1171,12 @@ label {
    margin-left: 40px;
    margin-right: 50px;
    position: fixed;
+   background: url("../images/community/chat_menu.png") no-repeat;
+}
+
+.uchat_inner{
+	padding-top: 195px;
+	padding-left: 35px;
 }
 
 /*community div 설정  */
@@ -1681,19 +1687,19 @@ button {
    margin-left: 75px;
 }
 
-.help_menu_ul {
+.help_menu_ul, .lease_menu_ul {
    list-style: none;
    position: fixed;
    padding-top: 220px;
    padding-left: 100px;
 }
 
-.help_menu_ul li {
+.help_menu_ul li, .lease_menu_ul li{
    margin-top: 60px;
-   
 }
 
-.help_menu_ul .help_menu_first {
+
+.help_menu_ul .help_menu_first, .lease_menu_ul .lease_menu_first {
    margin-top: 0px;
 }
 
@@ -1703,33 +1709,33 @@ button {
    color: #fff;
 }
 
-.help_table {
+.help_table, .lease_table {
    margin-top: 40px;
    width: 800px;
    text-align: center;
 }
 
-.help_table .td1 {
+.help_table .td1, .lease_table .td1 {
    width: 80px;
 }
 
-.help_table .td2 {
+.help_table .td2, .lease_table .td2 {
    width: 100px;
 }
 
-.help_table .td3 {
+.help_table .td3, .lease_table .td3 {
    width: 350px;
 }
 
-.help_table .td4 {
+.help_table .td4, .lease_table .td4 {
    width: 100px;
 }
 
-.help_table .td5 {
+.help_table .td5, .lease_table .td5 {
    width: 80px;
 }
 
-.help_table .td6 {
+.help_table .td6, .lease_table .td6 {
    width: 150px;
 }
 
@@ -1856,6 +1862,16 @@ button {
 	position: fixed;
 	z-index: -1;
 }
+
+.lease_menu_inner{
+	background: url(../images/lease/lease_menu1.png) no-repeat 10% 30%;
+	background-size: 25em 6em;
+   	padding: 55px;
+   	margin-top: 60px;
+   	margin-left: 30px;
+}
+
+
 
 .lease_main {
    float: left;

@@ -29,19 +29,22 @@
 	
 	<div class="board">
 		<div class="uchat">
+			<div class="uchat_inner">
 			<script>
 				u_chat({
 					room : 'yhj123',
 					chat_record : true,
 					width : '300',
-					height : '300',
+					height : '500',
 					conversation_limi : true,
 					in_sound : true,
 					say_id : true,
 					skin : 1,
+					no_inout : false,
 					mb_list_height : '50'
 				});
 			</script>
+			</div>
 		</div>
 		<c:url value="/board/write" var="boardWrite" />
 		<div class="board_read_main">

@@ -35,10 +35,10 @@
 			<br>
 			</div>
 		</div>
-			<ul class="help_menu_ul">
+		<ul class="help_menu_ul">
 			<li class="help_menu_first"><a id="help_frequenty" href="${FAQ }"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2.png"></a></li>
 			<li><a id="help_question"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu3_1.png"></a></li>
-			</ul>
+		</ul>
 		
 		<div class="help_main">   
 		<div class="qna_list">

@@ -13,10 +13,14 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="lease">
 	<div class="lease_menu">
+		<div class="lease_menu_inner"></div>
 	</div>
+	<c:url value="/leaseCall" var="leaseCall"></c:url>
+    <ul class="lease_menu_ul">
+		<li class="lease_menu_first"><a id="lease_call" href="${leaseCall}"><img id="lease_call_img" src="<%=request.getContextPath()%>/images/lease/lease_menu2.png"></a></li>
+		<li><a id="lease_lookup"><img id="lease_lookup_img" src="<%=request.getContextPath()%>/images/lease/lease_menu3_1.png"></a></li>
+	</ul>
 	<div class="lease_main">
-	<br><br><br>
-	
 	<c:url value="/lookupHeavy" var="lookupHeavy"></c:url>
 	<sform:form action="${lookupHeavy}" method="get" modelAttribute="page">
 	<div class="heavy_select">
@@ -117,9 +121,23 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
-
 	var g_currentPage = 1;
 
+	<c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
+	<c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
+	<c:url value="/images/lease/lease_menu2_1.png" var="leaseCallHover"></c:url>
+	<c:url value="/images/lease/lease_menu2.png" var="leaseCallNormal"></c:url>
+		$("#lease_call").hover(
+			function(){
+				$("#lease_call_img").attr("src", "${leaseCallHover}")		
+				$("#lease_lookup_img").attr("src", "${lookupHeavyNormal}");
+		},
+		function(){
+			$("#lease_call_img").attr("src", "${leaseCallNormal}")
+			$("#lease_lookup_img").attr("src", "${lookupHeavyHover}");
+	});
+	
+	
 	$("#search").on("change",function(){
 		var selected1 = $("#search option:selected").val();
 		if(selected1=="CREDIT"){
