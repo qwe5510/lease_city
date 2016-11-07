@@ -28,11 +28,14 @@ public class LeaseDirectCall implements Serializable {
 	/** 건설업체 회원 ID. (송신자) */
 	private String constructionId;
 
-	/** 중기업체 회원 ID. (수신자) */
-	private String equipmentId;
-
 	/** 임대요청 번호 */
 	private Integer leaseCallNo;
+	
+	/** 중기업체 회원 ID. (수신자) */
+	private String equipmentId;
+	
+	/** 중기업체 요청 차량 번호 */
+	private String callIdNumber;
 
 	/** 직접요청 내용. */
 	private String directCallContent;

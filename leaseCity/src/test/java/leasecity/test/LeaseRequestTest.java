@@ -30,7 +30,7 @@ public class LeaseRequestTest {
 	public void test(){
 		System.out.println(repo);
 
-		LeaseDirectCall leaseDirectCall = new LeaseDirectCall(null, "ysh5586", "raven92", 9, "직접요청입니다.", 500, 1000);
+		LeaseDirectCall leaseDirectCall = new LeaseDirectCall(null, "ysh5586", 9 ,"raven92", null, "직접요청입니다.", 500, 1000);
 		
 		int result = repo.insertLeaseDirectCall(leaseDirectCall);
 		logger.trace("임대 직접요청 추가 : {}", result);

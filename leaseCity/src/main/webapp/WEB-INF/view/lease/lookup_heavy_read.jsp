@@ -113,7 +113,7 @@
 				<c:url value="/leaseTransferWrite" var="leaseTransferWrite"></c:url>
 					<sform:form action="${leaseTransferWrite}" method="post" modelAttribute="leaseTransfer">
 					<fieldset>
-						<legend>보유차량</legend>
+						<legend>양도 신청</legend>
 						<table>
 							<tr>
 								<td>
@@ -175,43 +175,56 @@
 					<c:url value="/leaseDirectCallWrite" var="directCallWrite"></c:url>
 					<sform:form action="${directCallWrite}" method="post" modelAttribute="leaseDirectCall">
 					<fieldset>
-						<legend>보유차량</legend>
+						<legend>임대 요청 선택</legend>
 						<table>
 							<tr>
-								<td>
-									<label>보유차량</label>
-								</td>
-								<td class="possessionheavyEquipment">
-									<input type="radio" name="heavyEquipment" value="트럭"><label>트럭</label>
-									<input type="radio" name="heavyEquipment" value="펌프카"><label>펌프카</label>
-									<input type="radio" name="heavyEquipment" value="물질핸들러"><label>물질핸들러</label>
-									<input type="radio" name="heavyEquipment" value="트럭"><label>트럭</label>
-									<input type="radio" name="heavyEquipment" value="포크레인"><label>포크레인</label>
-									<input type="radio" name="heavyEquipment" value="장갑차"><label>장갑차</label>
+								<td colspan="2">
+									<label>요청 차량 선택</label>
+									<sform:select path="${CallIdNumber}" style="width: 350px;">
+										<sform:options items="${acceptIdNumbers}"/>
+									</sform:select>
 								</td>
 							</tr>
 							<tr>
-								<td>
-									<label>기간</label>
+								<td colspan="2">
+									<label>요청 대상 선택</label>
+									<sform:select path="leaseCallNo" style="width: 500px;">
+										<sform:options items="${leaseCallTitles}"/>
+									</sform:select>
 								</td>
-								<td class="heavy_request_date">
-									<label>시작날짜</label><input type="date">
-									<label>종료날짜</label><input type="date">
+							</tr>
+							
+							<tr>
+								<td width="50px">
+									<label>필요 차량 종류</label>
+								</td>
+								<td>
+									<span id="equipmentCategory" style="font-size: 1.5em;">${leaseCalls[0].equipmentCategory}</span>
 								</td>
 							</tr>
 							<tr>
-								<td>
-									<label>금액</label>
+								<td width="50px">
+									<label>임대 기한</label>
 								</td>
-								<td class="heavy_request_price">
-									<input type="number"><label>단위(만원)</label>
+								<td>
+									<fmt:formatDate value="${leaseCalls[0].toDate}" pattern="yyyy-MM-dd" var="toDate"></fmt:formatDate>
+									<fmt:formatDate value="${leaseCalls[0].fromDate}" pattern="yyyy-MM-dd" var="fromDate"></fmt:formatDate>
+									<span id="fromToDate" style="font-size: 1.5em;">${fromDate} ~ ${toDate}</span>
+								</td>
+							</tr>		
+							<tr>
+								<td width="50px">
+									<label>주소</label>
+								</td>
+								<td>
+									<span id="address" style="font-size: 1.5em;">${leaseCalls[0].address}</span>
 								</td>
 							</tr>
 						</table>
 					</fieldset>
 					<br>
 					<fieldset>
-						<legend>요청내용</legend>
+						<legend>요청 내용</legend>
 						<textarea style="width: 720px;"></textarea>
 					</fieldset>
 					<div class="lease_write_bottom">
@@ -235,6 +248,35 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+Date.prototype.format = function(f) {
+    if (!this.valueOf()) return " ";
+ 
+    var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+    var d = this;
+     
+    return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+        switch ($1) {
+            case "yyyy": return d.getFullYear();
+            case "yy": return (d.getFullYear() % 1000).zf(2);
+            case "MM": return (d.getMonth() + 1).zf(2);
+            case "dd": return d.getDate().zf(2);
+            case "E": return weekName[d.getDay()];
+            case "HH": return d.getHours().zf(2);
+            case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+            case "mm": return d.getMinutes().zf(2);
+            case "ss": return d.getSeconds().zf(2);
+            case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+            default: return $1;
+        }
+    });
+};
+ 
+String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+//날짜에 관한 스크립트 함수
 
 <c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
 <c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
@@ -338,6 +380,31 @@ function _jsDateCheck(fromDate, toDate){
       
       return true;
  }
+ 
+ <c:url value="/callInfoChange" var="callInfoChange"></c:url>
+ $("#leaseCallNo").on("change", function(){
+	 $.ajax({
+		url: "${callInfoChange}",
+		method: "GET",
+		data: {
+			callNoData : $(this).val()
+		},
+		success: function(leaseCall){
+			
+			console.log(leaseCall);
+			
+			var fromDate = new Date(leaseCall.fromDate).format("yyyy-MM-dd");
+			var toDate = new Date(leaseCall.toDate).format("yyyy-MM-dd");
+			
+			$("#equipmentCategory").html(leaseCall.equipmentCategory);
+			$("#fromToDate").html(fromDate + " ~ " + toDate);
+			$("#address").html(leaseCall.address);
+		},
+		error: function(xhr, status, error){
+			alert("유효하지 않은 요청글 정보입니다.");
+		},
+	 });
+ });
 
 </script>
 </html>

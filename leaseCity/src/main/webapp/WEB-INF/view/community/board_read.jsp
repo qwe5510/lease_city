@@ -35,7 +35,7 @@
 					room : 'yhj123',
 					chat_record : true,
 					width : '300',
-					height : '500',
+					height : '380',
 					conversation_limi : true,
 					in_sound : true,
 					say_id : true,
@@ -289,11 +289,8 @@
 			</c:if>
 
 		</div>
-	</div>
-	<br>
-	<div class="community">
-         
-         <table class="communityTable">
+		
+		<table class="communityTable">
             <tr>
                <td colspan="6" class="boardLine" style="height: 4px !important;"></td>
             </tr>

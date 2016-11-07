@@ -14,10 +14,7 @@
 	<c:url value="/help/qna" var="qna"/>
 	<div class="help">
 		<div class="help_menu">
-			<div class="help_menu_inner1">
-			<h2></h2>
-			<br>
-			</div>
+			<div class="help_menu_inner1"></div>
 		</div>
 		<ul class="help_menu_ul">
 			<li class="help_menu_first"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></li>
