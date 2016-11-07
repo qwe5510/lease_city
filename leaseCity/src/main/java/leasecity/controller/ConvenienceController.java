@@ -28,9 +28,8 @@ public class ConvenienceController {
 	
 	@RequestMapping(value="/evaluate",method=RequestMethod.GET)
 	public String evaluate(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
+		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
+		model.addAttribute("compare", compare);
 		return "convenience/evaluate";
 	}
 

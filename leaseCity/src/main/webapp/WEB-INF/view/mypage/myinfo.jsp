@@ -17,13 +17,17 @@
 	<c:url value="/history" var="history"></c:url>
 	<c:url value="/mypage_identify" var="mypage_identify"></c:url>
 	<c:url value="/withdrawal_agree_01" var="withdrawal_agree_01"></c:url>
+	<c:url value="/selection" var="selection"></c:url>
 		<a href="${mypage_identify}"><img id="myInfo1" src="<%=request.getContextPath()%>/images/mypage/개인정보.png"/></a>
 	</div>
 	<div class="myinfo_2">
 		<a href="${history }"><img id="myInfo2" src="<%=request.getContextPath()%>/images/mypage/이용내역.png" /></a>
 	</div>
 	<div class="myinfo_3"> 
-		<a href="${withdrawal_agree_01 }"><img id="myInfo3" src="<%=request.getContextPath()%>/images/mypage/회원탈퇴.png" /></a>
+		<a href="${selection }"><img id="myInfo3" src="<%=request.getContextPath()%>/images/mypage/작업관리.png" /></a>
+	</div>
+	<div class="myinfo_4"> 
+		<a href="${withdrawal_agree_01}"><img id="myInfo4" src="<%=request.getContextPath()%>/images/mypage/회원탈퇴.png"/></a>
 	</div>
 	<div>
 		<img src="<%=request.getContextPath()%>/images/mypage/표지판.png"/>
@@ -123,12 +127,14 @@
 <script>
 
 
-<c:url value="/images/mypage/개인정보2.png" var="hoverMyInfo1"></c:url>
+<c:url value="/images/mypage/개인정보_1.png" var="hoverMyInfo1"></c:url>
 <c:url value="/images/mypage/개인정보.png" var="MyInfo1"></c:url>
-<c:url value="/images/mypage/이용내역2.png" var="hoverMyInfo2"></c:url>
+<c:url value="/images/mypage/이용내역_1.png" var="hoverMyInfo2"></c:url>
 <c:url value="/images/mypage/이용내역.png" var="MyInfo2"></c:url>
-<c:url value="/images/mypage/회원탈퇴2.png" var="hoverMyInfo3"></c:url>
-<c:url value="/images/mypage/회원탈퇴.png" var="MyInfo3"></c:url>
+<c:url value="/images/mypage/작업관리_1.png" var="hoverMyInfo3"></c:url>
+<c:url value="/images/mypage/작업관리.png" var="MyInfo3"></c:url>
+<c:url value="/images/mypage/회원탈퇴_1.png" var="hoverMyInfo4"></c:url>
+<c:url value="/images/mypage/회원탈퇴.png" var="MyInfo4"></c:url>
 
 $("#myInfo1").hover(
 		function(){$(this).attr("src", "${hoverMyInfo1}");},
@@ -141,6 +147,10 @@ $("#myInfo2").hover(
 $("#myInfo3").hover(
 		function(){$(this).attr("src", "${hoverMyInfo3}");},
 		function(){$(this).attr("src", "${MyInfo3}");});
+		
+$("#myInfo4").hover(
+		function(){$(this).attr("src", "${hoverMyInfo4}");},
+		function(){$(this).attr("src", "${MyInfo4}");});
 		
 
 

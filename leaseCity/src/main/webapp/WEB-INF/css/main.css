@@ -2404,6 +2404,7 @@ button {
 	min-width: 1200px;
 	min-height: 500px;
 	text-align: center;
+	margin-top : 20px;
 	padding-top: 20px;
 	position: relative;
 	overflow: auto;
@@ -2411,6 +2412,7 @@ button {
 	text-align: center;
 }
 .myinfo_0{
+	margin-top : 20px;
 	margin-left : 10%;
 	width : 1000px;
 	height: 300px;
@@ -2421,15 +2423,19 @@ button {
 }
 .myinfo_1{
 	display : inline-block;
-	width: 30%;
+	width: 20%;
 }
 .myinfo_2{
 	display : inline-block;
-	width: 30%;
+	width: 20%;
 }
 .myinfo_3{
 	display : inline-block;
-	width: 30%;
+	width: 20%;
+}
+.myinfo_4{
+	display : inline-block;
+	width: 20%;
 }
 #SpecialRolling {
 	border: 1px solid gray;
@@ -2447,4 +2453,66 @@ button {
 	width: 617px;
 	height: 28px;
 	position: relative;
+}
+.history_table{
+	width: 780px;
+	font-size: 15px;
+}
+.history_table button {
+	width: 50px;
+	height: 20px;
+}
+.myinfo li{
+	padding: 10px;
+}
+.evaluate{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
+.evaluate_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
+	position: fixed;
+}
+.evaluate_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 65%;
+	display: inline-block;
+	text-align: left;
+	border: 2px solid;
+	margin-bottom: 30px;
+}
+.evaluate_main_table{
+	padding : 60px;
+	width: 780px;
+}
+.evaluate_main_table td{
+	padding-bottom: 40px;
+	font-size: 12px;
+}
+.evaluate_main_table span{
+	font-size: 16px;
+}
+.evaluate_main_table button{
+	width: 80px;
+	float: right;
+}
+.evaluate_check{
+	width: 70px;
 }
