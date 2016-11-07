@@ -38,6 +38,13 @@ public interface LookUpHeavyEquipmentRepo {
 	public List<HeavyEquipmentCompany> getPageInfoOnHeavyEquipmentCompanies(Page page);
 	
 	/**
+	 * Page단위로 출력하며, 모든 중기업체 유저를 리턴받는다 (관리자)
+	 * @param page
+	 * @return
+	 */
+	public List<HeavyEquipmentCompany> getPageAllHeavyEquipmentCompanies(Page page);
+	
+	/**
 	 * 회원 ID를 이용하여 중기업체 정보를 불러옴.
 	 * @param userId
 	 * @return

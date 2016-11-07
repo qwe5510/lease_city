@@ -34,11 +34,12 @@
 			<h2></h2>
 			<br>
 			</div>
-			<ul class="help_menu_ul">
-			<li class="help_menu_first"><a id="help_frequenty" href="${FAQ }"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2.png"></a></li>
-			<li><a id="help_question"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4_1.png"></a></li>
-			</ul>
 		</div>
+		<ul class="help_menu_ul">
+			<li class="help_menu_first"><a id="help_frequenty" href="${FAQ }"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2.png"></a></li>
+			<li><a id="help_question"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu3_1.png"></a></li>
+		</ul>
+		
 		<div class="help_main">   
 		<div class="qna_list">
 		    <table class="QnATable" >
@@ -153,10 +154,8 @@
                <td colspan="6" class="boardLine" style="height: 3px !important;"></td>
             </tr>
             
-            <tr class="board_write">
-               <td colspan="5">
-               </td>
-               <td colspan="1">
+            <tr>
+               <td colspan="6" align="right">
                <c:url value="/help/qna/write" var="qnaWrite"/>
                <c:url value="/help/qna" var="qna"/>
                <a href="${qnaWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
@@ -341,12 +340,12 @@
 
 	$("#help_frequenty").on("mouseover",function(){
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2_1.png");
-		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4.png");
+		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu3.png");
 	});
 	
 	$("#help_frequenty").on("mouseout",function(){
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2.png");
-		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4_1.png");
+		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu3_1.png");
 	});
 </script>
 </html>

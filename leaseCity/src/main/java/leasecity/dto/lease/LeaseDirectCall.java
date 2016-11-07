@@ -2,7 +2,6 @@ package leasecity.dto.lease;
 
 import java.io.Serializable;
 
-import leasecity.dto.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -20,8 +20,14 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="lease">
 		<div class="lease_menu">
-		</div>
-		<div class="lease_main">
+      	<div class="lease_menu_inner"></div>
+        </div>
+        <c:url value="/lookupHeavy" var="lookupHeavy"></c:url>
+        <ul class="lease_menu_ul">
+			<li class="lease_menu_first"><a id="lease_call"><img id="lease_call_img" src="<%=request.getContextPath()%>/images/lease/lease_menu2_1.png"></a></li>
+			<li><a id="lease_lookup" href="${lookupHeavy}"><img id="lease_lookup_img" src="<%=request.getContextPath()%>/images/lease/lease_menu3.png"></a></li>
+	    </ul>	
+	 	<div class="lease_main">
 		<br><br>
 		<sform:form action="#" method="post" modelAttribute="constructionCompany">
 			<fieldset>
@@ -157,6 +163,21 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+<c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
+<c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
+<c:url value="/images/lease/lease_menu2_1.png" var="leaseCallHover"></c:url>
+<c:url value="/images/lease/lease_menu2.png" var="leaseCallNormal"></c:url>
+	$("#lease_lookup").hover(
+		function(){
+			$("#lease_call_img").attr("src", "${leaseCallNormal}")
+			$("#lease_lookup_img").attr("src", "${lookupHeavyHover}");
+		},
+		function(){
+			$("#lease_call_img").attr("src", "${leaseCallHover}")
+			$("#lease_lookup_img").attr("src", "${lookupHeavyNormal}");
+		});
+
 	<c:url value="/leaseCall" var="leaseCall"></c:url>
 	$("#lease_read_cancel").on("click",function(e){
 		e.preventDefault();

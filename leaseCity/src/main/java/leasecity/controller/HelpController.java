@@ -83,10 +83,9 @@ public class HelpController {
 			}
 
 			// 1-2. 발급코드가 null이면 ""으로 받음. 아니면 값 그대로 받음.
-
-			// 로그인 중인 유저 탐색
-			User loginUser = (User) session.getAttribute("loginUser")==null?
-									(User)session.getAttribute("admin"):(User)session.getAttribute("loginUser");
+			// 로그인 중인 유저 탐색 - 로그인유저 값이 null이면 admin값을 불러온다.
+			User loginUser = session.getAttribute("loginUser")==null?
+								(User)session.getAttribute("admin"):(User)session.getAttribute("loginUser");
 
 			try {
 				loginUser = isUserLogin(loginUser);

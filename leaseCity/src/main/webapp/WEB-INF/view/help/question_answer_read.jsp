@@ -41,6 +41,7 @@
 		<div class="help_read_main">
 			<c:url value="/writeAnswer" var="writeAnswer"/>
 			<div class="help_read_main_inner">
+
 			<sform:form id="help_read_form" action="${writeAnswer}" method="post" modelAttribute="question">
 			<div class="qna_read_line">
 				<table class="qna_read_table">
@@ -166,6 +167,7 @@
 			</c:if>
 			
 			<!-- 관리자 로그인 시-->
+
 			<c:if test="${!empty admin}">				
 				<c:url value="/removeQuestion" var="removeQuestion" />
 				<sform:form id="board_edit_form" modelAttribute="question" action="${removeQuestion}" method="POST">

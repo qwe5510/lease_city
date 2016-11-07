@@ -1104,7 +1104,7 @@ input[type="number"] {
    float: left;
 }
 
-input[type="button"] {
+input[type="button"], button[type="submit"]{
    margin-top: 15px;
    height: 38px;
    margin-right: 20px;
@@ -1171,6 +1171,12 @@ label {
    margin-left: 40px;
    margin-right: 50px;
    position: fixed;
+   background: url("../images/community/chat_menu.png") no-repeat;
+}
+
+.uchat_inner{
+	padding-top: 195px;
+	padding-left: 35px;
 }
 
 /*community div 설정  */
@@ -1428,7 +1434,6 @@ button {
 }
 
 .board_write, .board_write_bottom, .board_adjust_bottom {
-   padding: 10px;
    float: right;
 }
 
@@ -1644,13 +1649,11 @@ button {
    min-height: 800px;
    text-align: center;
    padding-top: 80px;
-   position: relative;
    overflow: auto;
 }
 
 .help_menu {
    background: url("../images/help/help_menu.png") no-repeat;
-   background-size: 260px 400px;
    margin-top: 20px;
    min-height: 800px;
    margin-left: 50px;
@@ -1658,6 +1661,7 @@ button {
    min-width: 30%;
    width: 30%;
    position: fixed;
+   z-index: -1;
 }
 
 .help_baseLine {
@@ -1669,34 +1673,33 @@ button {
 }
 
 .help_main {
-   float: right;
-   margin-right: 50px;
+   float: left;
+   position: relative;
+   left: 40%;
+   width: 800px;
    min-height: 800px;
-   width: 60%;
-   display: inline-block;
-   text-align: left;
 }
 
 .help_menu_inner1 {
    background: url(../images/help/help_menu1.png) no-repeat 10% 30%;
    padding: 55px;
-   margin-top: 23px;
-   margin-left: 10px;
+   margin-top: 40px;
+   margin-left: 75px;
 }
 
-.help_menu_ul {
+.help_menu_ul, .lease_menu_ul {
    list-style: none;
-   text-align: left;
+   position: fixed;
+   padding-top: 220px;
+   padding-left: 100px;
 }
 
-.help_menu_ul li {
+.help_menu_ul li, .lease_menu_ul li{
    margin-top: 60px;
-   font-size: 25px;
-   font-family: NanumGothic, 나눔고딕, 'Helvetica Neue', Helvetica,
-      'Apple SD Gothic Neo', AppleGothic, Dotum, 돋움, Arial, sans-serif;
 }
 
-.help_menu_ul .help_menu_first {
+
+.help_menu_ul .help_menu_first, .lease_menu_ul .lease_menu_first {
    margin-top: 0px;
 }
 
@@ -1706,33 +1709,33 @@ button {
    color: #fff;
 }
 
-.help_table {
+.help_table, .lease_table {
    margin-top: 40px;
    width: 800px;
    text-align: center;
 }
 
-.help_table .td1 {
+.help_table .td1, .lease_table .td1 {
    width: 80px;
 }
 
-.help_table .td2 {
+.help_table .td2, .lease_table .td2 {
    width: 100px;
 }
 
-.help_table .td3 {
+.help_table .td3, .lease_table .td3 {
    width: 350px;
 }
 
-.help_table .td4 {
+.help_table .td4, .lease_table .td4 {
    width: 100px;
 }
 
-.help_table .td5 {
+.help_table .td5, .lease_table .td5 {
    width: 80px;
 }
 
-.help_table .td6 {
+.help_table .td6, .lease_table .td6 {
    width: 150px;
 }
 
@@ -1812,8 +1815,6 @@ button {
 }
 
 .qna_list {
-   float: right;
-   clear: both;
    margin-top: 30px;
    min-width: 60%;
    text-align: center;
@@ -1850,20 +1851,36 @@ button {
    overflow: auto;
 }
 
-.lease_menu {
-   margin-top: 20px;
-   min-height: 800px;
-   margin-left: 50px;
-   float: left;
-   width: 30%;
-   position: fixed;
+.lease_menu  {
+	background-image: url("../images/lease/lease_menu.png");
+	background-repeat: no-repeat;
+	margin-top: 20px;
+	min-height: 800px;
+	margin-left: 50px;
+	float: left;
+	width: 30%;
+	position: fixed;
+	z-index: -1;
 }
 
+.lease_menu_inner{
+	background: url(../images/lease/lease_menu1.png) no-repeat 10% 30%;
+	background-size: 25em 6em;
+   	padding: 55px;
+   	margin-top: 60px;
+   	margin-left: 30px;
+}
+
+
+
 .lease_main {
-   float: right;
+   float: left;
    min-height: 800px;
-   width: 65%;
+   width: 800px;
    margin-right: 30px;
+   position: absolute;
+   left: 40%;
+   z-index: 2;
 }
 
 .lease_main fieldset {
@@ -1886,6 +1903,29 @@ button {
    margin-right: 30px;
    margin-bottom: 15px;
    float: right;
+}
+
+.direct_call_header{
+	background: url("../images/lease/direct_call_header.png") no-repeat left center;
+	background-size: contain;
+	height: 150px;
+	text-align: left;
+	
+}
+
+.transfer_header{
+	background: url("../images/lease/transfer_header.png") no-repeat left center;
+	background-size: contain;
+	height: 150px;
+	text-align: left;
+	
+}
+
+.heavy_equipment_header{
+	background: url("../images/lease/heavy_equipment_header.png") no-repeat left center;
+	background-size: contain;
+	height: 150px;
+	text-align: left;
 }
 
 
@@ -2155,7 +2195,7 @@ button {
 
 
 /* 신용도 아이콘 및 표현 */
-.credit-min-area_leaseCall{
+.credit-min-area{
 	display:inline-block;
 	background: url("../images/credit/min_building.png") no-repeat;
 	background-size: contain;
@@ -2165,7 +2205,7 @@ button {
 	height: 15px;
 }
 
-.credit-max-area_leaseCall{
+.credit-max-area{
 	display:block;
 	background: url("../images/credit/max_building.png") no-repeat;
 	background-size: cover;
@@ -2247,17 +2287,20 @@ button {
 .heavy_select {
 	width: 150px;
 	display: inline;
+	float:left;
 }
 
 .heavy_search {
 	width: 250px;
 	display: inline;
+	float:left;
 }
 
 .heavy_search select {
 	padding-left: 15px;
 	padding-right: 15px;
 	width: 240px;
+	float:left;
 }
 
 .heavy_button {
@@ -2280,6 +2323,11 @@ button {
 .heavy_request_table td {
 	padding-right: 30px;
 	padding-bottom: 5px;
+}
+
+
+.HECArea:HOVER, .HECArea:FOCUS{
+	background: white;
 }
 
 .possessionheavyEquipment label {
@@ -2436,6 +2484,8 @@ button {
 .myinfo_4{
 	display : inline-block;
 	width: 20%;
+	margin-bottom : 5px;
+	padding : 0px;
 }
 #SpecialRolling {
 	border: 1px solid gray;

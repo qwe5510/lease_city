@@ -13,7 +13,14 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="lease">
 		<div class="lease_menu">
-		</div>
+      	<div class="lease_menu_inner"></div>
+        </div>
+        <c:url value="/leaseCall" var="leaseCall"></c:url>
+        <c:url value="/lookupHeavy" var="lookupHeavy"></c:url>
+        <ul class="lease_menu_ul">
+			<li class="lease_menu_first"><a id="lease_call" href="${leaseCall}"><img id="lease_call_img" src="<%=request.getContextPath()%>/images/lease/lease_menu2_1.png"></a></li>
+			<li><a id="lease_lookup" href="${lookupHeavy}"><img id="lease_lookup_img" src="<%=request.getContextPath()%>/images/lease/lease_menu3.png"></a></li>
+	    </ul>
 		<div class="lease_main">
 			<br><br>
 			
@@ -100,7 +107,6 @@
 					<td colspan="2" class="fromToDate">
 						<label>시작일자</label><sform:input path="fromDate" type="date"/><br>
 						<label>종료일자</label><sform:input path="toDate" type="date"/>
-						<span></span>
 					</td>
 				</tr>
 				<tr>
@@ -136,6 +142,22 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+<c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
+<c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
+<c:url value="/images/lease/lease_menu2_1.png" var="leaseCallHover"></c:url>
+<c:url value="/images/lease/lease_menu2.png" var="leaseCallNormal"></c:url>
+	$("#lease_lookup").hover(
+		function(){
+			$("#lease_call_img").attr("src", "${leaseCallNormal}")
+			$("#lease_lookup_img").attr("src", "${lookupHeavyHover}");
+		},
+		function(){
+			$("#lease_call_img").attr("src", "${leaseCallHover}")
+			$("#lease_lookup_img").attr("src", "${lookupHeavyNormal}");
+		});
+
+
  	<c:url value="/leaseCall/read?leaseCallNo=${leaseRequest.leaseCallNo}" var="leaseCallRead"/>
  	$(document).on("click","#lease_request_cancel",function(e) {
    		e.preventDefault();
@@ -212,26 +234,30 @@
 	   	subToDt 	= Math.floor(endDt.valueOf()/(24*60*60*1000) - today.valueOf()/(24*60*60*1000));
 	   	
  	   	if(subFromDt < 0){
+ 	   		$(".dateCheck").css("color", "red");
 	   	 	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
 	    	$("#toDate").focus();
 	    	return false; 
 	    }else if(subToDt < 0){
+	    	$(".dateCheck").css("color", "red");
 	    	$(".dateCheck").html("오늘보다 이전으로 잡을 수 없습니다.");
 	    	$("#toDate").focus();
 	    	return false;
 	    }
  	    
  	    if(fromDate == "" && toDate == ""){
+ 	    	$(".dateCheck").css("color", "red");
  	    	$(".dateCheck").html("날짜가 공백입니다 날짜를 설정 해주세요.");
  	    	$("#fromDate").focus();
  	    	return false;
  	    }
  	    else if(fromDate == ""){
+ 	    	$(".dateCheck").css("color", "blue");
  	    	$(".dateCheck").html("시작 날짜를 설정 해주세요.");
  	    	$("#fromDate").focus();
  	    	return false;
  	    }else if(toDate == ""){
- 	    	console.log("통과");
+ 	    	$(".dateCheck").css("color", "blue");
  	    	$(".dateCheck").html("종료 날짜를 설정 해주세요.");
  	    	$("#toDate").focus();
  	    	return false;
@@ -240,6 +266,7 @@
  	  	resultDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- startDt.valueOf()/(24*60*60*1000));
  	 
  	  	if(resultDt < 0 ){
+ 	  		$(".dateCheck").css("color", "red");
  	    	$(".dateCheck").html("종료날짜가 시작날짜보다 나중이어야 합니다.");
  	    	$("#toDate").focus();
  	    	return false; 
@@ -251,9 +278,11 @@
  	  	subCurtLineToDt = Math.floor(endDt.valueOf()/(24*60*60*1000)- curtLineDt.valueOf()/(24*60*60*1000));
  	  	
  	  	if(subCurtLineFromDt < 0){
+ 	  		$(".dateCheck").css("color", "red");
  	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
  	    	$("#fromDate").focus();
  	  	}else if(subCurtLineToDt < 0){
+ 	  		$(".dateCheck").css("color", "red");
  	  		$(".dateCheck").html("임대 요청 시작날짜보다 이전일 수 없습니다.");
  	    	$("#toDate").focus();
  	  	}

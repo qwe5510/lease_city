@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<jsp:include page="../layout/header.jsp"></jsp:include>	
 	<c:url value="/help/qna" var="qna"/>
 	<div class="help">
@@ -17,12 +18,12 @@
 			<h2></h2>
 			<br>
 			</div>
-			<ul class="help_menu_ul">
-			<li class="help_menu_first"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></li>
-			<li><a id="help_question" href="${qna}"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu4.png"></a></li>
-			</ul>
 		</div>
-
+		<ul class="help_menu_ul">
+			<li class="help_menu_first"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2_1.png"></li>
+			<li><a id="help_question" href="${qna}"><img id="help_question_img" src="<%=request.getContextPath()%>/images/help/help_menu3.png"></a></li>
+		</ul>
+		
 		<div class="cssload-cssload-wrap2">
 			<div class="cssload-wrap">
 				<div class="cssload-overlay"></div>
@@ -89,12 +90,12 @@
 
 
 	$("#help_question").on("mouseover",function(){
-		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4_1.png");
+		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu3_1.png");
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2.png");
 	});
 	
 	$("#help_question").on("mouseout",function(){
-		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu4.png");
+		$("#help_question_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu3.png");
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2_1.png");
 	});
 	$(document).ready(function() {

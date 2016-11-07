@@ -50,17 +50,39 @@ public interface UserService {
 	public User loadUserInfo(String userId)
 								throws NotFoundDataException;
 	
+	/**
+	 * 회원ID에 대한 중장비 정보 리턴 - 중기업체
+	 * @param userId
+	 * @return
+	 * @throws NotFoundDataException
+	 */
 	public List<HeavyEquipment> loadUserHeavyEquipment(String userId)
 								throws NotFoundDataException;
 	
+	/**
+	 * 회원ID에 대한 자격증 정보 리턴 - 건설업체
+	 * @param userId
+	 * @return
+	 * @throws NotFoundDataException
+	 */
 	public List<License> loadUserLicense(String userId)
 								throws NotFoundDataException;
+	
 	
 	/**
 	 * 유저 신용도 점수 계산
 	 * @param userId
 	 */
 	public void calcCreditGrade(User user);
+	
+	/**
+	 * 회원의 완료작업 기록 개수 (Credit DTO를 이용하여 작성)
+	 * @param user
+	 * @return
+	 */
+	public Integer getCountWorkLog(User user);
+	
+	
 								
 }
 

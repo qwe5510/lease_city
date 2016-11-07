@@ -27,7 +27,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter{
 		.addPathPatterns("/board", "board/**")
 		.addPathPatterns("/help/qna", "help/qna/**")
 		.addPathPatterns("/leaseCall", "leaseCall/**")
-		.addPathPatterns("/inquery_heavy", "inquery_heavy/**");
+		.addPathPatterns("/lookupHeavy", "lookupHeavy/**");
+
 	}
 	
 	

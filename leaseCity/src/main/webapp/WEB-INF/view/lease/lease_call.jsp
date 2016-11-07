@@ -26,11 +26,17 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<c:url value="/lookupHeavy" var="lookupHeavy"></c:url>
 	<div class="lease">
 		<div class="lease_menu">
+			<div class="lease_menu_inner"></div>
 		</div>
+		<ul class="lease_menu_ul">
+			<li class="lease_menu_first"><a id="lease_call"><img id="lease_call_img" src="<%=request.getContextPath()%>/images/lease/lease_menu2_1.png"></a></li>
+			<li><a id="lease_lookup" href="${lookupHeavy}"><img id="lease_lookup_img" src="<%=request.getContextPath()%>/images/lease/lease_menu3.png"></a></li>
+		</ul>				
 		<div class="lease_main">
-			<table class="help_table">
+			<table class="lease_table">
 				<tr>
 					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
 				</tr>
@@ -48,11 +54,11 @@
                </tr>
                <tr class="boardShow">
                
-               <fmt:formatNumber value="${leaseCall.tempGrade/5 * 100}" var="creditPercent" type="percent"></fmt:formatNumber>
+               <fmt:formatNumber value="${leaseCall.tempGrade/5}" var="creditPercent" type="percent"></fmt:formatNumber>
                <fmt:formatNumber value="${leaseCall.tempGrade}" pattern="0.00" var="credit"></fmt:formatNumber>
                   <td>
-                  <div class="credit-min-area_leaseCall">
-                  <i class="credit-max-area_leaseCall" style="width: ${creditPercent}"></i>
+                  <div class="credit-min-area">
+                  <i class="credit-max-area" style="width: ${creditPercent}"></i>
                   </div>
                   <strong>${credit}</strong>
                   </td>
@@ -72,7 +78,7 @@
                      </c:if>
                      
                      <c:if test="${!(leaseCall.choiceLRCount eq 0)}">
-                     	<span class="label label-warning">
+                     	<span class="label label-success">
                      		선발 : ${leaseCall.choiceLRCount}
                      	</span>
                      </c:if>
@@ -144,44 +150,28 @@
                   </div>
          	</div>
 		</div>
-	</div>
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
-	
-	
-	
-	<div class="cssload-cssload-wrap2">
-		<div class="cssload-wrap-leaseCall" style="border: solid 1px; display: none;">
-			<div class="cssload-overlay"></div>
-	
-			<div class="cssload-cogWheel cssload-one">
-			
-			<div class="cssload-cog cssload-one"></div>
-			<div class="cssload-cog cssload-two"></div>
-			<div class="cssload-cog cssload-three"></div>
-			<div class="cssload-cog cssload-four"></div>
-			<div class="cssload-cog cssload-five"></div>
-			<div class="cssload-center"></div>
-			</div>
-			<h5 style="margin-left:25px; margin-top: 40px; color: black;">loading</h5>
-			<div class="cssload-cogWheel cssload-two">
-			
-			<div class="cssload-cog cssload-one"></div>
-			<div class="cssload-cog cssload-two"></div>
-			<div class="cssload-cog cssload-three"></div>
-			<div class="cssload-cog cssload-four"></div>
-			<div class="cssload-cog cssload-five"></div>
-			<div class="cssload-center"></div>
-			</div>
-		</div>
-	</div>
-	
+	</div>	
+	<jsp:include page="../layout/footer.jsp"></jsp:include>	
 </body>
 
-<!-- 페이지 펼치기 -->
-<c:url value="/moreCallPageAjax" var="moreCallPage"></c:url>
 
+<!-- 페이지 펼치기 -->
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+<c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
+<c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
+<c:url value="/images/lease/lease_menu2_1.png" var="leaseCallHover"></c:url>
+<c:url value="/images/lease/lease_menu2.png" var="leaseCallNormal"></c:url>
+	$("#lease_lookup").hover(
+			function(){
+				$("#lease_call_img").attr("src", "${leaseCallNormal}")
+				$("#lease_lookup_img").attr("src", "${lookupHeavyHover}");
+			},
+			function(){
+				$("#lease_call_img").attr("src", "${leaseCallHover}")
+				$("#lease_lookup_img").attr("src", "${lookupHeavyNormal}");
+			});
 	
 	var g_currentPage = 1;
 	
@@ -211,14 +201,8 @@
 	String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
 	String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 	Number.prototype.zf = function(len){return this.toString().zf(len);};
-	
-	$(window).on("load", function(){
 
-		if(Number(${page.pageSize}) >= Number(${page.totalCount})){
-			$("#morePage").css("display", "none");
-		}
-	});
-	
+	<c:url value="/moreCallPageAjax" var="moreCallPage"></c:url>
 	$("#morePage").on("click", function(e){
 		e.preventDefault();	
 		
@@ -241,8 +225,8 @@
 					var creditPercent = (leaseCall.tempGrade/5 * 100);
                     var credit = leaseCall.tempGrade.toFixed(2);
                     
-					str+= "<tr class='boardShow'><td><div class='credit-min-area_leaseCall'>";
-					str+= "<i class='credit-max-area_leaseCall' style='width:"+ creditPercent + "%'></i>";
+					str+= "<tr class='boardShow'><td><div class='credit-min-area'>";
+					str+= "<i class='credit-max-area' style='width:"+ creditPercent + "%'></i>";
 					str+= "</div><strong>"+credit+"</strong></td>";
 					str+= "<td>"+leaseCall.leaseCategory+"<br>"+leaseCall.equipmentCategory+"</td>";
 					str+= "<td class='leaseCallTitle'>";					
@@ -279,13 +263,8 @@
 					str+= "</td></tr>";
 					str+= "<tr><td colspan='6' class='boardLine' style='height: 4px !important;'></td></tr>";
 				});
-				
-				$(".cssload-wrap-leaseCall").css("display", "block");
-				
-				setTimeout(function(){
-					$(".help_table").append(str);
-					$(".cssload-wrap-leaseCall").css("display", "none");
-				}, 100)
+			
+				$(".lease_table").append(str);
 				
 				var totalCount = map.pageCount;
 				var nextCount = map.pageSize*g_currentPage+1;

@@ -105,7 +105,7 @@ public class CommunityController {
 	
 	//게시판 글 , 댓글 확인
 	@RequestMapping(value="/board/read", method = RequestMethod.GET)
-	public String boarRead(Model model, HttpSession session, 
+	public String boardRead(Model model, HttpSession session, 
 			RedirectAttributes redir, Page searchPage, 
 			@RequestParam(value="currentPage", required=false) Integer currentPage,
 			@RequestParam(value="commentNo", required=false) Integer commentNo,

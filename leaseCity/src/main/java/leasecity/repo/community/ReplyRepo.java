@@ -2,7 +2,6 @@ package leasecity.repo.community;
 
 import java.util.List;
 
-import leasecity.dto.community.Comment;
 import leasecity.dto.community.Reply;
 import leasecity.dto.etc.Page;
 

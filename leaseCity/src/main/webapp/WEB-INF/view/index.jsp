@@ -6,7 +6,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Home | LEASECITY</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+
+<!-- <!-- <link rel="stylesheet" href="css/reset.css"> -->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/bootstrap-responsive.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/main.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/sl-slide.css">
+
+<script
+	src="<%=request.getContextPath()%>/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+<!-- Le fav and touch icons -->
+<link rel="shortcut icon"
+	href="<%=request.getContextPath()%>/images/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
+
 <title>HOME | LEASE CITY</title>
+
 </head>
 <body>
 	<!-- 가입 절차 설명 메시지 -->

@@ -28,7 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import leasecity.dto.adminwork.Notify;
 import leasecity.dto.etc.Page;
 import leasecity.dto.lease.LeaseCall;
+import leasecity.dto.lease.LeaseDirectCall;
 import leasecity.dto.lease.LeaseRequest;
+import leasecity.dto.lease.LeaseTransfer;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipment;
 import leasecity.dto.user.HeavyEquipmentCompany;
@@ -53,7 +55,15 @@ public class LeaseController {
 	@Autowired
 	NotifyService notifyService;
 	
-	public static final int LEASE_CALL_PAGE_SIZE = 5; 
+	/**
+	 * 임대 요청 기능 페이지 사이즈
+	 */
+	public static final int LEASE_CALL_PAGE_SIZE = 5;
+	
+	/**
+	 * 중기업체 조회 페이지 사이즈
+	 */
+	public static final int LOOK_UP_HEC_PAGE_SIZE = 10;
 	
 	static Logger logger = LoggerFactory.getLogger(LeaseController.class);
 	
@@ -83,16 +93,17 @@ public class LeaseController {
 				if (str!=null && str.matches("/^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/")) {
 					model.addAttribute("lease_message", "조건이 알맞지 않습니다.\\n(%를 제외한 2글자 이상 문자.)");
 				}
-
-				page = leaseService.getMoreViewSearchPage(
+			}
+			
+			page = leaseService.getMoreViewSearchPage(
 									currentPage, LEASE_CALL_PAGE_SIZE,
 									searchPage.getSearch(), searchPage.getKeyword());
 
-				logger.trace("page : {}", page);
-				leaseCalls = leaseService.loadLeaseCalls(page);
+			logger.trace("page : {}", page);
+			leaseCalls = leaseService.loadLeaseCalls(page);
 				
-				logger.trace("임대요청 : {}", leaseCalls);
-			} 
+			logger.trace("임대요청 : {}", leaseCalls);
+			
 			model.addAttribute("leaseCalls", leaseCalls);
 			model.addAttribute("page", page);
 		} catch (NotFoundDataException e) {
@@ -329,17 +340,209 @@ public class LeaseController {
 		return "redirect:/leaseCall";
 	}
 	
-	@RequestMapping(value="/inquery_heavy")
-	public String inquery_heavy(Model model){
+	/**
+	 * 중기업체 조회 컨트롤러
+	 * @param model
+	 * @param redir
+	 * @param session
+	 * @param searchPage
+	 * @param currentPage
+	 * @return
+	 */
+	@RequestMapping(value="/lookupHeavy", method=RequestMethod.GET)
+	public String inquery_heavy(Model model, RedirectAttributes redir,
+			HttpSession session, Page searchPage,
+			@RequestParam(required=false) Integer currentPage){
 		HeavyEquipmentCompany heavyEquipmentCompany = new HeavyEquipmentCompany();
 		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
-		return "lease/inquery_heavy";
+		
+		Page page = null;
+		List<HeavyEquipmentCompany> heavyEquipmentCompanies = null;
+		
+		
+		User loginUser = session.getAttribute("loginUser")==null?
+				(User)session.getAttribute("admin"):
+				(User)session.getAttribute("loginUser");
+		
+		//값이 없을 경우 1로 초기화
+		if(currentPage == null){currentPage = 1;}
+		
+		try {
+			if (searchPage != null) {
+				
+				if(searchPage.getSearch() != null && searchPage.getSearch().equals("CREDIT")){
+					model.addAttribute("creditCheck", "ON");
+				}
+				
+				String str = searchPage.getKeyword();
+
+				if (str!=null && str.matches("/^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/")) {
+					model.addAttribute("leasex_message", "조건이 알맞지 않습니다.\\n(%를 제외한 2글자 이상 문자.)");
+				}
+
+				page = leaseService.getMoreViewSearchPage(
+									currentPage, LOOK_UP_HEC_PAGE_SIZE,
+									searchPage.getSearch(), searchPage.getKeyword());
+
+				logger.trace("page : {}", page);
+				heavyEquipmentCompanies = 
+						leaseService.lookUpHeavyEquipmentCompanies(loginUser, page);
+				
+				for(HeavyEquipmentCompany company : heavyEquipmentCompanies){
+					String address = company.getAddress();
+					int localIdx = address.indexOf(" ", address.indexOf(" ")+1);
+					address = address.substring(0, localIdx);
+					company.setAddress(address);
+					
+					List<HeavyEquipment> HEs = company.getHeavyEquipmentList();
+					String outputCategory = HEs.get(0).getEquipmentCategory();
+					
+					if(HEs.size() > 1){
+						outputCategory = outputCategory + " 외 " + (HEs.size()-1) + "종";
+					}
+					company.setOutputCategory(outputCategory);
+					company.setOutputWorkLog(userService.getCountWorkLog(company));
+				}
+
+			} 
+			model.addAttribute("heavyEquipmentCompanies", heavyEquipmentCompanies);
+			model.addAttribute("page", page);
+		} catch (NotFoundDataException e) {
+			logger.error("공개 중인 중기업체 정보가 없습니다.");
+			model.addAttribute("errorMsg", "공개 중인 중기업체 정보가 없습니다.");
+		}
+		
+		return "lease/lookup_heavy";
 	}
 	
-	@RequestMapping(value="/heavy_request")
-	public String heavy_request(Model model){
-		HeavyEquipmentCompany heavyEquipmentCompany = new HeavyEquipmentCompany();
-		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
-		return "lease/heavy_request";
+	@RequestMapping(value="/moreHECPageAjax", method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> HECPageWrite(
+			@RequestParam Integer currentPage,
+			@RequestParam String search,
+			@RequestParam String keyword,
+			HttpSession session) throws NotFoundDataException{
+
+		User loginUser = session.getAttribute("loginUser")==null?
+			(User)session.getAttribute("admin"):
+			(User)session.getAttribute("loginUser");
+		
+		logger.trace("받은 유저 확인 : {}", loginUser);
+		
+		Page page = leaseService.getMoreViewSearchPage(
+				currentPage, LOOK_UP_HEC_PAGE_SIZE, search, keyword);
+		
+		
+		List<HeavyEquipmentCompany> HECs = null;
+		HECs = leaseService.lookUpHeavyEquipmentCompanies(loginUser, page);
+		
+		for(HeavyEquipmentCompany company : HECs){
+			String address = company.getAddress();
+			int localIdx = address.indexOf(" ", address.indexOf(" ")+1);
+			address = address.substring(0, localIdx);
+			company.setAddress(address);
+			
+			List<HeavyEquipment> HEs = company.getHeavyEquipmentList();
+			String outputCategory = HEs.get(0).getEquipmentCategory();
+			
+			if(HEs.size() > 1){
+				outputCategory = outputCategory + " 외 " + (HEs.size()-1) + "종";
+			}
+			company.setOutputCategory(outputCategory);
+			company.setOutputWorkLog(userService.getCountWorkLog(company));
+		}
+
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("HECs", HECs);
+		map.put("pageCount", page.getTotalCount());
+		map.put("pageSize", page.getPageSize());
+		
+		return map;
 	}
+	
+	/**
+	 * 중기업체 조회 인식 - 
+	 * @param model
+	 * @param redir
+	 * @param session
+	 * @param equipmentId
+	 * @return
+	 */
+	@RequestMapping(value="/lookupHeavy/read", method=RequestMethod.GET)
+	public String heavyRequest(Model model, RedirectAttributes redir,
+			HttpSession session, @RequestParam(required=false) String equipmentId){
+		
+		List<String> acceptIdNumbers = new ArrayList<>();
+		List<String> sendIdNumbers = new ArrayList<>();
+		
+		try {
+			User loginUser = session.getAttribute("loginUser")==null?
+					(User)session.getAttribute("admin"):
+					(User)session.getAttribute("loginUser");
+					
+			User user = userService.loadUserInfo(equipmentId);
+			HeavyEquipmentCompany HECUser= null;
+			
+			//중기 업체 일 때, - 양도신청 정보 담기
+			if(loginUser instanceof HeavyEquipmentCompany){
+				List<HeavyEquipment> HEs = userService.loadUserHeavyEquipment(loginUser.getUserId());
+				for(HeavyEquipment HE : HEs){
+					if(HE!= null && HE.getUsedYesNo().equals("Y"))
+						sendIdNumbers.add(HE.getInfo());
+				}
+				model.addAttribute("isUser", "HeavyEquipment");
+				model.addAttribute("sendIdNumbers", sendIdNumbers);
+				
+			//건설업체 일 때. - 직접요청 정보 담기.
+			}else if(loginUser instanceof ConstructionCompany){
+				model.addAttribute("isUser", "Construction");
+			}
+			
+			if(user instanceof HeavyEquipmentCompany){
+				HECUser = (HeavyEquipmentCompany)user;
+				
+				HECUser.setHeavyEquipmentList(
+						userService.loadUserHeavyEquipment(equipmentId));
+				
+				
+				for(HeavyEquipment HE : HECUser.getHeavyEquipmentList()){
+					if(HE!= null && HE.getUsedYesNo().equals("N"))
+						acceptIdNumbers.add(HE.getInfo());
+				}
+				model.addAttribute("acceptIdNumbers", acceptIdNumbers);
+				model.addAttribute("HECUser", HECUser);
+			}
+			
+		} catch (NotFoundDataException e) {
+			logger.trace("존재하지 않는 유저입니다.");
+			redir.addFlashAttribute("HEC_message", "존재하지 않는 유저입니다.");
+		}
+		
+		LeaseDirectCall leaseDirectCall = new LeaseDirectCall();
+		LeaseTransfer leaseTransfer = new LeaseTransfer();
+		
+		model.addAttribute("leaseDirectCall", leaseDirectCall);
+		model.addAttribute("leaseTransfer", leaseTransfer);
+		
+		return "lease/lookup_heavy_read";
+	}
+	
+	
+	@RequestMapping(value="/leaseDirectCallWrite", method=RequestMethod.POST)
+	public String directCallWrite(Model model, RedirectAttributes redir, HttpSession session){
+		
+		
+		
+		return "";
+	}
+	
+	@RequestMapping(value="/leaseTransferWrite", method=RequestMethod.POST)
+	public String transferWrite(Model model, RedirectAttributes redir, HttpSession session){
+		
+		
+		
+		return "";
+	}
+	
+	
 }
