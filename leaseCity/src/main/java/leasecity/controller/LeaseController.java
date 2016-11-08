@@ -380,9 +380,19 @@ public class LeaseController {
 					model.addAttribute("leasex_message", "조건이 알맞지 않습니다.\\n(%를 제외한 2글자 이상 문자.)");
 				}
 
-				page = leaseService.getMoreViewSearchPage(
+				String isCompany = null;
+				String userId = null;
+				if(loginUser instanceof ConstructionCompany){
+					isCompany = "CC";
+				}else if(loginUser instanceof HeavyEquipmentCompany){
+					isCompany = "HEC";
+					userId = loginUser.getUserId();
+				}
+				
+				page = leaseService.getMoreViewHECPage(
 									currentPage, LOOK_UP_HEC_PAGE_SIZE,
-									searchPage.getSearch(), searchPage.getKeyword());
+									searchPage.getSearch(), searchPage.getKeyword()
+									, isCompany, userId);
 
 				logger.trace("page : {}", page);
 				heavyEquipmentCompanies = 
@@ -473,7 +483,6 @@ public class LeaseController {
 			HttpSession session, @RequestParam(required=false) String equipmentId){
 		
 		List<String> acceptIdNumbers = new ArrayList<>();
-		
 		List<String> heavyIdNumbers = new ArrayList<>();
 		List<String> sendIdNumbers = new ArrayList<>();
 		List<String> leaseCallTitles = new ArrayList<>();
@@ -493,9 +502,15 @@ public class LeaseController {
 					if(HE!= null && HE.getUsedYesNo().equals("Y"))
 						sendIdNumbers.add(HE.getInfo());
 				}
-				String idNumber = sendIdNumbers.get(0);
-				       idNumber = idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
 				
+				String idNumber = null;
+				if(sendIdNumbers.size() <= 0){
+					redir.addFlashAttribute("HEC_message", "현재 양도 할 수 있는 중장비가 없습니다.");
+					return "redirect:/lookupHeavy";
+				}else{
+					idNumber = sendIdNumbers.get(0);
+				    idNumber = idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
+				}
 				String address = leaseService.loadHeavyEquipmentUsingAddress(idNumber);
 				
 				model.addAttribute("isUser", "HeavyEquipment");
@@ -654,9 +669,9 @@ public class LeaseController {
 		String sendCategory = leaseTransfer.getSendIdNumber().split("/")[0];
 		String acceptCategory = leaseTransfer.getAcceptIdNumber().split("/")[0];
 		
+		//보내는 사람과 받는사람의 차량종류가 일치할 경우 차량종류를 해당 양도테이블 정보에 넘김.
 		if(sendCategory.equals(acceptCategory)){
 			leaseTransfer.setEquipmentCategory(sendCategory);
-			//idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
 			
 			String sendIdNumber = leaseTransfer.getSendIdNumber();
 			String acceptIdNumber = leaseTransfer.getAcceptIdNumber();
@@ -678,16 +693,19 @@ public class LeaseController {
 			
 		}else{
 			redir.addFlashAttribute("HEC_message", "양도하려는 장비의 종류가 서로 다릅니다.");
-			return "redirect:/lookupHeavy/read";
+			return "redirect:/lookupHeavy/read?equipment="+leaseTransfer.getAcceptUserId();
 		}
 		
 		if(user != null && user instanceof HeavyEquipmentCompany){
 			leaseTransfer.setSendUserId(user.getUserId());
-			
 		}else{
 			redir.addFlashAttribute("join_meesage", "중기업체 회원이 아닙니다.\\n메인화면으로 이동합니다.");
 			return "redirect:/index";
 		}
+		
+		/**
+		 * 알림 자리가 들어가야 함.
+		 */
 		
 		try {
 			leaseService.doLeaseTransfer(leaseTransfer);

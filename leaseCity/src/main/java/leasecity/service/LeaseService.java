@@ -281,10 +281,11 @@ public interface LeaseService {
 	 * @param search 검색컨텐츠
 	 * @param keyword 검색어
 	 * @param isCompany (HEC : 중기업체 / CC : 건설업체)
+	 * @param userId : 업체명 기입.
 	 * @return 
 	 */
 	public Page getMoreViewHECPage
-		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany);
+		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany, String userId);
 	
 	/**
 	 * 임대 양도에 대한 페이지 (검색없음)

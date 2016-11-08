@@ -86,38 +86,27 @@
 			</fmt:formatNumber>
 			<fmt:formatNumber value="${HEC.creditGrade}" 
 					pattern="0.00" var="credit"></fmt:formatNumber>
-			
-			<c:choose>
-				<c:when test="${!empty loginUser and HEC.userId eq loginUser.userId}">
-				</c:when>
-				<c:otherwise>
-				<tr align="center" class="HECArea">
-					<td>
-						<div class="credit-min-area">
-						<i class="credit-max-area" style="width: ${creditPercent}">
-						</i></div>
-						<strong>${credit}</strong>
+			<tr align="center" class="HECArea">
+				<td>
+					<div class="credit-min-area">
+					<i class="credit-max-area" style="width: ${creditPercent}">
+					</i></div>
+					<strong>${credit}</strong>
+				</td>
+				<td>
+					<a href="${lookupHeavy}${HEC.userId}">
+					<span>${HEC.companyName}</span>
+					</a>
 					</td>
 					<td>
-						<a href="${lookupHeavy}${HEC.userId}">
-						<span>${HEC.companyName}</span>
-						</a>
-						</td>
-						<td>
-						<a href="${lookupHeavy}${HEC.userId}">
-						<span>${HEC.representName}</span>
-						</a>
-					</td>
-					<td><span>${HEC.address}</span></td>
-					<td><span>${HEC.outputCategory}</span></td>
-					<td><span>${HEC.outputWorkLog}건</span></td>
-				</tr>
-				</c:otherwise>
-			</c:choose>
-			
-			
-			
-			
+					<a href="${lookupHeavy}${HEC.userId}">
+					<span>${HEC.representName}</span>
+					</a>
+				</td>
+				<td><span>${HEC.address}</span></td>
+				<td><span>${HEC.outputCategory}</span></td>
+				<td><span>${HEC.outputWorkLog}건</span></td>
+			</tr>
 			</c:forEach>
 
 			<c:if test="${!empty errorMsg}">
@@ -139,11 +128,19 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 	var g_currentPage = 1;
+	$(window).on("load", function(e){
+		var totalCount = ${page.totalCount};
+		
+		if(totalCount <= 5){
+			$("#moreViewPage").css("display", "none");
+		}
+	});
+	
 	<c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
 	<c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
 	<c:url value="/images/lease/lease_menu2_1.png" var="leaseCallHover"></c:url>
 	<c:url value="/images/lease/lease_menu2.png" var="leaseCallNormal"></c:url>
-		$("#lease_call").hover(
+	$("#lease_call").hover(
 			function(){
 				$("#lease_call_img").attr("src", "${leaseCallHover}")		
 				$("#lease_lookup_img").attr("src", "${lookupHeavyNormal}");

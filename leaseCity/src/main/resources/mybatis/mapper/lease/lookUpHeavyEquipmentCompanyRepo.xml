@@ -45,7 +45,7 @@
  					ORDER BY credit_grade DESC
  					) sub
  				)
- 			WHERE help_on_off = 'ON'
+ 			WHERE help_on_off = 'ON' AND user_id != #{userId}
  		<if test="pageSize != null and to !=null and from != null">
  			AND rnum BETWEEN #{from} AND #{to}
  		</if>		

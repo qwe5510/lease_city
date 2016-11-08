@@ -595,9 +595,8 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 	
 	@Override
-	public Page getMoreViewHECPage
-		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany) {
-		
+	public Page getMoreViewHECPage(Integer currentPage, Integer pageSize,	
+			String search, String keyword, String isCompany, String userId) {
 		Page page;
 		
 		if(search!=null && keyword != null){
@@ -615,6 +614,7 @@ public class LeaseServiceImpl implements LeaseService {
 		}else if(isCompany!=null && isCompany.equals("HEC")){
 			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountHelpOnHeavyEquipment(page));
 		}
+		page.setUserId(userId);
 		
 		return page;
 	}
@@ -634,8 +634,8 @@ public class LeaseServiceImpl implements LeaseService {
 		List<LeaseCall> leaseCall = leaseCallRepo.getAllLeaseCalls();
 		return leaseCall;
 	}
-	
-	//------------------------------------------------------------------------------------
+
+	//-----------------------------------------------------------------------------------
 	
 	
 }
