@@ -239,6 +239,13 @@
 								<div id="Next9"></div>
 							</div>
 						</div>
+						<div>
+							<div class="weatherMap">
+								<div class="weatherInfo">
+								</div>
+							</div>
+							
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -362,14 +369,17 @@
 	
 		$(function() {
 			
+			// 날씨 초기화
+			for (var i = 1 ; i <= 10 ; i++) {
+				selectWeather(i);
+			}
 			
+			// 페이징
 			var Page = (function() {
-
 				var $navArrows = $('#nav-arrows'), slitslider = $('#slider')
 						.slitslider({
 							autoplay : true
 						}),
-
 				init = function() {
 					initEvents();
 				}, initEvents = function() {
@@ -377,24 +387,109 @@
 						slitslider.next();
 						return false;
 					});
-
 					$navArrows.children(':first').on('click', function() {
 						slitslider.previous();
 						return false;
 					});
 				};
-
 				return {
 					init : init
 				};
 
 			})();
 			Page.init();
-		});
+			
+			// 밑에 함수 실행
+			RollingText("Prev", "Next", 0);
+			// 함수 1
+			function RollingText(P, N, idx) {
+			
+				var maxcnt = 9;
 
+				// 아이디 갖고오기
+				var Prev = "#" + P + idx;
+				var Next = "#" + N + idx;
+
+				// css 갖고오기
+				var pos1 = $(Prev).css("top").replace("px", "");
+				var pos2 = $(Next).css("top").replace("px", "");
+				//alert('111');
+
+				// animate가 실행될 떄, 올라올 텍스트의 위치 설정
+				if (pos1 <= -28) {
+					$(Prev).css("top", "28px");
+				}
+				if (pos2 <= -56) {
+					$(Next).css("top", "0px");
+				}
+
+				// 첫번째 animate의 값 설정
+				fn_Next(idx);
+
+				// (이전 값들 밀어내기)
+				$(Prev).delay(100).animate({
+					top : "-=28px"
+				}, 600, function() {
+				});
+
+				// (갱신된 값 갖고 오기)
+				$(Next).delay(100).animate({
+					top : "-=28px"
+				}, 600, function() {
+					fn_Next(idx);
+					fn_Prev(idx);
+					idx++;
+					if (idx > maxcnt) {
+						setTimeout(function() {
+							RollingText(P, N, 0);
+					}, 7000);
+						
+					} else {
+						RollingText(P, N, idx);
+					}
+				});
+			}
+			//다음이 지나가고 이전꺼에 다음 순위 불러오는 처리 Ajax
+			function fn_Prev(val) {
+				//console.log("1  : " + realtimeUpdateLeaseCalls(val) + " and " + val);
+				if( realtimeUpdateLeaseCalls(val) == undefined) {
+					console.log("undefind ..");
+					//RollingText(vPrev, vNext, 0);
+					return;
+				}
+				
+				var text = realtimeUpdateLeaseCalls(val);
+				var PrevVal = "#" + "Prev" + val;
+				if( val < realtimeUpdateLeaseCalls(val).length) {
+					$(PrevVal).empty().append("<li><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ realtimeUpdateLeaseCalls(val)[realtimeUpdateLeaseCalls(val).length - (1 + val)].leaseCallNo + ">"  + realtimeUpdateLeaseCalls(val)[realtimeUpdateLeaseCalls(val).length - (1 + val)].leaseCommentTitle + "</a></li>");
+				} else {
+					$(PrevVal).empty().append("");
+				}
+			}
+			//다음 순위 불러오는 함수 처리 Ajax
+			function fn_Next(val) {
+				//console.log("2 : " + realtimeUpdateLeaseCalls(val) + " and " + val);
+				//consolo.log("length : " + realtimeUpdateLeaseCalls(val).length);
+				if( realtimeUpdateLeaseCalls(val) == undefined) {
+					console.log("undefind ..");
+					//RollingText(vPrev, vNext, 0);
+					return;
+				}
+				var text = realtimeUpdateLeaseCalls(val);
+				var NextVal = "#" + "Next" + val;
+				if( val < realtimeUpdateLeaseCalls(val).length ) {
+					$(NextVal).empty().append("<li><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ realtimeUpdateLeaseCalls(val)[realtimeUpdateLeaseCalls(val).length - (1 + val)].leaseCallNo + ">"  + realtimeUpdateLeaseCalls(val)[realtimeUpdateLeaseCalls(val).length - (1 + val)].leaseCommentTitle + "</a></li>");
+				} else {
+					$(NextVal).empty().append("");
+				}
+			}
+		});
+		
+	
+	// 함수 1 : 실시간 임대 요청 업데이트
 	var leaseCallList;
 	<c:url value="/autoSelectLeaseCalls" var="autoSelectLeaseCalls"/>
-	function testfunction(val) {
+	function realtimeUpdateLeaseCalls(val) {
 		$.ajax({
 			// type을 설정합니다.
 			type : 'get',
@@ -415,94 +510,62 @@
 		});
 		return leaseCallList;
 	}
-
-	$(function() {
+	
+	// 함수 2 : 날씨 업데이트
+	<c:url value="/selectWeather" var="selectWeather"/>
+	function selectWeather(val) {
 		
-		// 밑에 함수 실행
-		RollingText("Prev", "Next", 0);
-		// 함수 1
-		function RollingText(P, N, idx) {
-		
-			var maxcnt = 9;
+		$.ajax({
+			// type을 설정합니다.
+			type : 'get',
+			url : "${selectWeather }",
+			// 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+			data : {
+				regionNo : val
+			},
+			// 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+			success : function(res) {
 
-			// 아이디 갖고오기
-			var Prev = "#" + P + idx;
-			var Next = "#" + N + idx;
-
-			// css 갖고오기
-			var pos1 = $(Prev).css("top").replace("px", "");
-			var pos2 = $(Next).css("top").replace("px", "");
-			//alert('111');
-
-			// animate가 실행될 떄, 올라올 텍스트의 위치 설정
-			if (pos1 <= -28) {
-				$(Prev).css("top", "28px");
-			}
-			if (pos2 <= -56) {
-				$(Next).css("top", "0px");
-			}
-
-			// 첫번째 animate의 값 설정
-			fn_Next(idx);
-
-			// (이전 값들 밀어내기)
-			$(Prev).delay(100).animate({
-				top : "-=28px"
-			}, 600, function() {
-			});
-
-			// (갱신된 값 갖고 오기)
-			$(Next).delay(100).animate({
-				top : "-=28px"
-			}, 600, function() {
-				fn_Next(idx);
-				fn_Prev(idx);
-				idx++;
-				if (idx > maxcnt) {
-					setTimeout(function() {
-						RollingText(P, N, 0);
-				}, 7000);
-					
-				} else {
-					RollingText(P, N, idx);
+				var tmMax;
+				var tmMin;
+				
+				if ( Math.abs(res[0].tmx) != "999" ) {
+					tmMax = res[0].tmx;
+				} else if( Math.abs(res[1].tmx) != "999" ){
+					tmMax = res[1].tmx;
+				} 
+				
+				if ( Math.abs(res[0].tmn) != "999" ) {
+					tmMin = res[0].tmn;
+				} else if( Math.abs(res[1].tmn) != "999" ){
+					tmMin = res[1].tmn;
+				} 
+				
+				console.log("가져온 날씨 : " + res[0].wfKor);
+				console.log("도시 위치 : " + res[0].city);
+				console.log("도시 번호 : " + res[0].weatherNo);
+				
+				if(res[0].wfKor == "맑음") {
+					$(".weatherInfo").append("<div id='weather" + val + "'>" + res[0].city + "<br><img src='<%=request.getContextPath()%>/images/weather/맑음.png'><br><font color='blue'>" + tmMin + "</font> / <font color='orange'>" + tmMax + "</font></div>");
 				}
-			});
-		}
-		//다음이 지나가고 이전꺼에 다음 순위 불러오는 처리 Ajax
-		function fn_Prev(val) {
-			//console.log("1  : " + testfunction(val) + " and " + val);
-			if( testfunction(val) == undefined) {
-				console.log("undefind ..");
-				//RollingText(vPrev, vNext, 0);
-				return;
+				if(res[0].wfKor == "구름 많음") {
+					$(".weatherInfo").append("<div id='weather" + val + "'>" + res[0].city + "<br><img src='<%=request.getContextPath()%>/images/weather/구름많음.png'><br><font color='blue'>" + tmMin + "</font> / <font color='orange'>" + tmMax + "</font></div>");
+				}
+				if(res[0].wfKor == "구름 조금") {
+					$(".weatherInfo").append("<div id='weather" + val + "'>" + res[0].city + "<br><img src='<%=request.getContextPath()%>/images/weather/구름조금.png'><br><font color='blue'>" + tmMin + "</font> / <font color='orange'>" + tmMax + "</font></div>");
+				}
+				if(res[0].wfKor == "흐리고 비" || res[0].wfKor == "비") {
+					$(".weatherInfo").append("<div id='weather" + val + "'>" + res[0].city + "<br><img src='<%=request.getContextPath()%>/images/weather/흐리고비.png'><br><font color='blue'>" + tmMin + "</font> / <font color='orange'>" + tmMax + "</font></div>");
+				}
+				if(res[0].wfKor == "눈/비") {
+					$(".weatherInfo").append("<div id='weather" + val + "'>" + res[0].city + "<br><img src='<%=request.getContextPath()%>/images/weather/눈비.png'><br><font color='blue'>" + tmMin + "</font> / <font color='orange'>" + tmMax + "</font></div>");
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log(status);
 			}
-			
-			var text = testfunction(val);
-			var PrevVal = "#" + "Prev" + val;
-			if( val < testfunction(val).length) {
-				$(PrevVal).empty().append("<li><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[val].leaseCallNo + ">"  + testfunction(val)[val].leaseCommentTitle + "</a></li>");
-			} else {
-				$(PrevVal).empty().append("");
-			}
-		}
-		//다음 순위 불러오는 함수 처리 Ajax
-		function fn_Next(val) {
-			//console.log("2 : " + testfunction(val) + " and " + val);
-			//consolo.log("length : " + testfunction(val).length);
-			if( testfunction(val) == undefined) {
-				console.log("undefind ..");
-				//RollingText(vPrev, vNext, 0);
-				return;
-			}
-			var text = testfunction(val);
-			var NextVal = "#" + "Next" + val;
-			if( val < testfunction(val).length ) {
-				$(NextVal).empty().append("<li><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[val].leaseCallNo + ">"  + testfunction(val)[val].leaseCommentTitle + "</a></li>");
-			} else {
-				$(NextVal).empty().append("");
-			}
-		}
-	});
+		});
+	}
 	</script>
 
 
