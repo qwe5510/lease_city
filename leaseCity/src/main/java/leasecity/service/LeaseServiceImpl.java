@@ -131,12 +131,44 @@ public class LeaseServiceImpl implements LeaseService {
 		
 		return result;
 	}
+	
+	@Override
+	public List<LeaseCall> loadConstructionUserLeaseCalls(String userId) 
+										throws NotFoundDataException {
+		
+		if(userId == null){
+			throw new NotFoundDataException("건설업체 유저 ID정보");
+		}
+		
+		List<LeaseCall> results = leaseCallRepo.getSelectConstructionLeaseCalls(userId);
+		
+		if(results.size() <= 0){
+			throw new NotFoundDataException(userId + "유저의 요청글 정보");
+		}
+		
+		return results;
+	}
+	
+	@Override
+	public LeaseCall loadLeaseCall(Integer leaseCallNo) throws NotFoundDataException {
+		if(leaseCallNo == null){
+			throw new NotFoundDataException("임대 요청글 번호");
+		}
+		
+		LeaseCall result = leaseCallRepo.getLeaseCall(leaseCallNo);
+		
+		if(result == null){
+			throw new NotFoundDataException(leaseCallNo + "번 요청글");
+		}
+		
+		return result;
+	}
 
 	@Override
 	public LeaseCall viewLeaseCall(Integer leaseCallNo, String userId) throws NotFoundDataException {
 		
 		if(leaseCallNo == null){
-			throw new NotFoundDataException("임대 요청글");
+			throw new NotFoundDataException("임대 요청글 번호");
 		}
 		
 		LeaseCall result = leaseCallRepo.getLeaseCall(leaseCallNo);

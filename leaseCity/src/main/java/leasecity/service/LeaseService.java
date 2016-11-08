@@ -27,6 +27,22 @@ public interface LeaseService {
 	public List<LeaseCall> loadLeaseCalls(Page page) throws NotFoundDataException;
 	
 	/**
+	 * 건설업체 유저 id에 대한 요청글 조회.
+	 * @param userId
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	public List<LeaseCall> loadConstructionUserLeaseCalls(String userId) throws NotFoundDataException;
+	
+	/**
+	 * 임대 요청글 정보 리턴
+	 * @param leaseCallNo
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	public LeaseCall loadLeaseCall(Integer leaseCallNo) throws NotFoundDataException;
+	
+	/**
 	 * 임대 요청 보기
 	 * @param lease
 	 * @return

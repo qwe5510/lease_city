@@ -36,6 +36,12 @@ public class LeaseCallRepoImpl implements LeaseCallRepo {
 		String stmt = LEASE_CALL_NS + "getPageLeaseCalls";
 		return session.selectList(stmt, page);
 	}
+	
+	@Override
+	public List<LeaseCall> getSelectConstructionLeaseCalls(String userId) {
+		String stmt = LEASE_CALL_NS +"getSelectConstructionLeaseCalls";
+		return session.selectList(stmt, userId);
+	}
 
 	@Override
 	public LeaseCall getLeaseCall(Integer leaseCallNo) {

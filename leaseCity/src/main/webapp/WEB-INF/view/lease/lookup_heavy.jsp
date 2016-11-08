@@ -10,6 +10,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<c:if test="${!empty HEC_message }">
+		<script>
+			alert('${HEC_message}');
+		</script>
+	</c:if>
+
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="lease">
 	<div class="lease_menu">

@@ -30,10 +30,7 @@
 	<c:url value="/help/FAQ" var="FAQ"/>
 	<div class="help">
 		<div class="help_menu">
-			<div class="help_menu_inner1">
-			<h2></h2>
-			<br>
-			</div>
+			<div class="help_menu_inner1"></div>
 		</div>
 		<ul class="help_menu_ul">
 			<li class="help_menu_first"><a id="help_frequenty" href="${FAQ }"><img id="help_frequenty_img" src="<%=request.getContextPath()%>/images/help/help_menu2.png"></a></li>

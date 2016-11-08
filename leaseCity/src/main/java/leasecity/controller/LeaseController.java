@@ -474,7 +474,8 @@ public class LeaseController {
 		
 		List<String> acceptIdNumbers = new ArrayList<>();
 		List<String> sendIdNumbers = new ArrayList<>();
-		
+		List<String> leaseCallTitles = new ArrayList<>();
+				
 		try {
 			User loginUser = session.getAttribute("loginUser")==null?
 					(User)session.getAttribute("admin"):
@@ -495,20 +496,38 @@ public class LeaseController {
 				
 			//건설업체 일 때. - 직접요청 정보 담기.
 			}else if(loginUser instanceof ConstructionCompany){
+				List<LeaseCall> LCs = leaseService.loadConstructionUserLeaseCalls(loginUser.getUserId());
+				
+				if(LCs.size() <= 0){
+					redir.addFlashAttribute("HEC_message", "요청 할 요청글이 존재하지 않습니다.");
+					return "lease/lookup_heavy_read";
+				}
+				
+				for(LeaseCall LC : LCs){
+					String title = LC.getLeaseCallNo()+":"+LC.getLeaseCommentTitle();
+					leaseCallTitles.add(title);
+				}
+				
+				model.addAttribute("leaseCalls", LCs);
+				model.addAttribute("leaseCallTitles", leaseCallTitles);
 				model.addAttribute("isUser", "Construction");
 			}
 			
 			if(user instanceof HeavyEquipmentCompany){
 				HECUser = (HeavyEquipmentCompany)user;
-				
 				HECUser.setHeavyEquipmentList(
 						userService.loadUserHeavyEquipment(equipmentId));
-				
 				
 				for(HeavyEquipment HE : HECUser.getHeavyEquipmentList()){
 					if(HE!= null && HE.getUsedYesNo().equals("N"))
 						acceptIdNumbers.add(HE.getInfo());
 				}
+				
+				if(acceptIdNumbers.size() <= 0){
+					redir.addFlashAttribute("HEC_message", "사용 가능한 차량이 존재하지 않습니다.");
+					return "redirect:/lookupHeavy";
+				}
+				
 				model.addAttribute("acceptIdNumbers", acceptIdNumbers);
 				model.addAttribute("HECUser", HECUser);
 			}
@@ -516,6 +535,7 @@ public class LeaseController {
 		} catch (NotFoundDataException e) {
 			logger.trace("존재하지 않는 유저입니다.");
 			redir.addFlashAttribute("HEC_message", "존재하지 않는 유저입니다.");
+			return "redirect:/lookupHeavy";
 		}
 		
 		LeaseDirectCall leaseDirectCall = new LeaseDirectCall();
@@ -525,6 +545,18 @@ public class LeaseController {
 		model.addAttribute("leaseTransfer", leaseTransfer);
 		
 		return "lease/lookup_heavy_read";
+	}
+	
+	@RequestMapping(value="/callInfoChange", method=RequestMethod.GET)
+	public @ResponseBody LeaseCall leaseCallInfoChangeAjax(
+			@RequestParam String callNoData) throws NotFoundDataException{
+		
+			callNoData = callNoData.substring(0, callNoData.indexOf(":"));
+			int IntegerData = Integer.parseInt(callNoData);
+			LeaseCall result = leaseService.loadLeaseCall(IntegerData);
+			System.out.println(result);
+		
+		return result;
 	}
 	
 	

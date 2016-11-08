@@ -37,7 +37,7 @@
                </td>
                <td class="lease_label">
                   <sform:label path="representPhone">
-                  대표연락처
+                  	대표연락처
                   </sform:label>
                   <span>
                   <c:choose>
@@ -45,7 +45,7 @@
                         ${constructionCompany.representPhone}
                      </c:when>
                      <c:otherwise>
-                        미입력
+                       	 미입력
                      </c:otherwise>
                   </c:choose>
                   </span>

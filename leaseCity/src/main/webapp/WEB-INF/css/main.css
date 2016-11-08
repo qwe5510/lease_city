@@ -1168,23 +1168,25 @@ label {
    padding-top: 80px;
    width: 550px;
    height: 900px;
-   margin-left: 40px;
+   margin-left: 20px;
    margin-right: 50px;
    position: fixed;
    background: url("../images/community/chat_menu.png") no-repeat;
 }
 
 .uchat_inner{
-	padding-top: 195px;
+	padding-top: 190px;
 	padding-left: 35px;
 }
 
 /*community div 설정  */
 .community {
    width: 400px;
+   min-height: 800px;
    clear: both;
-   display: inline-block;
+   float:left;
    position: absolute;
+   left: 28%;
 }
 
 .board_read_main {
@@ -1192,6 +1194,10 @@ label {
    display: inline-block;
    position: absolute;
    padding: 10px;
+   padding-top: 0px;
+   position: relative;
+   margin-left: 200px;
+   width: 600px;
 }
 
 .board_read_line, .qna_read_line {
@@ -1368,13 +1374,6 @@ button {
    margin-left: 80px;
 }
 
-.board_read_main {
-   padding-top: 0px;
-   position: relative;
-   margin-left: 200px;
-   width: 600px;
-}
-/* } */
 /* board 페이징 부분 설정 */
 .boardPage {
    width: 780px;
@@ -1429,12 +1428,19 @@ button {
 
 .boardWriteTable textarea, .boardAdjustTable textarea {
    padding: 0px;
+   margin: 0px;
    width: 600px;
    height: 500px;
 }
 
 .board_write, .board_write_bottom, .board_adjust_bottom {
    float: right;
+   margin: 0px;
+}
+
+.board_write_bottom button{
+	margin-top: 0px;
+	margin-right: 27px;
 }
 
 .searchInput {
@@ -1656,7 +1662,7 @@ button {
    background: url("../images/help/help_menu.png") no-repeat;
    margin-top: 20px;
    min-height: 800px;
-   margin-left: 50px;
+   margin-left: 0px;
    float: left;
    min-width: 30%;
    width: 30%;
@@ -1675,23 +1681,23 @@ button {
 .help_main {
    float: left;
    position: relative;
-   left: 40%;
-   width: 800px;
+   left: 35%;
+   min-width: 600px;
    min-height: 800px;
 }
 
 .help_menu_inner1 {
    background: url(../images/help/help_menu1.png) no-repeat 10% 30%;
    padding: 55px;
-   margin-top: 40px;
-   margin-left: 75px;
+   margin-top: 55px;
+   margin-left: 90px;
 }
 
 .help_menu_ul, .lease_menu_ul {
    list-style: none;
    position: fixed;
    padding-top: 220px;
-   padding-left: 100px;
+   padding-left: 48px;
 }
 
 .help_menu_ul li, .lease_menu_ul li{
@@ -1856,7 +1862,7 @@ button {
 	background-repeat: no-repeat;
 	margin-top: 20px;
 	min-height: 800px;
-	margin-left: 50px;
+	margin-left: 0px;
 	float: left;
 	width: 30%;
 	position: fixed;
@@ -1879,7 +1885,7 @@ button {
    width: 800px;
    margin-right: 30px;
    position: absolute;
-   left: 40%;
+   left: 35%;
    z-index: 2;
 }
 
