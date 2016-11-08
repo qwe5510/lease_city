@@ -2272,7 +2272,6 @@ button {
 .priceCheck {
 	font-size: 20px;
 	text-align: center;
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 }
 
 .leaseCategory label {
@@ -2355,6 +2354,19 @@ button {
 	float: none;
 	display: inline-block;
 }
+.mypage_sub{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
 .mypage{
 	background: url("../images/help_main.png") no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -2362,7 +2374,7 @@ button {
 	-o-background-size: cover;
 	background-size: cover;
 	min-width: 1200px;
-	min-height: 500px;
+	min-height: 800px;
 	text-align: center;
 	padding-top: 20px;
 	position: relative;
@@ -2425,6 +2437,60 @@ button {
 	margin-top : 0px;
 	margin-left : 0px;
 	margin-bottom : 5px;
+}
+.license button{
+	width: 60px;
+}
+.license input{
+	margin-top : 15px;
+	width: 145px;
+	height: 35px;
+}
+.license input[type="date"]{
+	width: 140px;
+}
+.myinfo{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+	font-size: 20px;
+	text-align: center;
+}
+.myinfo_0{
+	margin-top : 20px;
+	margin-left : 10%;
+	width : 1000px;
+	height: 300px;
+	padding-top : 30px;
+	background: #444444;
+	border-radius: 15%/170px;
+	border :solid 5px black;
+}
+.myinfo_1{
+	display : inline-block;
+	width: 20%;
+}
+.myinfo_2{
+	display : inline-block;
+	width: 20%;
+}
+.myinfo_3{
+	display : inline-block;
+	width: 20%;
+}
+.myinfo_4{
+	display : inline-block;
+	width: 20%;
+	margin-bottom : 5px;
 	padding : 0px;
 }
 #SpecialRolling {
@@ -2443,4 +2509,110 @@ button {
 	width: 617px;
 	height: 28px;
 	position: relative;
+}
+.history_table{
+	width: 780px;
+	font-size: 15px;
+}
+.history_table button {
+	width: 50px;
+	height: 20px;
+}
+.myinfo li{
+	padding: 10px;
+}
+.evaluate{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
+.evaluate_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
+	position: fixed;
+}
+.evaluate_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 65%;
+	display: inline-block;
+	text-align: left;
+	border: 2px solid;
+	margin-bottom: 30px;
+}
+.evaluate_main_table{
+	padding : 60px;
+	width: 780px;
+}
+.evaluate_main_table td{
+	padding-bottom: 40px;
+	font-size: 12px;
+}
+.evaluate_main_table span{
+	font-size: 16px;
+}
+.evaluate_main_table button{
+	width: 80px;
+	float: right;
+}
+.evaluate_check{
+	width: 70px;
+}
+.selection{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
+.selection_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
+	position: fixed;
+}
+.selection_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 65%;
+	display: inline-block;
+	text-align: left;
+}
+.selection_hec{
+	width: 780px;
+}
+.selection_cc{
+	width: 780px;
+}
+.selection_3_bottom button{
+	margin-top : 20px;
+	width: 80px;
+}
+.selection2_table{
+	width: 600px;
 }

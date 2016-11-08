@@ -11,27 +11,75 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<div class="myinfo">
-	<div class="mypage_menu">
+	<div class="selection">
+	<div class="selection_menu">
 	</div>
-	<div class="mypage_main">
-		<h2>회원탈퇴 화면입니다.</h2>
-		<h3>회원탈퇴를 하시면 더이상 서비를 이용할 수 없습니다.<br>신중히 생각해주시기 바랍니다.</h3>
-		<h3>회원 탈퇴하시겠습니까?</h3>
-		<label>비밀번호</label><input type="password" placeholder="비밀번호 입력"/>
-		<br>
-		<label>비밀번호 확인</label><input type="password" placeholder="비밀번호 확인"/>
-		<br>
-		<button id="withdrawal_agree_confirm">탈퇴</button>
-		<button id="withdrawal_agree_cancel">취소</button>
+	<div class="selection_main">
+		<c:url value="/selection_3" var="selection_3"></c:url>
+		<fieldset>
+			<legend>선발</legend>
+			<table class="selection2_table">
+				<tr>
+					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
+				</tr>
+				<tr>
+					<th>업체명</th>
+					<th>대표자명</th>
+					<th>차량</th>
+					<th>기간</th>
+					<th>금액</th>
+					<th>신청일</th>
+				</tr>
+				<tr>
+					<td colspan="6" class="boardLine"></td>
+				</tr>
+				<tr>
+					<th><a href="${selection_3 }">건설건설</a></th>
+					<th><a href="${selection_3 }">장필식</a></th>
+					<th>펌프카</th>
+					<th>2016.10.20~2016.11.20</th>
+					<th>30</th>
+					<th>2016.10.30</th>
+				</tr>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend>대기</legend>
+			<table class="selection2_table">
+				<tr>
+					<td colspan="6" class="boardLine" style="height: 4px !important;"></td>
+				</tr>
+				<tr>
+					<th>업체명</th>
+					<th>대표자명</th>
+					<th>차량</th>
+					<th>기간</th>
+					<th>금액</th>
+					<th>신청일</th>
+				</tr>
+				<tr>
+					<td colspan="6" class="boardLine"></td>
+				</tr>
+				<tr>
+					<th><a href="${selection_3 }">건설건설</a></th>
+					<th><a href="${selection_3 }">장필식</a></th>
+					<th>펌프카</th>
+					<th>2016.10.20~2016.11.20</th>
+					<th>30</th>
+					<th>2016.10.30</th>
+				</tr>
+			</table>
+		</fieldset>
 	</div>
 	</div>
 	<!--Bottom-->
 	<section id="bottom" class="main">
 		<!--Container-->
 		<div class="container">
+
 			<!--row-fluids-->
 			<div class="row-fluid">
+
 				<!--Contact Form-->
 				<div class="span3">
 					<ul class="unstyled address">
@@ -103,26 +151,13 @@
 								alt="" /></li>
 						</ul>
 					</div>
-
 				</div>
-
 			</div>
 			<!--/row-fluid-->
 		</div>
 		<!--/container-->
-
 	</section>
 	<!--/bottom-->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
-<script src="http://code.jquery.com/jquery.js"></script>
-<script>
-	$("#withdrawal_agree_confirm").on("click",function(){
-		alert("탈퇴");
-	})
-	<c:url value="/myinfo" var="myinfo"/>
-	$("#withdrawal_agree_cancel").on("click",function(){
-		location.href="${myinfo}";
-	})
-</script>
 </html>
