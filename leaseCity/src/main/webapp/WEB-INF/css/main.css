@@ -2566,3 +2566,47 @@ button {
 .evaluate_check{
 	width: 70px;
 }
+.selection{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
+.selection_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
+	position: fixed;
+}
+.selection_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 65%;
+	display: inline-block;
+	text-align: left;
+}
+.selection_hec{
+	width: 780px;
+}
+.selection_cc{
+	width: 780px;
+}
+.selection_3_bottom button{
+	margin-top : 20px;
+	width: 80px;
+}
+.selection2_table{
+	width: 600px;
+}

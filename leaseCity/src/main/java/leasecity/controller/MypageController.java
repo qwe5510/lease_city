@@ -77,20 +77,25 @@ public class MypageController {
 		return "mypage/security_identify";
 	}
 	
-	@RequestMapping(value="/security",method=RequestMethod.GET)
-	public String security(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
-		return "mypage/security";
-	}
-	
 	@RequestMapping(value="/selection",method=RequestMethod.GET)
 	public String selection(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
+		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
+		model.addAttribute("compare", compare);
 		return "mypage/selection";
+	}
+	
+	@RequestMapping(value="/selection_2",method=RequestMethod.GET)
+	public String selection_2(Model model){
+		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
+		model.addAttribute("compare", compare);
+		return "mypage/selection_2";
+	}
+	
+	@RequestMapping(value="/selection_3",method=RequestMethod.GET)
+	public String selection_3(Model model){
+		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
+		model.addAttribute("compare", compare);
+		return "mypage/selection_3";
 	}
 	
 	@RequestMapping(value="/withdrawal_agree_01",method=RequestMethod.GET)
