@@ -1,5 +1,7 @@
 package leasecity.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipmentCompany;
+import leasecity.dto.user.License;
 import leasecity.dto.user.User;
 import leasecity.exception.NotFoundDataException;
 import leasecity.service.MypageService;
@@ -49,16 +52,35 @@ public class MypageController {
 		return "mypage/myinfo";
 	}
 	
-	@RequestMapping(value="/mypage_identify")
-	public String mypage_identify(Model model){
-		User user = new User();
-		ConstructionCompany constructionCompany = new ConstructionCompany();
-		HeavyEquipmentCompany heavyEquipmentCompany = new HeavyEquipmentCompany();
-		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
-		model.addAttribute("user", user);
-		model.addAttribute("compare", compare);
-		model.addAttribute("constructionCompany", constructionCompany);
-		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
+	//마이페이지 개인정보 수정
+	@RequestMapping(value="/mypage/identify")
+	public String mypage_identify(Model model, RedirectAttributes redir,
+			HttpSession session){
+		
+		User loginUser = (User) session.getAttribute("loginUser");
+		logger.trace("회원 정보 : {}", loginUser.userInfo());
+		
+		loginUser.setPassword("");
+		
+		if(loginUser instanceof HeavyEquipmentCompany){
+			HeavyEquipmentCompany heavyEquipmentCompany = (HeavyEquipmentCompany)loginUser;
+			model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
+			model.addAttribute("compare", "HEC");
+		}else if(loginUser instanceof ConstructionCompany){
+			ConstructionCompany constructionCompany = (ConstructionCompany)loginUser;
+			
+			List<License> licenseList = constructionCompany.getLicenseList();
+			
+			model.addAttribute("licenseList", licenseList);
+			model.addAttribute("compare", "CC");
+			model.addAttribute("constructionCompany", constructionCompany);
+			
+			
+			
+		}else{
+			redir.addFlashAttribute("index_message", "건설업체 또는 중기업체 회원이 아닙니다.");
+			return "redirect:/index";
+		}
 		return "mypage/mypage_identify";
 	}
 	

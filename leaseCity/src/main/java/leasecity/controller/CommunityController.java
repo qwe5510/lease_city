@@ -151,7 +151,7 @@ public class CommunityController {
 			try {
 				loginUser = isUserLogin(loginUser);
 			} catch (ServiceFailException e) {
-				redir.addFlashAttribute("join_message", "로그인 세션이 만료되었습니다.");
+				redir.addFlashAttribute("index_message", "로그인 세션이 만료되었습니다.");
 				return "redirect:/index";
 			}
 			
@@ -376,7 +376,7 @@ public class CommunityController {
 		try {
 			user = isUserLogin(userObj);
 		} catch (ServiceFailException e) {
-			redir.addFlashAttribute("join_message", "로그인 세션이 만료 되었습니다.");
+			redir.addFlashAttribute("index_message", "로그인 세션이 만료 되었습니다.");
 			return "redirect:/index";
 		}
 

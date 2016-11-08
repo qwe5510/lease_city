@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src='//uchat.co.kr/uchat.php' charset='UTF-8'></script>
-<title>Insert title here</title>
+<title>커뮤니티 | LEASE CITY</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>

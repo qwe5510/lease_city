@@ -15,10 +15,10 @@
 	<div class="myinfo_0">
 	<div class="myinfo_1">
 	<c:url value="/history" var="history"></c:url>
-	<c:url value="/mypage_identify" var="mypage_identify"></c:url>
+	<c:url value="/mypage/identify" var="mypageIdentify"></c:url>
 	<c:url value="/withdrawal_agree_01" var="withdrawal_agree_01"></c:url>
 	<c:url value="/selection" var="selection"></c:url>
-		<a href="${mypage_identify}"><img id="myInfo1" src="<%=request.getContextPath()%>/images/mypage/개인정보.png"/></a>
+		<a href="${mypageIdentify}"><img id="myInfo1" src="<%=request.getContextPath()%>/images/mypage/개인정보.png"/></a>
 	</div>
 	<div class="myinfo_2">
 		<a href="${history }"><img id="myInfo2" src="<%=request.getContextPath()%>/images/mypage/이용내역.png" /></a>

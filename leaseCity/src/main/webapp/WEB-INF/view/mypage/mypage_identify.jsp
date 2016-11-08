@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>개인정보 수정 | LEASE CITY</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>.
@@ -17,7 +17,7 @@
 	<div class="mypage_main">
 		<c:url value="/myinfo" var="myinfo"/>
 		<c:choose>
-			   <c:when test="${compare eq '중기'}">
+			   <c:when test="${compare == 'CC'}">
 			   <sform:form id="mypage_identify_form" method="post" modelAttribute="constructionCompany" action="${myinfo }">
                <fieldset>
                <legend>기본정보 입력</legend>
@@ -36,7 +36,7 @@
                   <tr>
                      <td><sform:label path="password" class="join_input">비밀번호확인</sform:label></td>
                      <td><input type="password" placeholder="패스워드 확인" id="password2" name="password2" onblur="passvali()"/>
-                     <span id= "vali" class="password2"></span>
+                     <span id= "vali" class="password2">비밀번호 미변경 시 공백.</span>
                      </td>
                   </tr>
                   <tr>
@@ -51,13 +51,13 @@
                   </tr>
                   <tr>
                      <td><sform:label path="representPhone" class="join_input">대표자연락처</sform:label></td>
-                     <td><input type="text" name="representPhone" id="representPhone" placeholder="ex)031-xxx-xxxx">
+                     <td><sform:input path="representPhone" placeholder="ex)031-xxx-xxxx"></sform:input>
                      <span id= "vali" class="representPhone">-포함 국번으로 입력</span>
                      </td>
                   </tr>
                   <tr>
                      <td><sform:label path="handPhone" class="join_input">휴대폰연락처</sform:label></td>
-                     <td><input type="text" name="handPhone" id="handPhone" placeholder="ex)010-xxxx-xxxx">
+                     <td><sform:input path="handPhone" placeholder="ex)010-xxxx-xxxx"></sform:input>
                      <span id= "vali" class="handPhone">-포함 11~12자리 핸드폰 번호 입력</span>
                      </td>
                   </tr>
@@ -67,27 +67,46 @@
                   </tr>
                   <tr>
                      <td><sform:label path="address" class="join_input">주소</sform:label></td>
-                     <td><input type="text" name="zipNo" id="zipNo" placeholder="우편번호" readonly="readonly">
+                     <td><sform:input path="zipNo" placeholder="우편번호" readonly="true"></sform:input>
                      <button id="addressSearch">주소검색</button>
                      <span id= "vali" class="addressInput"></span>
                      </td>
                   </tr>
                   <tr>
                      <td><sform:label path="address" class="join_input"> </sform:label></td>
-                     <td><div class="address"><input type="text" name="address" id="address" placeholder="주소" readonly="readonly"></div></td>
+                     <td><div class="address">
+                     <sform:input path="address" placeholder="주소" readonly="true"></sform:input>
+                     </div></td>
                   </tr>
                   <tr>
                      <td><sform:label path="url" class="join_input">URL</sform:label></td>
-                     <td><input type="text" name="url" id="url" placeholder="홈페이지 주소">
+                     <td><sform:input path="url" placeholder="홈페이지 주소"></sform:input>
                      <span id= "vali" class="url">사이트 주소 형식으로 입력(혹은 공백)</span>
                      </td>
                   </tr>
                   <tr>
                      <td><label class="join_input">알람 여부</label></td>
-                     <td><label for="notifyOnOff">ON</label> <input type="radio"
-                        name="notifyOnOff" value="ON" checked="checked"/> <label for="OFF">OFF</label>
-                        <input type="radio" name="notifyOnOff" value="OFF" /></td>
-                        <td><div id="vali" class="company"></div></td>
+                     <td>
+                     	<c:choose>
+                     		<c:when test="${notifyOnOff == 'ON'}">
+                     			<sform:label path="notifyOnOff">ON</sform:label> 
+		                     	<sform:radiobutton path="notifyOnOff" checked='true'/> 
+		                        <sform:label path="notifyOnOff">OFF</sform:label>
+		                        <sform:radiobutton path="notifyOnOff"/>
+                     		</c:when>
+                     		<c:otherwise>
+                     			<sform:label path="notifyOnOff">ON</sform:label> 
+		                     	<sform:radiobutton path="notifyOnOff"/> 
+		                        <sform:label path="notifyOnOff">OFF</sform:label>
+		                        <sform:radiobutton path="notifyOnOff" checked='true'/>
+                     		</c:otherwise>
+                     	</c:choose>
+                     	
+                     </td>
+                        
+                     <td>
+                     	<div id="vali" class="company"></div>
+                     </td>
                   </tr>
                </table>
             </fieldset>
@@ -106,14 +125,19 @@
                	</div>
                		<div class="license">
                		<sform:label path="licenseList">자격증</sform:label>
+               		<sform:button id="license_add">+</sform:button><sform:button id="license_remove" style="font-size: 2em;">-</sform:button>
                		<br>
-               		<input type="text" id="licenseName" name="licenseName" placeholder="자격증 명칭"/>
-               		<input type="text" id="licenser" name="licenser" placeholder="발급처"/>
-               		<input type="date" id="licenseDate" name="licenseDate" placeholder="발급시기"/>
+               		<c:forEach var="license" items="${licenseList}">
+               		<div>
+               			<input type="text" id="licenseName" name="licenseName" placeholder="자격증 명칭"/>
+               			<input type="text" id="licenser" name="licenser" placeholder="발급처"/>
+               			<input type="date" id="licenseDate" name="licenseDate" placeholder="발급시기"/>
+               		</div>
                		<%-- <sform:input path="licenseList" placeholder="자격증 명칭"/>
                		<sform:input path="licenseList" placeholder="발급처"/>
                		<sform:input path="licenseList" type="date" placeholder="발급시기"/> --%>
-               		<sform:button id="license_add">추가</sform:button><sform:button id="license_remove">삭제</sform:button>
+               		</c:forEach>
+               		
                		</div>
                	</div>
                	<div class="licenseCheck"></div>
@@ -141,137 +165,139 @@
             	<sform:button id="mypage_identify_cancel">취소</sform:button>
          		</sform:form>
 			   	</c:when>
-			   	<c:otherwise>
-			   	<sform:form id="mypage_identify_form" method="post" modelAttribute="heavyEquipmentCompany" action="${myinfo }">
-               <fieldset>
-               <legend>기본정보 입력</legend>
-               <table>
-                  <tr>
-                     <td><sform:label path="userId" class="join_input">아이디</sform:label></td>
-                     <td><sform:input path="userId" readonly="true"/>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="password" class="join_input">비밀번호변경</sform:label></td>
-                     <td><sform:input path="password" type="password" onblur="passvali()"/>
-                        <span id= "vali" class="password">영어 숫자 특수문자 혼용 8~16글자</span>
-                        </td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="password" class="join_input">비밀번호확인</sform:label></td>
-                     <td><input type="password" placeholder="패스워드 확인" id="password2" name="password2" onblur="passvali()"/>
-                     <span id= "vali" class="password2"></span>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="companyName" class="join_input">업체명</sform:label></td>
-                     <td><sform:input path="companyName"  readonly="true" /></td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="representName" class="join_input">대표자명</sform:label></td>
-                     <td><sform:input path="representName"  readonly="true"/></td>
-                  </tr>
-                  <tr>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="representPhone" class="join_input">대표자연락처</sform:label></td>
-                     <td><input type="text" name="representPhone" id="representPhone" placeholder="ex)031-xxx-xxxx">
-                     <span id= "vali" class="representPhone">-포함 국번으로 입력</span>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="handPhone" class="join_input">휴대폰연락처</sform:label></td>
-                     <td><input type="text" name="handPhone" id="handPhone" placeholder="ex)010-xxxx-xxxx">
-                     <span id= "vali" class="handPhone">-포함 11~12자리 핸드폰 번호 입력</span>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="email" class="join_input">Email</sform:label></td>
-                     <td><sform:input path="email" readonly="true"/> </td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="address" class="join_input">주소</sform:label></td>
-                     <td><input type="text" name="zipNo" id="zipNo" placeholder="우편번호" readonly="readonly">
-                     <button id="addressSearch">주소검색</button>
-                     <span id= "vali" class="addressInput"></span>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="address" class="join_input"> </sform:label></td>
-                     <td><div class="address"><input type="text" name="address" id="address" placeholder="주소" readonly="readonly"></div></td>
-                  </tr>
-                  <tr>
-                     <td><sform:label path="url" class="join_input">URL</sform:label></td>
-                     <td><input type="text" name="url" id="url" placeholder="홈페이지 주소">
-                     <span id= "vali" class="url">사이트 주소 형식으로 입력(혹은 공백)</span>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td><label class="join_input">알람 여부</label></td>
-                     <td><label for="notifyOnOff">ON</label> <input type="radio"
-                        name="notifyOnOff" value="ON" checked="checked"/> <label for="OFF">OFF</label>
-                        <input type="radio" name="notifyOnOff" value="OFF" /></td>
-                        <td><div id="vali" class="company"></div></td>
-                  </tr>
-               </table>
-            </fieldset>
-            <br>
-            <fieldset>
-               	<div>
-			   		<sform:label path="helpOnOff">알람여부</sform:label>
-			   		<sform:checkbox path="helpOnOff" value="업무대기" label="도움여부"/>
-			   		<sform:checkbox path="infoOnOff" value="정보공개" label="정보공개"/>
-			   		</div>
-               	<div>
-               		<label>차량추가</label>
-               		<select id="type" name="type">
-               			<option value="트럭">트럭</option>
-               			<option value="로더">로더</option>
-               			<option value="그레이더">그레이더</option>
-               			<option value="트랙">트랙</option>
-               			<option value="스크레이퍼">스크레이퍼</option>
-               			<option value="스키더">스키더</option>
-               			<option value="물질핸들러">물질핸들러</option>
-               			<option value="벌목용장비">벌목용장비</option>
-               			<option value="휠도저">휠도저</option>
-               			<option value="굴삭기">굴삭기</option>
-               			<option value="펌프카">펌프카</option>
-               		</select>
-               		<select id="size" name="size">
-               			<option value="소형">소형</option>
-               			<option value="중형">중형</option>
-               			<option value="대형">대형</option>
-               		</select>
-               		<input type="text" id="carNum" placeholder="차량번호"/>
-               		<button id="mypage_identify_add">추가</button>
-               	</div>
-               	<div class="numbervali"></div>
-               	<div>
-               	<div><sform:label path="heavyEquipmentList">차량보유현황</sform:label></div>
-               	<div>
-               	<div id="mypage_identify_carown">
-               	<div>
-               		<label>차량 분류</label>
-               		<label>차량번호</label>
-               		<label>삭제가능</label>
-               		<label>삭제</label>
-               	</div>
-               	<div>
-               		<label>트럭/소형</label>
-               		<label>30가 1111</label>
-               		<label>Y</label>
-               		<label><sform:button id="mypage_identify_remove">삭제</sform:button></label>
-              	</div>
-              	</div>
-              	</div>
-              	</div>
-             	<div class="checked"></div>
-             	</fieldset>
-            	<br>
-            	<sform:button id="mypage_identify_confirm">확인</sform:button>
-            	<sform:button id="mypage_identify_cancel">취소</sform:button>
-         		</sform:form>
-			   		</c:otherwise>
+			   	<c:when test="${compare == 'HEC'}">
+				   	<sform:form id="mypage_identify_form" method="post" modelAttribute="heavyEquipmentCompany" action="${myinfo}">
+	               <fieldset>
+	               <legend>기본정보 입력</legend>
+	               <table>
+	                  <tr>
+	                     <td><sform:label path="userId" class="join_input">아이디</sform:label></td>
+	                     <td><sform:input path="userId" readonly="true"/>
+	                     </td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="password" class="join_input">비밀번호변경</sform:label></td>
+	                     <td><sform:input path="password" type="password" onblur="passvali()"/>
+	                        <span id= "vali" class="password">영어 숫자 특수문자 혼용 8~16글자</span>
+	                        </td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="password" class="join_input">비밀번호확인</sform:label></td>
+	                     <td><input type="password" placeholder="패스워드 확인" id="password2" name="password2" onblur="passvali()"/>
+	                     <span id= "vali" class="password2"></span>
+	                     </td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="companyName" class="join_input">업체명</sform:label></td>
+	                     <td><sform:input path="companyName"  readonly="true" /></td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="representName" class="join_input">대표자명</sform:label></td>
+	                     <td><sform:input path="representName"  readonly="true"/></td>
+	                  </tr>
+	                  <tr>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="representPhone" class="join_input">대표자연락처</sform:label></td>
+	                     <td><sform:input path="representPhone" placeholder="ex)031-xxx-xxxx"></sform:input>
+	                     <span id= "vali" class="representPhone">-포함 국번으로 입력</span>
+	                     </td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="handPhone" class="join_input">휴대폰연락처</sform:label></td>
+	                     <td><sform:input path="handPhone" placeholder="ex)010-xxxx-xxxx"></sform:input>
+	                     <span id= "vali" class="handPhone">-포함 11~12자리 핸드폰 번호 입력</span>
+	                     </td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="email" class="join_input">Email</sform:label></td>
+	                     <td><sform:input path="email" readonly="true"/> </td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="address" class="join_input">주소</sform:label></td>
+	                     <td><sform:input path="zipNo" placeholder="우편번호" readonly="readonly"></sform:input>
+	                     <button id="addressSearch">주소검색</button>
+	                     <span id= "vali" class="addressInput"></span>
+	                     </td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="address" class="join_input"> </sform:label></td>
+	                     <td><div class="address">
+	                     <sform:input path="address" placeholder="주소" readonly="readonly"></sform:input>
+	                     </div></td>
+	                  </tr>
+	                  <tr>
+	                     <td><sform:label path="url" class="join_input">URL</sform:label></td>
+	                     <td><input type="text" name="url" id="url" placeholder="홈페이지 주소">
+	                     <span id= "vali" class="url">사이트 주소 형식으로 입력(혹은 공백)</span>
+	                     </td>
+	                  </tr>
+	                  <tr>
+	                     <td><label class="join_input">알람 여부</label></td>
+	                     <td><label for="notifyOnOff">ON</label> <input type="radio"
+	                        name="notifyOnOff" value="ON" checked="checked"/> <label for="OFF">OFF</label>
+	                        <input type="radio" name="notifyOnOff" value="OFF" /></td>
+	                        <td><div id="vali" class="company"></div></td>
+	                  </tr>
+	               </table>
+	            </fieldset>
+	            <br>
+	            <fieldset>
+	               	<div>
+				   		<sform:label path="helpOnOff">알람여부</sform:label>
+				   		<sform:checkbox path="helpOnOff" value="업무대기" label="도움여부"/>
+				   		<sform:checkbox path="infoOnOff" value="정보공개" label="정보공개"/>
+				   		</div>
+	               	<div>
+	               		<label>차량추가</label>
+	               		<select id="type" name="type">
+	               			<option value="트럭">트럭</option>
+	               			<option value="로더">로더</option>
+	               			<option value="그레이더">그레이더</option>
+	               			<option value="트랙">트랙</option>
+	               			<option value="스크레이퍼">스크레이퍼</option>
+	               			<option value="스키더">스키더</option>
+	               			<option value="물질핸들러">물질핸들러</option>
+	               			<option value="벌목용장비">벌목용장비</option>
+	               			<option value="휠도저">휠도저</option>
+	               			<option value="굴삭기">굴삭기</option>
+	               			<option value="펌프카">펌프카</option>
+	               		</select>
+	               		<select id="size" name="size">
+	               			<option value="소형">소형</option>
+	               			<option value="중형">중형</option>
+	               			<option value="대형">대형</option>
+	               		</select>
+	               		<input type="text" id="carNum" placeholder="차량번호"/>
+	               		<button id="mypage_identify_add">추가</button>
+	               	</div>
+	               	<div class="numbervali"></div>
+	               	<div>
+	               	<div><sform:label path="heavyEquipmentList">차량보유현황</sform:label></div>
+	               	<div>
+	               	<div id="mypage_identify_carown">
+	               	<div>
+	               		<label>차량 분류</label>
+	               		<label>차량번호</label>
+	               		<label>삭제가능</label>
+	               		<label>삭제</label>
+	               	</div>
+	               	<div>
+	               		<label>트럭/소형</label>
+	               		<label>30가 1111</label>
+	               		<label>Y</label>
+	               		<label><sform:button id="mypage_identify_remove">삭제</sform:button></label>
+	              	</div>
+	              	</div>
+	              	</div>
+	              	</div>
+	             	<div class="checked"></div>
+	             	</fieldset>
+	            	<br>
+	            	<sform:button id="mypage_identify_confirm">확인</sform:button>
+	            	<sform:button id="mypage_identify_cancel">취소</sform:button>
+	         		</sform:form>
+			   		</c:when>
 			   </c:choose>
 	</div>
 	</div>
@@ -279,6 +305,7 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
 $(document).on("click","#type",function(){
     var type = $("#type").val();
     var arr1 = ["26m","32m","37m","43m","52m","58m","기타"];
@@ -572,7 +599,7 @@ $(document).on("click","#type",function(){
 		 $(".licenseCheck").html("자격증은 최소1개 입력해주셔야합니다.");
          $(".licenseCheck").css("color", "#FF0000");
 	 }else{
-		 $(this).next().remove();
+		 $(".license div:last-child").remove();
 		 license_cnt--;
 		 $(".licenseCheck").html("");
 	 }

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>임대 요청 확인 | LEASE CITY</title>
 
 <c:if test="${!empty lease_message }">
 	<script>
