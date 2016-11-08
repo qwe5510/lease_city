@@ -92,7 +92,7 @@ body h3, body h4 {
 }
 
 a {
-   color: #2dcc70;
+   color: black;
    -webkit-transition: 300ms;
    -moz-transition: 300ms;
    -o-transition: 300ms;
@@ -100,7 +100,7 @@ a {
 }
 
 a:hover, a:focus {
-   color: #005580;
+   color: #6B66FF;
    text-decoration: none;
    outline: 0
 }
@@ -2503,6 +2503,7 @@ button {
 	font-weight: bold;
 	color: #1E96DD;
 	z-index: 0;
+	display: inline-block;
 }
 
 #SpecialRolling div {

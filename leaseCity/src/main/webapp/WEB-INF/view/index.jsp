@@ -112,10 +112,10 @@
 		</div>
 	</section>
 
-	<section id="clients" class="main">
+	<section id="clients" class="main" style="padding-bottom: 0px;">
 		<div class="container">
 			<div class="row-fluid">
-				<div class="span2">
+				<div class="span2" style="height: 350px;">
 					<div class="clearfix">
 						<h4 class="pull-left">Lease City</h4>
 						<div class="pull-right">
@@ -194,6 +194,9 @@
 								<!-- /Carousel items -->
 
 							</div>
+							<video width="300" height="200" controls="controls">
+								<source src="<%=request.getContextPath()%>/video/video.mp4" type="video/mp4">
+							</video>
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -239,6 +242,9 @@
 								<div id="Next9"></div>
 							</div>
 						</div>
+						<div>
+							<video src="<%=request.getContextPath()%>/video/video.mp4" controls="controls"></video>
+						</div>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -249,7 +255,6 @@
 	<section id="bottom" class="main">
 		<!--Container-->
 		<div class="container">
-
 			<!--row-fluids-->
 			<div class="row-fluid">
 

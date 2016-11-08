@@ -139,7 +139,6 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 	var g_currentPage = 1;
-
 	<c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
 	<c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
 	<c:url value="/images/lease/lease_menu2_1.png" var="leaseCallHover"></c:url>
