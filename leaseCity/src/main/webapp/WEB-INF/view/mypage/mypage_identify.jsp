@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>개인정보 수정 | LEASE CITY</title>
+
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>.
@@ -122,24 +124,36 @@
                		<sform:label path="yearlyAoor">연수주량</sform:label>
                		<sform:input path="yearlyAoor" type="number"/>
                		<span class="obtain">단위(건)</span>
+               		<span></span>
                	</div>
                		<div class="license">
                		<sform:label path="licenseList">자격증</sform:label>
                		<sform:button id="license_add">+</sform:button><sform:button id="license_remove" style="font-size: 2em;">-</sform:button>
                		<br>
-               		<c:forEach var="license" items="${licenseList}">
-               		<div>
-               			<input type="text" id="licenseName" name="licenseName" placeholder="자격증 명칭"/>
-               			<input type="text" id="licenser" name="licenser" placeholder="발급처"/>
-               			<input type="date" id="licenseDate" name="licenseDate" placeholder="발급시기"/>
-               		</div>
-               		<%-- <sform:input path="licenseList" placeholder="자격증 명칭"/>
-               		<sform:input path="licenseList" placeholder="발급처"/>
-               		<sform:input path="licenseList" type="date" placeholder="발급시기"/> --%>
-               		</c:forEach>
-               		
+               		<c:choose>
+               			<c:when test="${fn:length(constructionCompany.licenseList) == '0'}">
+               				<sform:input path="licenseList[0].licenseName" placeholder="자격증 이름"></sform:input>
+			               	<sform:input path="licenseList[0].licenser" placeholder="발급처"></sform:input>
+			               	<sform:input type="date" path="licenseList[0].licenseDate" placeholder="발급시기"></sform:input>
+               			</c:when>
+               			
+               			<c:otherwise>
+               				<c:forEach var="license" items="${constructionCompany.licenseList}" varStatus="status">
+		               			<fmt:formatDate value="${license.licenseDate}" pattern="yyyy-MM-dd" var="licenseDate"/>
+			               		<div>
+			               			<sform:input path="licenseList[${status.index}].licenseName" placeholder="자격증 이름"></sform:input>
+			               			<sform:input path="licenseList[${status.index}].licenser" placeholder="발급처"></sform:input>
+			               			<sform:input type="date" value="${licenseDate}" path="licenseList[${status.index}].licenseDate" placeholder="발급시기"></sform:input>
+			               		</div>
+               				</c:forEach> 
+               			</c:otherwise>
+               		</c:choose>
+               		              		
                		</div>
                	</div>
+               	<script>
+	               		
+	            </script>
                	<div class="licenseCheck"></div>
                	<div>
                		<sform:label path="companyCategory">회사분류</sform:label>
@@ -305,7 +319,6 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
-
 $(document).on("click","#type",function(){
     var type = $("#type").val();
     var arr1 = ["26m","32m","37m","43m","52m","58m","기타"];
@@ -577,15 +590,17 @@ $(document).on("click","#type",function(){
 	 e.preventDefault();
 	 location.href = "${myinfo}";
  });
- var license_cnt=0;
+ 
+ 
+ license_cnt = ${fn:length(constructionCompany.licenseList)}==0?0:${fn:length(constructionCompany.licenseList)-1};
  $("#license_add").on("click",function(e){
 	 e.preventDefault();
 	 var str="";
 	 if(license_cnt<2){
          license_cnt++;
-         str+="<div><input id='licenseName"+ license_cnt +"' name='licenseName' type='text' placeholder='자격증 명칭'>";
-         str+="<input id='licenser"+ license_cnt +"' name='licenser' type='text' placeholder='발급처'>";
-         str+="<input id='licenseDate"+ license_cnt +"' name='licenseDate' type='date'placeholder='발급시기'>"
+         str+="<div><input id='licenseList["+ license_cnt +"].licenseName' name='licenseList["+ license_cnt +"].licenseName' type='text' placeholder='자격증 명칭'>";
+         str+="<input id='licenseList["+ license_cnt +"].licenser' name='licenseList["+ license_cnt +"].licenser' type='text' placeholder='발급처'>";
+         str+="<input id='licenseList["+ license_cnt +"].licenseDate' name='licenseList["+ license_cnt +"].licenseDate' type='date'placeholder='발급시기'>"
          str+="<br><span id='licenseCheck"+ license_cnt +"'></span></div>";
          $(".license").append(str);
       }else{
@@ -593,12 +608,13 @@ $(document).on("click","#type",function(){
          $(".licenseCheck").css("color", "#FF0000");
       }
  });
- $("#license_remove").on("click",function(e){
+ $(document).on("click", "#license_remove", function(e){
 	 e.preventDefault();
 	 if(license_cnt==0){
 		 $(".licenseCheck").html("자격증은 최소1개 입력해주셔야합니다.");
          $(".licenseCheck").css("color", "#FF0000");
 	 }else{
+		 console.log($(".license div:last-child"));
 		 $(".license div:last-child").remove();
 		 license_cnt--;
 		 $(".licenseCheck").html("");

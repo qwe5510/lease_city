@@ -2472,7 +2472,7 @@ button {
 }
 .myinfo_0{
 	margin-top : 20px;
-	margin-left : 10%;
+	display: inline-block;
 	width : 1000px;
 	height: 300px;
 	padding-top : 30px;

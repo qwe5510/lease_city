@@ -1,5 +1,6 @@
 package leasecity.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -67,16 +68,9 @@ public class MypageController {
 			model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
 			model.addAttribute("compare", "HEC");
 		}else if(loginUser instanceof ConstructionCompany){
-			ConstructionCompany constructionCompany = (ConstructionCompany)loginUser;
-			
-			List<License> licenseList = constructionCompany.getLicenseList();
-			
-			model.addAttribute("licenseList", licenseList);
+			ConstructionCompany constructionCompany = (ConstructionCompany)loginUser;			
 			model.addAttribute("compare", "CC");
 			model.addAttribute("constructionCompany", constructionCompany);
-			
-			
-			
 		}else{
 			redir.addFlashAttribute("index_message", "건설업체 또는 중기업체 회원이 아닙니다.");
 			return "redirect:/index";
