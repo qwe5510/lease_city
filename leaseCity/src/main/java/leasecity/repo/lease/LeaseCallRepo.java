@@ -54,6 +54,13 @@ public interface LeaseCallRepo {
 	public LeaseCall getUserLeaseCall(LeaseCall leaseCall);
 	
 	/**
+	 * 건설업체 아이디로 임대요청 목록 검색하기
+	 * @param userId
+	 * @return
+	 */
+	public List<LeaseCall> getSelectConstructionLeaseCalls(String userId);
+	
+	/**
 	 * 임대 요청글 추가
 	 * @param leaseCall
 	 * @return

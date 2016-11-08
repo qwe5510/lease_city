@@ -131,12 +131,44 @@ public class LeaseServiceImpl implements LeaseService {
 		
 		return result;
 	}
+	
+	@Override
+	public List<LeaseCall> loadConstructionUserLeaseCalls(String userId) 
+										throws NotFoundDataException {
+		
+		if(userId == null){
+			throw new NotFoundDataException("건설업체 유저 ID정보");
+		}
+		
+		List<LeaseCall> results = leaseCallRepo.getSelectConstructionLeaseCalls(userId);
+		
+		if(results.size() <= 0){
+			throw new NotFoundDataException(userId + "유저의 요청글 정보");
+		}
+		
+		return results;
+	}
+	
+	@Override
+	public LeaseCall loadLeaseCall(Integer leaseCallNo) throws NotFoundDataException {
+		if(leaseCallNo == null){
+			throw new NotFoundDataException("임대 요청글 번호");
+		}
+		
+		LeaseCall result = leaseCallRepo.getLeaseCall(leaseCallNo);
+		
+		if(result == null){
+			throw new NotFoundDataException(leaseCallNo + "번 요청글");
+		}
+		
+		return result;
+	}
 
 	@Override
 	public LeaseCall viewLeaseCall(Integer leaseCallNo, String userId) throws NotFoundDataException {
 		
 		if(leaseCallNo == null){
-			throw new NotFoundDataException("임대 요청글");
+			throw new NotFoundDataException("임대 요청글 번호");
 		}
 		
 		LeaseCall result = leaseCallRepo.getLeaseCall(leaseCallNo);
@@ -311,6 +343,20 @@ public class LeaseServiceImpl implements LeaseService {
 		return results;
 	}
 
+	
+	@Override
+	public void doLeaseDirectCall(LeaseDirectCall leaseDirectCall) throws ServiceFailException {
+		
+		if(leaseDirectCall == null){
+			throw new ServiceFailException();
+		}
+		int result = leaseDirectCallRepo.insertLeaseDirectCall(leaseDirectCall);
+		
+		if(result != 1){
+			throw new ServiceFailException();
+		}
+	}
+	
 	@Override
 	public void permissionLeaseDirectCall
 		(LeaseDirectCall leaseDirectCall, LeaseRequest leaseRequest) 
@@ -367,6 +413,23 @@ public class LeaseServiceImpl implements LeaseService {
 		}
 		
 		return results;
+	}
+	
+	@Override
+	public String loadHeavyEquipmentUsingAddress(String idNumber) throws NotFoundDataException {
+		if(idNumber == null){
+			throw new NotFoundDataException("주소를 확인 할 차량번호");
+		}
+		
+		Integer leaseCallNo = leaseRequestRepo.getSearchIdNumberLeaseRequest(idNumber);
+		
+		if(leaseCallNo == null){
+			throw new NotFoundDataException("사용중인 차량의 임대요청 정보");
+		}
+		
+		LeaseCall leaseCall = leaseCallRepo.getLeaseCall(leaseCallNo);
+		
+		return leaseCall.getAddress();
 	}
 	
 	@Override
@@ -532,9 +595,8 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 	
 	@Override
-	public Page getMoreViewHECPage
-		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany) {
-		
+	public Page getMoreViewHECPage(Integer currentPage, Integer pageSize,	
+			String search, String keyword, String isCompany, String userId) {
 		Page page;
 		
 		if(search!=null && keyword != null){
@@ -552,6 +614,7 @@ public class LeaseServiceImpl implements LeaseService {
 		}else if(isCompany!=null && isCompany.equals("HEC")){
 			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountHelpOnHeavyEquipment(page));
 		}
+		page.setUserId(userId);
 		
 		return page;
 	}
@@ -571,8 +634,8 @@ public class LeaseServiceImpl implements LeaseService {
 		List<LeaseCall> leaseCall = leaseCallRepo.getAllLeaseCalls();
 		return leaseCall;
 	}
-	
-	//------------------------------------------------------------------------------------
+
+	//-----------------------------------------------------------------------------------
 	
 	
 }

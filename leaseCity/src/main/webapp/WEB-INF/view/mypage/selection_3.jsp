@@ -11,27 +11,70 @@
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<div class="myinfo">
-	<div class="mypage_menu">
+	<div class="selection">
+	<div class="selection_menu">
 	</div>
-	<div class="mypage_main">
-		<h2>회원탈퇴 화면입니다.</h2>
-		<h3>회원탈퇴를 하시면 더이상 서비를 이용할 수 없습니다.<br>신중히 생각해주시기 바랍니다.</h3>
-		<h3>회원 탈퇴하시겠습니까?</h3>
-		<label>비밀번호</label><input type="password" placeholder="비밀번호 입력"/>
-		<br>
-		<label>비밀번호 확인</label><input type="password" placeholder="비밀번호 확인"/>
-		<br>
-		<button id="withdrawal_agree_confirm">탈퇴</button>
-		<button id="withdrawal_agree_cancel">취소</button>
+	<div class="selection_main">
+		<fieldset>
+			<legend>기업개요</legend>
+			<table class="lease_request_table">
+				<tr>
+					<td class="lease_label"><label>회사명</label>
+						<span>${heavyEquipmentCompany.companyName}</span>
+					</td>
+					<td class="lease_label"><label>대표자</label>
+						<span>${heavyEquipmentCompany.representName}</span>
+					</td>
+					<td class="lease_label">
+						<label >대표연락처</label>
+						<span>${heavyEquipmentCompany.representPhone}</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="lease_label"><label >소재지</label>
+						<span>${heavyEquipmentCompany.address}</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="lease_label">
+					<label >중장비 목록</label>						
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" style="padding: 0px; margin: 0px;">
+						<table border="1" style="width: 100%">
+							<tr>
+								<th>차량 분류</th>
+								<th>차량 번호</th>
+								<th>사용 여부</th>
+							</tr>
+							<c:forEach var="heavyEquipment" items="${heavyEquipmentCompany.heavyEquipmentList}">
+							<tr>
+								<td>${heavyEquipment.equipmentCategory}</td>
+								<td>${heavyEquipment.idNumber}</td>
+								<td>${heavyEquipment.usedYesNo}</td>
+							</tr>
+							</c:forEach>
+						</table>
+					</td>
+				</tr>
+			</table>
+			</fieldset>
+			<div class="selection_3_bottom">
+				<button id="selection_3_confirm">선발</button>
+				<button id="selection_3_cancel">취소</button>
+			</div>
+			
 	</div>
 	</div>
 	<!--Bottom-->
 	<section id="bottom" class="main">
 		<!--Container-->
 		<div class="container">
+
 			<!--row-fluids-->
 			<div class="row-fluid">
+
 				<!--Contact Form-->
 				<div class="span3">
 					<ul class="unstyled address">
@@ -103,26 +146,25 @@
 								alt="" /></li>
 						</ul>
 					</div>
-
 				</div>
-
 			</div>
 			<!--/row-fluid-->
 		</div>
 		<!--/container-->
-
 	</section>
 	<!--/bottom-->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
-	$("#withdrawal_agree_confirm").on("click",function(){
-		alert("탈퇴");
+	<c:url value="/selection_2" var="selection_2"/>
+	$("#selection_3_confirm").on("click",function(){
+		location.href="${selection_2}";
 	})
-	<c:url value="/myinfo" var="myinfo"/>
-	$("#withdrawal_agree_cancel").on("click",function(){
-		location.href="${myinfo}";
+	
+	<c:url value="/selection" var="selection"/>
+	$("#selection_3_cancel").on("click",function(){
+		location.href="${selection}";
 	})
 </script>
 </html>

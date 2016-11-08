@@ -41,7 +41,5 @@
  		DELETE FROM replys
  		WHERE reply_no = #{replyNo}
  	</delete>
- 	
- 	
- 	 
+
  </mapper>

@@ -10,6 +10,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<c:if test="${!empty HEC_message }">
+		<script>
+			alert('${HEC_message}');
+		</script>
+	</c:if>
+
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="lease">
 	<div class="lease_menu">
@@ -79,23 +86,22 @@
 			</fmt:formatNumber>
 			<fmt:formatNumber value="${HEC.creditGrade}" 
 					pattern="0.00" var="credit"></fmt:formatNumber>
-			
 			<tr align="center" class="HECArea">
 				<td>
-				<div class="credit-min-area">
-				<i class="credit-max-area" style="width: ${creditPercent}">
-				</i></div>
-				<strong>${credit}</strong>
+					<div class="credit-min-area">
+					<i class="credit-max-area" style="width: ${creditPercent}">
+					</i></div>
+					<strong>${credit}</strong>
 				</td>
 				<td>
-				<a href="${lookupHeavy}${HEC.userId}">
-				<span>${HEC.companyName}</span>
-				</a>
-				</td>
-				<td>
-				<a href="${lookupHeavy}${HEC.userId}">
-				<span>${HEC.representName}</span>
-				</a>
+					<a href="${lookupHeavy}${HEC.userId}">
+					<span>${HEC.companyName}</span>
+					</a>
+					</td>
+					<td>
+					<a href="${lookupHeavy}${HEC.userId}">
+					<span>${HEC.representName}</span>
+					</a>
 				</td>
 				<td><span>${HEC.address}</span></td>
 				<td><span>${HEC.outputCategory}</span></td>
@@ -123,11 +129,21 @@
 <script>
 	var g_currentPage = 1;
 
+	
+	
+	$(window).on("load", function(e){
+		var totalCount = ${page.totalCount};
+		
+		if(totalCount <= 5){
+			$("#moreViewPage").css("display", "none");
+		}
+	});
+	
 	<c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
 	<c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>
 	<c:url value="/images/lease/lease_menu2_1.png" var="leaseCallHover"></c:url>
 	<c:url value="/images/lease/lease_menu2.png" var="leaseCallNormal"></c:url>
-		$("#lease_call").hover(
+	$("#lease_call").hover(
 			function(){
 				$("#lease_call_img").attr("src", "${leaseCallHover}")		
 				$("#lease_lookup_img").attr("src", "${lookupHeavyNormal}");

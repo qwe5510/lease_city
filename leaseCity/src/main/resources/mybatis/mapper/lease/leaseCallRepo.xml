@@ -70,6 +70,13 @@
  	</select>
  	
  	
+ 	<!-- 건설업체 아이디로 작성했던 임대 요청글 정보 받기. -->
+ 	<select id="getSelectConstructionLeaseCalls" parameterType="String" resultType="leaseCall">
+ 		SELECT * 
+ 		FROM lease_calls
+ 		WHERE user_id = #{userId}
+ 		AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
+ 	</select>
  	
  	<!-- 임대 요청 번호에 대한 임대 요청글 정보 받기 -->
  	<select id="getLeaseCall" parameterType="int" resultType="leaseCall">

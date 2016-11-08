@@ -32,6 +32,10 @@ public interface LeaseRequestRepo {
 	 */
 	public List<LeaseRequest> getAllChoiceLeaseRequests(Integer leaseCallNo);
 	
+	/**
+	 * 입력받은 차량번호가 현재 어느 요청글에 신청되어있는지 요청글번호 리턴
+	 */
+	public Integer getSearchIdNumberLeaseRequest(String idNumber);
 	
 	/**
 	 * 임대 신청 번호와 건설업체 유저 id로 임대업체 리턴.

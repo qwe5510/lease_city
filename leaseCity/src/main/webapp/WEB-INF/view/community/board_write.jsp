@@ -19,7 +19,7 @@
 					room : 'yhj123',
 					chat_record : true,
 					width : '300',
-					height : '500',
+					height : '380',
 					conversation_limi : true,
 					in_sound : true,
 					say_id : true,

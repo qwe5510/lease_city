@@ -21,10 +21,10 @@
  			FROM dual
  		</selectKey>
  		INSERT INTO lease_direct_calls (
- 			construction_id, equipment_id, lease_call_no,
+ 			construction_id, equipment_id, lease_call_no, call_id_number,
  			direct_call_content, from_price, to_price)
  		VALUES(
- 			#{constructionId}, #{equipmentId}, #{leaseCallNo}, 
+ 			#{constructionId}, #{equipmentId}, #{leaseCallNo}, #{callIdNumber},
  			#{directCallContent}, #{fromPrice}, #{toPrice})
  	</insert>
  	

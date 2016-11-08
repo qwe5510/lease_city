@@ -17,6 +17,12 @@
  	</select>
  	
  	
+ 	<!-- 중장비 차량번호로 현재 어디에 신청중인지 신청 정보 알아보기. -->
+ 	<select id="getSearchIdNumberLeaseRequest" parameterType="String" resultType="int">
+ 		SELECT lease_call_no FROM lease_requests
+ 		WHERE to_date &gt;= SYSDATE AND id_number = #{idNumber} 
+ 	</select>
+ 	
  	<!-- 임대 신청 : 선발 되지 않은 중기업체의 리스트 출력 : 임대 요청 글 별로 조회. -->
  	<select id="getAllStandByLeaseRequests" parameterType="int" resultType="leaseRequest">
  		SELECT * FROM lease_requests

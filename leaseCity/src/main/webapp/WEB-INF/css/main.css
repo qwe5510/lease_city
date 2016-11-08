@@ -1168,23 +1168,25 @@ label {
    padding-top: 80px;
    width: 550px;
    height: 900px;
-   margin-left: 40px;
+   margin-left: 20px;
    margin-right: 50px;
    position: fixed;
    background: url("../images/community/chat_menu.png") no-repeat;
 }
 
 .uchat_inner{
-	padding-top: 195px;
+	padding-top: 190px;
 	padding-left: 35px;
 }
 
 /*community div 설정  */
 .community {
    width: 400px;
+   min-height: 800px;
    clear: both;
-   display: inline-block;
+   float:left;
    position: absolute;
+   left: 28%;
 }
 
 .board_read_main {
@@ -1192,6 +1194,10 @@ label {
    display: inline-block;
    position: absolute;
    padding: 10px;
+   padding-top: 0px;
+   position: relative;
+   margin-left: 200px;
+   width: 600px;
 }
 
 .board_read_line, .qna_read_line {
@@ -1368,13 +1374,6 @@ button {
    margin-left: 80px;
 }
 
-.board_read_main {
-   padding-top: 0px;
-   position: relative;
-   margin-left: 200px;
-   width: 600px;
-}
-/* } */
 /* board 페이징 부분 설정 */
 .boardPage {
    width: 780px;
@@ -1429,12 +1428,19 @@ button {
 
 .boardWriteTable textarea, .boardAdjustTable textarea {
    padding: 0px;
+   margin: 0px;
    width: 600px;
    height: 500px;
 }
 
 .board_write, .board_write_bottom, .board_adjust_bottom {
    float: right;
+   margin: 0px;
+}
+
+.board_write_bottom button{
+	margin-top: 0px;
+	margin-right: 27px;
 }
 
 .searchInput {
@@ -1656,7 +1662,7 @@ button {
    background: url("../images/help/help_menu.png") no-repeat;
    margin-top: 20px;
    min-height: 800px;
-   margin-left: 50px;
+   margin-left: 0px;
    float: left;
    min-width: 30%;
    width: 30%;
@@ -1675,23 +1681,23 @@ button {
 .help_main {
    float: left;
    position: relative;
-   left: 40%;
-   width: 800px;
+   left: 35%;
+   min-width: 600px;
    min-height: 800px;
 }
 
 .help_menu_inner1 {
    background: url(../images/help/help_menu1.png) no-repeat 10% 30%;
    padding: 55px;
-   margin-top: 40px;
-   margin-left: 75px;
+   margin-top: 55px;
+   margin-left: 90px;
 }
 
 .help_menu_ul, .lease_menu_ul {
    list-style: none;
    position: fixed;
    padding-top: 220px;
-   padding-left: 100px;
+   padding-left: 48px;
 }
 
 .help_menu_ul li, .lease_menu_ul li{
@@ -1856,7 +1862,7 @@ button {
 	background-repeat: no-repeat;
 	margin-top: 20px;
 	min-height: 800px;
-	margin-left: 50px;
+	margin-left: 0px;
 	float: left;
 	width: 30%;
 	position: fixed;
@@ -1879,7 +1885,7 @@ button {
    width: 800px;
    margin-right: 30px;
    position: absolute;
-   left: 40%;
+   left: 35%;
    z-index: 2;
 }
 
@@ -2266,7 +2272,6 @@ button {
 .priceCheck {
 	font-size: 20px;
 	text-align: center;
->>>>>>> branch 'master' of https://github.com/qwe5510/lease_city.git
 }
 
 .leaseCategory label {
@@ -2349,6 +2354,19 @@ button {
 	float: none;
 	display: inline-block;
 }
+.mypage_sub{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
 .mypage{
 	background: url("../images/help_main.png") no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -2356,7 +2374,7 @@ button {
 	-o-background-size: cover;
 	background-size: cover;
 	min-width: 1200px;
-	min-height: 500px;
+	min-height: 800px;
 	text-align: center;
 	padding-top: 20px;
 	position: relative;
@@ -2419,6 +2437,60 @@ button {
 	margin-top : 0px;
 	margin-left : 0px;
 	margin-bottom : 5px;
+}
+.license button{
+	width: 60px;
+}
+.license input{
+	margin-top : 15px;
+	width: 145px;
+	height: 35px;
+}
+.license input[type="date"]{
+	width: 140px;
+}
+.myinfo{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+	font-size: 20px;
+	text-align: center;
+}
+.myinfo_0{
+	margin-top : 20px;
+	margin-left : 10%;
+	width : 1000px;
+	height: 300px;
+	padding-top : 30px;
+	background: #444444;
+	border-radius: 15%/170px;
+	border :solid 5px black;
+}
+.myinfo_1{
+	display : inline-block;
+	width: 20%;
+}
+.myinfo_2{
+	display : inline-block;
+	width: 20%;
+}
+.myinfo_3{
+	display : inline-block;
+	width: 20%;
+}
+.myinfo_4{
+	display : inline-block;
+	width: 20%;
+	margin-bottom : 5px;
 	padding : 0px;
 }
 
@@ -2438,6 +2510,113 @@ button {
 	width: 617px;
 	height: 28px;
 	position: relative;
+}
+
+.history_table{
+	width: 780px;
+	font-size: 15px;
+}
+.history_table button {
+	width: 50px;
+	height: 20px;
+}
+.myinfo li{
+	padding: 10px;
+}
+.evaluate{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
+.evaluate_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
+	position: fixed;
+}
+.evaluate_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 65%;
+	display: inline-block;
+	text-align: left;
+	border: 2px solid;
+	margin-bottom: 30px;
+}
+.evaluate_main_table{
+	padding : 60px;
+	width: 780px;
+}
+.evaluate_main_table td{
+	padding-bottom: 40px;
+	font-size: 12px;
+}
+.evaluate_main_table span{
+	font-size: 16px;
+}
+.evaluate_main_table button{
+	width: 80px;
+	float: right;
+}
+.evaluate_check{
+	width: 70px;
+}
+.selection{
+	background: url("../images/mypage_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 500px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+}
+.selection_menu{
+	margin-top: 20px;
+	min-height: 500px;
+	margin-left: 50px;
+	float: left;
+	min-width: 30%;
+	width: 30%;
+	position: fixed;
+}
+.selection_main{
+	float: right;
+	margin-right: 50px;
+	min-height: 500px;
+	width: 65%;
+	display: inline-block;
+	text-align: left;
+}
+.selection_hec{
+	width: 780px;
+}
+.selection_cc{
+	width: 780px;
+}
+.selection_3_bottom button{
+	margin-top : 20px;
+	width: 80px;
+}
+.selection2_table{
+	width: 600px;
 }
 
 .weatherMap {
@@ -2527,4 +2706,3 @@ button {
 	top: 995px;
 	left: 382px;
 }
-

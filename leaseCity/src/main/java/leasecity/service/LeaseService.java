@@ -27,6 +27,22 @@ public interface LeaseService {
 	public List<LeaseCall> loadLeaseCalls(Page page) throws NotFoundDataException;
 	
 	/**
+	 * 건설업체 유저 id에 대한 요청글 조회.
+	 * @param userId
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	public List<LeaseCall> loadConstructionUserLeaseCalls(String userId) throws NotFoundDataException;
+	
+	/**
+	 * 임대 요청글 정보 리턴
+	 * @param leaseCallNo
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	public LeaseCall loadLeaseCall(Integer leaseCallNo) throws NotFoundDataException;
+	
+	/**
 	 * 임대 요청 보기
 	 * @param lease
 	 * @return
@@ -129,6 +145,13 @@ public interface LeaseService {
 											throws NotFoundDataException;
 	
 	/**
+	 * 중기업체에게 직접요청 하기
+	 * @param leaseDirectCall
+	 * @throws ServiceFailException
+	 */
+	public void doLeaseDirectCall(LeaseDirectCall leaseDirectCall) throws ServiceFailException;
+	
+	/**
 	 * 중기업체 직접요청 수락 (알림)
 	 * @param leaseDirectCall
 	 * @param price
@@ -165,6 +188,13 @@ public interface LeaseService {
 	 */
 	public LeaseTransfer viewLeaseTransfer(Integer leaseTransferNo, String acceptUserId)
 														throws NotFoundDataException;
+	
+	/**
+	 * 입력한 차량번호에 대해서 현재 신청되어있는 요청글에서 요청한 주소를 리턴함.
+	 * @param idNumber
+	 * @throws NotFoundDataException
+	 */
+	public String loadHeavyEquipmentUsingAddress(String idNumber) throws NotFoundDataException;
 	
 	/**
 	 * 임대 양도 하기 (알림)
@@ -251,10 +281,11 @@ public interface LeaseService {
 	 * @param search 검색컨텐츠
 	 * @param keyword 검색어
 	 * @param isCompany (HEC : 중기업체 / CC : 건설업체)
+	 * @param userId : 업체명 기입.
 	 * @return 
 	 */
 	public Page getMoreViewHECPage
-		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany);
+		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany, String userId);
 	
 	/**
 	 * 임대 양도에 대한 페이지 (검색없음)

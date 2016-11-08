@@ -33,6 +33,12 @@ public class LeaseRequestRepoImpl implements LeaseRequestRepo{
 		return session.selectOne(stmt, leaseCallNo);
 	}
 	
+	@Override
+	public Integer getSearchIdNumberLeaseRequest(String idNumber) {
+		String stmt = LEASE_REQUEST_NS +"getSearchIdNumberLeaseRequest";
+		return session.selectOne(stmt, idNumber);
+	}
+	
 	
 	@Override
 	public List<LeaseRequest> getAllStandByLeaseRequests(Integer leaseCallNo) {
