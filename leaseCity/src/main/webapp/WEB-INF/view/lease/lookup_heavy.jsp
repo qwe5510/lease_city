@@ -87,27 +87,37 @@
 			<fmt:formatNumber value="${HEC.creditGrade}" 
 					pattern="0.00" var="credit"></fmt:formatNumber>
 			
-			<tr align="center" class="HECArea">
-				<td>
-				<div class="credit-min-area">
-				<i class="credit-max-area" style="width: ${creditPercent}">
-				</i></div>
-				<strong>${credit}</strong>
-				</td>
-				<td>
-				<a href="${lookupHeavy}${HEC.userId}">
-				<span>${HEC.companyName}</span>
-				</a>
-				</td>
-				<td>
-				<a href="${lookupHeavy}${HEC.userId}">
-				<span>${HEC.representName}</span>
-				</a>
-				</td>
-				<td><span>${HEC.address}</span></td>
-				<td><span>${HEC.outputCategory}</span></td>
-				<td><span>${HEC.outputWorkLog}건</span></td>
-			</tr>
+			<c:choose>
+				<c:when test="${!empty loginUser and HEC.userId eq loginUser.userId}">
+				</c:when>
+				<c:otherwise>
+				<tr align="center" class="HECArea">
+					<td>
+						<div class="credit-min-area">
+						<i class="credit-max-area" style="width: ${creditPercent}">
+						</i></div>
+						<strong>${credit}</strong>
+					</td>
+					<td>
+						<a href="${lookupHeavy}${HEC.userId}">
+						<span>${HEC.companyName}</span>
+						</a>
+						</td>
+						<td>
+						<a href="${lookupHeavy}${HEC.userId}">
+						<span>${HEC.representName}</span>
+						</a>
+					</td>
+					<td><span>${HEC.address}</span></td>
+					<td><span>${HEC.outputCategory}</span></td>
+					<td><span>${HEC.outputWorkLog}건</span></td>
+				</tr>
+				</c:otherwise>
+			</c:choose>
+			
+			
+			
+			
 			</c:forEach>
 
 			<c:if test="${!empty errorMsg}">

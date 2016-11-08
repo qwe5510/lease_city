@@ -473,6 +473,8 @@ public class LeaseController {
 			HttpSession session, @RequestParam(required=false) String equipmentId){
 		
 		List<String> acceptIdNumbers = new ArrayList<>();
+		
+		List<String> heavyIdNumbers = new ArrayList<>();
 		List<String> sendIdNumbers = new ArrayList<>();
 		List<String> leaseCallTitles = new ArrayList<>();
 				
@@ -491,8 +493,14 @@ public class LeaseController {
 					if(HE!= null && HE.getUsedYesNo().equals("Y"))
 						sendIdNumbers.add(HE.getInfo());
 				}
+				String idNumber = sendIdNumbers.get(0);
+				       idNumber = idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
+				
+				String address = leaseService.loadHeavyEquipmentUsingAddress(idNumber);
+				
 				model.addAttribute("isUser", "HeavyEquipment");
 				model.addAttribute("sendIdNumbers", sendIdNumbers);
+				model.addAttribute("address", address);
 				
 			//건설업체 일 때. - 직접요청 정보 담기.
 			}else if(loginUser instanceof ConstructionCompany){
@@ -513,6 +521,7 @@ public class LeaseController {
 				model.addAttribute("isUser", "Construction");
 			}
 			
+			//중기업체 일 경우 사용가능한 차량 중 차량종류가 일치하는 것만을 띄움
 			if(user instanceof HeavyEquipmentCompany){
 				HECUser = (HeavyEquipmentCompany)user;
 				HECUser.setHeavyEquipmentList(
@@ -521,6 +530,27 @@ public class LeaseController {
 				for(HeavyEquipment HE : HECUser.getHeavyEquipmentList()){
 					if(HE!= null && HE.getUsedYesNo().equals("N"))
 						acceptIdNumbers.add(HE.getInfo());
+				}
+				
+				if(loginUser instanceof HeavyEquipmentCompany){
+					boolean isEqualed = false;
+					
+					for(String sendIdNumber : sendIdNumbers){
+						for(String acceptIdNumber : acceptIdNumbers){
+							if(sendIdNumber.split("/")[0].equals(acceptIdNumber.split("/")[0])){
+								isEqualed = true;
+								heavyIdNumbers.add(acceptIdNumber);
+							}
+						}
+					}
+					
+					if(!isEqualed){
+						redir.addFlashAttribute("HEC_message", "양도 가능한 차량을 현 중기업체가 보유하고 있지 않습니다.");
+						return "redirect:/lookupHeavy";
+					}else{
+						model.addAttribute("heavyIdNumbers", heavyIdNumbers);
+					}
+					
 				}
 				
 				if(acceptIdNumbers.size() <= 0){
@@ -559,21 +589,116 @@ public class LeaseController {
 		return result;
 	}
 	
-	
-	@RequestMapping(value="/leaseDirectCallWrite", method=RequestMethod.POST)
-	public String directCallWrite(Model model, RedirectAttributes redir, HttpSession session){
-		
-		
-		
-		return "";
+	/**
+	 * 차량번호에 의해 사용중인장비의 요청글로 접속, 주소를 빼온다.
+	 * @param idNumber
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	@RequestMapping(value="/addressChangeInfo", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	public @ResponseBody String leaseTransferLoadAddressAjax(
+			@RequestParam String idNumber) throws NotFoundDataException{
+		idNumber = idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
+		String result = leaseService.loadHeavyEquipmentUsingAddress(idNumber);
+		return result;
 	}
 	
+	
+	//직접요청 작성 시
+	@RequestMapping(value="/leaseDirectCallWrite", method=RequestMethod.POST)
+	public String directCallWrite(Model model, RedirectAttributes redir,
+			HttpSession session, LeaseDirectCall leaseDirectCall){
+		
+		User user = (User)session.getAttribute("loginUser");
+		String idNumber = leaseDirectCall.getCallIdNumber();
+		
+		if(user!=null && user instanceof ConstructionCompany){
+			leaseDirectCall.setConstructionId(user.getUserId());
+		}else{
+			redir.addFlashAttribute("join_message", "건설업체 유저가 아닙니다.\\n메인페이지로 이동합니다.");
+			return "redirect:/index";
+		}
+		
+		idNumber = idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
+		Integer leaseCallNo = Integer.parseInt(leaseDirectCall.getLeaseCallTitle().split(":")[0]);
+		
+		leaseDirectCall.setCallIdNumber(idNumber);
+		leaseDirectCall.setLeaseCallNo(leaseCallNo);
+		
+		logger.trace("직접 요청 정보 : {}", leaseDirectCall);
+		
+		try {
+			leaseService.doLeaseDirectCall(leaseDirectCall);
+			
+			/**
+			 * 알림 자리가 들어가야 함.
+			 */
+			
+			redir.addFlashAttribute("HEC_message", "직접 요청이 완료되었습니다!.");
+			
+		} catch (ServiceFailException e) {
+			redir.addFlashAttribute("join_messgae", "직접 요청에 실패하였습니다.\\n메인페이지로 이동합니다.");
+			return "redirect:/index";
+		}
+		return "redirect:/lookupHeavy";
+	}
+	
+	//양도 작성
+	
 	@RequestMapping(value="/leaseTransferWrite", method=RequestMethod.POST)
-	public String transferWrite(Model model, RedirectAttributes redir, HttpSession session){
+	public String transferWrite(Model model, RedirectAttributes redir, 
+			HttpSession session, LeaseTransfer leaseTransfer){
+		
+		User user = (User)session.getAttribute("loginUser");
+		
+		String sendCategory = leaseTransfer.getSendIdNumber().split("/")[0];
+		String acceptCategory = leaseTransfer.getAcceptIdNumber().split("/")[0];
+		
+		if(sendCategory.equals(acceptCategory)){
+			leaseTransfer.setEquipmentCategory(sendCategory);
+			//idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
+			
+			String sendIdNumber = leaseTransfer.getSendIdNumber();
+			String acceptIdNumber = leaseTransfer.getAcceptIdNumber();
+			
+			sendIdNumber = sendIdNumber.substring(sendIdNumber.indexOf("(")+1, sendIdNumber.indexOf(")"));
+			acceptIdNumber = acceptIdNumber.substring(acceptIdNumber.indexOf("(")+1, acceptIdNumber.indexOf(")"));
+			
+			leaseTransfer.setAcceptIdNumber(acceptIdNumber);
+			leaseTransfer.setSendIdNumber(sendIdNumber);
+			
+			String address = null;
+			try {
+				address = leaseService.loadHeavyEquipmentUsingAddress(sendIdNumber);
+				leaseTransfer.setAddress(address);
+			} catch (NotFoundDataException e) {
+				redir.addFlashAttribute("HEC_message", "양도신청 장소가 제대로 반영되지 않았습니다.");
+				return "redirect:/lookupHeavy";
+			}
+			
+		}else{
+			redir.addFlashAttribute("HEC_message", "양도하려는 장비의 종류가 서로 다릅니다.");
+			return "redirect:/lookupHeavy/read";
+		}
+		
+		if(user != null && user instanceof HeavyEquipmentCompany){
+			leaseTransfer.setSendUserId(user.getUserId());
+			
+		}else{
+			redir.addFlashAttribute("join_meesage", "중기업체 회원이 아닙니다.\\n메인화면으로 이동합니다.");
+			return "redirect:/index";
+		}
+		
+		try {
+			leaseService.doLeaseTransfer(leaseTransfer);
+			redir.addFlashAttribute("HEC_message", "양도 신청이 완료되었습니다!");
+		} catch (ServiceFailException e) {
+			redir.addFlashAttribute("join_message", "양도 신청 작업에 에러가 발생하였습니다!\\n메인 페이지로 이동합니다.");
+			return "redirect:/index";
+		}
 		
 		
-		
-		return "";
+		return "redirect:/lookupHeavy";
 	}
 	
 	

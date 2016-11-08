@@ -343,6 +343,20 @@ public class LeaseServiceImpl implements LeaseService {
 		return results;
 	}
 
+	
+	@Override
+	public void doLeaseDirectCall(LeaseDirectCall leaseDirectCall) throws ServiceFailException {
+		
+		if(leaseDirectCall == null){
+			throw new ServiceFailException();
+		}
+		int result = leaseDirectCallRepo.insertLeaseDirectCall(leaseDirectCall);
+		
+		if(result != 1){
+			throw new ServiceFailException();
+		}
+	}
+	
 	@Override
 	public void permissionLeaseDirectCall
 		(LeaseDirectCall leaseDirectCall, LeaseRequest leaseRequest) 
@@ -399,6 +413,23 @@ public class LeaseServiceImpl implements LeaseService {
 		}
 		
 		return results;
+	}
+	
+	@Override
+	public String loadHeavyEquipmentUsingAddress(String idNumber) throws NotFoundDataException {
+		if(idNumber == null){
+			throw new NotFoundDataException("주소를 확인 할 차량번호");
+		}
+		
+		Integer leaseCallNo = leaseRequestRepo.getSearchIdNumberLeaseRequest(idNumber);
+		
+		if(leaseCallNo == null){
+			throw new NotFoundDataException("사용중인 차량의 임대요청 정보");
+		}
+		
+		LeaseCall leaseCall = leaseCallRepo.getLeaseCall(leaseCallNo);
+		
+		return leaseCall.getAddress();
 	}
 	
 	@Override

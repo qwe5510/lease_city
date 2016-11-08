@@ -12,7 +12,7 @@
 	</settings>
 	
 	<typeAliases>
-	    <!-- 1.유저 (관리자 (아무데도 속하지 않음) / 건설업체 - 자격증 / 중기업체 - 중장비)-->
+	    <!-- 1.유저 (관리자 (아무데도 속하지 않음) / 건설업체 - 자격증 / 중기업체 - 중장비 / 신용도계산)-->
 		<typeAlias type="leasecity.dto.user.User" alias="user"/>
 		<typeAlias type="leasecity.dto.user.ConstructionCompany" alias="constructionCompany"/>
 		<typeAlias type="leasecity.dto.user.License" alias="license" />
@@ -54,6 +54,7 @@
 		<mapper resource="mybatis/mapper/lease/leaseCallRepo.xml" />
 		<mapper resource="mybatis/mapper/lease/leaseRequestRepo.xml" />
 		<mapper resource="mybatis/mapper/lease/leaseDirectCallRepo.xml" />
+		<mapper resource="mybatis/mapper/lease/leaseTransferRepo.xml" />
 		<mapper resource="mybatis/mapper/lease/lookUpHeavyEquipmentCompanyRepo.xml" />
 		
 		

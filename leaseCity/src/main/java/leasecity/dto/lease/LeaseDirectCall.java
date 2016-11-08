@@ -31,6 +31,9 @@ public class LeaseDirectCall implements Serializable {
 	/** 임대요청 번호 */
 	private Integer leaseCallNo;
 	
+	/** 임대 글 제목 (dto에만 있음)*/
+	private String leaseCallTitle;
+	
 	/** 중기업체 회원 ID. (수신자) */
 	private String equipmentId;
 	

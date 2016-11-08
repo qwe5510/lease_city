@@ -145,6 +145,13 @@ public interface LeaseService {
 											throws NotFoundDataException;
 	
 	/**
+	 * 중기업체에게 직접요청 하기
+	 * @param leaseDirectCall
+	 * @throws ServiceFailException
+	 */
+	public void doLeaseDirectCall(LeaseDirectCall leaseDirectCall) throws ServiceFailException;
+	
+	/**
 	 * 중기업체 직접요청 수락 (알림)
 	 * @param leaseDirectCall
 	 * @param price
@@ -181,6 +188,13 @@ public interface LeaseService {
 	 */
 	public LeaseTransfer viewLeaseTransfer(Integer leaseTransferNo, String acceptUserId)
 														throws NotFoundDataException;
+	
+	/**
+	 * 입력한 차량번호에 대해서 현재 신청되어있는 요청글에서 요청한 주소를 리턴함.
+	 * @param idNumber
+	 * @throws NotFoundDataException
+	 */
+	public String loadHeavyEquipmentUsingAddress(String idNumber) throws NotFoundDataException;
 	
 	/**
 	 * 임대 양도 하기 (알림)
