@@ -70,15 +70,15 @@ public class LoginController {
 		try {
 			admin = UService.adminLogin(userId, password);
 			session.setAttribute("admin", admin);
-			redir.addFlashAttribute("join_message", "관리자님 반갑습니다.");
+			redir.addFlashAttribute("index_message", "관리자님 반갑습니다.");
 		} catch (LoginFailException e1) { // 관리자 로그인이 실패했을 경우
 			try {
 				user = UService.login(userId, password);
 				logger.trace("로그인 시도 : {}, {}", userId, password);
 				session.setAttribute("loginUser", user);
-				redir.addFlashAttribute("join_message", userId + "님 로그인 하셨습니다.");
+				redir.addFlashAttribute("index_message", userId + "님 로그인 하셨습니다.");
 			} catch (LoginFailException e) {
-				redir.addFlashAttribute("join_message", "로그인 실패 - 아이디 혹은 비밀번호가 올바르지 않습니다.");
+				redir.addFlashAttribute("index_message", "로그인 실패 - 아이디 혹은 비밀번호가 올바르지 않습니다.");
 				return "redirect:/login";
 			}
 		}
@@ -88,7 +88,7 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String logout(Model model, HttpSession session, RedirectAttributes redir){
 		session.invalidate();
-		redir.addFlashAttribute("join_message", "로그아웃 되었습니다.");
+		redir.addFlashAttribute("index_message", "로그아웃 되었습니다.");
 		return "redirect:index";
 	}
 
@@ -110,9 +110,9 @@ public class LoginController {
 		try {
 			user = UService.searchUserId(user);
 			mUtil.email_IdCertification(user.getEmail(), user.getUserId());
-			redir.addFlashAttribute("join_message", "아이디 찾기 성공 - 이메일로 아이디를 발송했습니다.");
+			redir.addFlashAttribute("index_message", "아이디 찾기 성공 - 이메일로 아이디를 발송했습니다.");
 		} catch (NotFoundDataException e) {
-			redir.addFlashAttribute("join_message", "아이디 찾기 실패");
+			redir.addFlashAttribute("index_message", "아이디 찾기 실패");
 			return "redirect:/login";
 		}
 		// 3. 결과 출력 메시지 후, login
@@ -146,7 +146,7 @@ public class LoginController {
 		} catch (NotFoundDataException e) {
 			logger.trace("패스워드 찾기 : DB 검색 실패");
 			submit = "fail_notFound";
-			//redir.addFlashAttribute("join_message", "패스워드 찾기 실패 - 등록되지 않은 회원입니다.");
+			//redir.addFlashAttribute("index_message", "패스워드 찾기 실패 - 등록되지 않은 회원입니다.");
 			return submit;
 		}
 		
@@ -160,7 +160,7 @@ public class LoginController {
 		if (matchingResult.equals("success")) {
 			logger.trace("이메일 인증 확인");
 		} else {
-			//redir.addFlashAttribute("join_message", "본인 인증 실패 - 인증되지 않은 회원입니다 .");
+			//redir.addFlashAttribute("index_message", "본인 인증 실패 - 인증되지 않은 회원입니다 .");
 			logger.trace("이메일 인증 실패");
 			return submit;
 		}
@@ -264,12 +264,12 @@ public class LoginController {
 			UService.changeInfo("password", user);
 		} catch (ServiceFailException e) {
 			// 4-2 비밀번호 변경 실패
-			redir.addFlashAttribute("join_message", "비밀번호 변경 실패.");
+			redir.addFlashAttribute("index_message", "비밀번호 변경 실패.");
 			return "redirect:/login";
 		}
 		
 		// (비밀번호 변경 성공 메시지)
-		redir.addFlashAttribute("join_message", user.getUserId() + "님! 비밀번호 변경를 변경하셨습니다.");
+		redir.addFlashAttribute("index_message", user.getUserId() + "님의 비밀번호 변경를 변경하셨습니다.");
 		
 		return "redirect:/popupSearchPassPRG";
 	}

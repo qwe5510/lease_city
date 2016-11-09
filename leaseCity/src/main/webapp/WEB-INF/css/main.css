@@ -1289,7 +1289,7 @@ label {
 }
 
 .reply_author {
-   width: 400px;
+   width: 300px;
    text-align : left;
    float: left;
    font-weight: bold;
@@ -1433,7 +1433,7 @@ button {
    height: 500px;
 }
 
-.board_write, .board_write_bottom, .board_adjust_bottom {
+.board_write_bottom, .board_adjust_bottom {
    float: right;
    margin: 0px;
 }
@@ -1602,7 +1602,12 @@ button {
 }
 
 .license_add {
-   margin-left: 100px;
+	margin-left: 100px;
+	font-size: 2em;
+}
+
+.license_remove{
+	font-size: 2em;
 }
 
 .checked {
@@ -2467,7 +2472,7 @@ button {
 }
 .myinfo_0{
 	margin-top : 20px;
-	margin-left : 10%;
+	display: inline-block;
 	width : 1000px;
 	height: 300px;
 	padding-top : 30px;

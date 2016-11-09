@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Home | LEASECITY</title>
+<title>HOME | LEASE CITY</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width">
 
@@ -38,11 +38,10 @@
 
 </head>
 <body>
-	<!-- 가입 절차 설명 메시지 -->
-	<c:if test="${!empty join_message }">
-		<script type="text/javascript">
-			var msg = '${join_message }'
-			alert(msg);
+	<!-- 메인으로 이동 시 보이는 메시지 -->
+	<c:if test="${!empty index_message }">
+		<script>
+			alert("${index_message }");
 		</script>
 	</c:if>
 	<jsp:include page="./layout/header.jsp"></jsp:include>
