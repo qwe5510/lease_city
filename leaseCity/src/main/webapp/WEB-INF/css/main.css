@@ -1289,7 +1289,7 @@ label {
 }
 
 .reply_author {
-   width: 400px;
+   width: 300px;
    text-align : left;
    float: left;
    font-weight: bold;
@@ -1433,7 +1433,7 @@ button {
    height: 500px;
 }
 
-.board_write, .board_write_bottom, .board_adjust_bottom {
+.board_write_bottom, .board_adjust_bottom {
    float: right;
    margin: 0px;
 }
@@ -1602,7 +1602,12 @@ button {
 }
 
 .license_add {
-   margin-left: 100px;
+	margin-left: 100px;
+	font-size: 2em;
+}
+
+.license_remove{
+	font-size: 2em;
 }
 
 .checked {
@@ -2433,7 +2438,7 @@ button {
 }
 #mypage_identify_carown button{
 	width: 40px;
-	height : 20px
+	height : 20px;
 	margin-top : 0px;
 	margin-left : 0px;
 	margin-bottom : 5px;
@@ -2467,7 +2472,7 @@ button {
 }
 .myinfo_0{
 	margin-top : 20px;
-	margin-left : 10%;
+	display: inline-block;
 	width : 1000px;
 	height: 300px;
 	padding-top : 30px;
@@ -2493,6 +2498,7 @@ button {
 	margin-bottom : 5px;
 	padding : 0px;
 }
+
 #SpecialRolling {
 	text-align: center;
 	width: 617px;
@@ -2510,6 +2516,7 @@ button {
 	height: 28px;
 	position: relative;
 }
+
 .history_table{
 	width: 780px;
 	font-size: 15px;
@@ -2615,4 +2622,92 @@ button {
 }
 .selection2_table{
 	width: 600px;
+}
+
+.weatherMap {
+	background: url(../images/weather/지도50.png) no-repeat;
+	background-size: contain;
+	
+	width: 400px;
+	height: 600px;
+}
+
+#weather1 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 980px;
+	left: 160px;
+}
+
+#weather2 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1080px;
+	left: 225px;
+}
+
+#weather3 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1080px;
+	left: 135px;
+}
+
+#weather4 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1130px;
+	left: 315px;
+}
+
+#weather5 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1210px;
+	left: 295px;
+}
+
+#weather6 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1205px;
+	left: 165px;
+}
+
+#weather7 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1270px;
+	left: 105px;
+}
+
+#weather8 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 985px;
+	left: 285px;
+}
+
+#weather9 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1380px;
+	left: 135px;
+}
+
+#weather10 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 995px;
+	left: 382px;
 }

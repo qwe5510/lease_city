@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>lease City</title>
+<title>회원가입 | LEASE CITY</title>
 </head>
 <body>
    <jsp:include page="../layout/header.jsp"></jsp:include>
@@ -190,7 +190,7 @@ function hecInfoOutput(){
       e.preventDefault(); 
       var form = document.createElement("form");
       form.setAttribute("method", "post");
-      form.setAttribute("action", "<%=request.getContextPath() %>/joinCancle")
+      form.setAttribute("action", "<%=request.getContextPath() %>/joinCancel")
       form.submit();
    });
    

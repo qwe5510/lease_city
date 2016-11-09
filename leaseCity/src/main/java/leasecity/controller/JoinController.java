@@ -44,12 +44,12 @@ public class JoinController {
 	UserService UService;
 
 	// (회원 가입시 ) 취소 버튼
-	@RequestMapping(value = "/joinCancle", method = RequestMethod.POST)
+	@RequestMapping(value = "/joinCancel", method = RequestMethod.POST)
 	public String join_cancel(Model model, RedirectAttributes redir, HttpSession session) {
 		// 동의 취소시, 전달 메시지 (한번만 보여주는 휘발성 메시지)
 		// 세션에 저장한 회원정보 일괄삭제 
 		session.invalidate();
-		redir.addFlashAttribute("join_message", "회원가입이 최소되었습니다.");	
+		redir.addFlashAttribute("index_message", "회원가입이 최소되었습니다.");	
 		return "redirect:/index";
 	}
 
@@ -62,7 +62,7 @@ public class JoinController {
 		Object joinOn = session.getAttribute("email");
 		if(joinOn == null){
 			logger.error("세션이 만료되었습니다.");
-			redir.addFlashAttribute("join_message", "세션이 만료되어 회원가입을 할 수 없습니다.");
+			redir.addFlashAttribute("index_message", "세션이 만료되어 회원가입을 할 수 없습니다.");
 			return "redirect:/index";
 		}
 
@@ -176,14 +176,14 @@ public class JoinController {
 			SBUService.rejectStandByUser(SBU); //대기유저 삭제
 			
 			UService.join(joinUser); //회원가입
-			redir.addFlashAttribute("join_message", joinUser.getRepresentName() + "님 회원가입에 성공했습니다.");
+			redir.addFlashAttribute("index_message", joinUser.getRepresentName() + "님 회원가입에 성공했습니다.");
 			logger.trace("회원가입 완료");
 		} catch (NotFoundDataException e) {
 			logger.error("지울 대기 유저를 찾을 수 없음.");
-			redir.addFlashAttribute("join_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
+			redir.addFlashAttribute("index_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
 			return "redirect:/login";
 		} catch (JoinFailException e) {
-			redir.addFlashAttribute("join_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
+			redir.addFlashAttribute("index_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
 			return "redirect:/login";
 		}
 
@@ -203,7 +203,7 @@ public class JoinController {
 		String email = (String)session.getAttribute("email");
 		
 		if(companyName==null || representName==null || email==null){
-			redir.addFlashAttribute("join_message", "세션이 만료되어 회원가입을 할 수 없습니다. \\n 메인 페이지로 이동합니다.");
+			redir.addFlashAttribute("index_message", "세션이 만료되어 회원가입을 할 수 없습니다. \\n 메인 페이지로 이동합니다.");
 			return "redirect:index";
 		}
 		
@@ -217,7 +217,7 @@ public class JoinController {
 		String email = (String)session.getAttribute("email");
 		
 		if(companyName==null || representName==null || email==null){
-			redir.addFlashAttribute("join_message", "세션이 만료되어 회원가입을 할 수 없습니다. \\n 메인 페이지로 이동합니다.");
+			redir.addFlashAttribute("index_message", "세션이 만료되어 회원가입을 할 수 없습니다. \\n 메인 페이지로 이동합니다.");
 			return "redirect:index";
 		}
 		
@@ -251,7 +251,7 @@ public class JoinController {
 			session.setMaxInactiveInterval(60 * 10);
 		} catch (NotFoundDataException e) {
 			// dir에 객체 저장하여 보내기
-			redir.addFlashAttribute("join_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
+			redir.addFlashAttribute("index_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
 			return "redirect:index";
 		}
 		return "redirect:/joinAgree";
@@ -264,7 +264,7 @@ public class JoinController {
 		String permissionNo = (String)session.getAttribute("permissionNo");
 		if(permissionNo== null){
 			// dir에 객체 저장하여 보내기
-			redir.addFlashAttribute("join_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
+			redir.addFlashAttribute("index_message", "회원가입을 할 수 없습니다. 메인 페이지로 이동합니다.");
 			return "redirect:index";
 		}
 
@@ -298,7 +298,7 @@ public class JoinController {
 			}
 			SBUService.addStandByUser(sbu);
 			logger.trace("저장된 임시 유저 : {}", sbu);
-			redir.addFlashAttribute("join_message", "회원가입 요청 성공");
+			redir.addFlashAttribute("index_message", "회원가입 요청 성공");
 
 			sbu = SBUService.providePermissionCode(sbu);
 			logger.trace("관리자의 승인을 받은 임시회원 : {}", sbu);
@@ -312,11 +312,11 @@ public class JoinController {
 
 			return "redirect:/index";
 		} catch (DuplicateValueException e) {
-			redir.addFlashAttribute("join_message", "회원가입 요청 실패\\n동일한 업체명, 이메일로 된 유저 혹은 대기유저가 존재합니다.");
+			redir.addFlashAttribute("index_message", "회원가입 요청 실패\\n동일한 업체명, 이메일로 된 유저 혹은 대기유저가 존재합니다.");
 			logger.error("회원가입 요청실패");
 			return "redirect:/login";
 		} catch (NotFoundDataException e) {
-			redir.addFlashAttribute("join_message", "회원가입 요청 실패");
+			redir.addFlashAttribute("index_message", "회원가입 요청 실패");
 			return "redirect:/login";
 		}
 

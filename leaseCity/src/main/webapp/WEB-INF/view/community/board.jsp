@@ -10,7 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src='//uchat.co.kr/uchat.php' charset='UTF-8'></script>
-<title>COMMUNITY | LEASECITY</title>
+<title>커뮤니티 | LEASE CITY</title>
 
 <c:if test="${!empty board_message }">
 	<script>
@@ -161,9 +161,7 @@
             </tr>
             
             <tr class="board_write">
-               <td colspan="5">
-               </td>
-               <td colspan="1">
+               <td colspan="6" align="right">
                <c:url value="/board/write" var="boardWrite"/>
                <a href="${boardWrite}"><button><i class="icon-pencil"></i>글쓰기</button></a>
                <a href="${boardList}"><button><i class="icon-list"></i>목록</button></a>

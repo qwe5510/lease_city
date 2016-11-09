@@ -4,7 +4,6 @@ import javax.mail.PasswordAuthentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import leasecity.dto.user.User;
 import leasecity.service.UserService;
 
 //이메일을 전송하는 관리자 계정 등록

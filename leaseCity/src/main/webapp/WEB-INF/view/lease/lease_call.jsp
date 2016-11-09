@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LEASE CALL | LEASE CITY</title>
+<title>임대 요청 | LEASE CITY</title>
 
 <c:if test="${!empty lease_message }">
 	<script>

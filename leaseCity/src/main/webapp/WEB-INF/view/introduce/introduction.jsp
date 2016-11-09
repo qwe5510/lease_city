@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>사이트 소개 | LEASE CITY</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
