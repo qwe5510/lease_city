@@ -15,9 +15,9 @@
 	<div class="mypage_menu">
 	</div>
 	<div class="mypage_main">
-		<h2>회원탈퇴 화면입니다.</h2>
-		<h3>회원탈퇴를 하시면 더이상 서비를 이용할 수 없습니다.<br>신중히 생각해주시기 바랍니다.</h3>
-		<h3>회원 탈퇴하시겠습니까?</h3>
+		<span><b>회원탈퇴</b> 화면입니다.</span><br><br>
+		<span><b>회원탈퇴</b>를 하시면 더이상 서비스를 이용할 수 없습니다.<br><br><b>신중히</b> 생각해주시기 바랍니다.</span>
+		<br><br><h3>회원 탈퇴하시겠습니까?</h3>
 		<label>비밀번호</label><input type="password" placeholder="비밀번호 입력"/>
 		<br>
 		<label>비밀번호 확인</label><input type="password" placeholder="비밀번호 확인"/>

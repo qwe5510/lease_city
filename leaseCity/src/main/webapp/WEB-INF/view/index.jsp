@@ -194,8 +194,8 @@
 								<!-- /Carousel items -->
 
 							</div>
-							<video width="300" height="200" controls="controls">
-								<source src="<%=request.getContextPath()%>/video/video.mp4" type="video/mp4">
+							<video width="300" height="200" controls>
+								<source src="https://www.youtube.com/watch?v=y2OFPvYxZuY.mp4" type="video/mp4">
 							</video>
 						</div>
 					</c:when>
@@ -244,6 +244,7 @@
 						</div>
 						<div>
 							<video src="<%=request.getContextPath()%>/video/video.mp4" controls="controls"></video>
+							<iframe width="100" height="100" src="https://www.youtube.com/embed/QbhmTM1cRro" frameborder="0" allowfullscreen></iframe>
 						</div>
 					</c:otherwise>
 				</c:choose>

@@ -1664,8 +1664,8 @@ button {
    min-height: 800px;
    margin-left: 0px;
    float: left;
-   min-width: 30%;
-   width: 30%;
+   min-width: 400px;
+   width: 400px;
    position: fixed;
    z-index: -1;
 }
@@ -1769,7 +1769,7 @@ button {
 
 .help_read_main {
    float: right;
-   width: 55%;
+   width: 800px;
    margin-right: 30px;
 }
 
@@ -2386,14 +2386,14 @@ button {
 	margin-left: 50px;
 	float: left;
 	min-width: 30%;
-	width: 30%;
+	width: 400px;
 	position: fixed;
 }
 .mypage_main{
 	float: right;
 	margin-right: 50px;
 	min-height: 500px;
-	width: 60%;
+	width: 800px;
 	display: inline-block;
 	text-align: left;
 }
@@ -2494,7 +2494,6 @@ button {
 	padding : 0px;
 }
 #SpecialRolling {
-	border: 1px solid gray;
 	text-align: center;
 	width: 617px;
 	height: 28px;
@@ -2542,14 +2541,14 @@ button {
 	margin-left: 50px;
 	float: left;
 	min-width: 30%;
-	width: 30%;
+	width: 400px;
 	position: fixed;
 }
 .evaluate_main{
 	float: right;
 	margin-right: 50px;
 	min-height: 500px;
-	width: 65%;
+	width: 800px;
 	display: inline-block;
 	text-align: left;
 	border: 2px solid;
@@ -2592,15 +2591,15 @@ button {
 	min-height: 500px;
 	margin-left: 50px;
 	float: left;
-	min-width: 30%;
-	width: 30%;
+	min-width: 400px;
+	width: 400px;
 	position: fixed;
 }
 .selection_main{
 	float: right;
 	margin-right: 50px;
 	min-height: 500px;
-	width: 65%;
+	width: 800px;
 	display: inline-block;
 	text-align: left;
 }
