@@ -2626,93 +2626,14 @@ button {
 .selection2_table{
 	width: 600px;
 }
-
-.weatherMap {
-	background: url(../images/weather/지도50.png) no-repeat;
-	background-size: contain;
-	
-	width: 400px;
-	height: 600px;
+.selection_classify{
+	width: 150px;
 }
-
-#weather1 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 980px;
-	left: 160px;
+.selection_titile{
+	width: 480px;
 }
-
-#weather2 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 1080px;
-	left: 225px;
-}
-
-#weather3 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 1080px;
-	left: 135px;
-}
-
-#weather4 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 1130px;
-	left: 315px;
-}
-
-#weather5 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 1210px;
-	left: 295px;
-}
-
-#weather6 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 1205px;
-	left: 165px;
-}
-
-#weather7 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 1270px;
-	left: 105px;
-}
-
-#weather8 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 985px;
-	left: 285px;
-}
-
-#weather9 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 1380px;
-	left: 135px;
-}
-
-#weather10 {
-	background-color: window;
-	position: absolute;
-	text-align: center;
-	top: 995px;
-	left: 382px;
+.selection_status{
+	width: 150px;
 }
 .today_lease{
 	float: left; 
