@@ -45,18 +45,6 @@ public class LicenseRepoImpl implements LicenseRepo{
 	}
 
 	@Override
-	public int updateLicense(License prev, License next) {
-		String stmt = LICENSE_NS + "updateLicense";
-		
-		Map<String, License> map = new HashMap<>();
-		
-		map.put("prev", prev);
-		map.put("next", next);
-		
-		return session.update(stmt);
-	}
-
-	@Override
 	public int deleteLicense(License license) {
 		String stmt = LICENSE_NS + "deleteLicense";
 		return session.delete(stmt, license);
@@ -67,7 +55,5 @@ public class LicenseRepoImpl implements LicenseRepo{
 		String stmt = LICENSE_NS + "deleteUserLicense";
 		return session.delete(stmt, userId);
 	}
-
-	
 	
 }

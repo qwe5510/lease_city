@@ -267,6 +267,8 @@
 		</div>
 	</section>
 
+
+
 	<!--Bottom-->
 	<section id="bottom" class="main">
 		<!--Container-->
@@ -351,7 +353,9 @@
 			<!--/row-fluid-->
 		</div>
 		<!--/container-->
-
+		
+		
+		
 	</section>
 	<!--/bottom-->
 	<jsp:include page="./layout/footer.jsp"></jsp:include>
@@ -565,4 +569,5 @@
 		return leaseCallList;
 	}
 </script>
+</body>
 </html>

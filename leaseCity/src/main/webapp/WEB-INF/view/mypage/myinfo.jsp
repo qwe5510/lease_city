@@ -7,7 +7,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>lease City</title>
+<title>마이 페이지 | LEASE CITY</title>
+
+<c:if test="${!empty myinfo_message }">
+	<script>
+		alert('${myinfo_message}');
+	</script>
+</c:if>
+
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>

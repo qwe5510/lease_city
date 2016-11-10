@@ -40,13 +40,19 @@ public class ConstructionCompanyRepooImpl implements ConstructionCompanyRepo{
 		return session.selectOne(stmt, userId);
 	}
 
-	
 	//건설업체 회원 추가
 	@Override
 	public int 
 		insertConstructionCompany(ConstructionCompany CC) {
 		String stmt = CC_NS + "insertCC";		
 		return session.insert(stmt, CC);
+	}
+	
+	//건설업체
+	@Override
+	public int updateConstructionCompany(ConstructionCompany CC) {
+		String stmt = CC_NS +"updateCC";
+		return session.update(stmt, CC);
 	}
 	
 }

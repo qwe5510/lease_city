@@ -38,5 +38,14 @@
  		DELETE FROM heavy_equipment_company
  		WHERE user_id = #{userId} 
  	</delete>
+ 	
+ 	<!-- 중기업체 정보 수정 -->
+ 	<update id="updateHEC" parameterType="String">
+ 		UPDATE heavy_equipment_company SET
+ 		help_on_off = #{helpOnOff},
+ 		info_on_off = #{infoOnOff}
+ 		WHERE user_id = #{userId}
+ 	</update>
+ 	
  
  </mapper>

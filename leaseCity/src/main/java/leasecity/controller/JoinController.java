@@ -99,7 +99,7 @@ public class JoinController {
 			// 체크박스 문자열을 이을 스트링버퍼 객체
 			StringBuffer sb = new StringBuffer();
 			for (String str : companyCategory) {
-				sb.append(str + "/");
+				sb.append(str + ",");
 			}
 			sb.deleteCharAt(sb.length() - 1);
 			// 분야를 /로 조합한 문자열

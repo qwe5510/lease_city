@@ -37,8 +37,13 @@ public interface UserService {
 	public User searchUserPassword(User user) 
 				throws NotFoundDataException;
 	
-	//유저정보변경, keyword를 통해 비밀번호, 정보 중 하나 변경 
-	public void changeInfo(String keyword, User user)
+	/**
+	 * 유저 정보 변경
+	 * @param isPassword true일 시, 비밀번호까지 변경
+	 * @param user
+	 * @throws ServiceFailException
+	 */
+	public void changeInfo(Boolean isPassword, User user)
 								throws ServiceFailException;
 	
 	/**
@@ -83,6 +88,12 @@ public interface UserService {
 	public Integer getCountWorkLog(User user);
 	
 	
+	/**
+	 * 해당 차량번호가 존재하는지 검색
+	 * @param idNumber
+	 * @return
+	 */
+	public Boolean checkHEC(String idNumber);
 								
 }
 

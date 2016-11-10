@@ -38,5 +38,14 @@
  		DELETE FROM construction_company
  		WHERE user_id = #{userId} 
  	</delete>
+ 	
+ 	<!-- 건설업체 회원 정보 수정 -->
+ 	<update id="updateCC" parameterType="constructionCompany">
+ 		UPDATE construction_company SET
+ 			yearly_sale = #{yearlySale},
+ 			yearly_AOOR = #{yearlyAoor},
+ 			company_category = #{companyCategory}
+ 		WHERE user_id = #{userId}
+ 	</update>
  
  </mapper>

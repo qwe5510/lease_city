@@ -20,4 +20,6 @@ public interface HeavyEquipmentCompanyRepo {
 	public int
 		insertHeavyEquipmentCompany(HeavyEquipmentCompany HEC);
 	
+	public int
+		updateHeavyEquipmentCompany(HeavyEquipmentCompany HEC);
 }

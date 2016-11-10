@@ -51,4 +51,11 @@ public class HeavyEquipmentCompanyRepoImpl implements HeavyEquipmentCompanyRepo 
 		return session.insert(stmt, HEC);
 	}
 	
+	@Override
+	public int 
+		updateHeavyEquipmentCompany(HeavyEquipmentCompany HEC) {
+		String stmt = HEC_NS +"updateHEC";
+		return session.update(stmt, HEC);
+	}
+	
 }
