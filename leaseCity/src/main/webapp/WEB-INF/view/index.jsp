@@ -430,6 +430,93 @@
 
         })();
         Page.init();
+        
+        if ("${sessionScope.loginUser.userId}" != "" || "${sessionScope.admin.userId}" != "" ) {
+        	 // 밑에 함수 실행
+            RollingText("Prev", "Next", 0);
+            // 함수 1
+            function RollingText(P, N, idx) {
+            
+               var maxcnt = 3;
+
+               // 아이디 갖고오기
+               var Prev = "#" + P + idx;
+               var Next = "#" + N + idx;
+
+               // css 갖고오기
+               var pos1 = $(Prev).css("top").replace("px", "");
+               var pos2 = $(Next).css("top").replace("px", "");
+               //alert('111');
+
+               // animate가 실행될 떄, 올라올 텍스트의 위치 설정
+               if (pos1 <= -28) {
+                  $(Prev).css("top", "28px");
+               }
+               if (pos2 <= -56) {
+                  $(Next).css("top", "0px");
+               }
+
+               // 첫번째 animate의 값 설정
+               fn_Next(idx);
+
+               // (이전 값들 밀어내기)
+               $(Prev).delay(100).animate({
+                  top : "-=28px"
+               }, 600, function() {
+               });
+
+               // (갱신된 값 갖고 오기)
+               $(Next).delay(100).animate({
+                  top : "-=28px"
+               }, 600, function() {
+                  fn_Next(idx);
+                  fn_Prev(idx);
+                  idx++;
+                  if (idx > maxcnt) {
+                     setTimeout(function() {
+                        RollingText(P, N, 0);
+                  }, 7000);
+                     
+                  } else {
+                     RollingText(P, N, idx);
+                  }
+               });
+            }
+            //다음이 지나가고 이전꺼에 다음 순위 불러오는 처리 Ajax
+            function fn_Prev(val) {
+               //console.log("1  : " + testfunction(val) + " and " + val);
+               if( testfunction(val) == undefined) {
+                  console.log("undefind ..");
+                  //RollingText(vPrev, vNext, 0);
+                  return;
+               }
+               
+               var text = testfunction(val);
+               var PrevVal = "#" + "Prev" + val;
+               if( val < testfunction(val).length) {
+                  $(PrevVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[testfunction(val).length - (1 + val)].leaseCallNo + ">"  + testfunction(val)[testfunction(val).length - (1 + val)].leaseCommentTitle + "</a></div>");
+               } else {
+                  $(PrevVal).empty().append("");
+               }
+            }
+            //다음 순위 불러오는 함수 처리 Ajax
+            function fn_Next(val) {
+               //console.log("2 : " + testfunction(val) + " and " + val);
+               //consolo.log("length : " + testfunction(val).length);
+               if( testfunction(val) == undefined) {
+                  console.log("undefind ..");
+                  //RollingText(vPrev, vNext, 0);
+                  return;
+               }
+               var text = testfunction(val);
+               var NextVal = "#" + "Next" + val;
+               if( val < testfunction(val).length ) {
+                  $(NextVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[testfunction(val).length - (1 + val)].leaseCallNo + ">"  + testfunction(val)[testfunction(val).length - (1 + val)].leaseCommentTitle + "</a></div>");
+               } else {
+                  $(NextVal).empty().append("");
+               }
+            }
+        }
      });
 
   var leaseCallList;
@@ -456,93 +543,10 @@
      return leaseCallList;
   }
 
-  $(function() {
+  /* $(function() {
      
-     // 밑에 함수 실행
-     RollingText("Prev", "Next", 0);
-     // 함수 1
-     function RollingText(P, N, idx) {
-     
-        var maxcnt = 3;
-
-        // 아이디 갖고오기
-        var Prev = "#" + P + idx;
-        var Next = "#" + N + idx;
-
-        // css 갖고오기
-        var pos1 = $(Prev).css("top").replace("px", "");
-        var pos2 = $(Next).css("top").replace("px", "");
-        //alert('111');
-
-        // animate가 실행될 떄, 올라올 텍스트의 위치 설정
-        if (pos1 <= -28) {
-           $(Prev).css("top", "28px");
-        }
-        if (pos2 <= -56) {
-           $(Next).css("top", "0px");
-        }
-
-        // 첫번째 animate의 값 설정
-        fn_Next(idx);
-
-        // (이전 값들 밀어내기)
-        $(Prev).delay(100).animate({
-           top : "-=28px"
-        }, 600, function() {
-        });
-
-        // (갱신된 값 갖고 오기)
-        $(Next).delay(100).animate({
-           top : "-=28px"
-        }, 600, function() {
-           fn_Next(idx);
-           fn_Prev(idx);
-           idx++;
-           if (idx > maxcnt) {
-              setTimeout(function() {
-                 RollingText(P, N, 0);
-           }, 7000);
-              
-           } else {
-              RollingText(P, N, idx);
-           }
-        });
-     }
-     //다음이 지나가고 이전꺼에 다음 순위 불러오는 처리 Ajax
-     function fn_Prev(val) {
-        //console.log("1  : " + testfunction(val) + " and " + val);
-        if( testfunction(val) == undefined) {
-           console.log("undefind ..");
-           //RollingText(vPrev, vNext, 0);
-           return;
-        }
-        
-        var text = testfunction(val);
-        var PrevVal = "#" + "Prev" + val;
-        if( val < testfunction(val).length) {
-           $(PrevVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[testfunction(val).length - (1 + val)].leaseCallNo + ">"  + testfunction(val)[testfunction(val).length - (1 + val)].leaseCommentTitle + "</a></div>");
-        } else {
-           $(PrevVal).empty().append("");
-        }
-     }
-     //다음 순위 불러오는 함수 처리 Ajax
-     function fn_Next(val) {
-        //console.log("2 : " + testfunction(val) + " and " + val);
-        //consolo.log("length : " + testfunction(val).length);
-        if( testfunction(val) == undefined) {
-           console.log("undefind ..");
-           //RollingText(vPrev, vNext, 0);
-           return;
-        }
-        var text = testfunction(val);
-        var NextVal = "#" + "Next" + val;
-        if( val < testfunction(val).length ) {
-           $(NextVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[testfunction(val).length - (1 + val)].leaseCallNo + ">"  + testfunction(val)[testfunction(val).length - (1 + val)].leaseCommentTitle + "</a></div>");
-        } else {
-           $(NextVal).empty().append("");
-        }
-     }
-  });
+    
+  }); */
 		
 	// 함수 1 : 실시간 임대 요청 업데이트
 	var leaseCallList;
