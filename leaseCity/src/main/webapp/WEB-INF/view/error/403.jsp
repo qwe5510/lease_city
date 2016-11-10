@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style>
 body {
-	background: url(<%=request.getContextPath()%>/images/500.png) no-repeat center top;
+	background: url(<%=request.getContextPath()%>/images/403.png) no-repeat center top;
 }
 </style>
 <title>Insert title here</title>
