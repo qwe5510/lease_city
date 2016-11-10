@@ -2500,7 +2500,6 @@ button {
 }
 
 #SpecialRolling {
-	text-align: center;
 	width: 617px;
 	height: 28px;
 	overflow: hidden;
@@ -2515,6 +2514,9 @@ button {
 	width: 617px;
 	height: 28px;
 	position: relative;
+}
+#SpecialRolling {
+	list-style: none;
 }
 
 .history_table{
@@ -2710,4 +2712,11 @@ button {
 	text-align: center;
 	top: 995px;
 	left: 382px;
+}
+.today_lease{
+	float: left; 
+	width: 440px;
+	margin-right: 50px;
+	margin-left: 50px;
+	padding-left: 60px;
 }
