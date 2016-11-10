@@ -284,6 +284,8 @@ header #notificationContainer {
    width: 400px;
    z-index: 500;
    display: none;
+   height: 400px;
+   overflow: scroll;
 
 }
 /*    //
@@ -310,7 +312,6 @@ header #notificationTitle {
    padding: 8px;
    font-size: 13px;
    background-color: #ffffff;
-   position: fixed;
    z-index: 1000;
    width: 384px;
    border-bottom: 1px solid #dddddd;
