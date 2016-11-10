@@ -36,6 +36,11 @@
  	
  	<!-- 임대 양도 추가 -->
  	<insert id="insertLeaseTransfer" parameterType="leaseTransfer">
+ 		<selectKey keyProperty="leaseTransferNo" resultType="int" order="AFTER">
+ 			SELECT SEQ_LT_LEASE_TRANSFER_NO.CURRVAL AS lease_transfer_no
+ 			FROM dual
+ 		</selectKey>
+ 	
  		INSERT INTO lease_transfer(
  					send_user_id, send_id_number, 
  					accept_user_id, accept_id_number, 
