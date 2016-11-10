@@ -78,7 +78,7 @@ public class LoginController {
 				session.setAttribute("loginUser", user);
 				redir.addFlashAttribute("index_message", userId + "님 로그인 하셨습니다.");
 			} catch (LoginFailException e) {
-				redir.addFlashAttribute("index_message", "로그인 실패 - 아이디 혹은 비밀번호가 올바르지 않습니다.");
+				redir.addFlashAttribute("login_message", "로그인 실패 - 아이디 혹은 비밀번호가 올바르지 않습니다.");
 				return "redirect:/login";
 			}
 		}
@@ -261,7 +261,7 @@ public class LoginController {
 		
 		// 4-1. DB에서 비밀번호 변경
 		try {
-			UService.changeInfo("password", user);
+			UService.changeInfo(true, user);
 		} catch (ServiceFailException e) {
 			// 4-2 비밀번호 변경 실패
 			redir.addFlashAttribute("index_message", "비밀번호 변경 실패.");

@@ -31,9 +31,6 @@ public class HeavyEquipment implements Serializable {
 	/** 중장비 종류. */
 	private String equipmentCategory;
 	
-	/** 중장비 사진링크. */
-	private String heavyEquipmentUri;
-	
 	/** 중장비 사용유무 */
 	private String usedYesNo;
 	

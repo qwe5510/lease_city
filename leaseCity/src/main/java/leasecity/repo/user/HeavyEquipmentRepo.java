@@ -21,11 +21,15 @@ public interface HeavyEquipmentRepo {
 	// 중장비 추가
 	public int insertHeavyEquipment(HeavyEquipment HE);
 	
-	// 중장비 정보 수정
-	public int updateHeavyEquipment(HeavyEquipment HE);
-	
 	// 증장비 삭제
 	public int deleteHeavyEquipment(HeavyEquipment HE);
+	
+	/**
+	 * 유저가 가진 중장비 총괄삭제
+	 * @param userId
+	 * @return
+	 */
+	public int deleteUserHeavyEquipment(String userId);
 	
 	/**
 	 * 중장비 사용여부 Y로 변경

@@ -36,15 +36,6 @@
  		#{licenseDate}, #{licenser})
  	</insert>
  	
- 	<!-- 작업해야함.  -->
- 	<!-- 자격증 수정 -->
- 	<update id="updateLicense" parameterType="license">
- 		UPDATE license SET
- 		user_id = #{userId}, license_name = #{licenseName} 
- 		WHERE license_no = #{licenseNo}
- 		
- 	</update>
- 	
  	<!-- 자격증 삭제 -->
  	<delete id="deleteLicense" parameterType="license">
  		DELETE FROM license

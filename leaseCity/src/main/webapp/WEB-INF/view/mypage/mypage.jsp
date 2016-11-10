@@ -18,7 +18,7 @@
 		<h3>개인 정보 수정</h3>
 		<h4>인증을 위해 비밀번호를 입력해주세요.</h4>
 		<c:url value="/myinfo" var="myinfo"></c:url>
-		<sform:form method="post" action="${myinfo }" modelAttribute="user">
+		<sform:form method="get" action="${myinfo }" modelAttribute="user">
 			<div><sform:label path="password">비밀번호</sform:label>
 				 <sform:input path="password" type="password"/>
 			</div>

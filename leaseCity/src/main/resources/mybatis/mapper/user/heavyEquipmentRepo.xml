@@ -29,25 +29,19 @@
  	<!-- 중장비 추가 -->
  	<insert id="insertHE" parameterType="heavyEquipment">
  		INSERT INTO heavy_equipment VALUES(
- 		#{idNumber},#{userId},#{equipmentCategory}
- 		<choose>
- 		<when test="heavyEquipmentUri != null">, #{heavyEquipmentUri}</when>
- 		<otherwise>, null</otherwise>
- 		</choose>, #{usedOnOff})
+ 		#{idNumber},#{userId},#{equipmentCategory}, #{usedYesNo})
  	</insert>
- 	
- 	<!-- 중장비 수정 -->
- 	<update id="updateHE" parameterType="heavyEquipment">
- 		UPDATE heavy_equipment SET
- 				id_number = #{idNumber}, 
- 				equipment_category=#{equipmentCategory}
- 		WHERE id_number = #{id_number}
- 	</update>
  	
  	<!-- 중장비 삭제 -->
  	<delete id="deleteHE" parameterType="heavyEquipment">
  		DELETE FROM heavy_equipment
  		WHERE user_id = #{userId} AND id_number = #{idNumber}
+ 	</delete>
+ 	
+ 	<!-- 중장비 일괄 삭제 -->
+ 	<delete id="deleteUserHE" parameterType="String">
+ 		DELETE FROM heavy_equipment
+ 		WHERE user_id = #{userId}
  	</delete>
  	
  	<!-- 중장비 사용 여부 변경 -->

@@ -83,11 +83,12 @@
  	<!-- 유저 정보 수정 -->
  	<update id="updateInfoUser" parameterType="user">
  		UPDATE users
- 		SET represent_phone = #{representPhone}
- 			hand_phone = #{handPhone}
- 			address = #{address}
- 			notify_on_off = #{notifyOnOff}
- 			url = ${url}
+ 		SET represent_phone = #{representPhone},
+ 			hand_phone = #{handPhone},
+ 			zip_no = #{zipNo},
+ 			address = #{address},
+ 			notify_on_off = #{notifyOnOff},
+ 			url = #{url}
  		WHERE user_id = #{userId}
  	</update>
  	

@@ -1,25 +1,32 @@
 package leasecity.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipmentCompany;
-import leasecity.dto.user.License;
 import leasecity.dto.user.User;
 import leasecity.exception.NotFoundDataException;
-import leasecity.service.MypageService;
+import leasecity.exception.ServiceFailException;
+import leasecity.service.UserService;
 
 @Controller
 public class MypageController {
@@ -27,7 +34,14 @@ public class MypageController {
 	static Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
 	@Autowired
-	MypageService mypageService;
+	UserService userService; 
+	
+	
+	@InitBinder
+	public void dateBinder(WebDataBinder binder) throws Exception{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat,true));
+	}
 	
 	@RequestMapping(value="/history",method=RequestMethod.GET)
 	public String history(Model model){
@@ -37,32 +51,31 @@ public class MypageController {
 		return "mypage/history";
 	}
 	
-	@RequestMapping(value="/myinfo")
+	@RequestMapping(value="/myinfo", method=RequestMethod.GET)
 	public String myinfo(Model model, RedirectAttributes redir,HttpSession session){
 		
 		User user = (User)session.getAttribute("loginUser");
 		if( session.getAttribute("loginUser") != null ) {
-			try {
-				user = mypageService.searchUser(user.getUserId());
-				model.addAttribute("user", user);
-			} catch (NotFoundDataException e) {
-				redir.addFlashAttribute("join_message", "로그인이 만료되었습니다.");
-				return "redirect:/index";
-			}
+			model.addAttribute("user", user);
+		}else if(user == null){
+			redir.addFlashAttribute("index_message", "로그인 정보가 만료되었습니다.");
+			return "redirect:/index";
 		}
 		return "mypage/myinfo";
 	}
 	
 	//마이페이지 개인정보 수정
 	@RequestMapping(value="/mypage/identify")
-	public String mypage_identify(Model model, RedirectAttributes redir,
+	public String mypageIdentify(Model model, RedirectAttributes redir,
 			HttpSession session){
 		
 		User loginUser = (User) session.getAttribute("loginUser");
-		logger.trace("회원 정보 : {}", loginUser.userInfo());
+		if(loginUser == null){
+			redir.addFlashAttribute("index_message", "로그인 정보가 만료되었습니다.");
+			return "redirect:/index";
+		}
 		
 		loginUser.setPassword("");
-		
 		if(loginUser instanceof HeavyEquipmentCompany){
 			HeavyEquipmentCompany heavyEquipmentCompany = (HeavyEquipmentCompany)loginUser;
 			model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
@@ -76,6 +89,68 @@ public class MypageController {
 			return "redirect:/index";
 		}
 		return "mypage/mypage_identify";
+	}
+	
+	@RequestMapping(value="/ConstructionSuccess", method=RequestMethod.POST)
+	public String identifyCCSuccess(Model model, RedirectAttributes redir,
+			HttpSession session, ConstructionCompany constructionCompany){
+		
+		Boolean isPassword = false; //비밀번호 변경 여부 true면 비밀번호도 변경함.
+		if(!constructionCompany.getPassword().equals("")){
+			isPassword = true;
+		}
+		
+		try {
+			userService.changeInfo(isPassword, constructionCompany);
+			redir.addFlashAttribute("myinfo_message", "성공적으로 개인정보 수정이 이루어졌습니다!");
+			session.setAttribute("loginUser", constructionCompany);
+			
+		} catch (ServiceFailException e) {
+			logger.error("ERROR! - 개인정보 수정 실패 (건설업체)");
+			redir.addFlashAttribute("myinfo_message", "개인정보 수정에 실패하였습니다.");
+		}
+		
+		return "redirect:/myinfo";
+	}
+	
+	
+	@RequestMapping(value="/HeavyEquipmentCheckAjax", method=RequestMethod.GET)
+	public @ResponseBody Boolean identifyHECCheck(@RequestParam String idNumber){
+		return userService.checkHEC(idNumber);
+	}
+	
+	@RequestMapping(value="/HeavyEquipmentSuccess", method=RequestMethod.POST)
+	public String identifyHECSuccess(Model model, RedirectAttributes redir,
+			HttpSession session, HeavyEquipmentCompany heavyEquipmentCompany){
+		
+		Boolean isPassword = false; //비밀번호 변경 여부 true면 비밀번호도 변경함.
+		if(!heavyEquipmentCompany.getPassword().equals("")){
+			isPassword = true;
+		}
+		
+		if(heavyEquipmentCompany.getHelpOnOff() == null){
+			heavyEquipmentCompany.setHelpOnOff("OFF");
+		}
+		
+		if(heavyEquipmentCompany.getInfoOnOff() == null){
+			heavyEquipmentCompany.setInfoOnOff("OFF");
+		}
+		
+		logger.trace("중기업체 : {}", heavyEquipmentCompany);
+		logger.trace("중기업체 유저 : {}", heavyEquipmentCompany.userInfo());
+		logger.trace("중기업체 중장비 : {}", heavyEquipmentCompany.getHeavyEquipmentList());
+		
+		
+		try {
+			userService.changeInfo(isPassword, heavyEquipmentCompany);
+			redir.addFlashAttribute("myinfo_message", "성공적으로 개인정보 수정이 이루어졌습니다!");
+			session.setAttribute("loginUser", heavyEquipmentCompany);
+		} catch (ServiceFailException e) {
+			logger.error("ERROR! - 개인정보 수정 실패 (중기업체)");
+			redir.addFlashAttribute("myinfo_message", "개인정보 수정에 실패하였습니다.");
+		}
+		
+		return "redirect:/myinfo";
 	}
 	
 	@RequestMapping(value="/mypage",method=RequestMethod.GET)
@@ -92,6 +167,8 @@ public class MypageController {
 		System.out.println("컨틀롤러들어옴!");
 		return "mypage/security_identify";
 	}
+	
+	
 	
 	@RequestMapping(value="/selection",method=RequestMethod.GET)
 	public String selection(Model model){

@@ -17,10 +17,10 @@
 	<div class="mypage_menu">
 	</div>
 	<div class="mypage_main">
-		<c:url value="/myinfo" var="myinfo"/>
+		<c:url value="/ConstructionSuccess" var="ConstructionSuccess"/>
 		<c:choose>
 			   <c:when test="${compare == 'CC'}">
-			   <sform:form id="mypage_identify_form" method="post" modelAttribute="constructionCompany" action="${myinfo }">
+			   <sform:form id="mypage_identify_form" method="post" modelAttribute="constructionCompany" action="${ConstructionSuccess}">
                <fieldset>
                <legend>기본정보 입력</legend>
                <table>
@@ -92,20 +92,18 @@
                      	<c:choose>
                      		<c:when test="${notifyOnOff == 'ON'}">
                      			<sform:label path="notifyOnOff">ON</sform:label> 
-		                     	<sform:radiobutton path="notifyOnOff" checked='true'/> 
+		                     	<sform:radiobutton path="notifyOnOff" value="ON" checked='true'/> 
 		                        <sform:label path="notifyOnOff">OFF</sform:label>
-		                        <sform:radiobutton path="notifyOnOff"/>
+		                        <sform:radiobutton path="notifyOnOff" value="OFF"/>
                      		</c:when>
                      		<c:otherwise>
-                     			<sform:label path="notifyOnOff">ON</sform:label> 
-		                     	<sform:radiobutton path="notifyOnOff"/> 
+                     			<sform:label path="notifyOnOff" >ON</sform:label> 
+		                     	<sform:radiobutton path="notifyOnOff" value="ON"/> 
 		                        <sform:label path="notifyOnOff">OFF</sform:label>
-		                        <sform:radiobutton path="notifyOnOff" checked='true'/>
+		                        <sform:radiobutton path="notifyOnOff" value="OFF" checked='true'/>
                      		</c:otherwise>
                      	</c:choose>
-                     	
                      </td>
-                        
                      <td>
                      	<div id="vali" class="company"></div>
                      </td>
@@ -132,20 +130,22 @@
                		<br>
                		<c:choose>
                			<c:when test="${fn:length(constructionCompany.licenseList) == '0'}">
-               				<sform:input path="licenseList[0].licenseName" placeholder="자격증 이름"></sform:input>
-			               	<sform:input path="licenseList[0].licenser" placeholder="발급처"></sform:input>
-			               	<sform:input type="date" path="licenseList[0].licenseDate" placeholder="발급시기"></sform:input>
+               				<sform:input id="licenseName0" path="licenseList[0].licenseName" placeholder="자격증 이름"></sform:input>
+			               	<sform:input id="licenser0" path="licenseList[0].licenser" placeholder="발급처"></sform:input>
+			               	<sform:input id="licenseDate0" type="date" path="licenseList[0].licenseDate" placeholder="발급시기"></sform:input>
+			               	<sform:hidden path="licenseList[0].userId"></sform:hidden>
                			</c:when>
                			
                			<c:otherwise>
                				<c:forEach var="license" items="${constructionCompany.licenseList}" varStatus="status">
 		               			<fmt:formatDate value="${license.licenseDate}" pattern="yyyy-MM-dd" var="licenseDate"/>
 			               		<div>
-			               			<sform:input path="licenseList[${status.index}].licenseName" placeholder="자격증 이름"></sform:input>
-			               			<sform:input path="licenseList[${status.index}].licenser" placeholder="발급처"></sform:input>
-			               			<sform:input type="date" value="${licenseDate}" path="licenseList[${status.index}].licenseDate" placeholder="발급시기"></sform:input>
+			               			<sform:input id="licenseName${status.index}" path="licenseList[${status.index}].licenseName" placeholder="자격증 이름"></sform:input>
+			               			<sform:input id="licenser${status.index}" path="licenseList[${status.index}].licenser" placeholder="발급처"></sform:input>
+			               			<sform:input id="licenseDate${status.index}" type="date" value="${licenseDate}" path="licenseList[${status.index}].licenseDate" placeholder="발급시기"></sform:input>
+			               			<sform:hidden path="licenseList[${status.index}].userId"></sform:hidden>
 			               		</div>
-               				</c:forEach> 
+               				</c:forEach>
                			</c:otherwise>
                		</c:choose>
                		              		
@@ -172,95 +172,128 @@
                     <sform:checkbox class="cc_label" path="companyCategory" value="해외" label="해외" />
                     <sform:checkbox class="cc_label" path="companyCategory" value="기타" label="기타" />
                	</div>
-             	<div class="checked"></div>
+             	<div class="CCchecked"></div>
              	</fieldset>
             	<br>
             	<sform:button id="mypage_identify_confirm">확인</sform:button>
             	<sform:button id="mypage_identify_cancel">취소</sform:button>
          		</sform:form>
 			   	</c:when>
+			   	
 			   	<c:when test="${compare == 'HEC'}">
-				   	<sform:form id="mypage_identify_form" method="post" modelAttribute="heavyEquipmentCompany" action="${myinfo}">
+			   	   <c:url value="/HeavyEquipmentSuccess" var="HeavyEquipmentSuccess"/>
+				   <sform:form id="mypage_identify_form" method="post" modelAttribute="heavyEquipmentCompany" action="${HeavyEquipmentSuccess}">
 	               <fieldset>
 	               <legend>기본정보 입력</legend>
 	               <table>
-	                  <tr>
-	                     <td><sform:label path="userId" class="join_input">아이디</sform:label></td>
-	                     <td><sform:input path="userId" readonly="true"/>
-	                     </td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="password" class="join_input">비밀번호변경</sform:label></td>
-	                     <td><sform:input path="password" type="password" onblur="passvali()"/>
-	                        <span id= "vali" class="password">영어 숫자 특수문자 혼용 8~16글자</span>
-	                        </td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="password" class="join_input">비밀번호확인</sform:label></td>
-	                     <td><input type="password" placeholder="패스워드 확인" id="password2" name="password2" onblur="passvali()"/>
-	                     <span id= "vali" class="password2"></span>
-	                     </td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="companyName" class="join_input">업체명</sform:label></td>
-	                     <td><sform:input path="companyName"  readonly="true" /></td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="representName" class="join_input">대표자명</sform:label></td>
-	                     <td><sform:input path="representName"  readonly="true"/></td>
-	                  </tr>
-	                  <tr>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="representPhone" class="join_input">대표자연락처</sform:label></td>
-	                     <td><sform:input path="representPhone" placeholder="ex)031-xxx-xxxx"></sform:input>
-	                     <span id= "vali" class="representPhone">-포함 국번으로 입력</span>
-	                     </td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="handPhone" class="join_input">휴대폰연락처</sform:label></td>
-	                     <td><sform:input path="handPhone" placeholder="ex)010-xxxx-xxxx"></sform:input>
-	                     <span id= "vali" class="handPhone">-포함 11~12자리 핸드폰 번호 입력</span>
-	                     </td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="email" class="join_input">Email</sform:label></td>
-	                     <td><sform:input path="email" readonly="true"/> </td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="address" class="join_input">주소</sform:label></td>
-	                     <td><sform:input path="zipNo" placeholder="우편번호" readonly="readonly"></sform:input>
-	                     <button id="addressSearch">주소검색</button>
-	                     <span id= "vali" class="addressInput"></span>
-	                     </td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="address" class="join_input"> </sform:label></td>
-	                     <td><div class="address">
-	                     <sform:input path="address" placeholder="주소" readonly="readonly"></sform:input>
-	                     </div></td>
-	                  </tr>
-	                  <tr>
-	                     <td><sform:label path="url" class="join_input">URL</sform:label></td>
-	                     <td><input type="text" name="url" id="url" placeholder="홈페이지 주소">
-	                     <span id= "vali" class="url">사이트 주소 형식으로 입력(혹은 공백)</span>
-	                     </td>
-	                  </tr>
-	                  <tr>
-	                     <td><label class="join_input">알람 여부</label></td>
-	                     <td><label for="notifyOnOff">ON</label> <input type="radio"
-	                        name="notifyOnOff" value="ON" checked="checked"/> <label for="OFF">OFF</label>
-	                        <input type="radio" name="notifyOnOff" value="OFF" /></td>
-	                        <td><div id="vali" class="company"></div></td>
-	                  </tr>
-	               </table>
+	                   <tr>
+                     <td><sform:label path="userId" class="join_input">아이디</sform:label></td>
+                     <td><sform:input path="userId" readonly="true"/>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="password" class="join_input">비밀번호변경</sform:label></td>
+                     <td><sform:input path="password" type="password" onblur="passvali()"/>
+                        <span id= "vali" class="password">영어 숫자 특수문자 혼용 8~16글자</span>
+                        </td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="password" class="join_input">비밀번호확인</sform:label></td>
+                     <td><input type="password" placeholder="패스워드 확인" id="password2" name="password2" onblur="passvali()"/>
+                     <span id= "vali" class="password2">비밀번호 미변경 시 공백.</span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="companyName" class="join_input">업체명</sform:label></td>
+                     <td><sform:input path="companyName"  readonly="true" /></td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="representName" class="join_input">대표자명</sform:label></td>
+                     <td><sform:input path="representName"  readonly="true"/></td>
+                  </tr>
+                  <tr>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="representPhone" class="join_input">대표자연락처</sform:label></td>
+                     <td><sform:input path="representPhone" placeholder="ex)031-xxx-xxxx"></sform:input>
+                     <span id= "vali" class="representPhone">-포함 국번으로 입력</span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="handPhone" class="join_input">휴대폰연락처</sform:label></td>
+                     <td><sform:input path="handPhone" placeholder="ex)010-xxxx-xxxx"></sform:input>
+                     <span id= "vali" class="handPhone">-포함 11~12자리 핸드폰 번호 입력</span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="email" class="join_input">Email</sform:label></td>
+                     <td><sform:input path="email" readonly="true"/> </td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="address" class="join_input">주소</sform:label></td>
+                     <td><sform:input path="zipNo" placeholder="우편번호" readonly="true"></sform:input>
+                     <button id="addressSearch">주소검색</button>
+                     <span id= "vali" class="addressInput"></span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="address" class="join_input"> </sform:label></td>
+                     <td><div class="address">
+                     <sform:input path="address" placeholder="주소" readonly="true"></sform:input>
+                     </div></td>
+                  </tr>
+                  <tr>
+                     <td><sform:label path="url" class="join_input">URL</sform:label></td>
+                     <td><sform:input path="url" placeholder="홈페이지 주소"></sform:input>
+                     <span id= "vali" class="url">사이트 주소 형식으로 입력(혹은 공백)</span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td><label class="join_input">알람 여부</label></td>
+                     <td>
+                     	<c:choose>
+                     		<c:when test="${notifyOnOff == 'ON'}">
+                     			<sform:label path="notifyOnOff">ON</sform:label> 
+		                     	<sform:radiobutton path="notifyOnOff" value="ON" checked='true'/> 
+		                        <sform:label path="notifyOnOff">OFF</sform:label>
+		                        <sform:radiobutton path="notifyOnOff" value="OFF"/>
+                     		</c:when>
+                     		<c:otherwise>
+                     			<sform:label path="notifyOnOff" >ON</sform:label> 
+		                     	<sform:radiobutton path="notifyOnOff" value="ON"/> 
+		                        <sform:label path="notifyOnOff">OFF</sform:label>
+		                        <sform:radiobutton path="notifyOnOff" value="OFF" checked='true'/>
+                     		</c:otherwise>
+                     	</c:choose>
+                     </td>
+                     <td>
+                     	<div id="vali" class="company"></div>
+                     </td>
+                  </tr>
+	              </table>
 	            </fieldset>
 	            <br>
 	            <fieldset>
 	               	<div>
 				   		<sform:label path="helpOnOff">알람여부</sform:label>
-				   		<sform:checkbox path="helpOnOff" value="업무대기" label="도움여부"/>
-				   		<sform:checkbox path="infoOnOff" value="정보공개" label="정보공개"/>
+				   		
+				   		<c:choose>
+				   			<c:when test="${heavyEquipmentCompany.helpOnOff == 'ON' }">
+				   				<sform:checkbox path="helpOnOff" value="ON" label="도움여부" checked="true"/>
+				   			</c:when>
+				   			<c:otherwise>
+				   				<sform:checkbox path="helpOnOff" value="ON" label="도움여부"/>
+				   			</c:otherwise>
+				   		</c:choose>
+				   		<c:choose>
+				   			<c:when test="${heavyEquipmentCompany.infoOnOff == 'ON' }">
+				   				<sform:checkbox path="infoOnOff" value="ON" label="정보공개" checked="true"/>
+				   			</c:when>
+				   			<c:otherwise>
+				   				<sform:checkbox path="infoOnOff" value="ON" label="정보공개"/>
+				   			</c:otherwise>
+				   		</c:choose>
+				   		
 				   		</div>
 	               	<div>
 	               		<label>차량추가</label>
@@ -283,27 +316,36 @@
 	               			<option value="대형">대형</option>
 	               		</select>
 	               		<input type="text" id="carNum" placeholder="차량번호"/>
-	               		<button id="mypage_identify_add">추가</button>
+	               		<button id="heavy_equipment_add">추가</button>
 	               	</div>
 	               	<div class="numbervali"></div>
 	               	<div>
 	               	<div><sform:label path="heavyEquipmentList">차량보유현황</sform:label></div>
-	               	<div>
-	               	<div id="mypage_identify_carown">
-	               	<div>
-	               		<label>차량 분류</label>
-	               		<label>차량번호</label>
-	               		<label>삭제가능</label>
-	               		<label>삭제</label>
-	               	</div>
-	               	<div>
-	               		<label>트럭/소형</label>
-	               		<label>30가 1111</label>
-	               		<label>Y</label>
-	               		<label><sform:button id="mypage_identify_remove">삭제</sform:button></label>
-	              	</div>
-	              	</div>
-	              	</div>
+	               		<div>
+	               			<div id="mypage_identify_carown">
+	               				<div>
+					            	<label>차량 분류</label>
+					               	<label>차량번호</label>
+					               	<label>사용여부</label>
+					               	<label>삭제</label>
+	               				</div>
+	               				<c:forEach var="heavyEquipment" items="${heavyEquipmentCompany.heavyEquipmentList}"
+	               							varStatus="status">
+	               				<div>
+	               					<label>${heavyEquipment.equipmentCategory}</label>
+	               					<label>${heavyEquipment.idNumber}</label>
+	               					<label id="usedYesNo">${heavyEquipment.usedYesNo}</label>
+	               					<label>
+	               						<sform:button id="heavy_equipment_remove">삭제</sform:button>
+	               					</label>
+	               					<sform:hidden id="equipmentCategory${status.index}" path="heavyEquipmentList[${status.index}].equipmentCategory"/>
+	               					<sform:hidden id="idNumber${status.index}" path="heavyEquipmentList[${status.index}].idNumber"/>
+	               					<sform:hidden id="userId${status.index}" path="heavyEquipmentList[${status.index}].userId"/>
+	               					<sform:hidden id="usedYesNo${status.index}" path="heavyEquipmentList[${status.index}].usedYesNo"/>
+	              				</div>
+	              				</c:forEach>
+	              			</div>
+	              		</div>
 	              	</div>
 	             	<div class="checked"></div>
 	             	</fieldset>
@@ -319,6 +361,23 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+license_cnt = ${fn:length(constructionCompany.licenseList)}==0?0:${fn:length(constructionCompany.licenseList)-1};
+heavyEquipment_cnt = ${fn:length(heavyEquipmentCompany.heavyEquipmentList)};
+
+$(document).on("ready", function(){
+	var category = document.getElementsByName("companyCategory");	
+	var companyCategory = "${constructionCompany.companyCategory}".split(",");
+	$(category).each(function(idx, item){
+		for(var isCheck of companyCategory){
+			if(item.value == isCheck){
+				item.checked = true;
+			}
+		}
+	});
+});
+	
+	
 $(document).on("click","#type",function(){
     var type = $("#type").val();
     var arr1 = ["26m","32m","37m","43m","52m","58m","기타"];
@@ -351,29 +410,103 @@ $(document).on("click","#type",function(){
        $("#size").html(str4);
     }
  });
- $(document).on("click","#mypage_identify_remove",function(e){
-	 e.preventDefault();
-	 $(this).parent().parent().remove();
- });
-
- $("#mypage_identify_add").on("click",function(e){
+ 
+ 
+ //차량 추가
+ $("#heavy_equipment_add").on("click",function(e){
 	 e.preventDefault();
 	 var carNum = $("#carNum").val();
 	 var size = $("#size").val();
 	 var type = $("#type").val();
 	 var regIdNumber = /^[0-9]{2}[가-힣] [0-9]{4}$/;
+	 
+	 
 	 if(!regIdNumber.test(carNum)){
-		 $(".numbervali").html("올바르지 않은 차량번호 입니다<br>[ex)30가 1000]");
+		 $(".numbervali").css("color", "red");
+		 $(".numbervali").html("올바르지 않은 차량번호 입니다 [ 예) 30가 1234 ]");
 	 }else{
-		 $(".numbervali").html("");
-		 $("#carNum").val("");
-		 $("#mypage_identify_carown").append("<div><label>"+type+"/"+size+"</label><label>"+carNum+"</label><label>Y</label><label><button id='mypage_identify_remove'>삭제</button></label>")
-		 .append("<input type='hidden' name='equipmentType' value='"+ type +"'> ")
-         .append("<input type='hidden' name='equipmentSize' value='"+ size +"'> ")
-         .append("<input type='hidden' id='idNumber' name='idNumber' value='"+ carNum +"'> ");
+		 var inputList = $("#mypage_identify_carown input[type=hidden]");
+		 var check = false;
+		 inputList.each(function(idx, item){
+			 var itemVal = $(item).val();
+			 if(carNum == itemVal){
+				 check = true;
+			 }
+		 });
+		 
+		 if(check){
+			 alert("동일한 차량번호가 이미 존재합니다.");
+		 }
+		 else{
+			//Ajax처리에 의한 이미등록된 차량 검색
+			 <c:url value="/HeavyEquipmentCheckAjax" var="HeavyEquipmentCheckAjax"></c:url>
+			 $.ajax({
+				 url: "${HeavyEquipmentCheckAjax}",
+				 method : "GET",
+				 data : {
+					 idNumber : carNum
+				 },
+				 success : function(res){
+					 //중복된 차량이 없을 경우.
+					 if(res){
+						 $(".numbervali").html("");
+						 $("#carNum").val("");
+						 
+						 var str = "";
+						 //중기업체 추가
+						 str+="<div><label>"+type+"/"+size+"</label>";
+						 str+="<label style='margin-left: 2px;'>"+carNum+"</label>";
+						 str+="<label style='margin-left: 3px;'>N</label>";
+						 str+="<label style='margin-left: 4px;'><button id='mypage_identify_remove'>삭제</button></label>";
+						 str+="<input type='hidden' id='equipmentCategory"+ heavyEquipment_cnt +"' name='heavyEquipmentList["+ heavyEquipment_cnt +"].equipmentCategory' value='"+ type+"/"+size+"'>";
+						 str+="<input type='hidden' id='idNumber"+ heavyEquipment_cnt +"' name='heavyEquipmentList["+ heavyEquipment_cnt +"].idNumber' value='"+ carNum +"'>";
+						 str+="<input type='hidden' id='userId"+ heavyEquipment_cnt +"' name='heavyEquipmentList["+ heavyEquipment_cnt +"].userId' value='${heavyEquipmentCompany.userId}'>";
+						 str+="<input type='hidden' id='usedYesNo"+ heavyEquipment_cnt +"' name='heavyEquipmentList["+ heavyEquipment_cnt +"].usedYesNo' value='N'>";
+						 $("#mypage_identify_carown").append(str);
+						 
+						 heavyEquipment_cnt++;
+					 }else{
+						 alert("이미 등록 되어있는 차량입니다.");
+					 }
+				 },
+				 error : function(error){
+					 alert(error);
+				 }
+			 });
+		 }
 	 } 
  });
-  $(document).on("click","#mypage_identify_confirm", function(){
+
+ 
+ //차량 삭제
+ $(document).on("click","#heavy_equipment_remove",function(e){
+	 e.preventDefault();
+	 var used = $(this).parent().prev().html();
+	
+	 if(used == "Y"){
+		alert("사용중인 장비는 삭제 할 수 없습니다.");
+		return false;
+	 }else if(used == "N"){
+		 $(this).parent().parent().remove();
+		 heavyEquipment_cnt--;
+		 
+		 var infoArray = ["equipmentCategory", "idNumber", "userId", "usedYesNo"];	 
+		 var inputList = $("#mypage_identify_carown input[type=hidden]");
+		 inputList.each(function(idx, item){
+			 var index = parseInt(idx/4);
+			 var itemindex = idx % 4;
+			 
+			 var infoId = infoArray[itemindex] + index;
+			 var infoName = "heavyEquipmentList["+ index  +"]." + infoArray[itemindex]; 
+			 
+			 $(item).attr("id", infoId);
+			 $(item).attr("name", infoName);
+		 })
+	 }
+ });
+ 
+  $(document).on("click","#mypage_identify_confirm", function(e){
+	  
 	   var password = $("#password").val();
 	   var password2 = $("#password2").val();
 	   var representPhone = $("#representPhone").val();
@@ -383,14 +516,16 @@ $(document).on("click","#type",function(){
 	   var sales = $("#sales").val();
 	   var obtain = $("#obtain").val();
 	   var num = $("#num").val();
-	   var idNumber = $("#idNumber").val();
 	   var yearlySale = $("#yearlySale").val();
 	   var yearlyAoor = $("#yearlyAoor").val();
 	   var companyCategory = $("input:checkbox[name='companyCategory']").is(":checked");
 	   
 	 //특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
 	   var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-	   if(!passRegExp.test(password)){
+	   
+	   if((password == ""|| password==null) &&
+		  (password2 == ""|| password2==null)){
+	   }else if(!passRegExp.test(password)){
 	      $(".password").html("패스워드 조건 불일치");
 	      $(".password").css("color", "#FF0000");
 	      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
@@ -443,6 +578,9 @@ $(document).on("click","#type",function(){
 	      $(".addressInput").html("");
 	   }
 	   
+	   
+	   
+	   
 	   //url 정규 표현식 
 	   var urlRegExp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w_\.-]*)*\/?$/;
 	   if(url==""){
@@ -457,106 +595,130 @@ $(document).on("click","#type",function(){
 	      $(".url").html("url 형식 일치합니다.");
 	      $(".url").css("color", "#0000FF");
 	   }
-	   
-	   if(idNumber==null){
-		   $(".numbervali").html("중장비는 최소 1개 이상 있어야합니다.");
-		   $(".numbervali").css("color", "#FF0000");
-		      return false;
+	
+	var isCompany = "${compare}";
+
+	if(isCompany == "CC") //건설 업체
+	{
+		console.log("건설업체");
+		//연매출, 연 수주량 검사
+		   var sOReg = /^[1-9][0-9]*$/;
+		   
+		   if(!sOReg.test(yearlySale)){
+		         $(".sales").html("연매출 필수 입력 억단위로 입력");
+		         $(".sales").css("color", "#FF0000");
+		         return false;
+		   }else{
+		         $(".sales").html("단위(억)");
+		         $(".sales").css("color", "#000000");
+		   }
+		      
+		      //연 수주량 공백검사
+		   if(!sOReg.test(yearlyAoor)){
+		         $(".obtain").html("연수주량 필수 입력 건단위로 입력");
+		         $(".obtain").css("color", "#FF0000");
+		         return false;
+		   }else{
+		         $(".obtain").html("단위(건)");
+		         $(".obtain").css("color", "#000000");
+		   }
+		   if(companyCategory==null){
+		    	  console.log("companyCategory 들어옴");
+		    	  $(".checked").html("최소 1개 분야를 선택하셔야 합니다.");
+		   }
+		      
+		 	//한글,숫자,영어 - 자격증명칭, 발급처에만 사용
+		      var licenseRegExp = /^[가-힣0-9a-zA-Z-#)( ]{1,}$/
+		      var isLicense = true; //자격증 조건식 총괄 bool변수
+		      
+		   for(var i=0; i<=license_cnt; i++){
+		    	  
+		         var licenseName = $("#licenseName" + i).val();
+		         var licenser = $("#licenser" + i).val();
+		         var licenseDate = $("#licenseDate" + i).val();
+
+		         console.log("licenseName"+ i + " : " + licenseName);
+		         console.log("licenser"+ i + " : " + licenser);
+		         console.log("licenseDate"+ i + " : " + licenseDate);
+		         
+		         var check = $("#licenseCheck" + i);
+		         var str = "";
+		         
+		         if(!licenseRegExp.test(licenseName)){
+		            if(str==""){
+		               str += "자격증 명칭";
+		            }else{
+		               str += ", 자격증 명칭";
+		            }
+		            isLicense = false;
+		         }
+		         
+		         if(!licenseRegExp.test(licenser)){
+		            if(str==""){
+		               str += "발급처";
+		            }else{
+		               str += ", 발급처";
+		            }
+		            isLicense = false;
+		         }
+		         
+		         if(licenseDate == null || licenseDate ==""){
+		            if(str==""){
+		               str += "발급 날짜";
+		            }else{
+		               str += ", 발급 날짜";
+		            }
+		            isLicense = false;
+		         }
+		         
+		         if(!isLicense){
+		            check.html(str + "를(을) 제대로 입력 해 주십시오.");
+		            check.css("color", "#FF0000");
+		         }else if(isLicense){
+		            check.html("자격증 조건 부합");
+		            check.css("color", "#0000FF");
+		         }
+			}
+			if(!isLicense){return false;}
+			
+		var isCheck = false;
+		$(".cc_label").each(function(idx, item){
+			if(item.checked){isCheck = true;}
+		});
+		
+		if(isCheck){
+			$(".CCchecked").html("");
+		}else{
+			$(".CCchecked").html("분야가 최소 1개 이상은 체크되어야 합니다.");
+			$(".CCchecked").css("color", "red");
+			return false;
 		}
-	   console.log("내가 왜 남아있게?");
-	   /* //연매출, 연 수주량 검사
-	   var sOReg = /^[1-9][0-9]*$/;
-	   
-	   if(!sOReg.test(yearlySale)){
-	         $(".sales").html("연매출 필수 입력 억단위로 입력");
-	         $(".sales").css("color", "#FF0000");
-	         return false;
-	      }else{
-	         $(".sales").html("단위(억)");
-	         $(".sales").css("color", "#000000");
-	      }
-	      
-	      //연 수주량 공백검사
-	      if(!sOReg.test(yearlyAoor)){
-	         $(".obtain").html("연수주량 필수 입력 건단위로 입력");
-	         $(".obtain").css("color", "#FF0000");
-	         return false;
-	      }else{
-	         $(".obtain").html("단위(건)");
-	         $(".obtain").css("color", "#000000");
-	      }
-	      if(companyCategory==null){
-	    	  console.log("companyCategory 들어옴");
-	    	  $(".checked").html("최소 1개 분야를 선택하셔야 합니다.");
-	      }else{
-	    	  console.log("서밋");
-	    	  $("#mypage_identify_form").submit();
-	      } 
-	      
-	 //한글,숫자,영어 - 자격증명칭, 발급처에만 사용
-	      var licenseRegExp = /^[가-힣0-9a-zA-Z-#)( ]{1,}$/
-	      var isLicense = true; //자격증 조건식 총괄 bool변수
-	      
-	      for(var i=1; i<=license_cnt; i++){
-	         var licenseName = $("#licenseName" + i).val();
-	         var licenser = $("#licenser" + i).val();
-	         var licenseDate = $("#licenseDate" + i).val();
-	         
-	         console.log("자격증이름" + i + " : " + licenseName);
-	         console.log("발급처" + i + " : " + licenser);
-	         console.log("발급날짜" + i + " : " + licenseDate);
-	         
-	         var check = $("#licenseCheck" + i);
-	         var str = "";
-	         
-	         if(!licenseRegExp.test(licenseName)){
-	            if(str==""){
-	               str += "자격증 명칭";
-	            }else{
-	               str += ", 자격증 명칭";
-	            }
-	            isLicense = false;
-	         }
-	         
-	         if(!licenseRegExp.test(licenser)){
-	            if(str==""){
-	               str += "발급처";
-	            }else{
-	               str += ", 발급처";
-	            }
-	            isLicense = false;
-	         }
-	         
-	         if(licenseDate == null || licenseDate ==""){
-	            if(str==""){
-	               str += "발급 날짜";
-	            }else{
-	               str += ", 발급 날짜";
-	            }
-	            isLicense = false;
-	         }
-	         
-	         if(!isLicense){
-	            check.html(str + "를(을) 제대로 입력 해 주십시오.");
-	            check.css("color", "#FF0000");
-	         }else if(isLicense){
-	            check.html("자격증 조건 부합");
-	            check.css("color", "#0000FF");
-	         }
-	      }
-	      if(!isLicense){
-	         return false;
-	      }*/
- });
+		
+	}
+	else if(isCompany == 'HEC'){
+		var inputList = $("#mypage_identify_carown input[type=hidden]");		
+		if(inputList.length == 0){
+			   $(".numbervali").html("중장비는 최소 1개 이상 있어야합니다.");
+			   $(".numbervali").css("color", "#FF0000");
+			      return false;
+		}
+	}
+});
   
-  
+ //비밀번호 검사
  function passvali(){
 	   var password = $("#password").val();
 	   var password2 = $("#password2").val();
 	   
 	   //특수문자가 하나라도 포함되어야하는 8글자 이상 16글자 이하의 비밀번호.
 	   var passRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-	   if(!passRegExp.test(password)){
+	   
+	   if((password == ""|| password==null) &&
+		  (password2 == ""|| password2==null)){
+		  $(".password").css("color", "#000000");
+		  $(".password").html("영어 숫자 특수문자 혼용 8~16글자");
+		  $(".password2").html(" 비밀번호 미변경 시 공백.");
+	   }else if(!passRegExp.test(password)){
 	      $(".password").html("패스워드 조건 불일치");
 	      $(".password").css("color", "#FF0000");
 	      $(".password2").html("영어 숫자 특수문자 혼용 8~16글자");
@@ -592,23 +754,26 @@ $(document).on("click","#type",function(){
  });
  
  
- license_cnt = ${fn:length(constructionCompany.licenseList)}==0?0:${fn:length(constructionCompany.licenseList)-1};
+ //자격증 추가 - 삭제
  $("#license_add").on("click",function(e){
 	 e.preventDefault();
 	 var str="";
 	 if(license_cnt<2){
          license_cnt++;
-         str+="<div><input id='licenseList["+ license_cnt +"].licenseName' name='licenseList["+ license_cnt +"].licenseName' type='text' placeholder='자격증 명칭'>";
-         str+="<input id='licenseList["+ license_cnt +"].licenser' name='licenseList["+ license_cnt +"].licenser' type='text' placeholder='발급처'>";
-         str+="<input id='licenseList["+ license_cnt +"].licenseDate' name='licenseList["+ license_cnt +"].licenseDate' type='date'placeholder='발급시기'>"
+         str+="<div><input id='licenseName"+ license_cnt +"' name='licenseList["+ license_cnt +"].licenseName' type='text' placeholder='자격증 명칭'>";
+         str+="<input id='licenser"+ license_cnt +"' name='licenseList["+ license_cnt +"].licenser' type='text' placeholder='발급처'>";
+         str+="<input id='licenseDate"+ license_cnt +"' name='licenseList["+ license_cnt +"].licenseDate' type='date' placeholder='발급시기'>";
+         str+="<input id='licenseList"+ license_cnt +".userId' name='licenseList["+ license_cnt +"].userId' type='hidden' value=${constructionCompany.userId}>";
          str+="<br><span id='licenseCheck"+ license_cnt +"'></span></div>";
          $(".license").append(str);
+         $(".licenseCheck").html("");
       }else{
          $(".licenseCheck").html("자격증은 3개 까지 작성 가능합니다.");
          $(".licenseCheck").css("color", "#FF0000");
       }
  });
- $(document).on("click", "#license_remove", function(e){
+ 
+ $("#license_remove").on("click", function(e){
 	 e.preventDefault();
 	 if(license_cnt==0){
 		 $(".licenseCheck").html("자격증은 최소1개 입력해주셔야합니다.");

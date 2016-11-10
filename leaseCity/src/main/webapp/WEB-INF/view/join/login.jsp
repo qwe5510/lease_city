@@ -13,9 +13,9 @@
 <body>
 
    <!-- 가입 절차 설명 메시지 -->
-   <c:if test="${!empty join_message }">
-      <script type="text/javascript">
-         alert('${join_message }');
+   <c:if test="${!empty login_message}">
+      <script>
+         alert('${login_message}');
       </script>
    </c:if>
    
@@ -29,12 +29,12 @@
                <table style="margin-left: 60px">
                   <tr>
                      <th><label for="userId">아이디</label></th>
-                     <th><input name="userId" type="text" /></th>
+                     <th><input name="userId" type="text" tabindex="1"/></th>
                      <th rowspan="2"><button class="loginBtn">로그인</button>
                   </tr>
                   <tr>
                      <th><label for="password">비밀번호</label></th>
-                     <th><input name="password" type="password" /></th>
+                     <th><input name="password" type="password" tabindex="2"/></th>
                   </tr>
                </table>
                <div class="inner1">

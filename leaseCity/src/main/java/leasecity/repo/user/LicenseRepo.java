@@ -16,11 +16,8 @@ public interface LicenseRepo {
 	
 	//자격증 추가
 	public int insertLicense(License license);
-	//자격증 수정
-	public int updateLicense(License prev, License next);
 	//자격증 삭제
 	public int deleteLicense(License license);
-	
 	//유저가 가진 자격증 총괄삭제
 	public int deleteUserLicense(String userId);
 	

@@ -188,28 +188,65 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	//유저정보변경, keyword를 통해 비밀번호, 정보 중 하나 변경 
+	
 	@Override
-	public void changeInfo(String keyword, User user) 
+	public void changeInfo(Boolean isPassword, User user) 
 								throws ServiceFailException {
 		int result = -1;
 		// 비밀번호 수정
-		if (keyword.equals("password")) {
+		if (isPassword) {
 			// 비밀번호 해싱
 			String hashPassword = HashingUtil.hashingString(user.getPassword());
 			user.setPassword(hashPassword);
 
-			result = userRepo.updatePasswordUser(user);
-			logger.trace("유저 비밀번호 수정 완료 : {}", result);
+			result =userRepo.updatePasswordUser(user); 
+			if(result != 1){
+				logger.error("ERROR!! - 요청 서비스가 올바르지 않음");
+				throw new ServiceFailException();
+			}else{
+				logger.trace("유저 비밀번호 수정 완료 : {}", result);
+			}
 		} 
 		// 정보 수정
-		else if (keyword.equals("info")) {
-			
-			result = userRepo.updateUser(user);
-			logger.trace("유저 정보 수정 완료 : {}", result);
-		} else {
+		result = userRepo.updateUser(user); 
+		if(result != 1){
 			logger.error("ERROR!! - 요청 서비스가 올바르지 않음");
 			throw new ServiceFailException();
+		}else{
+			logger.trace("유저 정보 수정 완료 : {}", result);
+		}
+		
+		
+		if(user instanceof HeavyEquipmentCompany){
+			HeavyEquipmentCompany HEC = (HeavyEquipmentCompany)user;
+			result = heavyEquipmentCompanyRepo.updateHeavyEquipmentCompany(HEC);
+			if(result != 1){
+				//건설업체 정보가 제대로 반영되지 않음.
+				throw new ServiceFailException();
+			}
+			
+			heavyEquipmentRepo.deleteUserHeavyEquipment(HEC.getUserId());
+			List<HeavyEquipment> HEs = HEC.getHeavyEquipmentList();
+			
+			for(HeavyEquipment HE : HEs){
+				heavyEquipmentRepo.insertHeavyEquipment(HE);
+			}
+			
+		}else if(user instanceof ConstructionCompany){
+			ConstructionCompany CC = (ConstructionCompany)user;
+			result = constructionCompanyRepo.updateConstructionCompany(CC);
+			if(result != 1){
+				//건설업체 정보가 제대로 반영되지 않음.
+				throw new ServiceFailException();
+			}
+			
+			licenseRepo.deleteUserLicense(CC.getUserId());
+			List<License> licenses = CC.getLicenseList();
+			
+			for(License license : licenses){
+				licenseRepo.insertLicense(license);
+			}
+			
 		}
 	}
 
@@ -296,5 +333,18 @@ public class UserServiceImpl implements UserService {
 			result = creditRepo.getCountSendCredits(user.getUserId());
 		}
 		return result;
+	}
+	
+	@Override
+	public Boolean checkHEC(String idNumber) {
+		if(idNumber==null){
+			return false;
+		}		
+		HeavyEquipment HEC = heavyEquipmentRepo.getHeavyEquipment(idNumber);
+		if(HEC == null){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

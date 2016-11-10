@@ -244,6 +244,8 @@
 		</div>
 	</section>
 
+
+
 	<!--Bottom-->
 	<section id="bottom" class="main">
 		<!--Container-->
@@ -276,7 +278,6 @@
 					</div>
 				</div>
 				<!--Important Links-->
-
 				<!--Archives-->
 				<div id="archives" class="span3">
 					<h4>Our Company's</h4>
@@ -330,7 +331,9 @@
 			<!--/row-fluid-->
 		</div>
 		<!--/container-->
-
+		
+		
+		
 	</section>
 	<!--/bottom-->
 	<jsp:include page="./layout/footer.jsp"></jsp:include>
@@ -503,11 +506,5 @@
 		}
 	});
 	</script>
-
-
-	<!-- 검색어 만들기 -->
-	<script type="text/javascript" language="javascript">
-	</script>
-	<!-- /SL Slider -->
 </body>
 </html>
