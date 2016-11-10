@@ -1,13 +1,5 @@
 package leasecity.test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
-import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
-import leasecity.dto.user.User;
 import leasecity.repo.user.UserRepo;
 
 @RunWith(SpringJUnit4ClassRunner.class)

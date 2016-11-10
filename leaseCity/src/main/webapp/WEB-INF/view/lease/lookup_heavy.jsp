@@ -129,7 +129,7 @@
 <script>
 	var g_currentPage = 1;
 	$(window).on("load", function(e){
-		var totalCount = ${page.totalCount};
+		var totalCount = "${page.totalCount}"==""?0:"${page.totalCount}";
 		
 		if(totalCount <= 5){
 			$("#moreViewPage").css("display", "none");

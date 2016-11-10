@@ -1943,8 +1943,23 @@ button {
 /* 로딩 화면 설정 */
 .cssload-cssload-wrap2 {
 	width: 146px;
-	height: 146px;
+	height: 500px;
 	overflow: hidden;
+}
+
+.cssload-wrap-index{
+	position: absolute;
+	width: 97px;
+	height: 97px;
+	left: 50%;
+	top: 40%;
+	margin-top: -49px;
+	margin-left: -49px;
+	transform: scale(2);
+		-o-transform: scale(2);
+		-ms-transform: scale(2);
+		-webkit-transform: scale(2);
+		-moz-transform: scale(2);
 }
 
 .cssload-wrap-leaseCall{
@@ -1979,7 +1994,8 @@ button {
 
 }
 .cssload-wrap .cssload-overlay, 
-.cssload-wrap-leaseCall .cssload-overlay{
+.cssload-wrap-leaseCall .cssload-overlay,
+.cssload-wrap-index .cssload-overlay{
 
 	position: absolute;
 	width: 100%;
@@ -1992,7 +2008,8 @@ button {
 		-moz-box-shadow: 0 0 24px 37px rgb(245,245,245) inset;
 }
 .cssload-wrap .cssload-cogWheel, 
-.cssload-wrap-leaseCall .cssload-cogWheel {
+.cssload-wrap-leaseCall .cssload-cogWheel,
+.cssload-wrap-index .cssload-cogWheel{
 	position: absolute;
 	top: 50%;
 	margin-top: -24px;
@@ -2001,7 +2018,8 @@ button {
 
 }
 .cssload-wrap .cssload-cogWheel.cssload-one, 
-.cssload-wrap-leaseCall .cssload-cogWheel.cssload-one {
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-one,
+.cssload-wrap-index .cssload-cogWheel.cssload-one{
 	left: -6.25px;
 	animation: cssload-rotLeft 0.55s infinite linear;
 		-o-animation: cssload-rotLeft 0.55s infinite linear;
@@ -2010,11 +2028,14 @@ button {
 		-moz-animation: cssload-rotLeft 0.55s infinite linear;
 }
 .cssload-wrap .cssload-cogWheel.cssload-one .cssload-one:before,
-.cssload-wrap-leaseCall .cssload-cogWheel.cssload-one .cssload-one:before{
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-one .cssload-one:before,
+.cssload-wrap-index .cssload-cogWheel.cssload-one .cssload-one:before{
 	border: none;
 }
+
 .cssload-wrap .cssload-cogWheel.cssload-two,
-.cssload-wrap-leaseCall .cssload-cogWheel.cssload-two{
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-two,
+.cssload-wrap-index .cssload-cogWheel.cssload-two{
 	right: -6.25px;
 	margin-top: -23px;
 	transform: rotate(196deg);
@@ -2028,19 +2049,23 @@ button {
 		-webkit-animation: cssload-rotRight 0.55s infinite linear;
 		-moz-animation: cssload-rotRight 0.55s infinite linear;
 }
+
 .cssload-wrap .cssload-cogWheel.cssload-two .cssload-one:before,
-.cssload-wrap-leaseCall .cssload-cogWheel.cssload-two .cssload-one:before{
+.cssload-wrap-leaseCall .cssload-cogWheel.cssload-two .cssload-one:before,
+.cssload-wrap-index .cssload-cogWheel.cssload-two .cssload-one:before{
 	border: none;
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog{
 	position: absolute;
 	width: 100%;
 	left: 0;
 	top: 50%;
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog:after,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog:after{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog:after,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog:after{
 	display: block;
 	position: absolute;
 	content: ' ';
@@ -2052,7 +2077,8 @@ button {
 	top: -4px;
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog:before,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog:before{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog:before,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog:before{
 	display: block;
 	position: absolute;
 	content: ' ';
@@ -2068,7 +2094,8 @@ button {
 		-moz-transform: rotate(-20deg);
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog.cssload-one,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-one{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-one,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog.cssload-one{
 	transform: rotate(-80deg);
 		-o-transform: rotate(-80deg);
 		-ms-transform: rotate(-80deg);
@@ -2076,7 +2103,8 @@ button {
 		-moz-transform: rotate(-80deg);
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog.cssload-two,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-two{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-two,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog.cssload-two{
 	transform: rotate(-40deg);
 		-o-transform: rotate(-40deg);
 		-ms-transform: rotate(-40deg);
@@ -2084,7 +2112,8 @@ button {
 		-moz-transform: rotate(-40deg);
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog.cssload-three,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-three{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-three,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog.cssload-three{
 	transform: rotate(0deg);
 		-o-transform: rotate(0deg);
 		-ms-transform: rotate(0deg);
@@ -2092,7 +2121,8 @@ button {
 		-moz-transform: rotate(0deg);
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog.cssload-four,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-four{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-four,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog.cssload-four{
 	transform: rotate(40deg);
 		-o-transform: rotate(40deg);
 		-ms-transform: rotate(40deg);
@@ -2100,7 +2130,8 @@ button {
 		-moz-transform: rotate(40deg);
 }
 .cssload-wrap .cssload-cogWheel .cssload-cog.cssload-five,
-.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-five{
+.cssload-wrap-leaseCall .cssload-cogWheel .cssload-cog.cssload-five,
+.cssload-wrap-index .cssload-cogWheel .cssload-cog.cssload-five{
 	transform: rotate(80deg);
 		-o-transform: rotate(80deg);
 		-ms-transform: rotate(80deg);

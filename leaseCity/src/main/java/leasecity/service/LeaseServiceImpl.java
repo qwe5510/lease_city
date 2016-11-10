@@ -610,9 +610,11 @@ public class LeaseServiceImpl implements LeaseService {
 		page.setFromTo();
 		
 		if(isCompany!=null && isCompany.equals("CC")){
-			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountInfoOnHeavyEquipment(page));
+			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountInfoOnHeavyEquipmentCompanies());
 		}else if(isCompany!=null && isCompany.equals("HEC")){
-			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountHelpOnHeavyEquipment(page));
+			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountHelpOnHeavyEquipmentCompanies());
+		}else{
+			page.setTotalCount(lookUpHeavyEquipmentRepo.getCountAllHeavyEquipmentCompanies());
 		}
 		page.setUserId(userId);
 		

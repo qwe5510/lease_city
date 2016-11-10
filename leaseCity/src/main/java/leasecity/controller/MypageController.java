@@ -49,6 +49,13 @@ public class MypageController {
 		return "mypage/history";
 	}
 	
+	@RequestMapping(value="/myinfoCheckAjax", method=RequestMethod.GET)
+	public @ResponseBody Boolean myinfoAjax(@RequestParam String password, HttpSession session){
+		
+		
+		return false;
+	}
+	
 	@RequestMapping(value="/myinfo", method=RequestMethod.GET)
 	public String myinfo(Model model, RedirectAttributes redir,HttpSession session){
 		

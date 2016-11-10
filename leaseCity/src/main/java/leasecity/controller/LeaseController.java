@@ -352,7 +352,9 @@ public class LeaseController {
 	@RequestMapping(value="/lookupHeavy", method=RequestMethod.GET)
 	public String inquery_heavy(Model model, RedirectAttributes redir,
 			HttpSession session, Page searchPage,
-			@RequestParam(required=false) Integer currentPage){
+			@RequestParam(required=false) Integer currentPage,
+			@RequestParam(required=false) String search,
+			@RequestParam(required=false) String keyword){
 		HeavyEquipmentCompany heavyEquipmentCompany = new HeavyEquipmentCompany();
 		model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
 		
@@ -368,6 +370,13 @@ public class LeaseController {
 		if(currentPage == null){currentPage = 1;}
 		
 		try {
+			
+			if(search != null && keyword != null){
+				page = leaseService.getMoreViewHECPage(
+						currentPage, LOOK_UP_HEC_PAGE_SIZE,
+						search, keyword, null, loginUser.getUserId());
+			}
+			
 			if (searchPage != null) {
 				
 				if(searchPage.getSearch() != null && searchPage.getSearch().equals("CREDIT")){

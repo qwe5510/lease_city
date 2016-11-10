@@ -13,14 +13,20 @@ public interface LookUpHeavyEquipmentRepo {
 	 * @param page keyword 혹은 search가 들어갈 것임
 	 * @return
 	 */
-	public Integer getCountHelpOnHeavyEquipment(Page page);
+	public Integer getCountHelpOnHeavyEquipmentCompanies();
 	
 	/**
 	 * 입력한 페이지 조건에 부합하는 중기업체 인원 확인
 	 * @param page keyword 혹은 search가 들어갈 것임
 	 * @return
 	 */
-	public Integer getCountInfoOnHeavyEquipment(Page page);
+	public Integer getCountInfoOnHeavyEquipmentCompanies();
+	
+	/**
+	 * 조건없이 모든 중기업체 인원 확인.
+	 * @return
+	 */
+	public Integer getCountAllHeavyEquipmentCompanies();
 	
 	/**
 	 * Page단위로 출력하며, 도움 여부가 ON된 유저만을 리스트로 받는다.

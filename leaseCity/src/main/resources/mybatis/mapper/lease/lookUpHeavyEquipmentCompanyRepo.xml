@@ -5,8 +5,7 @@
  <mapper namespace="leasecity.repo.LookUpHeavyEquipmentCompanyRepo">
  	
  	<!-- 중기업체 - 중기업체 : 도움 여부가 ON된 중기업체 개수만 리턴 -->
- 	<select id="getCountHelpOnHeavyEquipment" parameterType="page"
- 											resultType="int">
+ 	<select id="getCountHelpOnHeavyEquipmentCompanies" resultType="int">
  		SELECT COUNT(*) 
  		FROM users 
  		JOIN heavy_equipment_company USING(user_id)
@@ -14,14 +13,20 @@
  	</select>
  	
  	<!-- 건설업체 - 중기업체 : 도움 여부가 ON된 중기업체 개수만 리턴 -->
- 	<select id="getCountInfoOnHeavyEquipment" parameterType="page"
- 											resultType="int">
+ 	<select id="getCountInfoOnHeavyEquipmentCompanies" resultType="int">
  		SELECT COUNT(*) 
  		FROM users 
  		JOIN heavy_equipment_company USING(user_id)
  		WHERE info_on_off = 'ON'
  	</select>
  	
+ 	
+ 	<select id="getCountAllHeavyEquipmentCompanies" resultType="int">
+ 		SELECT COUNT(*) 
+ 		FROM users 
+ 		JOIN heavy_equipment_company USING(user_id)
+ 	</select>
+ 	 	
  	<!-- 중기업체 - 중기업체 : 정보 공개 여부가 ON된 중기업체 리스트를 리턴 -->
  	<select id="getPageHelpOnHeavyEquipmentCompanies" parameterType="page" 
  											resultType="heavyEquipmentCompany">

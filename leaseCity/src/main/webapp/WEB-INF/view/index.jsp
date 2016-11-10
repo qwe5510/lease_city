@@ -110,7 +110,6 @@
 
 		</div>
 	</section>
-
 	<section id="clients" class="main" style="padding-bottom: 0px;">
 		<div class="container">
 			<div class="row-fluid">
@@ -266,9 +265,6 @@
 			</div>
 		</div>
 	</section>
-
-
-
 	<!--Bottom-->
 	<section id="bottom" class="main">
 		<!--Container-->
@@ -352,11 +348,8 @@
 			</div>
 			<!--/row-fluid-->
 		</div>
-		<!--/container-->
-		
-		
-		
-	</section>
+		<!--/container-->	
+	</section>	
 	<!--/bottom-->
 	<jsp:include page="./layout/footer.jsp"></jsp:include>
 	<!--  Login form -->
@@ -391,7 +384,7 @@
 <script src="<%=request.getContextPath()%>/js/jquery.ba-cond.min.js"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery.slitslider.js"></script>
 <script>
-	$(document).ready(function(){
+	$(document).ready(function(){		
 	  $('.bxslider').bxSlider({
 		  slideWidth:280,
 		  nextSelector: '#next', 
@@ -456,6 +449,7 @@
      return leaseCallList;
   }
 
+  
   $(function() {
      
      // 밑에 함수 실행
@@ -469,7 +463,7 @@
         var Prev = "#" + P + idx;
         var Next = "#" + N + idx;
 
-        // css 갖고오기
+        // css 갖고오기        
         var pos1 = $(Prev).css("top").replace("px", "");
         var pos2 = $(Next).css("top").replace("px", "");
         //alert('111');
