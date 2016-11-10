@@ -201,7 +201,8 @@ $("#totalBtn").on("click",function(e){
 						notification.close();
 					});
 					// (모두 삭제 클릭시, notify 닫기)
-					$("#notificationFooterButton").click(function() {
+					$("#notificationFooterButton").click(function(e) {
+						e.preventDefault();
 						notification.close();
 					});
 					

@@ -17,8 +17,9 @@
 	<div class="mypage_main">
 		<h3>개인 정보 수정</h3>
 		<h4>인증을 위해 비밀번호를 입력해주세요.</h4>
-		<c:url value="/myinfoCheckAjax" var="myinfo"></c:url>
-		<form method="get" action="${myinfo}">
+		<c:url value="/myinfoCheckAjax" var="myinfoCheckAjax"></c:url>
+		<c:url value="/myinfo" var="myinfo"></c:url>
+		<form id="mypageForm" method="get" action="${myinfo}">
 			<div>
 				<label for="password">비밀번호</label>
 				<input id="password" name="password" type="password"/>
@@ -123,18 +124,49 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 
-	$("#myInfo_confirm"),on("click", function(e){
-		e.preventDefault();
-		if(password2=="" || password==""){
-			$(".password").html("두 패스워드 값을 전부 입력해주세요.");
-			$(".password").css("color", "#0000FF");
-			return false;
-		}else if(password != password2){
-		    $(".password").html("패스워드가 일치하지 않습니다.");
-		    $(".password").css("color", "#FF0000");
-			return false;
-		}
-	});
+
+
+
+
+$("#myInfo_confirm").on("click", function(e){
+	e.preventDefault();
+	
+	var password = $("#password").val();
+	var password2 = $("#password2").val();
+	
+	if(password2=="" || password==""){
+		$(".password").html("두 패스워드 값을 전부 입력해주세요.");
+		$(".password").css("color", "#FF0000");
+		return false;
+	}else if(password != password2){
+	    $(".password").html("패스워드가 일치하지 않습니다.");
+	    $(".password").css("color", "#FF0000");
+		return false;
+	}else{
+		$(".password").html("");
+		
+		console.log("df");
+		
+		$.ajax({
+			url : "${myinfoCheckAjax}",
+			method : "GET",
+			data : {
+				password : password
+			},
+			success: function(res){
+				if(res){
+					$("#mypageForm").submit();
+				}
+				else{
+					alert("올바른 패스워드가 아닙니다.");
+				}
+			},
+			error : function(error){
+				alert(error);
+			}
+		});	
+	}
+});
 
 		
 </script>

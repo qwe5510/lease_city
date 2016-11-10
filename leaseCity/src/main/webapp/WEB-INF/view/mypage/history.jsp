@@ -278,9 +278,7 @@
 								alt="" /></li>
 						</ul>
 					</div>
-
 				</div>
-
 			</div>
 			<!--/row-fluid-->
 		</div>

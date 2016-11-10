@@ -25,6 +25,7 @@ import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
 import leasecity.exception.ServiceFailException;
 import leasecity.service.UserService;
+import leasecity.util.HashingUtil;
 
 @Controller
 public class MypageController {
@@ -43,30 +44,65 @@ public class MypageController {
 	
 	@RequestMapping(value="/history",method=RequestMethod.GET)
 	public String history(Model model){
-		model.addAttribute("message", "Good Morning");
-		logger.trace("컨트롤러!!");
-		System.out.println("컨틀롤러들어옴!");
+		
+		
 		return "mypage/history";
+	}
+	
+	@RequestMapping(value="/historyPageControlAjax", method=RequestMethod.GET)
+	public @ResponseBody String historyPageControlAjax(Model model){
+		
+		return "";
 	}
 	
 	@RequestMapping(value="/myinfoCheckAjax", method=RequestMethod.GET)
 	public @ResponseBody Boolean myinfoAjax(@RequestParam String password, HttpSession session){
 		
+		User user = session.getAttribute("loginUser")==null?
+					(User)session.getAttribute("admin"):
+					(User)session.getAttribute("loginUser");
+			
+		logger.trace("패스워드 전 : {}", password);
 		
-		return false;
+					
+		password = HashingUtil.hashingString(password);
+		
+		logger.trace("패스워드 후 : {}", password);
+		logger.trace("세션에 저장된 비밀번호 : {}", user.getPassword());
+		
+		if(user.getPassword().equals(password)){
+			session.setAttribute("myInfoCheck", true);
+			return true;
+		}else{
+			return false;
+		}	
 	}
-	
 	@RequestMapping(value="/myinfo", method=RequestMethod.GET)
 	public String myinfo(Model model, RedirectAttributes redir,HttpSession session){
 		
 		User user = (User)session.getAttribute("loginUser");
-		if( session.getAttribute("loginUser") != null ) {
+		if(session.getAttribute("loginUser") != null ) {
 			model.addAttribute("user", user);
 		}else if(user == null){
 			redir.addFlashAttribute("index_message", "로그인 정보가 만료되었습니다.");
 			return "redirect:/index";
 		}
-		return "mypage/myinfo";
+		
+		if(session.getAttribute("myInfoCheck") != null){
+			return "mypage/myinfo";
+		}else{
+			return "error/405";
+		}
+	}
+	
+	@RequestMapping(value="/mypage",method=RequestMethod.GET)
+	public String mypage(Model model, HttpSession session){
+		session.removeAttribute("myInfoCheck");
+		
+		
+		User user = new User();
+		model.addAttribute("user",user);
+		return "mypage/mypage";
 	}
 	
 	//마이페이지 개인정보 수정
@@ -80,7 +116,7 @@ public class MypageController {
 			return "redirect:/index";
 		}
 		
-		loginUser.setPassword("");
+		
 		if(loginUser instanceof HeavyEquipmentCompany){
 			HeavyEquipmentCompany heavyEquipmentCompany = (HeavyEquipmentCompany)loginUser;
 			model.addAttribute("heavyEquipmentCompany", heavyEquipmentCompany);
@@ -153,12 +189,7 @@ public class MypageController {
 		return "redirect:/myinfo";
 	}
 	
-	@RequestMapping(value="/mypage",method=RequestMethod.GET)
-	public String mypage(Model model){
-		User user = new User();
-		model.addAttribute("user",user);
-		return "mypage/mypage";
-	}
+	
 	
 	@RequestMapping(value="/security_identify",method=RequestMethod.GET)
 	public String security_identify(Model model){
