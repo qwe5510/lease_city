@@ -311,7 +311,7 @@
                         <sform:option value="CATEGORY">분류</sform:option>
                      </sform:select>
                      <sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
-                     <button id="boardBtn"><i class="icon-search"></i>검색</button>
+                     <button id="qnaBtn"><i class="icon-search"></i>검색</button>
                   </div>
          </sform:form>
          </div>
@@ -323,17 +323,15 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 
-	$("#boardBtn").on("click",function(e){
-		e.preventDefault();
+	$("#qnaBtn").on("click", function(e){
 		var keyword = $("#keyword").val();
 		var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
+
 		if(!searchRegExp.test(keyword)){
 			alert("조건이 알맞지 않습니다.\n(%를 제외한 2글자 이상 문자.)");
 			return false;
-		}else{
-			$("form").submit();
 		}
-	}) 
+	}) ;
 
 	$("#help_frequenty").on("mouseover",function(){
 		$("#help_frequenty_img").attr("src","<%=request.getContextPath()%>/images/help/help_menu2_1.png");

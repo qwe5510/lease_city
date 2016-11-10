@@ -330,14 +330,11 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
  $("#boardBtn").on("click",function(e){
-	e.preventDefault();
 	var keyword = $("#keyword").val();
 	var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
 	if(!searchRegExp.test(keyword)){
 		alert("조건이 알맞지 않습니다.\n(%를 제외한 2글자 이상 문자.)");
 		return false;
-	}else{
-		$("form").submit();
 	}
 }) 
 </script>

@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
-import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
 import leasecity.service.UserService;
 
@@ -135,11 +133,6 @@ public class MypageController {
 		if(heavyEquipmentCompany.getInfoOnOff() == null){
 			heavyEquipmentCompany.setInfoOnOff("OFF");
 		}
-		
-		logger.trace("중기업체 : {}", heavyEquipmentCompany);
-		logger.trace("중기업체 유저 : {}", heavyEquipmentCompany.userInfo());
-		logger.trace("중기업체 중장비 : {}", heavyEquipmentCompany.getHeavyEquipmentList());
-		
 		
 		try {
 			userService.changeInfo(isPassword, heavyEquipmentCompany);

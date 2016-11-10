@@ -132,7 +132,7 @@
 				
 				<div class="board_write">
 					<c:url value="/leaseCall/write" var="leaseCallWrite"/>
-					<a href="${leaseCallWrite}"><button><i class="icon-pencil"></i>글작성</button></a>
+					<a href="${leaseCallWrite}"><button style="float:right;"><i class="icon-pencil"></i>요청글 쓰기</button></a>
 				</div>
 			<div class="boardSearch">
 				<div class="boardBottom">
@@ -145,7 +145,7 @@
                         <sform:option value="CATEGORY">임대,차량</sform:option>
                      </sform:select>
                      <sform:input path="keyword" placeholder="검색어를 입력해주세요."/>
-                     <button id="boardBtn"><i class="icon-search"></i>검색</button>
+                     <button id="leaseBtn"><i class="icon-search"></i>검색</button>
                  </sform:form>
                   </div>
          	</div>
@@ -158,6 +158,15 @@
 <!-- 페이지 펼치기 -->
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+$("#leaseBtn").on("click",function(e){
+	var keyword = $("#keyword").val();
+	var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
+	if(!searchRegExp.test(keyword)){
+		alert("조건이 알맞지 않습니다.\n(%를 제외한 2글자 이상 문자.)");
+		return false;
+	}
+}) 
 
 <c:url value="/images/lease/lease_menu3_1.png" var="lookupHeavyHover"></c:url>
 <c:url value="/images/lease/lease_menu3.png" var="lookupHeavyNormal"></c:url>

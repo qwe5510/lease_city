@@ -32,7 +32,7 @@
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
+<link rel="apple-touch-icon-precomposed" sizes="72x7"src/main/webapp/WEB-INF/view/mypage/selection.jsp"2"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
@@ -62,14 +62,20 @@
 						<li>
 							<table>
 								<tr>
-									<th><select>
-											<option>임대</option>
-											<option>커뮤니티</option>
-											<option>Q&A</option>
-											<option>중기업체</option>
-									</select></th>
-									<th><input type="text" placeholder="검색어를 입력해주세요."></th>
-									<th><input type="button" value="검색"></th>
+									<th>
+										<c:url value="/totalSearch" var="totalSearch"></c:url>
+										<form method="get" action="${totalSearch }">
+										<select name="serviceKind">
+												<option value="LEASE">임대</option>
+												<option value="COMMUNITY">커뮤니티</option>
+												<option value="Q_AND_A">Q&A</option>
+												<option value="HE_SELECT">중기업체</option>
+										</select>
+										<input id="totalKeyword" name="keyword" type="text" placeholder="검색어를 입력해주세요.">
+										<input id="totalBtn" type="submit" value="검색">
+										</form>
+									</th>
+									
 								</tr>
 							</table>
 						</li>
@@ -95,11 +101,11 @@
 						<%-- <c:url value="/mypage" var="mypage"></c:url> --%>
 						<c:choose>
 							<c:when test="${!empty loginUser or !empty admin}">
-								<li id="con"><a href=${logout }><i class="icon-signout"></i></a></li>
-								<li id="con"><a href=${mypage }><i class="icon-info-sign"></i></a></li>
+								<li id="con"><a href=${logout } title="로그아웃"><i class="icon-signout"></i></a></li>
+								<li id="con"><a href=${mypage } title="마이페이지"><i class="icon-info-sign"></i></a></li>
 							</c:when>
 							<c:otherwise>
-								<li id="con"><a href=${login }><i class="icon-lock"></i></a></li>
+								<li id="con"><a href=${login}><i class="icon-lock" title="로그인하기"></i></a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>
@@ -112,6 +118,15 @@
 <script src="<%=request.getContextPath() %>/js/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
+
+$("#totalBtn").on("click",function(e){
+	var keyword = $("#totalKeyword").val();
+	var searchRegExp = /^[ㄱ-ㅎ가-힣0-9a-zA-Z!@#$^&*)(_=+-/*]{2,}$/;
+	if(!searchRegExp.test(keyword)){
+		alert("조건이 알맞지 않습니다.\n(%를 제외한 2글자 이상 문자.)");
+		return false;
+	}
+}) 
 
 	// (반복문 초기 실행)
 	window.onload = function() {
