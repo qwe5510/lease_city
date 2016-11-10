@@ -128,9 +128,6 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
 	var g_currentPage = 1;
-
-	
-	
 	$(window).on("load", function(e){
 		var totalCount = ${page.totalCount};
 		

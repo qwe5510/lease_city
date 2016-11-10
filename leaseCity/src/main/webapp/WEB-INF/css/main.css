@@ -92,7 +92,7 @@ body h3, body h4 {
 }
 
 a {
-   color: #2dcc70;
+   color: black;
    -webkit-transition: 300ms;
    -moz-transition: 300ms;
    -o-transition: 300ms;
@@ -100,7 +100,7 @@ a {
 }
 
 a:hover, a:focus {
-   color: #005580;
+   color: #6B66FF;
    text-decoration: none;
    outline: 0
 }
@@ -1669,8 +1669,8 @@ button {
    min-height: 800px;
    margin-left: 0px;
    float: left;
-   min-width: 30%;
-   width: 30%;
+   min-width: 400px;
+   width: 400px;
    position: fixed;
    z-index: -1;
 }
@@ -1774,7 +1774,7 @@ button {
 
 .help_read_main {
    float: right;
-   width: 55%;
+   width: 800px;
    margin-right: 30px;
 }
 
@@ -2391,14 +2391,14 @@ button {
 	margin-left: 50px;
 	float: left;
 	min-width: 30%;
-	width: 30%;
+	width: 400px;
 	position: fixed;
 }
 .mypage_main{
 	float: right;
 	margin-right: 50px;
 	min-height: 500px;
-	width: 60%;
+	width: 800px;
 	display: inline-block;
 	text-align: left;
 }
@@ -2499,8 +2499,8 @@ button {
 	margin-bottom : 5px;
 	padding : 0px;
 }
+
 #SpecialRolling {
-	border: 1px solid gray;
 	text-align: center;
 	width: 617px;
 	height: 28px;
@@ -2509,6 +2509,7 @@ button {
 	font-weight: bold;
 	color: #1E96DD;
 	z-index: 0;
+	display: inline-block;
 }
 
 #SpecialRolling div {
@@ -2516,6 +2517,7 @@ button {
 	height: 28px;
 	position: relative;
 }
+
 .history_table{
 	width: 780px;
 	font-size: 15px;
@@ -2547,14 +2549,14 @@ button {
 	margin-left: 50px;
 	float: left;
 	min-width: 30%;
-	width: 30%;
+	width: 400px;
 	position: fixed;
 }
 .evaluate_main{
 	float: right;
 	margin-right: 50px;
 	min-height: 500px;
-	width: 65%;
+	width: 800px;
 	display: inline-block;
 	text-align: left;
 	border: 2px solid;
@@ -2597,15 +2599,15 @@ button {
 	min-height: 500px;
 	margin-left: 50px;
 	float: left;
-	min-width: 30%;
-	width: 30%;
+	min-width: 400px;
+	width: 400px;
 	position: fixed;
 }
 .selection_main{
 	float: right;
 	margin-right: 50px;
 	min-height: 500px;
-	width: 65%;
+	width: 800px;
 	display: inline-block;
 	text-align: left;
 }
@@ -2621,4 +2623,92 @@ button {
 }
 .selection2_table{
 	width: 600px;
+}
+
+.weatherMap {
+	background: url(../images/weather/지도50.png) no-repeat;
+	background-size: contain;
+	
+	width: 400px;
+	height: 600px;
+}
+
+#weather1 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 980px;
+	left: 160px;
+}
+
+#weather2 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1080px;
+	left: 225px;
+}
+
+#weather3 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1080px;
+	left: 135px;
+}
+
+#weather4 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1130px;
+	left: 315px;
+}
+
+#weather5 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1210px;
+	left: 295px;
+}
+
+#weather6 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1205px;
+	left: 165px;
+}
+
+#weather7 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1270px;
+	left: 105px;
+}
+
+#weather8 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 985px;
+	left: 285px;
+}
+
+#weather9 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 1380px;
+	left: 135px;
+}
+
+#weather10 {
+	background-color: window;
+	position: absolute;
+	text-align: center;
+	top: 995px;
+	left: 382px;
 }
