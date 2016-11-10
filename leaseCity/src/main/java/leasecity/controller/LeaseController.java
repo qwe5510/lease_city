@@ -324,7 +324,7 @@ public class LeaseController {
 			// 2. notify 에 정보 추가
 			notify.setUserId(leaseCall.getUserId());
 			notify.setLeaseCallNo(leaseCall.getLeaseCallNo());
-			notify.setNotifyLink("http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo=" + leaseCall.getLeaseCallNo());
+			notify.setNotifyLink("http://localhost:9090/leaseCity/selection");
 			
 			// 3. notify 저장
 			notifyService.insertNotifyByLoginUser(notify);
@@ -649,16 +649,17 @@ public class LeaseController {
 		leaseDirectCall.setCallIdNumber(idNumber);
 		leaseDirectCall.setLeaseCallNo(leaseCallNo);
 		
-		logger.trace("직접 요청 정보 : {}", leaseDirectCall);
+		Notify notify = new Notify();
 		
 		try {
 			leaseService.doLeaseDirectCall(leaseDirectCall);
-			
-			/**
-			 * 알림 자리가 들어가야 함.
-			 */
-			
 			redir.addFlashAttribute("HEC_message", "직접 요청이 완료되었습니다!.");
+			
+			notify.setUserId(leaseDirectCall.getEquipmentId());
+			notify.setLeaseDirectNo(leaseDirectCall.getLeaseDirectNo());
+			notify.setNotifyLink("http://localhost:9090/leaseCity/selection");
+			
+			notifyService.insertNotifyByLoginUser(notify);
 			
 		} catch (ServiceFailException e) {
 			redir.addFlashAttribute("join_messgae", "직접 요청에 실패하였습니다.\\n메인페이지로 이동합니다.");
@@ -712,13 +713,18 @@ public class LeaseController {
 			return "redirect:/index";
 		}
 		
-		/**
-		 * 알림 자리가 들어가야 함.
-		 */
+		Notify notify = new Notify();
 		
 		try {
 			leaseService.doLeaseTransfer(leaseTransfer);
 			redir.addFlashAttribute("HEC_message", "양도 신청이 완료되었습니다!");
+			logger.trace("양도 정보 : {}", leaseTransfer);
+			
+			notify.setUserId(leaseTransfer.getAcceptUserId());
+			notify.setLeaseTransferNo(leaseTransfer.getLeaseTransferNo());
+			notify.setNotifyLink("http://localhost:9090/leaseCity/selection");
+			
+			notifyService.insertNotifyByLoginUser(notify);
 		} catch (ServiceFailException e) {
 			redir.addFlashAttribute("index_message", "양도 신청 작업에 에러가 발생하였습니다!\\n메인 페이지로 이동합니다.");
 			return "redirect:/index";

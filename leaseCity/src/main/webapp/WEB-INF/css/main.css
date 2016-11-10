@@ -1869,7 +1869,7 @@ button {
 	min-height: 800px;
 	margin-left: 0px;
 	float: left;
-	width: 30%;
+	width: 400px;
 	position: fixed;
 	z-index: -1;
 }
