@@ -38,6 +38,7 @@
 
 </head>
 <body>
+	
 	<!-- 메인으로 이동 시 보이는 메시지 -->
 	<c:if test="${!empty index_message }">
 		<script>
@@ -401,8 +402,6 @@
 	  });
 	});
 	$(function() {
-        
-        
         var Page = (function() {
 
            var $navArrows = $('#nav-arrows'), slitslider = $('#slider')
