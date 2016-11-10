@@ -38,6 +38,7 @@
 
 </head>
 <body>
+	
 	<!-- 메인으로 이동 시 보이는 메시지 -->
 	<c:if test="${!empty index_message }">
 		<script>
@@ -396,7 +397,7 @@
 	
 	
 	$(function() {
-        
+    
 		// 알림이 권한이 없을 시, 허용시키기
         if (Notification.permission !== 'denied') {
         	 Notification.requestPermission(function (permission) {
@@ -545,7 +546,7 @@
      });
      return leaseCallList;
   }
-  
+
 </script>
 </body>
 </html>
