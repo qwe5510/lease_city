@@ -402,6 +402,14 @@
 	});
 	$(function() {
         
+		// 알림이 권한이 없을 시, 허용시키기
+        if (Notification.permission !== 'denied') {
+        	 Notification.requestPermission(function (permission) {
+        	      if(!('permission' in Notification)) {
+        	        Notification.permission = permission;
+        	      }
+        	  });
+        }
         
         var Page = (function() {
 
@@ -430,7 +438,7 @@
 
         })();
         Page.init();
-        
+   
         if ("${sessionScope.loginUser.userId}" != "" || "${sessionScope.admin.userId}" != "" ) {
         	 // 밑에 함수 실행
             RollingText("Prev", "Next", 0);
