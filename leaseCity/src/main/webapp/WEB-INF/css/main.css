@@ -9,7 +9,7 @@
 .clearfix:before, .clearfix:after {
    display: table;
    content: "";
-   line-height: 0
+   line-height: 0;
 }
 
 .clearfix:after {
@@ -2533,7 +2533,7 @@ button {
 }
 
 #SpecialRolling {
-	width: 617px;
+	width: 360px;
 	height: 28px;
 	overflow: hidden;
 	position: relative;
@@ -2544,7 +2544,7 @@ button {
 }
 
 #SpecialRolling div {
-	width: 617px;
+	width: 360px;
 	height: 28px;
 	position: relative;
 }

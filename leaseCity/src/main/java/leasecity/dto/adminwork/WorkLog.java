@@ -27,6 +27,9 @@ public class WorkLog implements Serializable {
 
 	/** 작업기록번호. */
 	private Integer logNo;
+	
+	/** 작업기록 행 번호 */
+	private Integer rowNumLogNo;
 
 	/** 회원. */
 	private User users;

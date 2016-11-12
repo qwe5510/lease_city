@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.workLogRepo">
+ 	
+ 	<!-- 모든 기록 개수 출력 -->
+ 	<select id="getCountAllWorkLog" parameterType="String" resultType="workLog">
+ 		SELECT COUNT(*)
+ 		FROM work_log
+ 		WHERE user_id = #{userId}
+ 	</select>
+ 	
+ 	<!-- 페이지별 작업기록 리스트 출력 -->
+ 	<select id="getPageWorkLog" parameterType="page" resultType="workLog">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS row_num_log_no
+ 				FROM( SELECT *
+ 						FROM work_log
+ 						WHERE user_id = #{userId} 
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE row_num_log_no BETWEEN #{from} AND #{to}
+ 		</if>
+ 	</select>
+ </mapper>

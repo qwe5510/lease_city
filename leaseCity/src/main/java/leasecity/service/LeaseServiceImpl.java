@@ -65,8 +65,6 @@ public class LeaseServiceImpl implements LeaseService {
 	public List<LeaseCall> loadLeaseCalls(Page page) throws NotFoundDataException {
 		List<LeaseCall> result = leaseCallRepo.getPageLeaseCalls(page);
 		
-		System.out.println("result : " + result);
-		
 		if(result.size() <= 0){
 			throw new NotFoundDataException("임대 요청글 목록");
 		}

@@ -3,6 +3,7 @@ package leasecity.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,10 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import leasecity.dto.adminwork.WorkLog;
+import leasecity.dto.etc.Page;
 import leasecity.dto.user.ConstructionCompany;
 import leasecity.dto.user.HeavyEquipmentCompany;
 import leasecity.dto.user.User;
+import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
+import leasecity.service.MyPageService;
 import leasecity.service.UserService;
 import leasecity.util.HashingUtil;
 
@@ -33,7 +38,13 @@ public class MypageController {
 	static Logger logger = LoggerFactory.getLogger(MypageController.class);
 	
 	@Autowired
-	UserService userService; 
+	MyPageService myPageService;
+	
+	@Autowired
+	UserService userService;
+	
+	
+	private final static Integer WORK_LOG_SIZE = 15;
 	
 	
 	@InitBinder
@@ -42,17 +53,13 @@ public class MypageController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat,true));
 	}
 	
-	@RequestMapping(value="/history",method=RequestMethod.GET)
-	public String history(Model model){
+	@RequestMapping(value="/mypage",method=RequestMethod.GET)
+	public String mypage(Model model, HttpSession session){
+		session.removeAttribute("myInfoCheck");
 		
-		
-		return "mypage/history";
-	}
-	
-	@RequestMapping(value="/historyPageControlAjax", method=RequestMethod.GET)
-	public @ResponseBody String historyPageControlAjax(Model model){
-		
-		return "";
+		User user = new User();
+		model.addAttribute("user",user);
+		return "mypage/mypage";
 	}
 	
 	@RequestMapping(value="/myinfoCheckAjax", method=RequestMethod.GET)
@@ -64,7 +71,6 @@ public class MypageController {
 			
 		logger.trace("패스워드 전 : {}", password);
 		
-					
 		password = HashingUtil.hashingString(password);
 		
 		logger.trace("패스워드 후 : {}", password);
@@ -77,14 +83,16 @@ public class MypageController {
 			return false;
 		}	
 	}
+	
+	//마이페이지 메인화면
 	@RequestMapping(value="/myinfo", method=RequestMethod.GET)
 	public String myinfo(Model model, RedirectAttributes redir,HttpSession session){
 		
 		User user = (User)session.getAttribute("loginUser");
-		if(session.getAttribute("loginUser") != null ) {
+		if(user != null ) {
 			model.addAttribute("user", user);
 		}else if(user == null){
-			redir.addFlashAttribute("index_message", "로그인 정보가 만료되었습니다.");
+			redir.addFlashAttribute("index_message", "유저가 아니거나 세션이 만료 되었습니다.");
 			return "redirect:/index";
 		}
 		
@@ -95,15 +103,6 @@ public class MypageController {
 		}
 	}
 	
-	@RequestMapping(value="/mypage",method=RequestMethod.GET)
-	public String mypage(Model model, HttpSession session){
-		session.removeAttribute("myInfoCheck");
-		
-		
-		User user = new User();
-		model.addAttribute("user",user);
-		return "mypage/mypage";
-	}
 	
 	//마이페이지 개인정보 수정
 	@RequestMapping(value="/mypage/identify")
@@ -129,7 +128,46 @@ public class MypageController {
 			redir.addFlashAttribute("index_message", "건설업체 또는 중기업체 회원이 아닙니다.");
 			return "redirect:/index";
 		}
-		return "mypage/mypage_identify";
+		
+		if(session.getAttribute("myInfoCheck") != null){
+			return "mypage/mypage_identify";
+		}else{
+			return "error/405";
+		}
+		
+	}
+	
+	//작업 기록
+	@RequestMapping(value = "/history", method = RequestMethod.GET)
+	public String history(Model model, RedirectAttributes redir, HttpSession session) {
+
+		User loginUser = (User) session.getAttribute("loginUser");
+		List<WorkLog> workLogs = null;
+		
+		if (loginUser == null) {
+			redir.addFlashAttribute("index_message", "로그인 세션이 만료되었습니다.");
+		} else {
+			Page workLogPage = myPageService.getWorkLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
+			
+			try {
+				workLogs = myPageService.loadPageWorkLog(workLogPage);
+				model.addAttribute("workLogs", workLogs);
+			} catch (NotFoundDataException e) {
+				model.addAttribute("ErrorMsg", e.getMessage());
+			}
+		}
+		
+		if(session.getAttribute("myInfoCheck") != null){
+			return "mypage/history";
+		}else{
+			return "error/405";
+		}
+	}
+
+	@RequestMapping(value = "/historyPageControlAjax", method = RequestMethod.GET)
+	public @ResponseBody String historyPageControlAjax(Model model) {
+
+		return "";
 	}
 	
 	@RequestMapping(value="/ConstructionSuccess", method=RequestMethod.POST)

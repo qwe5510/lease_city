@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>작업 기록 | LEASE CITY</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
@@ -26,16 +26,24 @@
 				<td>상대업체</td>
 				<td>평가하기</td>
 			</tr>
-			<tr>
-				<td colspan="5" class="boardLine"></td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>20051</td>
-				<td>2016.05.06~2016.10.30 (2016.04.30)</td>
-				<td>건설업체</td>
-				<td>진행중</td>
-			</tr>
+			
+			<c:forEach var="workLog" items="${workLogs}">
+				<tr>
+					<td colspan="5" class="boardLine"></td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>20051</td>
+					<td>2016.05.06~2016.10.30 (2016.04.30)</td>
+					<td>건설업체</td>
+					<td>진행중</td>
+				</tr>
+				
+			</c:forEach>
+			
+			
+			
+			
 			<tr>
 				<td colspan="5" class="boardLine"></td>
 			</tr>
