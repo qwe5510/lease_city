@@ -116,7 +116,7 @@
 					<td class="lease_label"><sform:label path="regDate">금액</sform:label>
 					</td>
 					<td colspan="2" class="fromToPrice">
-						<sform:input path="price" type="number" min="0"/><h4 style="margin-top: 25px; color: black;">만원(단위)</h4>
+						<sform:input path="price" type="number" min="0"/><h4 style="margin-top: 25px; color: black; display: inline-block">만원(단위)</h4>
 					</td>
 				</tr>
 				<tr>

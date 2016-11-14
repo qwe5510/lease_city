@@ -19,7 +19,7 @@
 		<h4>인증을 위해 비밀번호를 입력해주세요.</h4>
 		<c:url value="/myinfoCheckAjax" var="myinfoCheckAjax"></c:url>
 		<c:url value="/myinfo" var="myinfo"></c:url>
-		<form id="mypageForm" method="get" action="${myinfo}">
+		<form id="mypageForm" method="post" action="${myinfo}">
 			<div>
 				<label for="password">비밀번호</label>
 				<input id="password" name="password" type="password"/>

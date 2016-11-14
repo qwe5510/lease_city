@@ -14,198 +14,479 @@
 	<div class="myinfo">
 	<div class="mypage_menu">
 	</div>
-	<div class="mypage_main">
-		<table class="history_table">
-			<tr>
-				<td colspan="5" class="boardLine" style="height: 4px !important;"></td>
-			</tr>
-			<tr>
-				<td>번호</td>
-				<td>임대번호</td>
-				<td>업무기간(신청날짜)</td>
-				<td>상대업체</td>
-				<td>평가하기</td>
-			</tr>
-			
-			<c:forEach var="workLog" items="${workLogs}">
-				<tr>
-					<td colspan="5" class="boardLine"></td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>20051</td>
-					<td>2016.05.06~2016.10.30 (2016.04.30)</td>
-					<td>건설업체</td>
-					<td>진행중</td>
-				</tr>
+		<div class="mypage_main" style="text-align: center;">
+			<c:choose>
+				<c:when test="${isLogin == 'HEC' }">
+					<!-- 임대 신청 리스트 -->
+					<fieldset>
+						<legend>임대 신청 기록</legend>
+						<table class="history_table">
+							<tr>
+								<td colspan="5" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+							<tr>
+								<td>번호</td>
+								<td>임대 신청 번호</td>
+								<td>업무기간</td>
+								<td>상대업체</td>
+								<td>평가하기</td>
+							</tr>
+							<c:forEach var="workLog" items="${requestLogs}">
+								<tr>
+									<td colspan="5" class="boardLine"></td>
+								</tr>
+								<tr>
+									<td>${workLog.rowNumLogNo}</td>
+									<td>20051</td>
+									<td>2016.05.06~2016.10.30 (2016.04.30)</td>
+									<td>건설업체</td>
+									<td>진행중</td>
+								</tr>
+							</c:forEach>
+							<c:if test="${!empty ErrorRequestMsg}">
+								<tr>
+									<td colspan="5" class="boardLine"></td>
+								</tr>
+								<tr align="center">
+									<td colspan="5"><span style="font-weight: bold;">${ErrorRequestMsg}</span>
+									</td>
+								</tr>
+							</c:if>
+							<tr>
+								<td colspan="5" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+						</table>
+						<div class="boardPage" style="display: inline-block;">
+
+							<!-- 임대 신청 이전 페이지, 다음 페이지 변수 선언 -->
+							<fmt:parseNumber
+								value="${(((requestPage.currentPage-1)/10)-(((requestPage.currentPage-1)/10)%1))*10}"
+								var="requestPrevPage">
+							</fmt:parseNumber>
+							<fmt:parseNumber value="${requestPrevPage+11}" var="requestNextPage">
+							</fmt:parseNumber>
+
+							<c:choose>
+								<c:when test="${requestPrevPage > 0}">
+									<a href="#"><i class="icon-arrow-left">이전</i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
+								</c:otherwise>
+							</c:choose>
+
+							<c:if test="${!empty requestPage.totalPage}">
+								<c:choose>
+									<c:when test="${(requestNextPage-1) >= requestPage.totalPage }">
+
+										<c:forEach var="i" begin="${requestPrevPage+1}"
+											end="${requestPage.totalPage}">
+											<c:choose>
+												<c:when test="${i eq requestPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="i" begin="${requestPrevPage+1}" end="${requestNextPage-1}">
+											<c:choose>
+												<c:when test="${i eq requestPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+							<c:choose>
+								<c:when test="${requestNextPage <= requestPage.totalPage}">
+									<a href="#">다음<i class="icon-arrow-right"></i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</fieldset>
+					<br>
+
+					<!-- 임대 양도 리스트 -->
+					<fieldset>
+						<legend>임대 양도 기록</legend>
+						<table class="history_table">
+							<tr>
+								<td colspan="5" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+							<tr>
+								<td>번호</td>
+								<td>임대 양도 번호</td>
+								<td>업무기간</td>
+								<td>상대업체</td>
+								<td>평가하기</td>
+							</tr>
+							<c:forEach var="workLog" items="${workLogs}">
+								<tr>
+									<td colspan="5" class="boardLine"></td>
+								</tr>
+								<tr>
+									<td>${workLog.rowNumLogNo}</td>
+									<td>20051</td>
+									<td>2016.05.06~2016.10.30 (2016.04.30)</td>
+									<td>건설업체</td>
+									<td>진행중</td>
+								</tr>
+							</c:forEach>
+							<c:if test="${!empty ErrorTransferMsg}">
+								<tr>
+									<td colspan="5" class="boardLine"></td>
+								</tr>
+								<tr align="center">
+									<td colspan="5"><span style="font-weight: bold;">${ErrorTransferMsg}</span>
+									</td>
+								</tr>
+							</c:if>
+							<tr>
+								<td colspan="5" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+						</table>
+						<div class="boardPage" style="display: inline-block;">
+
+							<!-- 이전 페이지, 다음 페이지 변수 선언 -->
+							<fmt:parseNumber
+								value="${(((transferPage.currentPage-1)/10)-(((transferPage.currentPage-1)/10)%1))*10}"
+								var="transferPrevPage">
+							</fmt:parseNumber>
+							<fmt:parseNumber value="${transferPrevPage+11}"
+								var="transferNextPage">
+							</fmt:parseNumber>
+
+
+							<c:choose>
+								<c:when test="${transferPrevPage > 0}">
+									<a href="#"> <i class="icon-arrow-left">이전</i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
+								</c:otherwise>
+							</c:choose>
+
+							<c:if test="${!empty transferPage.totalPage}">
+								<c:choose>
+									<c:when
+										test="${(transferNextPage-1) >= transferPage.totalPage }">
+										<c:forEach var="i" begin="${transferPrevPage+1}" 
+											end="${transferPage.totalPage}">
+											<c:choose>
+												<c:when test="${i eq transferPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="i" begin="${transferPrevPage+1}"
+											end="${transferNextPage-1}">
+											<c:choose>
+												<c:when test="${i eq transferPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+
+							<c:choose>
+								<c:when test="${transferNextPage <= transferPage.totalPage}">
+									<a href="#">다음<i class="icon-arrow-right"></i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</fieldset>
+				</c:when>
 				
-			</c:forEach>
-			
-			
-			
-			
-			<tr>
-				<td colspan="5" class="boardLine"></td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>20083</td>
-				<td>2016.07.10~2016.11.28(2016.04.20)</td>
-				<td>건설업체</td>
-				<td><button id="history_evaluate">평가</button></td>
-			</tr>
-			<tr>
-				<td colspan="5" class="boardLine"></td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>21111</td>
-				<td>2016.07.10~2016.11.28(2016.04.20)</td>
-				<td>상대업체</td>
-				<td>완료</td>
-			</tr>
-			<tr>
-				<td colspan="5" class="boardLine" style="height: 4px !important;"></td>
-			</tr>
-		</table>
-		<div class="boardPage" style="display: inline-block;">
-            
-            <!-- 이전 페이지, 다음 페이지 변수 선언 -->
-            <fmt:parseNumber 
-               value="${(((page.currentPage-1)/10)-(((page.currentPage-1)/10)%1))*10}" 
-               var="prevPage">
-            </fmt:parseNumber>
-            <fmt:parseNumber 
-               value="${prevPage+11}" 
-               var="nextPage">
-            </fmt:parseNumber>
-               
-            
-            <c:choose>
-            <c:when test="${prevPage > 0}">
-                           
-               <c:choose>
-                  <c:when test="${!empty page.keyword and !empty page.order}">
-                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:when>
-                  <c:when test="${!empty page.order}">
-                     <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:when>
-                  <c:when test="${!empty page.keyword}">
-                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:when>
-                  <c:otherwise>
-                     <a href="<%=request.getContextPath()%>/board?currentPage=${prevPage}">
-                     <i class="icon-arrow-left">이전</i></a>
-                  </c:otherwise>
-               </c:choose>
-            </c:when>
-            <c:otherwise>
-            <a style="color: black;"><i class="icon-arrow-left">처음</i></a>
-            </c:otherwise>
-            </c:choose>            
-            
-            <c:if test="${!empty page.totalPage}">
-               <c:choose>
-                  <c:when test="${(nextPage-1) >= page.totalPage }">
-                     <c:forEach var="i" begin="${prevPage+1}" end = "${page.totalPage}">
-                        <c:choose>
-                           <c:when test="${i eq page.currentPage}">
-                              <b><c:out value="${i}"></c:out></b>
-                           </c:when>
-                           <c:otherwise>
-                              <c:choose>
-                                 <c:when test="${!empty page.keyword and !empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.keyword}">
-                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>                        
-                                 </c:when>
-                                 <c:otherwise>
-                                    <a href="<%=request.getContextPath()%>/board?currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:otherwise>
-                              </c:choose>
-                           </c:otherwise>
-                        </c:choose>
-                     </c:forEach>
-                  </c:when>
-                  <c:otherwise>
-                     <c:forEach var="i" begin="${prevPage+1}" end = "${nextPage-1}">
-                        <c:choose>
-                           <c:when test="${i eq page.currentPage}">
-                              <b><c:out value="${i}"></c:out></b>
-                           </c:when>
-                           <c:otherwise>
-                              <c:choose>
-                                 <c:when test="${!empty page.keyword and !empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.order}">
-                                    <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:when>
-                                 <c:when test="${!empty page.keyword}">
-                                    <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>                        
-                                 </c:when>
-                                 <c:otherwise>
-                                    <a href="<%=request.getContextPath()%>/board?currentPage=${i}">
-                                       <c:out value="${i}"></c:out>
-                                    </a>
-                                 </c:otherwise>
-                              </c:choose>
-                           </c:otherwise>
-                        </c:choose>
-                     </c:forEach>
-                  </c:otherwise>
-               </c:choose>
-            </c:if>
-            
-            <c:choose>
-            <c:when test="${nextPage <= page.totalPage}">
-               <c:choose>
-               <c:when test="${!empty page.keyword and !empty page.order}">
-                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:when>
-                  <c:when test="${!empty page.order}">
-                     <a href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:when>
-                  <c:when test="${!empty page.keyword}">
-                     <a href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:when>
-                  <c:otherwise>
-                     <a href="<%=request.getContextPath()%>/board?currentPage=${nextPage}">
-                     다음<i class="icon-arrow-right"></i></a>
-                  </c:otherwise>
-               </c:choose>
-            </c:when>
-            <c:otherwise>
-               <a style="color: black;">끝<i class="icon-arrow-right"></i></a>
-            </c:otherwise>
-            </c:choose>
-         </div>
-	</div>
+				<c:when test="${isLogin == 'CC'}">
+					<!-- 임대 요청 리스트 -->
+					<fieldset>
+						<legend>임대 요청 기록</legend>
+						<table class="history_table">
+							<tr>
+								<td colspan="5" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+							<tr>
+								<td>번호</td>
+								<td>요청 번호</td>
+								<td>업무기간 (등록기간)</td>
+								<td>분류</td>
+								<td>진행 상황</td>
+							</tr>
+							<c:forEach var="workLog" items="${callLogs}">
+							
+								<fmt:formatDate value="${workLog.fromDate}" pattern="yyyy-MM-dd" var="fromDate"/>
+								<fmt:formatDate value="${workLog.toDate}" pattern="yyyy-MM-dd" var="toDate"/>
+								<fmt:formatDate value="${workLog.regDate}" pattern="yyyy-MM-dd" var="regDate"/>
+							
+								<tr>
+									<td colspan="5" class="boardLine"></td>
+								</tr>
+								<tr>
+									<td>${workLog.rowNumLogNo}</td>
+									<td>${workLog.leaseCallNo}</td>
+									<td>${fromDate}~${toDate}(${regDate})</td>
+									<td>
+										${workLog.leaseCategory}
+										<br>
+										${workLog.equipmentCategory}
+									</td>
+									<td align="center">
+									<c:choose>
+										<c:when test="${workLog.status == 'STAND_BY'}">
+											<span class="label label-inverse">작업 대기</span>
+										</c:when>
+										<c:when test="${workLog.status == 'WORKING'}">
+											<span class="label label-inverse">작업 중</span>
+										</c:when>
+										<c:when test="${workLog.status == 'COMPLETE'}">
+											<span class="label label-success">작업 완료</span>
+											<span class="label" style="background-color: #cfdae9">
+											<a href="#">평가 하기</a></span>
+										</c:when>
+										<c:when test="${workLog.status == 'EVALUATED'}">
+											<span class="label label-success">작업 완료</span>
+										</c:when>									
+									</c:choose>
+									</td>
+								</tr>
+							</c:forEach>
+							<c:if test="${!empty ErrorRequestMsg}">
+								<tr>
+									<td colspan="5" class="boardLine"></td>
+								</tr>
+								<tr align="center">
+									<td colspan="5"><span style="font-weight: bold;">${ErrorRequestMsg}</span>
+									</td>
+								</tr>
+							</c:if>
+							<tr>
+								<td colspan="5" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+						</table>
+						<div class="boardPage" style="display: inline-block;">
+
+							<!-- 임대 신청 이전 페이지, 다음 페이지 변수 선언 -->
+							<fmt:parseNumber
+								value="${(((callPage.currentPage-1)/10)-(((callPage.currentPage-1)/10)%1))*10}"
+								var="callPrevPage">
+							</fmt:parseNumber>
+							<fmt:parseNumber value="${callPrevPage+11}" var="callNextPage">
+							</fmt:parseNumber>							
+
+							<c:choose>
+								<c:when test="${callPrevPage > 0}">
+									<a href="#"><i class="icon-arrow-left">이전</i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
+								</c:otherwise>
+							</c:choose>
+
+							<c:if test="${!empty callPage.totalPage}">
+								<c:choose>
+									<c:when test="${(callNextPage-1) >= callPage.totalPage }">
+
+										<c:forEach var="i" begin="${callPrevPage+1}"
+											end="${callPage.totalPage}">
+											<c:choose>
+												<c:when test="${i eq callPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="i" begin="${callPrevPage+1}" end="${callNextPage-1}">
+											<c:choose>
+												<c:when test="${i eq callPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+							<c:choose>
+								<c:when test="${callNextPage <= callPage.totalPage}">
+									<a href="#">다음<i class="icon-arrow-right"></i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</fieldset>
+					<br>
+
+					<!-- 임대 요청에 대한 양도 리스트 -->
+					<fieldset>
+						<legend>임대 요청/신청 기록</legend>
+						<table class="history_table">
+							<tr>
+								<td colspan="6" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+							<tr>
+								<td>번호</td>
+								<td>요청 번호</td>
+								<td>신청 번호</td>
+								<td>업무기간</td>
+								<td>상대업체</td>
+								<td>진행 상황</td>
+							</tr>
+							<c:forEach var="workLog" items="${callRequestLogs}">
+							
+								<fmt:formatDate value="${workLog.fromDate}" pattern="yyyy-MM-dd" var="fromDate"/>
+								<fmt:formatDate value="${workLog.toDate}" pattern="yyyy-MM-dd" var="toDate"/>
+								<fmt:formatDate value="${workLog.regDate}" pattern="yyyy-MM-dd" var="regDate"/>
+								
+							
+								<tr>
+									<td colspan="6" class="boardLine"></td>
+								</tr>
+								<tr>
+									<td>${workLog.rowNumLogNo}</td>
+									<td>${workLog.leaseCallNo}</td>
+									<td>${workLog.leaseRequestNo}</td>
+									<td>${fromDate}~${toDate}(${regDate})</td>
+									<td>${workLog.companyName}</td>
+									<td>
+									<c:choose>
+										<c:when test="${workLog.status == 'STAND_BY'}">
+											<span class="label label-inverse">작업 대기</span>
+										</c:when>
+										<c:when test="${workLog.status == 'WORKING'}">
+											<span class="label label-inverse">작업 중</span>
+										</c:when>
+										<c:when test="${workLog.status == 'COMPLETE'}">
+											<span class="label label-success">작업 완료</span>
+											<span class="label" style="background-color: #cfdae9">
+											<a href="#">평가 하기</a></span>
+										</c:when>
+										<c:when test="${workLog.status == 'EVALUATED'}">
+											<span class="label label-success">작업 완료</span>
+										</c:when>									
+									</c:choose>
+									</td>
+								</tr>
+							</c:forEach>
+							<c:if test="${!empty ErrorCallRequestMsg}">
+								<tr>
+									<td colspan="6" class="boardLine"></td>
+								</tr>
+								<tr align="center">
+									<td colspan="6"><span style="font-weight: bold;">${ErrorCallRequestMsg}</span>
+									</td>
+								</tr>
+							</c:if>
+							<tr>
+								<td colspan="6" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
+						</table>
+						<div class="boardPage" style="display: inline-block;">
+
+							<!-- 이전 페이지, 다음 페이지 변수 선언 -->
+							<fmt:parseNumber
+								value="${(((callRequestPage.currentPage-1)/10)-(((callRequestPage.currentPage-1)/10)%1))*10}"
+								var="callRequestPrevPage">
+							</fmt:parseNumber>
+							<fmt:parseNumber value="${callRequestPrevPage+11}"
+								var="callRequestNextPage">
+							</fmt:parseNumber>
+
+
+							<c:choose>
+								<c:when test="${callRequestPrevPage > 0}">
+									<a href="#"> <i class="icon-arrow-left">이전</i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
+								</c:otherwise>
+							</c:choose>
+
+							<c:if test="${!empty callRequestPage.totalPage}">
+								<c:choose>
+									<c:when
+										test="${(callRequestNextPage-1) >= callRequestPage.totalPage }">
+										<c:forEach var="i" begin="${callRequestPrevPage+1}"
+											end="${callRequestPage.totalPage}">
+											<c:choose>
+												<c:when test="${i eq callRequestPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="i" begin="${callRequestPrevPage+1}"
+											end="${callRequestNextPage-1}">
+											<c:choose>
+												<c:when test="${i eq callRequestPage.currentPage}">
+													<b>${i}</b>
+												</c:when>
+												<c:otherwise>
+													<a href="#">${i}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+
+							<c:choose>
+								<c:when test="${callRequestNextPage <= callRequestPage.totalPage}">
+									<a href="#">다음<i class="icon-arrow-right"></i></a>
+								</c:when>
+								<c:otherwise>
+									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</fieldset>
+				</c:when>
+			</c:choose>
+		</div>
+
 	</div>
 	<!--Bottom-->
 	<section id="bottom" class="main">
@@ -237,6 +518,8 @@
 								wkdvlftlr123@gmail.com</li>
 						</ul>
 					</div>
+					<select >
+					</select>
 				</div>
 				<!--Important Links-->
 

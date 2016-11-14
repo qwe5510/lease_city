@@ -146,4 +146,19 @@ public class DateUtil {
 		
 		return calendar.getTime();
 	}
+	
+	
+	/**
+	 * 오늘의 날짜만 리턴(시간,분,초 0)
+	 * @return
+	 */
+	public static Date getToday(){
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		
+		return calendar.getTime();
+	}
 }

@@ -32,22 +32,25 @@ public class WorkLog implements Serializable {
 	private Integer rowNumLogNo;
 
 	/** 회원. */
-	private User users;
+	private String userId;
+	
+	/** 업체 이름 */
+	private String companyName;
 
 	/** 임대 요청 번호. */
 	private Integer leaseCallNo;
+	
+	/** 임대 분류 (요청기록용) */
+	private String leaseCategory;
+	
+	/** 차량 분류 (요청기록용) */
+	private String equipmentCategory;
 
 	/** 임대 신청 번호. */
 	private Integer leaseRequestNo;
 
-	/** 임대 직접 요청 번호. */
-	private Integer leaseDirectNo;
-
 	/** 임대 양도 번호. */
 	private Integer leaseTransferNo;
-
-	/** 임대 선정 번호. */
-	private Integer leaseSelectionNo;
 
 	/** 시작 날짜 (~부터). */
 	private Date fromDate;
@@ -57,5 +60,11 @@ public class WorkLog implements Serializable {
 
 	/** 기록 날짜. */
 	private Date regDate;
+	
+	/** 평가 여부 */
+	private String evaluationCheck;
+	
+	/** 기록 경과에 따른 상태 */
+	private String status;
 
 }

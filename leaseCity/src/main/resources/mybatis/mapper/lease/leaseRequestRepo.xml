@@ -16,7 +16,6 @@
  		WHERE lease_call_no = #{leaseCallNo} AND reg_date IS NOT NULL
  	</select>
  	
- 	
  	<!-- 중장비 차량번호로 현재 어디에 신청중인지 신청 정보 알아보기. -->
  	<select id="getSearchIdNumberLeaseRequest" parameterType="String" resultType="int">
  		SELECT lease_call_no FROM lease_requests
@@ -58,6 +57,13 @@
  				''
  			</otherwise>
  		</choose> 
+ 	</select>
+ 	
+ 	
+ 	<select id="getSimpleLeaseRequest" parameterType="int" resultType="leaseRequest">
+ 		SELECT * 
+ 		FROM lease_requests
+ 		WHERE lease_request_no = #{leaseRequestNo}
  	</select>
  	
  	<!-- 임대 신청 추가 -->

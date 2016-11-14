@@ -124,19 +124,30 @@ function cscInfoOutput(){
    //중기업체 span 공백으로 설정
    $(".checked").html("");
    
+   
+   
    var str1 ="<label class='join_input'>"+ "연매출"+ "</label><input id='sales' name='yearlySale' type='number' min='0' placeholder='연매출'><span id= 'vali' class='sales'>단위(억)</span>";
    var str2 ="<br><label class='join_input'>"+ "연수주량"+"</label><input id='obtain' name='yearlyAoor' type='number' min='0' placeholder='연 수주량'><span id= 'vali' class='obtain'>단위(건)</span>";
-   var str3 ="<br><div class='license'><label class='join_input'>자격증</label><button id='btn2'>추가</button><span class='licenseCheck'>자격증은 최대 3개까지 작성 가능</span></div></div>";
+   var str3 ="<br><div class='license'><label class='join_input'>자격증</label><button id='license_add'>+</button><button id='license_remove'>-</button><span class='licenseCheck'>자격증은 최대 3개까지 작성 가능</span></div></div>";
    var str4 ="<br><label class='join_input'>"+"회사분야"+"</label><br>";
    var str6 ="";
-   var str7 ="";
-   var str8 ="";
    for(var i of CC_arr){
       str6+="<input type='checkbox' id='" + i + "' name='companyCategory' value='"+i+"'>"
            +"<label class='category_input'>"+i+"</label>";
    }
    $(".heavy").html("");
    $(".companySelector").html(str1+str2+str3+str4+str6);
+   
+	var str="";
+   
+   str+="<div class='license_add' style=\"margin-left: 0px;\">";
+   str+="<input id='licenseName"+ license_cnt +"' name='licenseName' type='text' placeholder='자격증 명칭'>";
+   str+="<input id='licenser"+ license_cnt +"' name='licenser' type='text' placeholder='발급처'>";
+   str+="<input id='licenseDate"+ license_cnt +"' name='licenseDate' type='date'placeholder='발급시기'>";
+   str+="<br><span id='licenseCheck"+ license_cnt +"' style='font-size: 15px;'></span>";
+   str+="</div>";
+   
+   $(".license").append(str);
    
 }
 
@@ -169,7 +180,7 @@ function hecInfoOutput(){
 //====================================================================================================================================================================================
 
    //자격증 개수
-   var license_cnt=0;
+   var license_cnt=1;
    
    //건설업체, 중기업체에 대한 이벤트 처리.
    $("#CSC").on("click", cscInfoOutput);
@@ -481,23 +492,42 @@ function passvali(){
    });
    
    //자격증 추가에 관한 버튼
-   $(document).on("click","#btn2",   function(e) {
+   $(document).on("click","#license_add",   function(e) {
       e.preventDefault();
-      
       if(license_cnt<3){
          license_cnt++;
          
-         $(".license").append("<div class='license_add'>")
-         .append("<input id='licenseName"+ license_cnt +"' name='licenseName' type='text' placeholder='자격증 명칭'>")
-         .append("<input id='licenser"+ license_cnt +"' name='licenser' type='text' placeholder='발급처'>")
-         .append("<input id='licenseDate"+ license_cnt +"' name='licenseDate' type='date'placeholder='발급시기'>")
-         .append("<br><span id='licenseCheck"+ license_cnt +"'></span>")
-         .append("</div>");
+         var str="";
+         
+         str+="<div class='license_add' style=\"margin-left: 0px;\">";
+         str+="<input id='licenseName"+ license_cnt +"' name='licenseName' type='text' placeholder='자격증 명칭'>";
+         str+="<input id='licenser"+ license_cnt +"' name='licenser' type='text' placeholder='발급처'>";
+         str+="<input id='licenseDate"+ license_cnt +"' name='licenseDate' type='date'placeholder='발급시기'>";
+         str+="<br><span id='licenseCheck"+ license_cnt +"' style='font-size: 15px;'></span>";
+         str+="</div>";
+         $(".license").append(str);
+         
+         $(".licenseCheck").html("");
       }else{
          $(".licenseCheck").html("자격증은 3개 까지 작성 가능합니다.");
          $(".licenseCheck").css("color", "#FF0000");
       }
    });
+   
+   //자격증 삭제에 관한 버튼
+   $(document).on("click", "#license_remove", function(e){
+		 e.preventDefault();
+		 if(license_cnt==1){
+			 $(".licenseCheck").html("자격증은 최소1개 입력해주셔야합니다.");
+	         $(".licenseCheck").css("color", "#FF0000");
+	         $(".licenseCheck").css("font-size", "1em");
+		 }else{
+			 console.log($(".license div:last-child"));
+			 $(".license div:last-child").remove();
+			 license_cnt--;
+			 $(".licenseCheck").html("");
+		 }
+	 });
    
    
    

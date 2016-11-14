@@ -1,6 +1,6 @@
 package leasecity.test;
 
-import java.util.List;
+import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import leasecity.config.ApplicationConfig;
 import leasecity.dto.adminwork.WorkLog;
-import leasecity.dto.etc.Page;
 import leasecity.exception.NotFoundDataException;
+import leasecity.repo.adminwork.WorkLogRepo;
 import leasecity.service.MyPageService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,17 +25,14 @@ public class WorkLogTest {
 	@Autowired
 	MyPageService myPageService;
 	
+	@Autowired
+	WorkLogRepo workLogRepo;
+	
 	static Logger logger = LoggerFactory.getLogger(WorkLogTest.class);
 
 	@Test
 	public void test() throws NotFoundDataException {
 		logger.trace("Service :{}", myPageService);
-		
-		Page workLogPage = myPageService.getWorkLogPage(1, 10, "ysh5586");
-		
-		List<WorkLog> workLogs = myPageService.loadPageWorkLog(workLogPage);
-		
-		logger.trace("작업기록 : {}", workLogs);
 		
 	}
 

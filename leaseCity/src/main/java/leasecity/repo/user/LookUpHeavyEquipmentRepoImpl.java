@@ -22,13 +22,13 @@ public class LookUpHeavyEquipmentRepoImpl implements LookUpHeavyEquipmentRepo{
 	
 	@Override
 	public Integer getCountHelpOnHeavyEquipmentCompanies() {
-		String stmt = LOOKUP_HEC_NS +"getCountHelpOnHeavyEquipment";
+		String stmt = LOOKUP_HEC_NS +"getCountHelpOnHeavyEquipmentCompanies";
 		return session.selectOne(stmt);
 	}
 
 	@Override
 	public Integer getCountInfoOnHeavyEquipmentCompanies() {
-		String stmt = LOOKUP_HEC_NS + "getCountInfoOnHeavyEquipment";
+		String stmt = LOOKUP_HEC_NS + "getCountInfoOnHeavyEquipmentCompanies";
 		return session.selectOne(stmt);
 	}
 	

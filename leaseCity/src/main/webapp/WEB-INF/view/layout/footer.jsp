@@ -31,8 +31,8 @@
 				</div>
 
 				<div class="span1">
-					<a id="gototop" class="gototop pull-right" href="#"><i
-						class="icon-angle-up"></i></a>
+					<a id="gototop" class="gototop pull-right" href="#">
+					<i class="icon-angle-up" style="padding-left: 5px;"></i></a>
 				</div>
 				<!--/Goto Top-->
 			</div>

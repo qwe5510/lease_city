@@ -46,6 +46,13 @@ public interface LeaseRequestRepo {
 	public LeaseRequest getLeaseRequest(Integer leaseRequestNo, String userId);
 	
 	/**
+	 * 신청번호가지고 임대신청 정보 받기.
+	 * @param leaseRequestNo
+	 * @return
+	 */
+	public LeaseRequest getSimpleLeaseRequest(Integer leaseRequestNo);
+	
+	/**
 	 * 임대 신청 추가
 	 * @param leaseRequstNo
 	 * @return

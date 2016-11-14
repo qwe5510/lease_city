@@ -1009,6 +1009,16 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 	background-color: #356635;
 }
 
+.label-notify, .badge-notify{
+	background-color: #bf1414;
+}
+
+.label-notify[href], .badge-notify[href]{
+	background-color: #bf1414;
+}
+
+
+
 .label-info, .badge-info {
 	background-color: #3a87ad;
 }

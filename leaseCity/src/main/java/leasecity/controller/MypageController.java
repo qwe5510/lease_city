@@ -44,7 +44,7 @@ public class MypageController {
 	UserService userService;
 	
 	
-	private final static Integer WORK_LOG_SIZE = 15;
+	private final static Integer WORK_LOG_SIZE = 5;
 	
 	
 	@InitBinder
@@ -85,7 +85,7 @@ public class MypageController {
 	}
 	
 	//마이페이지 메인화면
-	@RequestMapping(value="/myinfo", method=RequestMethod.GET)
+	@RequestMapping(value="/myinfo", method=RequestMethod.POST)
 	public String myinfo(Model model, RedirectAttributes redir,HttpSession session){
 		
 		User user = (User)session.getAttribute("loginUser");
@@ -142,21 +142,91 @@ public class MypageController {
 	public String history(Model model, RedirectAttributes redir, HttpSession session) {
 
 		User loginUser = (User) session.getAttribute("loginUser");
-		List<WorkLog> workLogs = null;
 		
 		if (loginUser == null) {
 			redir.addFlashAttribute("index_message", "로그인 세션이 만료되었습니다.");
-		} else {
-			Page workLogPage = myPageService.getWorkLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
+		}
+		else if(loginUser instanceof HeavyEquipmentCompany){
+			List<WorkLog> requestLogs = null;
+			List<WorkLog> transferLogs = null;
+			Page requestPage = null;
+			Page transferPage = null;
 			
 			try {
-				workLogs = myPageService.loadPageWorkLog(workLogPage);
-				model.addAttribute("workLogs", workLogs);
+				requestPage = myPageService.getRequestAndCallLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
+				requestLogs = myPageService.loadPageLeaseRequestAndCallHECWorkLog(requestPage);
+				
+				logger.trace("임대 신청 기록 : {}", requestLogs);
+				
+				for(WorkLog requestLog : requestLogs){
+					requestLog.setRowNumLogNo(requestPage.getTotalCount()-requestLog.getRowNumLogNo() + 1);
+				}		
+				
+				model.addAttribute("requestPage", requestPage);
+				model.addAttribute("requestLogs", requestLogs);
 			} catch (NotFoundDataException e) {
-				model.addAttribute("ErrorMsg", e.getMessage());
+				model.addAttribute("ErrorRequestMsg", e.getMessage());
 			}
+			
+			try{
+				transferPage = myPageService.getTransferLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
+				transferLogs = myPageService.loadPageLeaseTransferWorkLog(transferPage);
+				
+				logger.trace("임대 양도 기록 : {}", transferLogs);
+				
+				for(WorkLog transferLog : transferLogs){
+					transferLog.setRowNumLogNo(transferPage.getTotalCount()-transferLog.getRowNumLogNo() + 1);
+				}
+				
+				model.addAttribute("transferPage", transferPage);
+				model.addAttribute("transferLogs", transferLogs);
+			}catch (NotFoundDataException e) {
+				model.addAttribute("ErrorTransferMsg", e.getMessage());
+			}
+			
+			model.addAttribute("isLogin", "HEC");
+		}else if(loginUser instanceof ConstructionCompany){
+			
+			Page callPage = null;
+			Page callRequestPage = null;
+			List<WorkLog> callLogs = null;
+			List<WorkLog> callRequestLogs = null;
+			
+			//임대 요청 작성 기록
+			try {
+				callPage = myPageService.getCallLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
+				callLogs = myPageService.loadPageLeaseCallWorkLog(callPage);
+				
+				for(WorkLog callLog : callLogs){
+					callLog.setRowNumLogNo(callPage.getTotalCount()-callLog.getRowNumLogNo() + 1);
+				}
+				
+				model.addAttribute("callPage", callPage);
+				model.addAttribute("callLogs", callLogs);
+				
+			} catch (NotFoundDataException e) {
+				model.addAttribute("ErrorCallMsg", e.getMessage());
+			}
+			
+			//임대 요청에 대한 신청 기록
+			try {
+				
+				callRequestPage = myPageService.getCallLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
+				callRequestLogs = myPageService.loadPageLeaseRequestAndCallCCWorkLog(callRequestPage);
+				
+				for(WorkLog callRequestLog : callRequestLogs){
+					callRequestLog.setRowNumLogNo(callRequestPage.getTotalCount()-callRequestLog.getRowNumLogNo() + 1);
+				}
+				
+				model.addAttribute("callRequestPage", callRequestPage);
+				model.addAttribute("callRequestLogs", callRequestLogs);
+				
+			} catch (NotFoundDataException e) {
+				model.addAttribute("ErrorCallRequestMsg", e.getMessage());
+			}
+			
+			model.addAttribute("isLogin", "CC");
 		}
-		
 		if(session.getAttribute("myInfoCheck") != null){
 			return "mypage/history";
 		}else{
@@ -164,8 +234,14 @@ public class MypageController {
 		}
 	}
 
-	@RequestMapping(value = "/historyPageControlAjax", method = RequestMethod.GET)
-	public @ResponseBody String historyPageControlAjax(Model model) {
+	@RequestMapping(value = "/historyRequestPageControlAjax", method = RequestMethod.GET)
+	public @ResponseBody String historyRequestPageControlAjax(Model model) {
+
+		return "";
+	}
+	
+	@RequestMapping(value = "/historyTransferPageControlAjax", method = RequestMethod.GET)
+	public @ResponseBody String historyTransferPageControlAjax(Model model) {
 
 		return "";
 	}

@@ -39,6 +39,7 @@ import leasecity.exception.NotFoundDataException;
 import leasecity.exception.ServiceFailException;
 import leasecity.exception.WriteFailException;
 import leasecity.service.LeaseService;
+import leasecity.service.MyPageService;
 import leasecity.service.NotifyService;
 import leasecity.service.UserService;
 import leasecity.util.DateUtil;
@@ -51,6 +52,9 @@ public class LeaseController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MyPageService myPageService;
 	
 	@Autowired
 	NotifyService notifyService;
@@ -201,6 +205,8 @@ public class LeaseController {
 		
 		try {
 			leaseService.writeLeaseCall(leaseCall);
+			myPageService.writeCallWorkLog(leaseCall); // 작업기록에 기록하기.			
+			
 		} catch (WriteFailException e) {
 			redir.addFlashAttribute("lease_message", "임대 요청글 작성에 실패하였습니다.");
 			return "redirect:/leaseCall";
@@ -302,8 +308,6 @@ public class LeaseController {
 	@RequestMapping(value="/leaseCall/RequestWrite", method=RequestMethod.POST)
 	public String leaseRequestWrite(Model model, HttpSession session,
 			RedirectAttributes redir, LeaseRequest leaseRequest){
-		
-		
 		User user = (User) session.getAttribute("loginUser");
 		
 		if(user != null){
@@ -318,6 +322,7 @@ public class LeaseController {
 		Notify notify = new Notify();
 		
 		try {
+			
 			// 1. 건설업체 요청 갖고 오기
 			LeaseCall leaseCall = leaseService.viewLeaseCall(leaseRequest.getLeaseCallNo(), null);
 			
@@ -330,10 +335,18 @@ public class LeaseController {
 			notifyService.insertNotifyByLoginUser(notify);
 			
 			leaseService.doLeaseRequest(leaseRequest);
+			
+			//작업 기록하기.
+			LeaseCall temp = leaseService.loadLeaseCall(leaseRequest.getLeaseCallNo());
+			myPageService.writeRequestWorkLog(leaseRequest, temp.getUserId());
+			
+			
 			redir.addFlashAttribute("lease_message", "임대 신청이 완료되었습니다.");
 		} catch (ServiceFailException e) {
 			redir.addFlashAttribute("lease_message", "임대 신청에 실패하였습니다.");
 		} catch (NotFoundDataException e1) {
+			redir.addFlashAttribute("lease_message", "임대 신청에 실패하였습니다.");
+		} catch (WriteFailException e2) {
 			redir.addFlashAttribute("lease_message", "임대 신청에 실패하였습니다.");
 		} 
 				
