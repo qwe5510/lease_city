@@ -21,15 +21,21 @@ public class LookUpHeavyEquipmentRepoImpl implements LookUpHeavyEquipmentRepo{
 	private final String LOOKUP_HEC_NS = "leasecity.repo.LookUpHeavyEquipmentCompanyRepo.";
 	
 	@Override
-	public Integer getCountHelpOnHeavyEquipment(Page page) {
-		String stmt = LOOKUP_HEC_NS +"getCountHelpOnHeavyEquipment";
-		return session.selectOne(stmt, page);
+	public Integer getCountHelpOnHeavyEquipmentCompanies() {
+		String stmt = LOOKUP_HEC_NS +"getCountHelpOnHeavyEquipmentCompanies";
+		return session.selectOne(stmt);
 	}
 
 	@Override
-	public Integer getCountInfoOnHeavyEquipment(Page page) {
-		String stmt = LOOKUP_HEC_NS + "getCountInfoOnHeavyEquipment";
-		return session.selectOne(stmt, page);
+	public Integer getCountInfoOnHeavyEquipmentCompanies() {
+		String stmt = LOOKUP_HEC_NS + "getCountInfoOnHeavyEquipmentCompanies";
+		return session.selectOne(stmt);
+	}
+	
+	@Override
+	public Integer getCountAllHeavyEquipmentCompanies() {
+		String stmt = LOOKUP_HEC_NS +"getCountAllHeavyEquipmentCompanies";
+		return session.selectOne(stmt);
 	}
 
 	@Override

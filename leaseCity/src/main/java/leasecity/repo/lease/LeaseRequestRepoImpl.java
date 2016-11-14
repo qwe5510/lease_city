@@ -60,6 +60,12 @@ public class LeaseRequestRepoImpl implements LeaseRequestRepo{
 		map.put("userId", userId);
 		return session.selectOne(stmt, map);
 	}
+	
+	@Override
+	public LeaseRequest getSimpleLeaseRequest(Integer leaseRequestNo) {
+		String stmt = LEASE_REQUEST_NS +"getSimpleLeaseRequest";
+		return session.selectOne(stmt, leaseRequestNo);
+	}
 
 	@Override
 	public int insertLeaseRequest(LeaseRequest leaseRequest) {

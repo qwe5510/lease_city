@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>개인 정보 수정 | LEASE CITY</title>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
@@ -17,17 +17,21 @@
 	<div class="mypage_main">
 		<h3>개인 정보 수정</h3>
 		<h4>인증을 위해 비밀번호를 입력해주세요.</h4>
+		<c:url value="/myinfoCheckAjax" var="myinfoCheckAjax"></c:url>
 		<c:url value="/myinfo" var="myinfo"></c:url>
-		<sform:form method="get" action="${myinfo }" modelAttribute="user">
-			<div><sform:label path="password">비밀번호</sform:label>
-				 <sform:input path="password" type="password"/>
+		<form id="mypageForm" method="post" action="${myinfo}">
+			<div>
+				<label for="password">비밀번호</label>
+				<input id="password" name="password" type="password"/>
+				<span class="password"></span>
 			</div>
-			<div><sform:label path="password">비밀번호확인</sform:label>
-				 <sform:input path="password" type="password"/>
+			<div>
+				<label for="password2">비밀번호확인</label>
+				<input id="password2" name="password2"  type="password"/>
 			</div>
-			<sform:button>확인</sform:button>
-			<sform:button>취소</sform:button>
-		</sform:form>
+			<button id="myInfo_confirm">확인</button>
+			<button id="mypageCancel">취소</button>
+		</form>
 	</div>
 	</div>
 		<!--Bottom-->
@@ -116,5 +120,55 @@
 	</section>
 	<!--/bottom-->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+
+
+
+
+
+$("#myInfo_confirm").on("click", function(e){
+	e.preventDefault();
+	
+	var password = $("#password").val();
+	var password2 = $("#password2").val();
+	
+	if(password2=="" || password==""){
+		$(".password").html("두 패스워드 값을 전부 입력해주세요.");
+		$(".password").css("color", "#FF0000");
+		return false;
+	}else if(password != password2){
+	    $(".password").html("패스워드가 일치하지 않습니다.");
+	    $(".password").css("color", "#FF0000");
+		return false;
+	}else{
+		$(".password").html("");
+		
+		console.log("df");
+		
+		$.ajax({
+			url : "${myinfoCheckAjax}",
+			method : "GET",
+			data : {
+				password : password
+			},
+			success: function(res){
+				if(res){
+					$("#mypageForm").submit();
+				}
+				else{
+					alert("올바른 패스워드가 아닙니다.");
+				}
+			},
+			error : function(error){
+				alert(error);
+			}
+		});	
+	}
+});
+
+		
+</script>
 </body>
 </html>

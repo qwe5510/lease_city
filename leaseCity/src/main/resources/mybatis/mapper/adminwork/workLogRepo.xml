@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="leasecity.repo.workLogRepo">
+ 	
+ 	<!-- 유저에 관한 임대 요청/신청 기록 출력 -->
+ 	<select id="getCountLeaseRequestAndCallWorkLog" parameterType="String" resultType="int">
+ 		SELECT COUNT(*)
+ 		FROM work_log
+ 		WHERE user_id = #{userId}
+ 		AND lease_request_no IS NOT NULL
+ 		AND lease_call_no IS NOT NULL
+ 		AND lease_transfer_no IS NULL
+ 	</select>
+ 	
+ 	
+ 	<!-- 페이지별 임대요청/신청 작업기록 리스트 출력 -->
+ 	<select id="getPageLeaseRequestAndCallCCWorkLog" parameterType="page" resultType="workLog">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS row_num_log_no
+ 				FROM( SELECT wl.*, u.company_name
+ 						FROM work_log wl 
+ 						JOIN lease_requests lr 
+ 						ON wl.lease_request_no = lr.lease_request_no 
+ 						JOIN users u 
+ 						ON lr.user_id = u.user_id 						
+ 						WHERE wl.user_id = #{userId}
+ 						AND wl.lease_request_no IS NOT NULL
+ 						AND wl.lease_call_no IS NOT NULL
+ 						AND wl.lease_transfer_no IS NULL
+ 						ORDER BY wl.to_date DESC, wl.from_date DESC
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE row_num_log_no BETWEEN #{from} AND #{to}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 페이지별 임대요청/신청 작업기록 리스트 출력 -->
+ 	<select id="getPageLeaseRequestAndCallHECWorkLog" parameterType="page" resultType="workLog">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS row_num_log_no
+ 				FROM( SELECT wl.*, lc.
+ 						FROM work_log wl JOIN lease_calls lc ON wl.lease_call_no = lc.lease_call_no
+ 						WHERE user_id = #{userId}
+ 						AND wl.lease_request_no IS NOT NULL
+ 						AND wl.lease_call_no IS NOT NULL
+ 						AND wl.lease_transfer_no IS NULL
+ 						ORDER BY wl.to_date DESC, wl.from_date DESC
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE row_num_log_no BETWEEN #{from} AND #{to}
+ 		</if>
+ 	</select>
+ 	
+ 	<!-- 유저에 관한 모든 임대 양도 기록 출력 -->
+ 	<select id="getCountLeaseTransferWorkLog" parameterType="String" resultType="int">
+ 		SELECT COUNT(*)
+ 		FROM work_log
+ 		WHERE user_id = #{userId}
+ 		AND lease_transfer_no IS NOT NULL
+ 	</select>
+ 	
+ 	<!-- 페이지별 임대 양도 작업기록 리스트 출력 -->
+ 	<select id="getPageLeaseTransferWorkLog" parameterType="page" resultType="workLog">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS row_num_log_no
+ 				FROM( SELECT *
+ 						FROM work_log
+ 						WHERE user_id = #{userId}
+ 						AND lease_transfer_no IS NOT NULL
+ 						AND lease_call_no IS NULL
+ 						AND lease_request_no IS NULL
+ 						ORDER BY to_date DESC, from_date DESC
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE row_num_log_no BETWEEN #{from} AND #{to}
+ 		</if>
+ 	</select>
+ 
+ 		
+ 	<!-- 유저에 관한 모든 임대 요청 기록 출력 -->
+ 	<select id="getCountLeaseCallWorkLog" parameterType="String" resultType="int">
+ 		SELECT COUNT(*)
+ 		FROM work_log
+ 		WHERE user_id = #{userId}
+ 		AND lease_call_no IS NOT NULL
+ 		AND lease_request_no IS NULL
+ 		AND lease_transfer_no IS NULL
+ 	</select>
+ 	
+ 	<!-- 페이지별 임대 요청 작업기록 리스트 출력 -->
+ 	<select id="getPageLeaseCallWorkLog" parameterType="page" resultType="workLog">
+ 		SELECT *
+ 		FROM (
+ 				SELECT sub.*, rownum AS row_num_log_no
+ 				FROM( SELECT wl.*, lc.lease_category, lc.equipment_category
+ 						FROM work_log wl JOIN lease_calls lc ON wl.lease_call_no=lc.lease_call_no
+ 						WHERE wl.user_id = #{userId}
+ 						AND wl.lease_call_no IS NOT NULL
+ 						AND lease_request_no IS NULL
+ 						AND lease_transfer_no IS NULL
+ 						ORDER BY wl.to_date DESC, wl.from_date DESC
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE row_num_log_no BETWEEN #{from} AND #{to}
+ 		</if>
+ 	</select> 	
+ 	
+ 	<!-- ======================================================================== -->
+ 	
+ 	<!-- 작업기록 추가 -->
+ 	<insert id="insertWorkLog" parameterType="workLog">
+ 		INSERT INTO work_log
+ 						(user_id
+ 						<if test="leaseCallNo != null">
+ 						, lease_call_no
+ 						</if>
+ 						<if test="leaseRequestNo != null">
+ 						, lease_request_no
+ 						</if>
+ 						<if test="leaseTransferNo != null">
+ 						, lease_transfer_no
+ 						</if>, from_date, to_date)
+ 		
+ 		VALUES(#{userId}
+ 				<if test="leaseCallNo != null">
+ 					, #{leaseCallNo}
+ 				</if>
+ 				<if test="leaseRequestNo != null">
+ 					, #{leaseRequestNo}
+ 				</if>
+ 				<if test="leaseTransferNo != null">
+ 					, #{leaseTransferNo}
+ 				</if>, #{fromDate}, #{toDate})
+ 	</insert>
+ 	
+ </mapper>

@@ -366,6 +366,8 @@ license_cnt = ${fn:length(constructionCompany.licenseList)}==0?0:${fn:length(con
 heavyEquipment_cnt = ${fn:length(heavyEquipmentCompany.heavyEquipmentList)};
 
 $(document).on("ready", function(){
+	$("#password").val(""); //비밀번호 값 초기화하기.
+	
 	var category = document.getElementsByName("companyCategory");	
 	var companyCategory = "${constructionCompany.companyCategory}".split(",");
 	$(category).each(function(idx, item){
@@ -375,6 +377,8 @@ $(document).on("ready", function(){
 			}
 		}
 	});
+	
+	
 });
 	
 	

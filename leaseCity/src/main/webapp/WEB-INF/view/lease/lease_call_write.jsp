@@ -112,6 +112,9 @@
                      <sform:checkbox path="leaseCategory" value="기타" label="기타" />
                </td>
             </tr>
+            <tr align="center">
+            	<td colspan="3"><span id="leaseCateogryCheck"></span></td>
+            </tr>
             <tr>
                <td colspan="3" class="constructionAddress lease_label">
                   <sform:label path="address">작업장소</sform:label>
@@ -119,6 +122,13 @@
                   <input type="button" value="검색" id="conAddressSearch"/>
                </td>
             </tr>
+            
+            <tr align="center">
+            	<td colspan="3">
+            	<span id="addressCheck"></span>
+            	</td>
+            </tr>
+            
             <tr>
                <td class="lease_label"><sform:label path="equipmentCategory" >필요차량</sform:label>
                </td>
@@ -136,7 +146,11 @@
                   <sform:checkbox path="equipmentCategory" value="펌프카" label="펌프카"/>
                   <sform:checkbox path="equipmentCategory" value="기타" label="기타"/>
                </td>
-               
+            </tr>
+            <tr align="center">
+            	<td colspan="3">
+            		<span id="equipmentCateogryCheck"></span>
+            	</td>
             </tr>
             <tr>
                <td class="lease_label">
@@ -151,7 +165,7 @@
                </td>
             </tr>
             <tr>
-               <td colspan="3" class="dateCheck"></td>
+               <td colspan="3" class="dateCheck" style="padding-left: 150px;"></td>
             </tr>
             <tr>
                <td class="lease_label">
@@ -160,19 +174,19 @@
                <td colspan="2" class="fromToPrice">
                   <sform:label path="fromPrice">최소금액</sform:label>
                   <sform:input path="fromPrice" type="number" min="0"/><br>                  
-                  <sform:input path="toPrice" type="number" min="0"/>단위(만원)
                   <sform:label path="toPrice">최대금액</sform:label>
+                  <sform:input path="toPrice" type="number" min="0"/>단위(만원)
                </td>
             </tr>
             <tr>
-               <td colspan="3" class="priceCheck"></td>
+               <td colspan="3" class="priceCheck" style="padding-left: 120px; text-align: left;"></td>
             </tr>
          </table>
          </fieldset>
          <br>
          <fieldset>
             <legend>참고사항</legend>
-            <sform:textarea path="leaseCommentContent" cols="50" rows="5"/>
+            <sform:textarea path="leaseCommentContent" cols="50" rows="5" style="width: 700px;"/>
          </fieldset>
          <div class="lease_write_bottom">
             <button id="lease_call_write"> <i class="icon-pencil"></i>작성</button>
@@ -238,12 +252,51 @@
           $(".priceCheck").html("");
        }
     })
-    $("#lease_call_write").on("click",function(e){
+    $(document).on("click", "#lease_call_write", function(e){
         var priceReg = /^[1-9][0-9]*$/;
         var lease_fromprice = $("#fromPrice").val();
         var lease_toprice = $("#toPrice").val();
  		var fromDate = $("#fromDate").val();
  		var toDate = $("#toDate").val();
+ 		
+ 		var isLeaseChecked = false;
+ 		var isEquipmentChecked = false;
+ 		
+ 		$.each($(".equipmentCategoryList input[type=checkbox]"), function(idx, item){
+ 			if(item.checked){
+ 				isEquipmentChecked = true;
+ 			}
+ 		})
+ 		
+ 		$.each($(".leaseCategory input[type=checkbox]"), function(idx, item){
+ 			if(item.checked){
+ 				isLeaseChecked = true;
+ 			}
+ 		})
+ 		
+ 		if(!isLeaseChecked){
+ 			$("#leaseCateogryCheck").css("color", "red");
+ 			$("#leaseCateogryCheck").html("공사 업종을 최소 1개 이상 선택하여 주십시요.")
+ 			return false;
+ 		}else{
+ 			$("#leaseCateogryCheck").html("")
+ 		}
+ 		
+ 		if($("#address").val() == "" || $("#address").val() == null){
+ 			$("#addressCheck").css("color", "red");
+ 			$("#addressCheck").html("작업장소가 공백입니다. 작업장소를 검색 하여 주십시요.");
+ 			return false;
+ 		}else{
+ 			$("#addressCheck").html("");
+ 		}
+ 		
+ 		if(!isEquipmentChecked){
+ 			$("#equipmentCateogryCheck").css("color", "red");
+ 			$("#equipmentCateogryCheck").html("필요 차량 종류를 최소 1대 이상 선택하여 주십시요.")
+ 			return false;
+ 		}else{
+ 			$("#equipmentCateogryCheck").html("");
+ 		}
  		
  		if(!_jsDateCheck(fromDate,toDate)){
  			return false;

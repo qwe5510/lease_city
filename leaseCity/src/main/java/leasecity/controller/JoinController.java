@@ -176,15 +176,14 @@ public class JoinController {
 			SBUService.rejectStandByUser(SBU); //대기유저 삭제
 			
 			UService.join(joinUser); //회원가입
-			redir.addFlashAttribute("index_message", joinUser.getRepresentName() + "님 회원가입에 성공했습니다.");
+			redir.addFlashAttribute("login_message", joinUser.getRepresentName() + "님 회원가입에 성공했습니다.");
 			logger.trace("회원가입 완료");
 		} catch (NotFoundDataException e) {
 			logger.error("지울 대기 유저를 찾을 수 없음.");
-			redir.addFlashAttribute("index_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
-			return "redirect:/login";
+			redir.addFlashAttribute("login_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
 		} catch (JoinFailException e) {
-			redir.addFlashAttribute("index_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
-			return "redirect:/login";
+			logger.error("회원가입 실패");
+			redir.addFlashAttribute("login_message", "회원가입에 실패하였습니다.\\n다시 시도 해주세요.");
 		}
 
 		return "redirect:/login";
@@ -312,11 +311,11 @@ public class JoinController {
 
 			return "redirect:/index";
 		} catch (DuplicateValueException e) {
-			redir.addFlashAttribute("index_message", "회원가입 요청 실패\\n동일한 업체명, 이메일로 된 유저 혹은 대기유저가 존재합니다.");
+			redir.addFlashAttribute("login_message", "회원가입 요청 실패\\n동일한 업체명, 이메일로 된 유저 혹은 대기유저가 존재합니다.");
 			logger.error("회원가입 요청실패");
 			return "redirect:/login";
 		} catch (NotFoundDataException e) {
-			redir.addFlashAttribute("index_message", "회원가입 요청 실패");
+			redir.addFlashAttribute("login_message", "회원가입 요청 실패");
 			return "redirect:/login";
 		}
 

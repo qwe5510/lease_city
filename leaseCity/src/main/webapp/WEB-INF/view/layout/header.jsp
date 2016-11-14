@@ -32,7 +32,7 @@
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-144-precomposed.png">
 <link rel="apple-touch-icon-precomposed" sizes="114x114"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x7"src/main/webapp/WEB-INF/view/mypage/selection.jsp"2"
+<link rel="apple-touch-icon-precomposed" sizes="72x7"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-72-precomposed.png">
 <link rel="apple-touch-icon-precomposed"
 	href="<%=request.getContextPath()%>/images/ico/apple-touch-icon-57-precomposed.png">
@@ -43,9 +43,9 @@
 		<div class="notification" style="display: none;">
 			<div id="notification_li">
 				<span id="notification_count"></span> 
-				<a href="#" id="notificationLink">새 알림</a>
+				<a href="#" id="notificationLink" class="label label-notify">새 알림</a>
 				<div id="notificationContainer">
-					<div id="notificationTitle">Notifications</div>
+					<div id="notificationTitle">알림</div>
 					<div id="notificationsBody" class="notifications">
 						<ul class="notificationContent"></ul>
 					</div>
@@ -68,7 +68,7 @@
 										<select name="serviceKind">
 												<option value="LEASE">임대</option>
 												<option value="COMMUNITY">커뮤니티</option>
-												<option value="Q_AND_A">Q&A</option>
+												<option value="Q_AND_A">Q&#38;A</option>
 												<option value="HE_SELECT">중기업체</option>
 										</select>
 										<input id="totalKeyword" name="keyword" type="text" placeholder="검색어를 입력해주세요.">
@@ -92,7 +92,7 @@
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="<%=request.getContextPath() %>/help/FAQ">자주 묻는 질문</a></li>
-								<li><a href="<%=request.getContextPath() %>/help/qna">Q&A</a></li>
+								<li><a href="<%=request.getContextPath() %>/help/qna">Q&#38;A</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/introduction">소개</a></li>
 						<c:url value="/login" var="login"></c:url>
@@ -105,7 +105,7 @@
 								<li id="con"><a href=${mypage } title="마이페이지"><i class="icon-info-sign"></i></a></li>
 							</c:when>
 							<c:otherwise>
-								<li id="con"><a href=${login}><i class="icon-lock" title="로그인하기"></i></a></li>
+								<li id="con"><a href="${login}"><i class="icon-lock" title="로그인하기"></i></a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>
@@ -201,7 +201,8 @@ $("#totalBtn").on("click",function(e){
 						notification.close();
 					});
 					// (모두 삭제 클릭시, notify 닫기)
-					$("#notificationFooterButton").click(function() {
+					$("#notificationFooterButton").click(function(e) {
+						e.preventDefault();
 						notification.close();
 					});
 					
