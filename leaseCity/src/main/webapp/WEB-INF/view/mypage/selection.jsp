@@ -15,7 +15,7 @@
 	<div class="selection_main">
 	<c:url value="/selection_2" var="selection_2"></c:url>
 		<c:choose>
-			<c:when test="${compare eq '건설'}">
+			<c:when test="${compare eq 'CC'}">
 				<h3>-임대요청-</h3>
 				<table class="selection_cc">
 					<tr>
