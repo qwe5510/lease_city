@@ -88,7 +88,7 @@ public class MypageController {
 	}
 	
 	//마이페이지 메인화면
-	@RequestMapping(value="/myinfo", method=RequestMethod.POST)
+	@RequestMapping(value="/myinfo")
 	public String myinfo(Model model, RedirectAttributes redir,HttpSession session){
 		
 		User user = (User)session.getAttribute("loginUser");
@@ -117,7 +117,6 @@ public class MypageController {
 			redir.addFlashAttribute("index_message", "로그인 정보가 만료되었습니다.");
 			return "redirect:/index";
 		}
-		
 		
 		if(loginUser instanceof HeavyEquipmentCompany){
 			HeavyEquipmentCompany heavyEquipmentCompany = (HeavyEquipmentCompany)loginUser;
@@ -350,11 +349,23 @@ public class MypageController {
 	
 	
 	@RequestMapping(value="/selection",method=RequestMethod.GET)
-	public String selection(Model model){
-		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
-		model.addAttribute("compare", compare);
+	public String selection(Model model, RedirectAttributes redir, HttpSession session){
+		User user = (User)session.getAttribute("loginUser");
+		
+		if(user == null){
+			redir.addFlashAttribute("d", "");
+		}else if(user instanceof HeavyEquipmentCompany){
+			
+		}else if(user instanceof ConstructionCompany){
+			
+		}
+		
+		
 		return "mypage/selection";
 	}
+	
+	
+	
 	
 	@RequestMapping(value="/selection_2",method=RequestMethod.GET)
 	public String selection_2(Model model){

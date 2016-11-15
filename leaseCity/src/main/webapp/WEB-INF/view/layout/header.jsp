@@ -84,7 +84,7 @@
 								class="icon-angle-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="<%=request.getContextPath() %>/leaseCall">임대 신청/조회</a></li>
-								<li><a href="<%=request.getContextPath() %>/lookupHeavy">중기업체조회</a></li>
+								<li><a href="<%=request.getContextPath() %>/lookupHeavy">중기업체 조회</a></li>
 							</ul></li>
 						<li id="con"><a href="<%=request.getContextPath() %>/board">커뮤니티</a></li>
 						<li class="dropdown" id="con"><a href="<%=request.getContextPath() %>/help/FAQ"
@@ -140,7 +140,7 @@ $("#totalBtn").on("click",function(e){
 	}
 	// 반복 함수
 	function repeatloop() {
-		setTimeout("repeatloop()", 1000 * 5); //refresh 빈도 1000 = 1초
+		setTimeout("repeatloop()", 1000 * 60); //refresh 빈도 1000 = 1초
 		// (로그인 확인 후) footNotification 실행 
 
 		if ("${sessionScope.loginUser.userId}" != "") {

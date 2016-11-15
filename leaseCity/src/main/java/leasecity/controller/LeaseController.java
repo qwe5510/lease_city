@@ -508,102 +508,126 @@ public class LeaseController {
 		List<String> heavyIdNumbers = new ArrayList<>();
 		List<String> sendIdNumbers = new ArrayList<>();
 		List<String> leaseCallTitles = new ArrayList<>();
-				
+		User loginUser = null;
+		User user = null;
+		HeavyEquipmentCompany HECUser= null;
+		
 		try {
-			User loginUser = session.getAttribute("loginUser")==null?
+			loginUser = session.getAttribute("loginUser")==null?
 					(User)session.getAttribute("admin"):
 					(User)session.getAttribute("loginUser");
 					
-			User user = userService.loadUserInfo(equipmentId);
-			HeavyEquipmentCompany HECUser= null;
-			
-			//중기 업체 일 때, - 양도신청 정보 담기
-			if(loginUser instanceof HeavyEquipmentCompany){
-				List<HeavyEquipment> HEs = userService.loadUserHeavyEquipment(loginUser.getUserId());
-				for(HeavyEquipment HE : HEs){
-					if(HE!= null && HE.getUsedYesNo().equals("Y"))
-						sendIdNumbers.add(HE.getInfo());
-				}
-				
-				String idNumber = null;
-				if(sendIdNumbers.size() <= 0){
-					redir.addFlashAttribute("HEC_message", "현재 양도 할 수 있는 중장비가 없습니다.");
-					return "redirect:/lookupHeavy";
-				}else{
-					idNumber = sendIdNumbers.get(0);
-				    idNumber = idNumber.substring(idNumber.indexOf("(")+1, idNumber.indexOf(")"));
-				}
-				String address = leaseService.loadHeavyEquipmentUsingAddress(idNumber);
-				
-				model.addAttribute("isUser", "HeavyEquipment");
-				model.addAttribute("sendIdNumbers", sendIdNumbers);
-				model.addAttribute("address", address);
-				
-			//건설업체 일 때. - 직접요청 정보 담기.
-			}else if(loginUser instanceof ConstructionCompany){
-				List<LeaseCall> LCs = leaseService.loadConstructionUserLeaseCalls(loginUser.getUserId());
-				
-				if(LCs.size() <= 0){
-					redir.addFlashAttribute("HEC_message", "요청 할 요청글이 존재하지 않습니다.");
-					return "lease/lookup_heavy_read";
-				}
-				
-				for(LeaseCall LC : LCs){
-					String title = LC.getLeaseCallNo()+":"+LC.getLeaseCommentTitle();
-					leaseCallTitles.add(title);
-				}
-				
-				model.addAttribute("leaseCalls", LCs);
-				model.addAttribute("leaseCallTitles", leaseCallTitles);
-				model.addAttribute("isUser", "Construction");
-			}
-			
-			//중기업체 일 경우 사용가능한 차량 중 차량종류가 일치하는 것만을 띄움
-			if(user instanceof HeavyEquipmentCompany){
-				HECUser = (HeavyEquipmentCompany)user;
-				HECUser.setHeavyEquipmentList(
-						userService.loadUserHeavyEquipment(equipmentId));
-				
-				for(HeavyEquipment HE : HECUser.getHeavyEquipmentList()){
-					if(HE!= null && HE.getUsedYesNo().equals("N"))
-						acceptIdNumbers.add(HE.getInfo());
-				}
-				
-				if(loginUser instanceof HeavyEquipmentCompany){
-					boolean isEqualed = false;
-					
-					for(String sendIdNumber : sendIdNumbers){
-						for(String acceptIdNumber : acceptIdNumbers){
-							if(sendIdNumber.split("/")[0].equals(acceptIdNumber.split("/")[0])){
-								isEqualed = true;
-								heavyIdNumbers.add(acceptIdNumber);
-							}
-						}
-					}
-					
-					if(!isEqualed){
-						redir.addFlashAttribute("HEC_message", "양도 가능한 차량을 현 중기업체가 보유하고 있지 않습니다.");
-						return "redirect:/lookupHeavy";
-					}else{
-						model.addAttribute("heavyIdNumbers", heavyIdNumbers);
-					}
-					
-				}
-				
-				if(acceptIdNumbers.size() <= 0){
-					redir.addFlashAttribute("HEC_message", "사용 가능한 차량이 존재하지 않습니다.");
-					return "redirect:/lookupHeavy";
-				}
-				
-				model.addAttribute("acceptIdNumbers", acceptIdNumbers);
-				model.addAttribute("HECUser", HECUser);
-			}
-			
+			user = userService.loadUserInfo(equipmentId);
 		} catch (NotFoundDataException e) {
 			logger.trace("존재하지 않는 유저입니다.");
 			redir.addFlashAttribute("HEC_message", "존재하지 않는 유저입니다.");
 			return "redirect:/lookupHeavy";
 		}
+		
+		// 중기 업체 일 때, - 양도신청 정보 담기
+		if (loginUser instanceof HeavyEquipmentCompany) {
+			try {
+				List<HeavyEquipment> HEs = userService.loadUserHeavyEquipment(loginUser.getUserId());
+
+				for (HeavyEquipment HE : HEs) {
+					if (HE != null && HE.getUsedYesNo().equals("Y"))
+						sendIdNumbers.add(HE.getInfo());
+				}
+
+				String idNumber = null;
+				if (sendIdNumbers.size() <= 0) {
+					redir.addFlashAttribute("HEC_message", "현재 양도 할 수 있는 중장비가 없습니다.");
+					return "redirect:/lookupHeavy";
+				} else {
+					idNumber = sendIdNumbers.get(0);
+					idNumber = idNumber.substring(idNumber.indexOf("(") + 1, idNumber.indexOf(")"));
+				}
+				String address = leaseService.loadHeavyEquipmentUsingAddress(idNumber);
+
+				model.addAttribute("isUser", "HeavyEquipment");
+				model.addAttribute("sendIdNumbers", sendIdNumbers);
+				model.addAttribute("address", address);
+
+			} catch (NotFoundDataException e) {
+				logger.error("현대 임대 양도할 수 있는 차량이 없습니다.");
+				redir.addFlashAttribute("HEC_message", "임대 양도 가능한 작업중인 차량이 존재하지 않습니다.");
+				return "redirect:/lookupHeavy";
+			}
+
+			// 건설업체 일 때. - 직접요청 정보 담기.
+		} else if (loginUser instanceof ConstructionCompany) {
+			try{
+				List<LeaseCall> LCs = leaseService.loadConstructionUserLeaseCalls(loginUser.getUserId());
+
+				if (LCs.size() <= 0) {
+					redir.addFlashAttribute("HEC_message", "요청 할 요청글이 존재하지 않습니다.");
+					return "lease/lookup_heavy_read";
+				}
+
+				for (LeaseCall LC : LCs) {
+					String title = LC.getLeaseCallNo() + ":" + LC.getLeaseCommentTitle();
+					leaseCallTitles.add(title);
+				}
+
+				model.addAttribute("leaseCalls", LCs);
+				model.addAttribute("leaseCallTitles", leaseCallTitles);
+				model.addAttribute("isUser", "Construction");
+			}catch(NotFoundDataException e){
+				logger.error("직접 요청을 수행할 요청글이 존재하지 않습니다..");
+				redir.addFlashAttribute("HEC_message", "직접 요청할 요청글이 존재하지 않습니다.");
+				return "redirect:/lookupHeavy";
+			}
+			
+		}
+
+		// 중기업체 일 경우 사용가능한 차량 중 차량종류가 일치하는 것만을 띄움
+		if (user instanceof HeavyEquipmentCompany) {
+			HECUser = (HeavyEquipmentCompany) user;
+			try {
+				HECUser.setHeavyEquipmentList(userService.loadUserHeavyEquipment(equipmentId));
+				for (HeavyEquipment HE : HECUser.getHeavyEquipmentList()) {
+					if (HE != null && HE.getUsedYesNo().equals("N"))
+						acceptIdNumbers.add(HE.getInfo());
+				}
+
+				if (loginUser instanceof HeavyEquipmentCompany) {
+					boolean isEqualed = false;
+
+					for (String sendIdNumber : sendIdNumbers) {
+						for (String acceptIdNumber : acceptIdNumbers) {
+							if (sendIdNumber.split("/")[0].equals(acceptIdNumber.split("/")[0])) {
+								isEqualed = true;
+								heavyIdNumbers.add(acceptIdNumber);
+							}
+						}
+					}
+
+					if (!isEqualed) {
+						redir.addFlashAttribute("HEC_message", "양도 가능한 차량을 현 중기업체가 보유하고 있지 않습니다.");
+						return "redirect:/lookupHeavy";
+					} else {
+						model.addAttribute("heavyIdNumbers", heavyIdNumbers);
+					}
+
+				}
+
+				if (acceptIdNumbers.size() <= 0) {
+					redir.addFlashAttribute("HEC_message", "사용 가능한 차량이 존재하지 않습니다.");
+					return "redirect:/lookupHeavy";
+				}
+
+				model.addAttribute("acceptIdNumbers", acceptIdNumbers);
+				model.addAttribute("HECUser", HECUser);
+				
+			} catch (NotFoundDataException e) {
+				logger.error("중장비가 확인되지 않습니다.");
+				redir.addFlashAttribute("HEC_message", "현재 내 중장비 리스트가 확인되지 않습니다.\\n다시 시도하여 주십시요.");
+				return "redirect:/lookupHeavy";
+			}
+			
+		}
+			
+		
 		
 		LeaseDirectCall leaseDirectCall = new LeaseDirectCall();
 		LeaseTransfer leaseTransfer = new LeaseTransfer();

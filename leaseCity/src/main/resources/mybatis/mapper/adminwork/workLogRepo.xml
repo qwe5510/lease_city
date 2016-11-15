@@ -43,9 +43,13 @@
  		SELECT *
  		FROM (
  				SELECT sub.*, rownum AS row_num_log_no
- 				FROM( SELECT wl.*, lc.
- 						FROM work_log wl JOIN lease_calls lc ON wl.lease_call_no = lc.lease_call_no
- 						WHERE user_id = #{userId}
+ 				FROM( SELECT wl.*, u.company_name
+ 						FROM work_log wl 
+ 						JOIN lease_calls lc 
+ 						ON wl.lease_call_no = lc.lease_call_no
+ 						JOIN users u
+ 						ON lc.user_id = u.user_id
+ 						WHERE wl.user_id = #{userId}
  						AND wl.lease_request_no IS NOT NULL
  						AND wl.lease_call_no IS NOT NULL
  						AND wl.lease_transfer_no IS NULL
