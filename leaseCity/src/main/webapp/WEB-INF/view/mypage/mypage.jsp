@@ -12,8 +12,6 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="mypage_sub" style="padding-top: 80px !important;">
-	<div class="mypage_menu">
-	</div>
 	<div class="mypage_main">
 		<h3>개인 정보 수정</h3>
 		<h4>인증을 위해 비밀번호를 입력해주세요.</h4>

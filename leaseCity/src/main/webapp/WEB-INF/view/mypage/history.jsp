@@ -12,8 +12,6 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="myinfo">
-	<div class="mypage_menu">
-	</div>
 		<div class="mypage_main" style="text-align: center;">
 			<c:choose>
 				<c:when test="${isLogin == 'HEC' }">

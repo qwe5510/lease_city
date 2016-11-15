@@ -9,8 +9,6 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="mypage">
-	<div class="mypage_menu">
-	</div>
 	<div class="mypage_main">
 	</div>
 	</div>

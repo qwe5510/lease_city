@@ -12,8 +12,6 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="selection">
-	<div class="selection_menu">
-	</div>
 	<div class="selection_main">
 	<c:url value="/selection_2" var="selection_2"></c:url>
 		<c:choose>
