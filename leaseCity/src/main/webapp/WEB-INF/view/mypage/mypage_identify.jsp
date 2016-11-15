@@ -14,13 +14,11 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>.
 	<div class="mypage">
-	<div class="mypage_menu">
-	</div>
-	<div class="mypage_main">
+	<div class="mypage_main" style="text-align:center;">
 		<c:url value="/ConstructionSuccess" var="ConstructionSuccess"/>
 		<c:choose>
 			   <c:when test="${compare == 'CC'}">
-			   <sform:form id="mypage_identify_form" method="post" modelAttribute="constructionCompany" action="${ConstructionSuccess}">
+			   <sform:form id="mypage_identify_form" method="post" modelAttribute="constructionCompany" action="${ConstructionSuccess}" style="display:inline-block; text-align: left;">
                <fieldset>
                <legend>기본정보 입력</legend>
                <table>

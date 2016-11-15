@@ -110,6 +110,12 @@ a:hover, a:focus {
    min-width: 180px
 }
 
+.navi_main{
+	
+	min-width: 1200px;	
+}
+
+
 body>section {
    padding: 50px 0
 }
@@ -1867,7 +1873,7 @@ button {
    overflow: auto;
 }
 
-.lease_menu  {
+.lease_menu {
 	background-image: url("../images/lease/lease_menu.png");
 	background-repeat: no-repeat;
 	margin-top: 20px;
@@ -2420,22 +2426,12 @@ button {
 	position: relative;
 	overflow: auto;
 }
-.mypage_menu{
-	margin-top: 20px;
-	min-height: 500px;
-	margin-left: 50px;
-	float: left;
-	min-width: 30%;
-	width: 400px;
-	position: fixed;
-}
+
+
 .mypage_main{
-	float: right;
-	margin-right: 50px;
 	min-height: 500px;
 	width: 800px;
 	display: inline-block;
-	text-align: left;
 }
 .mypage_main fieldset{
 	width: 700px;
@@ -2504,7 +2500,6 @@ button {
 	position: relative;
 	overflow: auto;
 	font-size: 20px;
-	text-align: center;
 }
 .myinfo_0{
 	margin-top : 20px;
@@ -2641,12 +2636,11 @@ button {
 	position: fixed;
 }
 .selection_main{
-	float: right;
 	margin-right: 50px;
 	min-height: 500px;
 	width: 800px;
 	display: inline-block;
-	text-align: left;
+	text-align: center;
 }
 .selection_hec{
 	width: 780px;

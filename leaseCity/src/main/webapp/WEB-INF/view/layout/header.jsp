@@ -57,7 +57,7 @@
 		</div>
 		<div class="navbar-inner">
 				<a id="logo" class="pull-left" href="<%=request.getContextPath()%>/index"></a>
-				<div class="nav-collapse collapse pull-right">
+				<div class="navi_main">
 					<ul class="nav">
 						<li>
 							<table>
@@ -101,11 +101,11 @@
 						<%-- <c:url value="/mypage" var="mypage"></c:url> --%>
 						<c:choose>
 							<c:when test="${!empty loginUser or !empty admin}">
-								<li id="con"><a href=${logout } title="로그아웃"><i class="icon-signout"></i></a></li>
-								<li id="con"><a href=${mypage } title="마이페이지"><i class="icon-info-sign"></i></a></li>
+								<li id="con"><a href=${logout } title="로그아웃"><i class="icon-signout label label-logout"> Logout</i></a></li>
+								<li id="con"><a href=${mypage } title="마이페이지" style="padding-left: 0px;"><i class="icon-info-sign label label-my-page"> My Page</i></a></li>
 							</c:when>
 							<c:otherwise>
-								<li id="con"><a href="${login}"><i class="icon-lock" title="로그인하기"></i></a></li>
+								<li id="con"><a href="${login}"><i class="icon-lock label label-login" title="로그인"> Login</i></a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>
