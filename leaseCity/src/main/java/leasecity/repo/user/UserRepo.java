@@ -31,7 +31,14 @@ public interface UserRepo {
 	
 	//유저 수정 - 정보변경(업체명, 대표자명, 이메일 제외)
 	public int updateUser(User user);
+	
 	//유저 수정 - 비밀번호 변경
 	public int updatePasswordUser(User user);
+	
+	// 유저 탈퇴
+	public int withdrawUser(User user);
+	
+	// 탈퇴 유저 자동 삭제 (14일 이상)
+	public int deletewithdrawUser();
 
 }

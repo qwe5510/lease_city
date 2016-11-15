@@ -53,10 +53,10 @@ public class MyPageServiceImpl implements MyPageService {
 				workLog.setStatus("STAND_BY"); // 작업 대기
 			}else if(todayTime >= fromDate && todayTime <= toDate){
 				workLog.setStatus("WORKING"); // 작업중
-			}else if(todayTime > toDate){
-				workLog.setStatus("COMPLETE"); // 작업완료
 			}else if(workLog.getEvaluationCheck().equals("Y")){
 				workLog.setStatus("EVALUATED"); // 평가된상태
+			}else if(todayTime > toDate){
+				workLog.setStatus("COMPLETE"); // 작업완료
 			}
 
 		}
@@ -109,10 +109,10 @@ public class MyPageServiceImpl implements MyPageService {
 				workLog.setStatus("STAND_BY"); // 작업 대기
 			}else if(todayTime >= fromDate && todayTime <= toDate){
 				workLog.setStatus("WORKING"); // 작업중
-			}else if(todayTime > toDate){
-				workLog.setStatus("COMPLETE"); // 작업완료
 			}else if(workLog.getEvaluationCheck().equals("Y")){
 				workLog.setStatus("EVALUATED"); // 평가된상태
+			}else if(todayTime > toDate){
+				workLog.setStatus("COMPLETE"); // 작업완료
 			}
 			
 			

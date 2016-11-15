@@ -100,6 +100,18 @@ public class UserRepoImpl implements UserRepo{
 		return session.update(stmt, user);
 	}
 
+	@Override
+	public int withdrawUser(User user) {
+		String stmt = USER_NS + "withdrawUser";
+		return session.update(stmt, user);
+	}
+
+	@Override
+	public int deletewithdrawUser() {
+		String stmt = USER_NS + "deleteWithdrawUser";
+		return session.delete(stmt);
+	}
+
 
 	
 }

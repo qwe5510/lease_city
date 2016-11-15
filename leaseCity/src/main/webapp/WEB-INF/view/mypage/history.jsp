@@ -18,7 +18,7 @@
 					<!-- 임대 신청 리스트 -->
 					<fieldset>
 						<legend>임대 신청 기록</legend>
-						<table class="history_table">
+						<table class="history_table" id="request_log">
 							<tr>
 								<td colspan="5" class="boardLine"
 									style="height: 4px !important;"></td>
@@ -57,7 +57,6 @@
 							</tr>
 						</table>
 						<div class="boardPage" style="display: inline-block;">
-
 							<!-- 임대 신청 이전 페이지, 다음 페이지 변수 선언 -->
 							<fmt:parseNumber
 								value="${(((requestPage.currentPage-1)/10)-(((requestPage.currentPage-1)/10)%1))*10}"
@@ -65,7 +64,6 @@
 							</fmt:parseNumber>
 							<fmt:parseNumber value="${requestPrevPage+11}" var="requestNextPage">
 							</fmt:parseNumber>
-
 							<c:choose>
 								<c:when test="${requestPrevPage > 0}">
 									<a href="#"><i class="icon-arrow-left">이전</i></a>
@@ -107,7 +105,7 @@
 							</c:if>
 							<c:choose>
 								<c:when test="${requestNextPage <= requestPage.totalPage}">
-									<a href="#">다음<i class="icon-arrow-right"></i></a>
+									<a href="#" >다음<i class="icon-arrow-right"></i></a>
 								</c:when>
 								<c:otherwise>
 									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
@@ -227,7 +225,7 @@
 					<!-- 임대 요청 리스트 -->
 					<fieldset>
 						<legend>임대 요청 기록</legend>
-						<table class="history_table">
+						<table class="history_table" id="callWorkLog">
 							<tr>
 								<td colspan="5" class="boardLine"
 									style="height: 4px !important;"></td>
@@ -294,6 +292,10 @@
 						<div class="boardPage" style="display: inline-block;">
 
 							<!-- 임대 신청 이전 페이지, 다음 페이지 변수 선언 -->
+							
+							<!-- var prevPage = parseInt( (currentPage-1) /10 * 10)
+							var nextPage = prevPage + 11 -->
+							
 							<fmt:parseNumber
 								value="${(((callPage.currentPage-1)/10)-(((callPage.currentPage-1)/10)%1))*10}"
 								var="callPrevPage">
@@ -303,7 +305,7 @@
 
 							<c:choose>
 								<c:when test="${callPrevPage > 0}">
-									<a href="#"><i class="icon-arrow-left">이전</i></a>
+									<a href="${callPrevPage}"><i class="icon-arrow-left">이전</i></a>
 								</c:when>
 								<c:otherwise>
 									<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
@@ -342,7 +344,7 @@
 							</c:if>
 							<c:choose>
 								<c:when test="${callNextPage <= callPage.totalPage}">
-									<a href="#">다음<i class="icon-arrow-right"></i></a>
+									<a href="${callNextPage}">다음<i class="icon-arrow-right"></i></a>
 								</c:when>
 								<c:otherwise>
 									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
@@ -473,7 +475,7 @@
 
 							<c:choose>
 								<c:when test="${callRequestNextPage <= callRequestPage.totalPage}">
-									<a href="#">다음<i class="icon-arrow-right"></i></a>
+									<a href="#{callRequestNextPage}">다음<i class="icon-arrow-right"></i></a>
 								</c:when>
 								<c:otherwise>
 									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
@@ -583,5 +585,76 @@
 	$("#history_evaluate").on("click",function(){
 		location.href="${evaluate}";
 	})
+	
+	Date.prototype.format = function(f) {
+	    if (!this.valueOf()) return " ";
+	 
+	    var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+	    var d = this;
+	     
+	    return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+	        switch ($1) {
+	            case "yyyy": return d.getFullYear();
+	            case "yy": return (d.getFullYear() % 1000).zf(2);
+	            case "MM": return (d.getMonth() + 1).zf(2);
+	            case "dd": return d.getDate().zf(2);
+	            case "E": return weekName[d.getDay()];
+	            case "HH": return d.getHours().zf(2);
+	            case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+	            case "mm": return d.getMinutes().zf(2);
+	            case "ss": return d.getSeconds().zf(2);
+	            case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+	            default: return $1;
+	        }
+	    });
+	};
+	 
+	String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+	String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+	Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+	
+	/* <c:url value="" var=""></c:url>
+	$(document).on("click", "#ID값", function(){
+		var dd = $(this).html() -> 이전, 다음
+		
+		if(dd == '이전'){
+			var currentPage = $(this).attr("href");
+		}
+		
+		$.ajax(){
+			url: ${},
+			method: "GET",
+			data: {currentPage : currentPage}, 
+			success : function(map){
+				var callPage = map.callPage;
+				var callWorkLogs = map.callWorkLogs;
+				
+				str ="";
+				$.each($(callWorkLogs), function(idx, item){
+					
+					var fromDate = new Date(callWorkLogs.fromDate).format("yyyy-MM-dd");
+					var toDate =  
+					
+					str+=
+				})
+				$("#callWorkLog").append(str);
+				
+				
+				
+				
+				
+				
+				
+				
+			},
+			error : function(xhr, status, error){
+				alert("존재하지 않는 페이지입니다.");
+			}
+		}
+	}) */
+	
+	
+	
 </script>
 </html>

@@ -94,6 +94,20 @@ public interface UserService {
 	 * @return
 	 */
 	public Boolean checkHEC(String idNumber);
+	
+	/**
+	 * 탈퇴 유저 처리
+	 * @param user
+	 * @return
+	 */
+	public Integer changeWithdrawUser(User user);
+	
+	/**
+	 * 탈퇴 유저 14일 경과 시, 자동삭제
+	 * @param
+	 * @return
+	 */
+	public void cleanWithdrawUser();
 								
 }
 

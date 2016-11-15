@@ -3,7 +3,9 @@ package leasecity.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -52,6 +54,7 @@ public class MypageController {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat,true));
 	}
+	
 	
 	@RequestMapping(value="/mypage",method=RequestMethod.GET)
 	public String mypage(Model model, HttpSession session){
@@ -233,13 +236,44 @@ public class MypageController {
 			return "error/405";
 		}
 	}
+	
+	//임대 요청글에 대한 리스트 불러오기
+	@RequestMapping(value = "/historyCallPageControlAjax", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> historyCallPageControlAjax(
+			@RequestParam Integer currentPage, HttpSession session) throws NotFoundDataException {
+		
+		if(currentPage == null)
+			currentPage = 1;
+		
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		Page page = myPageService.getCallLogPage(currentPage, WORK_LOG_SIZE, loginUser.getUserId());
+		List<WorkLog> workLogs = myPageService.loadPageLeaseCallWorkLog(page);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("callPage", page);
+		map.put("callWorkLogs", workLogs);	
 
-	@RequestMapping(value = "/historyRequestPageControlAjax", method = RequestMethod.GET)
-	public @ResponseBody String historyRequestPageControlAjax(Model model) {
+		return map;
+	}
+	
+	//임대요청글에 대한 신청글 리스트 불러오기 - 건설업체
+	@RequestMapping(value = "/historyRequestCallCCPageControlAjax", method = RequestMethod.GET)
+	public @ResponseBody String historyRequestCallCCPageControlAjax(Model model) {
 
 		return "";
 	}
 	
+	
+	//임대 요청글에 대한 신청글 리스트 불러오기 - 중기업체
+	@RequestMapping(value = "/historyRequestCallHECPageControlAjax", method = RequestMethod.GET)
+	public @ResponseBody String historyRequestCallHECPageControlAjax(Model model) {
+
+		return "";
+	}
+	
+	//임대 양도에 대한 리스트 불러오기
 	@RequestMapping(value = "/historyTransferPageControlAjax", method = RequestMethod.GET)
 	public @ResponseBody String historyTransferPageControlAjax(Model model) {
 
@@ -353,7 +387,7 @@ public class MypageController {
 	}
 	
 	// 탈퇴 하기
-	@RequestMapping(value="/withdrawalCheckAjax", method=RequestMethod.GET)
+	@RequestMapping(value="/withdrawalCheckAjax", method=RequestMethod.POST)
 	public @ResponseBody Boolean withdrawalCheckAjax(@RequestParam String password, HttpSession session){
 		
 		User user = session.getAttribute("loginUser")==null?
@@ -368,7 +402,9 @@ public class MypageController {
 		logger.trace("세션에 저장된 비밀번호 : {}", user.getPassword());
 		
 		if(user.getPassword().equals(password)){
-			session.setAttribute("myInfoCheck", true);
+			user.setWithdrawDate(user.getWithdrawDate());
+			userService.changeWithdrawUser(user);
+			session.invalidate(); // 로그아웃
 			return true;
 		}else{
 			return false;

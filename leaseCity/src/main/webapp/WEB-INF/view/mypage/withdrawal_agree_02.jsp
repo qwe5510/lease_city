@@ -149,13 +149,12 @@
 			console.log("df");
 
 			$.ajax({
-				url : "${withdrawal_agree_confirm}",
-				method : "GET",
+				url : "${withdrawalCheckAjax}",
+				method : "POST",
 				data : {
 					password : password
 				},
 				success : function(res) {
-					alert();
 					if (res) {
 						$("#mypageForm").submit();
 					} else {

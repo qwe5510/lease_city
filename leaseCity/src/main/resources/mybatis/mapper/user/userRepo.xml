@@ -32,7 +32,7 @@
  	<select id="getSelectUserIdAndPassword" parameterType="Map" 
  								resultType="user">
  		SELECT * FROM users 
- 		WHERE user_id = #{userId} AND password= #{password}
+ 		WHERE user_id = #{userId} AND password= #{password} AND withdraw_date IS NULL
  	</select>
  	
  	<!-- 유저 ID찾기 : ID 출력 (뒷 2자리 *처리) -->
@@ -105,6 +105,16 @@
  		WHERE user_id = #{userId}
  	</delete>
  	
+ 	<!-- 탈퇴 유저의 탈퇴 날짜 변경 -->
+ 	<update id="withdrawUser" parameterType="user">
+ 		UPDATE users
+ 		SET withdraw_date = SYSDATE
+ 		WHERE user_id = #{userId}
+ 	</update>
  	
- 
+ 	<!-- 탈퇴유저 삭제 : 탈퇴한지 14일경과된 유저대상 -->
+ 	<delete id="deleteWithdrawUser">
+ 		DELETE FROM users
+ 		WHERE withdraw_date IS NOT NULL and SYSDATE - withdraw_date &gt;= 14
+ 	</delete>
  </mapper>
