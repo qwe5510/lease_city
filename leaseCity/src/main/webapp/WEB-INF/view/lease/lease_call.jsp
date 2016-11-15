@@ -98,7 +98,7 @@
                         var="strRegDate"/>
                   
                   <fmt:formatDate value="${leaseCall.regDate}"
-                        pattern="hh:mm:ss"
+                        pattern="hh:mm:ss" timeStyle=""
                         var="strRegTime"/>
                   
                   <c:choose>

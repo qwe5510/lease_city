@@ -173,8 +173,8 @@
              	<div class="CCchecked"></div>
              	</fieldset>
             	<br>
-            	<sform:button id="mypage_identify_confirm">확인</sform:button>
-            	<sform:button id="mypage_identify_cancel">취소</sform:button>
+            	<sform:button id="mypage_identify_confirm label">확인</sform:button>
+            	<sform:button id="mypage_identify_cancel label">이전으로</sform:button>
          		</sform:form>
 			   	</c:when>
 			   	

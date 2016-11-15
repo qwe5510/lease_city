@@ -21,11 +21,13 @@
 			<div>
 				<label for="password">비밀번호</label>
 				<input id="password" name="password" type="password"/>
-				<span class="password"></span>
 			</div>
 			<div>
 				<label for="password2">비밀번호확인</label>
 				<input id="password2" name="password2"  type="password"/>
+			</div>
+			<div>
+				<span class="password"></span>
 			</div>
 			<button id="myInfo_confirm">확인</button>
 			<button id="mypageCancel">취소</button>
