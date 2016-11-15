@@ -1110,7 +1110,7 @@ input[type="number"] {
    float: left;
 }
 
-input[type="button"], button[type="submit"]{
+input[type="button"]{
    margin-top: 15px;
    height: 38px;
    margin-right: 20px;
@@ -1152,7 +1152,7 @@ label {
    -o-background-size: cover;
    background-size: cover;
    padding-top: 0px;
-   min-width: 1300px;
+   min-width: 1000px;
    min-height: 800px;
    text-align: center;
 }
@@ -1202,7 +1202,7 @@ label {
    padding: 10px;
    padding-top: 0px;
    position: relative;
-   margin-left: 200px;
+   margin-left: 240px;
    width: 600px;
 }
 
@@ -1337,11 +1337,6 @@ button {
 
 /* 화면사이즈 980px 해상도에서의 설정*/
 @media all and (min-width: 980px) {
-   /*커뮤니티 jsp 메인 div 설정  */
-   .board {
-      
-   }
-
    /*유챗 div 설정  */
    .uchat {
       padding-top: 100px;
@@ -1363,8 +1358,9 @@ button {
 
 /* 커뮤니티 전체 */
 .board {
-   min-height: 800px;
-   position: relative;
+	padding-top: 50px;
+    min-height: 800px;
+    position: relative;
 }
 
 /*유챗 div 설정  */
@@ -1826,7 +1822,6 @@ button {
 .faq_bold {
    font-size: 19px;
    font-weight: 100px;
-   color: #228B22;
 }
 
 .search {
@@ -1834,6 +1829,7 @@ button {
    font-size: 25px;
    font-weight: 300px;
    color: #228B22;
+   width: 650px;
 }
 
 .qna_list {

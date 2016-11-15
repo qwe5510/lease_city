@@ -7,6 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=request.getContextPath() %>/css/accordionImageMenu.css" rel="stylesheet">
 <title>자주 묻는 질문 | LEASE CITY</title>
+
+<style>
+ul{
+	list-style: none;
+	padding: 0px;
+}
+</style>
+
 </head>
 <body>
 
