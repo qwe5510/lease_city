@@ -40,7 +40,7 @@ import leasecity.service.NotifyService;
 @Controller
 public class CommunityController {
 	static Logger logger = LoggerFactory.getLogger(CommunityController.class);
-	public static final int COMMENT_PAGE_SIZE = 20;
+	public static final int COMMENT_PAGE_SIZE = 15;
 	public static final int REPLY_PAGE_SIZE = 10;
 	
 	@Autowired

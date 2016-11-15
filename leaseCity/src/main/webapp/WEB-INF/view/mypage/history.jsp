@@ -25,21 +25,42 @@
 							</tr>
 							<tr>
 								<td>번호</td>
-								<td>임대 신청 번호</td>
+								<td>임대 요청 번호</td>
 								<td>업무기간</td>
 								<td>상대업체</td>
 								<td>평가하기</td>
 							</tr>
 							<c:forEach var="workLog" items="${requestLogs}">
+							
+								<fmt:formatDate value="${workLog.fromDate}" pattern="yyyy-MM-dd" var="fromDate"/>
+								<fmt:formatDate value="${workLog.toDate}" pattern="yyyy-MM-dd" var="toDate"/>
+								<fmt:formatDate value="${workLog.regDate}" pattern="yyyy-MM-dd" var="regDate"/>
+								
 								<tr>
 									<td colspan="5" class="boardLine"></td>
 								</tr>
 								<tr>
 									<td>${workLog.rowNumLogNo}</td>
-									<td>20051</td>
-									<td>2016.05.06~2016.10.30 (2016.04.30)</td>
-									<td>건설업체</td>
-									<td>진행중</td>
+									<td>${workLog.leaseCallNo}</td>
+									<td>${fromDate}~${toDate}(${regDate})</td>
+									<td>
+										<c:choose>
+											<c:when test="${workLog.status == 'STAND_BY'}">
+												<span class="label label-inverse">작업 대기</span>
+											</c:when>
+											<c:when test="${workLog.status == 'WORKING'}">
+												<span class="label label-inverse">작업 중</span>
+											</c:when>
+											<c:when test="${workLog.status == 'COMPLETE'}">
+												<span class="label label-success">작업 완료</span>
+												<span class="label" style="background-color: #cfdae9">
+												<a href="#">평가 하기</a></span>
+											</c:when>
+											<c:when test="${workLog.status == 'EVALUATED'}">
+												<span class="label label-success">작업 완료</span>
+											</c:when>									
+										</c:choose>
+									</td>
 								</tr>
 							</c:forEach>
 							<c:if test="${!empty ErrorRequestMsg}">
@@ -291,11 +312,7 @@
 						</table>
 						<div class="boardPage" style="display: inline-block;">
 
-							<!-- 임대 신청 이전 페이지, 다음 페이지 변수 선언 -->
-							
-							<!-- var prevPage = parseInt( (currentPage-1) /10 * 10)
-							var nextPage = prevPage + 11 -->
-							
+							<!-- 임대 신청 이전 페이지, 다음 페이지 변수 선언 -->				
 							<fmt:parseNumber
 								value="${(((callPage.currentPage-1)/10)-(((callPage.currentPage-1)/10)%1))*10}"
 								var="callPrevPage">
@@ -305,7 +322,7 @@
 
 							<c:choose>
 								<c:when test="${callPrevPage > 0}">
-									<a href="${callPrevPage}"><i class="icon-arrow-left">이전</i></a>
+									<a href="${callPrevPage}" id="callNo"><i class="icon-arrow-left">이전</i></a>
 								</c:when>
 								<c:otherwise>
 									<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
@@ -323,7 +340,7 @@
 													<b>${i}</b>
 												</c:when>
 												<c:otherwise>
-													<a href="#">${i}</a>
+													<a href="#" id="callNo">${i}</a>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
@@ -335,7 +352,7 @@
 													<b>${i}</b>
 												</c:when>
 												<c:otherwise>
-													<a href="#">${i}</a>
+													<a href="#" id="callNo">${i}</a>
 												</c:otherwise>
 											</c:choose>
 										</c:forEach>
@@ -344,7 +361,7 @@
 							</c:if>
 							<c:choose>
 								<c:when test="${callNextPage <= callPage.totalPage}">
-									<a href="${callNextPage}">다음<i class="icon-arrow-right"></i></a>
+									<a href="${callNextPage}" id="callNo">다음<i class="icon-arrow-right"></i></a>
 								</c:when>
 								<c:otherwise>
 									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
@@ -475,7 +492,7 @@
 
 							<c:choose>
 								<c:when test="${callRequestNextPage <= callRequestPage.totalPage}">
-									<a href="#{callRequestNextPage}">다음<i class="icon-arrow-right"></i></a>
+									<a href="${callRequestNextPage}">다음<i class="icon-arrow-right"></i></a>
 								</c:when>
 								<c:otherwise>
 									<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
@@ -613,48 +630,56 @@
 	String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
 	Number.prototype.zf = function(len){return this.toString().zf(len);};
 
+	<c:url value="/historyCallPageControlAjax" var="historyCallPageControlAjax"/>
+	<c:url value="/historyRequestCallCCPageControlAjax" var="historyRequestCallCCPageControlAjax"/>
+	<c:url value="/historyRequestCallHECPageControlAjax" var="historyRequestCallHECPageControlAjax"/>
+	<c:url value="/historyTransferPageControlAjax" var="historyTransferPageControlAjax"/>
 	
-	/* <c:url value="" var=""></c:url>
-	$(document).on("click", "#ID값", function(){
-		var dd = $(this).html() -> 이전, 다음
+	$(document).on("click", "#callNo", function(){
 		
-		if(dd == '이전'){
-			var currentPage = $(this).attr("href");
+		var currentPage = $(this).html();
+		
+		if(callNo == '이전'){
+			alert($(this).attr("href"));
+		}
+		if(callNo == '다음'){
+			alert($(this).attr("href"));
 		}
 		
-		$.ajax(){
-			url: ${},
-			method: "GET",
-			data: {currentPage : currentPage}, 
-			success : function(map){
-				var callPage = map.callPage;
-				var callWorkLogs = map.callWorkLogs;
-				
-				str ="";
+		$.ajax({
+			// type을 설정합니다.
+	        type : 'get',
+	        url : "${historyCallPageControlAjax }",
+	        // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+	        data : {
+	           currentPage : currentPage
+	        },
+	        // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+	        success : function(map) {
+	        	str = "";
+	        	
+	        	var callPage = map.callPage;
+	        	var callWorkLogs = map.callWorkLogs;
+	        	
 				$.each($(callWorkLogs), function(idx, item){
 					
 					var fromDate = new Date(callWorkLogs.fromDate).format("yyyy-MM-dd");
-					var toDate =  
+					var toDate = new Date(callWorkLogs.toDate).format("yyyy-MM-dd");
+					var regDate = new Date(callWorkLogs.regDate).format("yyyy-MM-dd");
 					
-					str+=
-				})
-				$("#callWorkLog").append(str);
-				
-				
-				
-				
-				
-				
-				
-				
-			},
-			error : function(xhr, status, error){
-				alert("존재하지 않는 페이지입니다.");
-			}
-		}
-	}) */
-	
-	
+					str+= fromDate + "~" + toDate + "(" + regDate + ")"
+					
+					console.log(callWorkLogs);
+
+				});
+
+	        },
+	        error : function(xhr, status, error) {
+	        	alert("존재하지 않는 페이지입니다.");
+	        }
+		});
+		
+	});
 	
 </script>
 </html>
