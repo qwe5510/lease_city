@@ -352,5 +352,27 @@ public class MypageController {
 		return "mypage/withdrawal_agree_02";
 	}
 	
+	// 탈퇴 하기
+	@RequestMapping(value="/withdrawalCheckAjax", method=RequestMethod.GET)
+	public @ResponseBody Boolean withdrawalCheckAjax(@RequestParam String password, HttpSession session){
+		
+		User user = session.getAttribute("loginUser")==null?
+					(User)session.getAttribute("admin"):
+					(User)session.getAttribute("loginUser");
+			
+		logger.trace("패스워드 전 : {}", password);
+		
+		password = HashingUtil.hashingString(password);
+		
+		logger.trace("패스워드 후 : {}", password);
+		logger.trace("세션에 저장된 비밀번호 : {}", user.getPassword());
+		
+		if(user.getPassword().equals(password)){
+			session.setAttribute("myInfoCheck", true);
+			return true;
+		}else{
+			return false;
+		}	
+	}
 	
 }
