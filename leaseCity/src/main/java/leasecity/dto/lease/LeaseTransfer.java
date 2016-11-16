@@ -61,4 +61,7 @@ public class LeaseTransfer implements Serializable {
 
 	/** 비용. */
 	private Integer price;
+	
+	/** 수락 날짜. */
+	private Date permissionDate;
 }

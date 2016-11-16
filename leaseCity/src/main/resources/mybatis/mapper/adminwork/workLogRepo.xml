@@ -67,6 +67,8 @@
  		FROM work_log
  		WHERE user_id = #{userId}
  		AND lease_transfer_no IS NOT NULL
+ 		AND lease_call_no IS NULL
+ 		AND lease_request_no IS NULL
  	</select>
  	
  	<!-- 페이지별 임대 양도 작업기록 리스트 출력 -->
@@ -74,13 +76,17 @@
  		SELECT *
  		FROM (
  				SELECT sub.*, rownum AS row_num_log_no
- 				FROM( SELECT *
- 						FROM work_log
- 						WHERE user_id = #{userId}
- 						AND lease_transfer_no IS NOT NULL
- 						AND lease_call_no IS NULL
- 						AND lease_request_no IS NULL
- 						ORDER BY to_date DESC, from_date DESC
+ 				FROM( SELECT wl.*, u.company_name
+ 						FROM work_log wl 
+ 						JOIN lease_transfer lt
+ 						ON wl.lease_transfer_no = lt.lease_transfer_no
+ 						JOIN users u
+ 						ON lt.send_user_id = u.user_id
+ 						WHERE wl.user_id = #{userId}
+ 						AND wl.lease_transfer_no IS NOT NULL
+ 						AND wl.lease_call_no IS NULL
+ 						AND wl.lease_request_no IS NULL
+ 						ORDER BY wl.to_date DESC, wl.from_date DESC
  					) sub
  				)
  		<if test="pageSize != null and to !=null and from != null">

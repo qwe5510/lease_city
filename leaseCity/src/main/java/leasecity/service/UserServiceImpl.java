@@ -348,4 +348,19 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
+
+	@Override
+	public Integer changeWithdrawUser(User user) {
+		int result = 0;
+		if(user != null){
+			result = userRepo.withdrawUser(user);
+		}
+		return result;
+	}
+
+	@Override
+	public void cleanWithdrawUser() {
+		int result = userRepo.deletewithdrawUser();
+		logger.trace("삭제 : 탈퇴 한지 14일 경과된 유저 : {}", result);
+	}
 }

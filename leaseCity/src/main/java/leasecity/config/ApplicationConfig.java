@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 		"leasecity.service"})
 @PropertySource("classpath:/config/dbconfig.properties")
 @EnableTransactionManagement
-@Import(StandByUserScheduler.class)
+@Import( {StandByUserScheduler.class, WithDrawUserScheduler.class} )
 public class ApplicationConfig {
 
 	@Bean

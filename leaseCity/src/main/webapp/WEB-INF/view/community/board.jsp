@@ -32,7 +32,7 @@
       	<div class="uchat_inner">
          <script>
             u_chat({
-               room : 'yhj123',
+               room : 'LeaseCity',
                chat_record : true,
                width : '300',
                height : '380',

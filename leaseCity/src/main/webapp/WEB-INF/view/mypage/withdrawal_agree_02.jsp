@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sform" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,19 +12,29 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<div class="myinfo">
-	<div class="mypage_menu">
-	</div>
-	<div class="mypage_main">
-		<span><b>회원탈퇴</b> 화면입니다.</span><br><br>
-		<span><b>회원탈퇴</b>를 하시면 더이상 서비스를 이용할 수 없습니다.<br><br><b>신중히</b> 생각해주시기 바랍니다.</span>
-		<br><br><h3>회원 탈퇴하시겠습니까?</h3>
-		<label>비밀번호</label><input type="password" placeholder="비밀번호 입력"/>
-		<br>
-		<label>비밀번호 확인</label><input type="password" placeholder="비밀번호 확인"/>
-		<br>
-		<button id="withdrawal_agree_confirm">탈퇴</button>
-		<button id="withdrawal_agree_cancel">취소</button>
-	</div>
+		<div class="mypage_menu"></div>
+		<div class="mypage_main">
+			<span><b>회원탈퇴</b> 화면입니다.</span><br>
+			<br> <span><b>회원탈퇴</b>를 하시면 더이상 서비스를 이용할 수 없습니다.<br>
+			<br>
+			<b>신중히</b> 생각해주시기 바랍니다.</span> <br>
+			<br>
+			<h3>회원 탈퇴하시겠습니까?</h3>
+			<c:url value="/withdrawalCheckAjax" var="withdrawalCheckAjax"></c:url>
+			<c:url value="/index" var="index"></c:url>
+			<form id="mypageForm" method="get" action="${index}">
+				<div>
+					<label for="password">비밀번호</label> <input id="password"
+						name="password" type="password" /> <span class="password"></span>
+				</div>
+				<div>
+					<label for="password2">비밀번호확인</label> <input id="password2"
+						name="password2" type="password" />
+				</div>
+				<button id="withdrawal_agree_confirm">탈퇴</button>
+				<button id="withdrawal_agree_cancel">취소</button>
+			</form>
+		</div>
 	</div>
 	<!--Bottom-->
 	<section id="bottom" class="main">
@@ -117,12 +127,48 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script>
-	$("#withdrawal_agree_confirm").on("click",function(){
-		alert("탈퇴");
-	})
-	<c:url value="/myinfo" var="myinfo"/>
-	$("#withdrawal_agree_cancel").on("click",function(){
-		location.href="${myinfo}";
+	<c:url value="/index" var="index"></c:url>
+	<c:url value="/withdrawalCheckAjax" var="withdrawalCheckAjax"></c:url>
+	$("#withdrawal_agree_confirm").on("click", function(e) {
+		e.preventDefault();
+
+		var password = $("#password").val();
+		var password2 = $("#password2").val();
+
+		if (password2 == "" || password == "") {
+			$(".password").html("두 패스워드 값을 전부 입력해주세요.");
+			$(".password").css("color", "#FF0000");
+			return false;
+		} else if (password != password2) {
+			$(".password").html("패스워드가 일치하지 않습니다.");
+			$(".password").css("color", "#FF0000");
+			return false;
+		} else {
+			$(".password").html("");
+
+			console.log("df");
+
+			$.ajax({
+				url : "${withdrawalCheckAjax}",
+				method : "POST",
+				data : {
+					password : password
+				},
+				success : function(res) {
+					if (res) {
+						$("#mypageForm").submit();
+					} else {
+						alert("올바른 패스워드가 아닙니다.");
+					}
+				},
+				error : function(error) {
+					alert(error);
+				}
+			});
+		}
+	});
+	$("#withdrawal_agree_cancel").on("click", function() {
+		location.href = "${myinfo}";
 	})
 </script>
 </html>

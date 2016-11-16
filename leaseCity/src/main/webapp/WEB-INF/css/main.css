@@ -287,11 +287,11 @@ header #notificationContainer {
    overflow: auto;
    position: absolute;
    top: 30px;
-   width: 400px;
+   width: 430px;
    z-index: 500;
    display: none;
-   height: 400px;
-   overflow: scroll;
+   height: 417px;
+   overFlow-y : scroll;
 
 }
 /*    //

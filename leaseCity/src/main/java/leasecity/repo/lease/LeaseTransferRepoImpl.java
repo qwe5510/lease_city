@@ -72,4 +72,10 @@ public class LeaseTransferRepoImpl implements LeaseTransferRepo{
 		return session.update(stmt, leaseTransfer);
 	}
 
+	@Override
+	public LeaseTransfer getSelectLeaseTransfer(Integer leaseTransferNo) {
+		String stmt = LEASE_TRANSFER_NS + "getSelectLeaseTransfer";
+		return session.selectOne(stmt, leaseTransferNo);
+	}
+
 }

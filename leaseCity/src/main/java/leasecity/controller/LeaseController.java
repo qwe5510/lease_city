@@ -754,6 +754,7 @@ public class LeaseController {
 		
 		try {
 			leaseService.doLeaseTransfer(leaseTransfer);
+			myPageService.writeTransferWorkLog(leaseTransfer);
 			redir.addFlashAttribute("HEC_message", "양도 신청이 완료되었습니다!");
 			logger.trace("양도 정보 : {}", leaseTransfer);
 			
@@ -765,9 +766,11 @@ public class LeaseController {
 		} catch (ServiceFailException e) {
 			redir.addFlashAttribute("index_message", "양도 신청 작업에 에러가 발생하였습니다!\\n메인 페이지로 이동합니다.");
 			return "redirect:/index";
+		} catch (WriteFailException e) {
+			redir.addFlashAttribute("index_message", "양도 신청 작업에 에러가 발생하였습니다!\\n메인 페이지로 이동합니다.");
+			return "redirect:/index";
 		}
-		
-		
+
 		return "redirect:/lookupHeavy";
 	}
 	

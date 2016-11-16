@@ -499,7 +499,7 @@
                var text = testfunction(val);
                var PrevVal = "#" + "Prev" + val;
                if( val < testfunction(val).length) {
-                  $(PrevVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[testfunction(val).length - (1 + val)].leaseCallNo + ">"  + testfunction(val)[testfunction(val).length - (1 + val)].leaseCommentTitle + "</a></div>");
+                  $(PrevVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[val].leaseCallNo + ">"  + testfunction(val)[val].leaseCommentTitle + "</a></div>");
                } else {
                   $(PrevVal).empty().append("");
                }
@@ -516,7 +516,7 @@
                var text = testfunction(val);
                var NextVal = "#" + "Next" + val;
                if( val < testfunction(val).length ) {
-                  $(NextVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[testfunction(val).length - (1 + val)].leaseCallNo + ">"  + testfunction(val)[testfunction(val).length - (1 + val)].leaseCommentTitle + "</a></div>");
+                  $(NextVal).empty().append("<div><a href=http://localhost:9090/leaseCity/leaseCall/read?leaseCallNo="+ testfunction(val)[val].leaseCallNo + ">"  + testfunction(val)[val].leaseCommentTitle + "</a></div>");
                } else {
                   $(NextVal).empty().append("");
                }

@@ -112,7 +112,7 @@ ul{
 			if(submenu.is(":visible")){
                 submenu.slideUp();
             }else{
-            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img1.jpg'>");
+            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/FAQ/임대요청설명.png'>");
                 submenu.slideDown();
                 
             }
@@ -122,7 +122,7 @@ ul{
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
-            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img2.jpg'>");
+            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/FAQ/임대신청설명.png'>");
                 submenu.slideDown();
             }
 		});
@@ -131,7 +131,7 @@ ul{
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
-            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img3.jpg'>");
+            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/FAQ/직접요청설명.png'>");
                 submenu.slideDown();
             }
 		});
@@ -140,7 +140,7 @@ ul{
 			if( submenu.is(":visible") ){
                 submenu.slideUp();
             }else{
-            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img4.jpg'>");
+            	$(".bb").html("<img src='<%=request.getContextPath()%>/images/FAQ/양도설명.png'>");
                 submenu.slideDown();
             }
 		});
@@ -168,7 +168,7 @@ ul{
 		if( submenu.is(":visible") ){
             submenu.slideUp();
         }else{
-        	$(".bb").html("<img src='<%=request.getContextPath()%>/images/img/img6.jpg'>");
+        	$(".bb").html("<img src='<%=request.getContextPath()%>/images/FAQ/평가설명.png'>");
             submenu.slideDown();
         }
 	});

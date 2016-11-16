@@ -26,11 +26,10 @@ public class ConvenienceController {
 	@Autowired
 	NotifyService nService;
 	
-	@RequestMapping(value="/evaluate",method=RequestMethod.GET)
-	public String evaluate(Model model){
-		String compare="중기"; //업체를 확인하기위해 임시로 사용한 변수
-		model.addAttribute("compare", compare);
-		return "convenience/evaluate";
+	@RequestMapping(value="/addEvaluate",method=RequestMethod.POST)
+	public @ResponseBody Integer evaluate(@RequestParam Integer avgPoint){
+		
+		return avgPoint;
 	}
 
 	// 로그인 유저가 notify 있는지 확인 및 던지기
