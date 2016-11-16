@@ -15,6 +15,7 @@ import leasecity.exception.WriteFailException;
 import leasecity.repo.adminwork.WorkLogRepo;
 import leasecity.repo.lease.LeaseCallRepo;
 import leasecity.repo.lease.LeaseRequestRepo;
+import leasecity.repo.lease.LeaseTransferRepo;
 import leasecity.util.DateUtil;
 
 @Service
@@ -28,6 +29,9 @@ public class MyPageServiceImpl implements MyPageService {
 	
 	@Autowired
 	LeaseRequestRepo leaseRequestRepo;
+	
+	@Autowired
+	LeaseTransferRepo leaseTransferRepo;
 	
 	
 	
@@ -47,17 +51,20 @@ public class MyPageServiceImpl implements MyPageService {
 			
 			LeaseRequest leaseRequest = leaseRequestRepo.getSimpleLeaseRequest(workLog.getLeaseRequestNo());
 			
-			if(leaseRequest == null){
-				workLog.setStatus("CANCELED"); // 작업 대기
-			}else if(todayTime < fromDate){
+			if (leaseRequest == null) {
+				workLog.setStatus("CANCELED"); // 작업 취소
+			} else if (leaseRequest.getRegDate() == null) {
+				workLog.setStatus("SELECT_SB"); // 선발 대기
+			} else if (todayTime < fromDate) {
 				workLog.setStatus("STAND_BY"); // 작업 대기
-			}else if(todayTime >= fromDate && todayTime <= toDate){
+			} else if (todayTime >= fromDate && todayTime <= toDate) {
 				workLog.setStatus("WORKING"); // 작업중
-			}else if(workLog.getEvaluationCheck().equals("Y")){
+			} else if (workLog.getEvaluationCheck().equals("Y")) {
 				workLog.setStatus("EVALUATED"); // 평가된상태
-			}else if(todayTime > toDate){
+			} else if (todayTime > toDate) {
 				workLog.setStatus("COMPLETE"); // 작업완료
 			}
+
 
 		}
 		
@@ -67,12 +74,31 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public List<WorkLog> loadPageLeaseRequestAndCallHECWorkLog(Page page) throws NotFoundDataException {
 		List<WorkLog> result = workLogRepo.getPageLeaseRequestAndCallHECWorkLog(page);
+		Long todayTime = DateUtil.getToday().getTime(); // 오늘 날짜
 		
 		if(result.size() <= 0){
 			throw new NotFoundDataException("임대 신청 기록");
 		}
 		
 		for(WorkLog workLog : result){
+			Long fromDate = workLog.getFromDate().getTime();
+			Long toDate = workLog.getToDate().getTime();
+			
+			LeaseRequest leaseRequest = leaseRequestRepo.getSimpleLeaseRequest(workLog.getLeaseRequestNo());
+			
+			if (leaseRequest == null) {
+				workLog.setStatus("CANCELED"); // 작업 취소
+			} else if (leaseRequest.getRegDate() == null) {
+				workLog.setStatus("SELECT_SB"); // 선발 대기
+			} else if (todayTime < fromDate) {
+				workLog.setStatus("STAND_BY"); // 작업 대기
+			} else if (todayTime >= fromDate && todayTime <= toDate) {
+				workLog.setStatus("WORKING"); // 작업중
+			} else if (workLog.getEvaluationCheck().equals("Y")) {
+				workLog.setStatus("EVALUATED"); // 평가된상태
+			} else if (todayTime > toDate) {
+				workLog.setStatus("COMPLETE"); // 작업완료
+			}
 			
 		}
 		
@@ -82,9 +108,32 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public List<WorkLog> loadPageLeaseTransferWorkLog(Page page) throws NotFoundDataException {
 		List<WorkLog> result = workLogRepo.getPageLeaseTransferWorkLog(page);
+		Long todayTime = DateUtil.getToday().getTime(); // 오늘 날짜
 		
 		if(result.size() <= 0){
 			throw new NotFoundDataException("임대 양도 기록");
+		}
+		
+		for(WorkLog workLog : result){
+			Long fromDate = workLog.getFromDate().getTime();
+			Long toDate = workLog.getToDate().getTime();
+			Long legDate = workLog.getRegDate().getTime();
+			
+			LeaseTransfer leaseTransfer = leaseTransferRepo.getSelectLeaseTransfer(workLog.getLeaseTransferNo());
+			
+			if (leaseTransfer == null) {
+				workLog.setStatus("CANCELED"); // 작업 취소
+			} else if (leaseTransfer.getPermissionDate() == null) {
+				workLog.setStatus("SELECT_SB"); // 선발 대기
+			} else if (todayTime < fromDate) {
+				workLog.setStatus("STAND_BY"); // 작업 대기
+			} else if (todayTime >= fromDate && todayTime <= toDate) {
+				workLog.setStatus("WORKING"); // 작업중
+			} else if (workLog.getEvaluationCheck().equals("Y")) {
+				workLog.setStatus("EVALUATED"); // 평가된상태
+			} else if (todayTime > toDate) {
+				workLog.setStatus("COMPLETE"); // 작업완료
+			}
 		}
 		
 		return result;
@@ -103,15 +152,17 @@ public class MyPageServiceImpl implements MyPageService {
 			
 			LeaseCall leaseCall = leaseCallRepo.getLeaseCall(workLog.getLeaseCallNo());
 			
-			if(leaseCall == null){
-				workLog.setStatus("CANCELED"); // 작업 대기
-			}else if(todayTime < fromDate){
+			if (leaseCall == null) {
+				workLog.setStatus("CANCELED"); // 작업 취소
+			} else if (leaseCall.getRegDate() == null) {
+				workLog.setStatus("SELECT_SB"); // 선발 대기
+			} else if (todayTime < fromDate) {
 				workLog.setStatus("STAND_BY"); // 작업 대기
-			}else if(todayTime >= fromDate && todayTime <= toDate){
+			} else if (todayTime >= fromDate && todayTime <= toDate) {
 				workLog.setStatus("WORKING"); // 작업중
-			}else if(workLog.getEvaluationCheck().equals("Y")){
+			} else if (workLog.getEvaluationCheck().equals("Y")) {
 				workLog.setStatus("EVALUATED"); // 평가된상태
-			}else if(todayTime > toDate){
+			} else if (todayTime > toDate) {
 				workLog.setStatus("COMPLETE"); // 작업완료
 			}
 			

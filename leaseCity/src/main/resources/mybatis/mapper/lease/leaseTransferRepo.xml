@@ -27,6 +27,12 @@
  		</if>
  	</select>
  	
+ 	<select id="getSelectLeaseTransfer" parameterType="int" resultType="leaseTransfer">
+ 		SELECT * 
+ 		FROM lease_transfer 
+ 		WHERE lease_transfer_no = #{leaseTransferNo}
+ 	</select> 
+ 	
  	<!-- 임대 양도 번호와 임대 받은 회원 아이디로 임대 양도 정보 검색 -->
  	<select id="getSelectAcceptLeaseTransfer" parameterType="map" resultType="leaseTransfer">
  		SELECT *

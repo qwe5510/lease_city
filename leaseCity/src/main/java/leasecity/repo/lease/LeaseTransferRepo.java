@@ -63,6 +63,14 @@ public interface LeaseTransferRepo {
 	 * @return
 	 */
 	public int permissionUpdateLeaseTransfer(LeaseTransfer leaseTransfer);
+
+	/**
+	 * 
+	 * @param leaseTransferNo
+	 * @return
+	 */
+	
+	public LeaseTransfer getSelectLeaseTransfer(Integer leaseTransferNo);
 	
 
 }

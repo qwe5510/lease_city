@@ -213,7 +213,7 @@ public class MypageController {
 			//임대 요청에 대한 신청 기록
 			try {
 				
-				callRequestPage = myPageService.getCallLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
+				callRequestPage = myPageService.getRequestAndCallLogPage(1, WORK_LOG_SIZE, loginUser.getUserId());
 				callRequestLogs = myPageService.loadPageLeaseRequestAndCallCCWorkLog(callRequestPage);
 				
 				for(WorkLog callRequestLog : callRequestLogs){
@@ -249,6 +249,10 @@ public class MypageController {
 		Page page = myPageService.getCallLogPage(currentPage, WORK_LOG_SIZE, loginUser.getUserId());
 		List<WorkLog> workLogs = myPageService.loadPageLeaseCallWorkLog(page);
 		
+		for(WorkLog callLog : workLogs){
+			callLog.setRowNumLogNo(page.getTotalCount()-callLog.getRowNumLogNo() + 1);
+		}
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("callPage", page);
@@ -259,24 +263,79 @@ public class MypageController {
 	
 	//임대요청글에 대한 신청글 리스트 불러오기 - 건설업체
 	@RequestMapping(value = "/historyRequestCallCCPageControlAjax", method = RequestMethod.GET)
-	public @ResponseBody String historyRequestCallCCPageControlAjax(Model model) {
+	public @ResponseBody Map<String, Object> historyRequestCallCCPageControlAjax(
+			@RequestParam Integer currentPage, HttpSession session) throws NotFoundDataException {
 
-		return "";
+		if(currentPage == null)
+			currentPage = 1;
+		
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		Page page = myPageService.getRequestAndCallLogPage(currentPage, WORK_LOG_SIZE, loginUser.getUserId());
+		List<WorkLog> workLogs = myPageService.loadPageLeaseRequestAndCallCCWorkLog(page);
+		
+		for(WorkLog callLog : workLogs){
+			callLog.setRowNumLogNo(page.getTotalCount()-callLog.getRowNumLogNo() + 1);
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("callRequestPage", page);
+		map.put("callRequestWorkLogs", workLogs);	
+
+		return map;
 	}
 	
 	
 	//임대 요청글에 대한 신청글 리스트 불러오기 - 중기업체
 	@RequestMapping(value = "/historyRequestCallHECPageControlAjax", method = RequestMethod.GET)
-	public @ResponseBody String historyRequestCallHECPageControlAjax(Model model) {
+	public @ResponseBody Map<String, Object> historyRequestCallHECPageControlAjax(
+			@RequestParam Integer currentPage, HttpSession session) throws NotFoundDataException{
 
-		return "";
+		if(currentPage == null)
+			currentPage = 1;
+		
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		Page page = myPageService.getRequestAndCallLogPage(currentPage, WORK_LOG_SIZE, loginUser.getUserId());
+		List<WorkLog> workLogs = myPageService.loadPageLeaseRequestAndCallHECWorkLog(page);
+		
+		for(WorkLog callLog : workLogs){
+			callLog.setRowNumLogNo(page.getTotalCount()-callLog.getRowNumLogNo() + 1);
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("requestPage", page);
+		map.put("requestWorkLogs", workLogs);	
+
+		return map;
+		
 	}
 	
 	//임대 양도에 대한 리스트 불러오기
 	@RequestMapping(value = "/historyTransferPageControlAjax", method = RequestMethod.GET)
-	public @ResponseBody String historyTransferPageControlAjax(Model model) {
+	public @ResponseBody Map<String, Object> historyTransferPageControlAjax(
+			@RequestParam Integer currentPage, HttpSession session) throws NotFoundDataException{
 
-		return "";
+		if(currentPage == null)
+			currentPage = 1;
+		
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		Page page = myPageService.getTransferLogPage(currentPage, WORK_LOG_SIZE, loginUser.getUserId());
+		List<WorkLog> workLogs = myPageService.loadPageLeaseTransferWorkLog(page);
+		
+		for(WorkLog callLog : workLogs){
+			callLog.setRowNumLogNo(page.getTotalCount()-callLog.getRowNumLogNo() + 1);
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("transferPage", page);
+		map.put("transferWorkLogs", workLogs);	
+
+		return map;
 	}
 	
 	@RequestMapping(value="/ConstructionSuccess", method=RequestMethod.POST)
