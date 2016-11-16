@@ -5,32 +5,37 @@
  <mapper namespace="leasecity.repo.leaseTransferRepo">
  	
  	<!-- 유저 별 임대 양도 받은 목록 출력 -->
- 	<select id="getCountSelectAllAcceptLeaseTransfers" parameterType="String">
+ 	<select id="getCountSelectAllAcceptLeaseTransfers" parameterType="String" resultType="int">
  		SELECT COUNT(*)
  		FROM lease_transfer
  		WHERE accept_user_id = #{acceptUserId}
- 		AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date;
+ 		AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date
  	</select>
  	
  	<select id="getSelectPageAcceptLeaseTransfers" parameterType="page" resultType="leaseTransfer">
  		SELECT *
- 		FROM (
- 				SELECT sub.*, rownum AS lease_transfer_row_num
- 				FROM( SELECT *						 
- 						FROM lease_transfer
- 						WHERE accept_user_id = #{userId}
- 						AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; to_date;
+ 			FROM (
+ 				SELECT sub.*, rownum AS rnum
+ 				FROM( SELECT lt.*, u.company_name AS send_company_name				 
+ 						FROM lease_transfer lt 
+ 						JOIN users u
+ 						ON lt.send_user_id = u.user_id
+ 						WHERE lt.accept_user_id = #{userId}
+ 						AND TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &lt; lt.to_date
+ 						AND permission_date IS NULL
  					) sub
  				)
  		<if test="pageSize != null and to !=null and from != null">
- 			WHERE lease_transfer_row_num BETWEEN #{from} AND #{to}
+ 			WHERE rnum BETWEEN #{from} AND #{to}
  		</if>
  	</select>
  	
  	<!-- 임대 양도 번호와 임대 받은 회원 아이디로 임대 양도 정보 검색 -->
  	<select id="getSelectAcceptLeaseTransfer" parameterType="map" resultType="leaseTransfer">
- 		SELECT *
- 		FROM lease_transfer
+ 		SELECT lt.*, u.company_name AS send_company_name
+ 		FROM lease_transfer lt
+ 		JOIN users u
+ 		ON lt.send_user_id = u.user_id 
  		WHERE lease_transfer_no = #{leaseTransferNo} AND accept_user_id = #{acceptUserId}
  	</select>
  	

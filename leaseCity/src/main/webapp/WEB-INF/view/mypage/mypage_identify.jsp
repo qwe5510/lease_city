@@ -14,7 +14,7 @@
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>.
 	<div class="mypage">
-	<div class="mypage_main" style="text-align:center;">
+	<div class="mypage_main" style="text-align:left; padding-left:125px;">
 		<c:url value="/ConstructionSuccess" var="ConstructionSuccess"/>
 		<c:choose>
 			   <c:when test="${compare == 'CC'}">

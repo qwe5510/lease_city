@@ -31,6 +31,9 @@ public class LeaseTransfer implements Serializable {
 
 	/** 임대 양도 하는 아이디. */
 	private String sendUserId;
+	
+	/** 보내는 쪽 업체 이름 (DTO전용)*/
+	private String sendCompanyName;
 
 	/** 임대 양도 하는 차량 번호. */
 	private String sendIdNumber;

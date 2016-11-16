@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
+import leasecity.service.LeaseService;
 import leasecity.service.StandByUserService;
 
 @Configuration
@@ -16,6 +17,9 @@ public class StandByUserScheduler implements SchedulingConfigurer{
 
 	@Autowired
 	StandByUserService SBUService;
+	
+	@Autowired
+	LeaseService leaseService;
 	
 	@Bean
 	public ThreadPoolTaskScheduler taskShceduler(){
@@ -40,6 +44,7 @@ public class StandByUserScheduler implements SchedulingConfigurer{
 			@Override
 			public void run() {
 				SBUService.cleanStandByUser();
+				leaseService.reflashLeaseDirectCalls();
 			}
 		}, " 0 0 0 * * ?");
 		//0초 0분 0시 매일 아무요일이나

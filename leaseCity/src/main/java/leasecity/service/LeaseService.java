@@ -141,8 +141,16 @@ public interface LeaseService {
 	 * @param equipmentId
 	 * @return
 	 */
-	public List<LeaseDirectCall> loadLeaseDirectCalls(String equipmentId)
+	public List<LeaseDirectCall> loadPageLeaseDirectCalls(Page page)
 											throws NotFoundDataException;
+	
+	/**
+	 * 임대 직접 요청 번호로 불러오기.
+	 * @param leaseDriectNo
+	 * @return
+	 * @throws NotFoundDataException
+	 */
+	public LeaseDirectCall loadLeaseDirectCall(Integer leaseDirectNo) throws NotFoundDataException;
 	
 	/**
 	 * 중기업체에게 직접요청 하기
@@ -167,6 +175,10 @@ public interface LeaseService {
 	public void rejectionLeaseDirectCall(LeaseDirectCall leaseDirectCall)
 														throws RemoveFailException;
 	
+	/**
+	 * 오늘날짜가 직접요청의 시작날짜를 경과한 요청들을 일괄적으로 삭제함
+	 */
+	public void reflashLeaseDirectCalls();
 	
 	// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 	//임대 양도
@@ -208,7 +220,7 @@ public interface LeaseService {
 	 * @throws ServiceFailException
 	 */
 	public void permissionLeaseTransfer(LeaseTransfer leaseTransfer)
-												throws ChangeValueFailException;
+												throws ChangeValueFailException, ServiceFailException;
 	
 	/**
 	 * 임대 양도 거절
@@ -286,6 +298,16 @@ public interface LeaseService {
 	 */
 	public Page getMoreViewHECPage
 		(Integer currentPage, Integer pageSize,	String search, String keyword, String isCompany, String userId);
+	
+	
+	/**
+	 * 직접요청 페이지 리턴
+	 * @param currentPage
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	public Page getDirectCallPage(Integer currentPage, Integer pageSize, String userId);
 	
 	/**
 	 * 임대 양도에 대한 페이지 (검색없음)

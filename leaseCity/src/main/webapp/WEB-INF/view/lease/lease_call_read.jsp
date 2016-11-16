@@ -57,10 +57,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="lease_label"><sform:label path="companyCategory">회사분류</sform:label>
+					<td colspan="3" class="lease_label"><sform:label path="companyCategory">회사분류</sform:label>
 						<span>${constructionCompany.companyCategory }</span>
 					</td>
-					<td colspan="2" class="lease_label"><sform:label path="address">소재지</sform:label>
+				</tr>
+				<tr>
+					<td colspan="3" class="lease_label"><sform:label path="address">소재지</sform:label>
 						<span>${constructionCompany.address}</span>
 					</td>
 				</tr>

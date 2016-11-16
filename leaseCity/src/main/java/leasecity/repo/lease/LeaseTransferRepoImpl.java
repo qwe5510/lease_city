@@ -24,7 +24,7 @@ public class LeaseTransferRepoImpl implements LeaseTransferRepo{
 	@Override
 	public Integer getCountSelectAllAcceptLeaseTransfers(String acceptUserId) {
 		String stmt = LEASE_TRANSFER_NS + "getCountSelectAllAcceptLeaseTransfers";
-		return session.selectOne(stmt);
+		return session.selectOne(stmt, acceptUserId);
 	}
 
 	@Override

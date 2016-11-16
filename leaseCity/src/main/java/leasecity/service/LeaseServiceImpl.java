@@ -3,6 +3,8 @@ package leasecity.service;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +60,8 @@ public class LeaseServiceImpl implements LeaseService {
 	@Autowired
 	UserRepo userRepo;
 	
+	
+	static Logger logger = LoggerFactory.getLogger(LeaseServiceImpl.class);
 	
 	//임대 요청-----------------------------------------------------------------------------
 	
@@ -326,19 +330,34 @@ public class LeaseServiceImpl implements LeaseService {
 	//------------------------------------------------------------------------------------
 	//임대 직접 요청 영역
 	@Override
-	public List<LeaseDirectCall> loadLeaseDirectCalls(String equipmentId) throws NotFoundDataException {
+	public List<LeaseDirectCall> loadPageLeaseDirectCalls(Page page) throws NotFoundDataException {
 		
-		if(equipmentId == null){
-			throw new NotFoundDataException("불러 올 직접신청 목록");
+		if(page == null){
+			throw new NotFoundDataException("불러 올 직접 요청 목록");
 		}
 		
-		List<LeaseDirectCall> results = leaseDirectCallRepo.getAllLeaseDirectCalls(equipmentId);
+		List<LeaseDirectCall> results = leaseDirectCallRepo.getPageSelectHECLeaseDirectCalls(page);
 		
 		if(results.size() <= 0){
-			throw new NotFoundDataException("불러 올 직접신청 목록");
+			throw new NotFoundDataException("불러 올 직접 요청 목록");
 		}
 		
 		return results;
+	}
+	
+	@Override
+	public LeaseDirectCall loadLeaseDirectCall(Integer leaseDirectNo) throws NotFoundDataException{
+		if(leaseDirectNo == null){
+			throw new NotFoundDataException("직접 요청 번호");
+		}
+		
+		LeaseDirectCall result = leaseDirectCallRepo.getLeaseDirectCall(leaseDirectNo);
+		
+		if(result == null){
+			throw new NotFoundDataException("임대 직접 요청 게시글");
+		}
+		
+		return result;
 	}
 
 	
@@ -368,6 +387,17 @@ public class LeaseServiceImpl implements LeaseService {
 		if(result != 1){
 			throw new ServiceFailException();
 		}
+		
+		//즉시 선발
+		result = leaseRequestRepo.choiceLeaseRequest(leaseRequest);
+		if(result != 1){
+			throw new ServiceFailException();
+		}
+		
+		/**
+		 * @알림
+		 */
+		
 		//임대 직접신청 자동 삭제
 		result = leaseDirectCallRepo.deleteLeaseDirectCall(leaseDirectCall);
 		if(result != 1){
@@ -396,6 +426,12 @@ public class LeaseServiceImpl implements LeaseService {
 		}
 	}
 	
+	@Override
+	public void reflashLeaseDirectCalls() {
+		int result = leaseDirectCallRepo.deleteOutBoundDirectCall();
+		logger.trace("삭제대상 - 시간이 경과된 직접요청 개수 : {}", result);
+	}
+	
 	//------------------------------------------------------------------------------------
 	//임대 양도 영역 
 	
@@ -406,7 +442,7 @@ public class LeaseServiceImpl implements LeaseService {
 		}
 		
 		List<LeaseTransfer> results = leaseTransferRepo.getSelectPageAcceptLeaseTransfers(page);
-		if(results.size() >= 0){
+		if(results.size() <= 0){
 			throw new NotFoundDataException("요청 받은 임대 양도 목록");
 		}
 		
@@ -459,10 +495,12 @@ public class LeaseServiceImpl implements LeaseService {
 	
 	@Override
 	public void permissionLeaseTransfer(LeaseTransfer leaseTransfer) 
-												throws ChangeValueFailException{
+												throws ChangeValueFailException, ServiceFailException{
 		if(leaseTransfer == null){
 			throw new ChangeValueFailException("임대 양도 수락");
 		}
+		
+		logger.trace("퍼미션 양도 : {}", leaseTransfer);
 		
 		//임대 업무를 받는 
 		HeavyEquipment acceptCar = heavyEquipmentRepo.getHeavyEquipment
@@ -471,10 +509,15 @@ public class LeaseServiceImpl implements LeaseService {
 		HeavyEquipment sendCar = heavyEquipmentRepo.getHeavyEquipment
 								(leaseTransfer.getSendIdNumber());
 		
+		if(acceptCar == null || sendCar == null){
+			leaseTransferRepo.deleteLeaseTransfer(leaseTransfer);
+			throw new ServiceFailException();
+		}
+		
 		//업무를 주는 중장비 사용여부 N으로 바꾸기
 		heavyEquipmentRepo.heavyEquipmentUsedNo(sendCar);
 		
-		//업무를 주는 중장비 사용여부 Y로 바꾸기
+		//업무를 받는 중장비 사용여부 Y로 바꾸기
 		heavyEquipmentRepo.heavyEquipmentUsedYes(acceptCar);
 		
 		int result = leaseTransferRepo.permissionUpdateLeaseTransfer(leaseTransfer);
@@ -556,21 +599,6 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 	
 	//------------------------------------------------------------------------------------
-	//기타 영역 (페이지 정보 출력 등)
-	
-	/*@Override
-	public ConstructionCompany viewConstructionCompanyInfo(String constructionId) throws NotFoundDataException {
-		if(constructionId == null){
-			throw new NotFoundDataException("건설업체 정보");
-		}
-		ConstructionCompany result = constructionCompanyRepo.getCCUser(constructionId);
-		if(result == null){
-			throw new NotFoundDataException("건설업체 정보");
-		}
-		
-		return result;
-	}*/
-	
 	//페이지 리턴 메소드 영역
 	@Override
 	public Page getMoreViewSearchPage
@@ -620,10 +648,25 @@ public class LeaseServiceImpl implements LeaseService {
 	}
 	
 	@Override
-	public Page getTransferPage(Integer currentPage, Integer pageSize, String userId) {
+	public Page getDirectCallPage(Integer currentPage, Integer pageSize, String userId) {
 		Page page = new Page();
+		page.setTotalCount(leaseDirectCallRepo.getCountSelectHECLeaseDirectCalls(userId));
 		page.setCurrentPage(currentPage);
 		page.setPageSize(pageSize);
+		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
+		page.setUserId(userId);
+		page.setFromTo();
+		
+		return page;
+	}
+	
+	@Override
+	public Page getTransferPage(Integer currentPage, Integer pageSize, String userId) {
+		Page page = new Page();
+		page.setTotalCount(leaseTransferRepo.getCountSelectAllAcceptLeaseTransfers(userId));
+		page.setPageSize(pageSize);
+		page.setTotalPage((page.getTotalCount()-1)/page.getPageSize()+1);
+		page.setCurrentPage(currentPage);
 		page.setUserId(userId);
 		page.setFromTo();
 		return page;

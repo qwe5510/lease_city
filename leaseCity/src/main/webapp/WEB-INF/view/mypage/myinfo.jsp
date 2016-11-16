@@ -24,14 +24,14 @@
 	<c:url value="/history" var="history"></c:url>
 	<c:url value="/mypage/identify" var="mypageIdentify"></c:url>
 	<c:url value="/withdrawal_agree_01" var="withdrawal_agree_01"></c:url>
-	<c:url value="/selection" var="selection"></c:url>
+	<c:url value="/workManagement" var="workManagement"></c:url>
 		<a href="${mypageIdentify}"><img id="myInfo1" src="<%=request.getContextPath()%>/images/mypage/개인정보.png"/></a>
 	</div>
 	<div class="myinfo_2">
 		<a href="${history }"><img id="myInfo2" src="<%=request.getContextPath()%>/images/mypage/이용내역.png" /></a>
 	</div>
 	<div class="myinfo_3"> 
-		<a href="${selection }"><img id="myInfo3" src="<%=request.getContextPath()%>/images/mypage/작업관리.png" /></a>
+		<a href="${workManagement}"><img id="myInfo3" src="<%=request.getContextPath()%>/images/mypage/작업관리.png" /></a>
 	</div>
 	<div class="myinfo_4"> 
 		<a href="${withdrawal_agree_01}"><img id="myInfo4" src="<%=request.getContextPath()%>/images/mypage/회원탈퇴.png"/></a>

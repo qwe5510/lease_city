@@ -246,8 +246,9 @@ public class UserServiceImpl implements UserService {
 			for(License license : licenses){
 				licenseRepo.insertLicense(license);
 			}
-			
 		}
+		
+		logger.trace("유저 정보 : {}", user);
 	}
 
 	

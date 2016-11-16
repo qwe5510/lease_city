@@ -5,15 +5,34 @@
  <mapper namespace="leasecity.repo.leaseDirectCallRepo">
  	
  	
- 	<select id="getAllLeaseDirectCalls" parameterType="String" resultType="leaseDirectCall">
- 		SELECT * FROM lease_direct_calls
+ 	<select id="getCountSelectHECLeaseDirectCalls" parameterType="String" resultType="int">
+ 		SELECT COUNT(*) FROM lease_direct_calls
  		WHERE equipment_id = #{equipmentId}
  	</select>
  	
+ 	<select id="getPageSelectHECLeaseDirectCalls" parameterType="page" resultType="leaseDirectCall">
+ 		SELECT *
+ 			FROM (
+ 				SELECT sub.*, rownum AS rnum
+ 				FROM( 
+ 					SELECT ldc.*, u.company_name
+ 					FROM lease_direct_calls ldc 
+ 					JOIN users u
+ 					ON ldc.construction_id = u.user_id
+ 					WHERE equipment_id = #{userId}
+ 					) sub
+ 				)
+ 		<if test="pageSize != null and to !=null and from != null">
+ 			WHERE rnum BETWEEN #{from} AND #{to}
+ 		</if>
+ 	</select>
+ 	
  	<select id="getLeaseDirectCall" parameterType="int" resultType="leaseDirectCall">
- 		SELECT * FROM lease_direct_calls
+ 		SELECT ldc.*, u.company_name
+ 		FROM lease_direct_calls ldc
+ 		JOIN users u ON ldc.construction_id = u.user_id
  		WHERE lease_direct_no = #{leaseDirectNo}
- 	</select> 	
+ 	</select> 
  	
  	<insert id="insertLeaseDirectCall" parameterType="leaseDirectCall">
  		<selectKey keyProperty="leaseDirectNo" resultType="int" order="AFTER">
@@ -28,10 +47,16 @@
  			#{directCallContent}, #{fromPrice}, #{toPrice})
  	</insert>
  	
- 	
+ 	<!-- 중기업체 아이디와 직접요청번호를 검색하여 직접요청 삭제 - 거절 -->
  	<delete id="deleteLeaseDirectCall" parameterType="leaseDirectCall">
  		DELETE FROM lease_direct_calls
  		WHERE lease_direct_no = #{leaseDirectNo} AND equipment_id = #{equipmentId}
+ 	</delete>
+ 	
+ 	<!-- 시작날짜가 오늘을 지난 직접요청 들을 삭제하는 쿼리 -->
+ 	<delete id="deleteOutBoundDirectCall">
+ 		DELETE FROM lease_direct_calls
+ 		WHERE TO_DATE(TO_CHAR(SYSDATE, 'YYYY-MM-DD')) &gt; from_date
  	</delete>
  	
 

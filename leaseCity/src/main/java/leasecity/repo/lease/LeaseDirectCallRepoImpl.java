@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import leasecity.dto.etc.Page;
 import leasecity.dto.lease.LeaseDirectCall;
 
 @Repository
@@ -18,10 +19,17 @@ public class LeaseDirectCallRepoImpl implements LeaseDirectCallRepo{
 	// mapper연동용 문자열 코드 - 임대 신청
 	private final String LEASE_DIRECT_CALL_NS = "leasecity.repo.leaseDirectCallRepo.";
 
+	
 	@Override
-	public List<LeaseDirectCall> getAllLeaseDirectCalls(String equipmentId) {
-		String stmt = LEASE_DIRECT_CALL_NS + "getAllLeaseDirectCalls";
-		return session.selectList(stmt, equipmentId);
+	public Integer getCountSelectHECLeaseDirectCalls(String equipmentId) {
+		String stmt = LEASE_DIRECT_CALL_NS + "getCountSelectHECLeaseDirectCalls";
+		return session.selectOne(stmt, equipmentId);
+	}
+	
+	@Override
+	public List<LeaseDirectCall> getPageSelectHECLeaseDirectCalls(Page page) {
+		String stmt = LEASE_DIRECT_CALL_NS + "getPageSelectHECLeaseDirectCalls";
+		return session.selectList(stmt, page);
 	}
 
 	@Override
@@ -40,6 +48,12 @@ public class LeaseDirectCallRepoImpl implements LeaseDirectCallRepo{
 	public int deleteLeaseDirectCall(LeaseDirectCall leaseDirectCall) {
 		String stmt = LEASE_DIRECT_CALL_NS + "deleteLeaseDirectCall";
 		return session.delete(stmt, leaseDirectCall);
+	}
+	
+	@Override
+	public int deleteOutBoundDirectCall() {
+		String stmt = LEASE_DIRECT_CALL_NS +"deleteOutBoundDirectCall";
+		return session.delete(stmt);
 	}
 
 }
