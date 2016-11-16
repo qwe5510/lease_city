@@ -8,6 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>작업 관리 | LEASE CITY</title>
+
+<c:if test="${!empty wm_message }">
+	<script>
+		alert('${wm_message }');
+	</script>
+</c:if>
+
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
@@ -15,120 +22,42 @@
 		<div class="selection_main">
 			<c:choose>
 				<c:when test="${compare == 'CC'}">
-					<h3>-임대요청-</h3>
-					<table class="selection_cc" style="text-align:center;">
+					<fieldset>
+					<legend>임대요청</legend>
+					<table class="workManageCC" style="text-align:center;">
 						<tr>
 							<td colspan="5" class="boardLine" style="height: 4px !important;"></td>
 						</tr>
 						<tr>
 							<th>제목</th>
-							<th>신청일</th>
+							<th>등록 날짜</th>
 						</tr>
-						<tr>
-							<td colspan="5" class="boardLine"></td>
-						</tr>
-						<tr>
-							<th><a href="${selection_2 }">대한건설 2011.12.10~신청(10)</a></th>
-							<th>2016.10.20</th>
-						</tr>
-						<tr>
-							<td colspan="5" class="boardLine"></td>
-						</tr>
-						<tr>
-							<th><a href="${selection_2 }">대한건설 2011.12.10~신청(10)</a></th>
-							<th>2016.10.30</th>
-						</tr>
+						
+						<c:url value="/workManagement/leaseCall" var="leaseCallCheck"></c:url>
+						<c:forEach var="leaseCall" items="${leaseCalls}">
+						
+						<fmt:formatDate value="${leaseCall.regDate}" pattern="yyyy-MM-dd" var="regDate"/>
+						
+							<tr>
+								<td colspan="5" class="boardLine"></td>
+							</tr>
+							<tr align="center">
+								<td>
+								<a href="${leaseCallCheck}?leaseCallNo=${leaseCall.leaseCallNo}">
+									${leaseCall.leaseCommentTitle}</a></td>
+								<td>${regDate}</td>
+							</tr>
+						</c:forEach>
 						<tr>
 							<td colspan="5" class="boardLine" style="height: 4px !important;"></td>
 						</tr>
 					</table>
-					<div class="boardPage" style="display: inline-block;">
-
-						<!-- 이전 페이지, 다음 페이지 변수 선언 -->
-						<fmt:parseNumber
-							value="${(((page.currentPage-1)/10)-(((page.currentPage-1)/10)%1))*10}"
-							var="prevPage">
-						</fmt:parseNumber>
-						<fmt:parseNumber value="${prevPage+11}" var="nextPage">
-						</fmt:parseNumber>
-						<c:choose>
-							<c:when test="${prevPage > 0}">
-								<a	href="#"><i class="icon-arrow-left">이전</i></a>
-							</c:when>
-							<c:otherwise>
-								<a style="color: black;"><i class="icon-arrow-left">처음</i></a>
-							</c:otherwise>
-						</c:choose>
-
-						<c:if test="${!empty page.totalPage}">
-							<c:choose>
-								<c:when test="${(nextPage-1) >= page.totalPage }">
-									<c:forEach var="i" begin="${prevPage+1}"
-										end="${page.totalPage}">
-										<c:choose>
-											<c:when test="${i eq page.currentPage}">
-												<b><c:out value="${i}"></c:out></b>
-											</c:when>
-											<c:otherwise>
-												<c:choose>
-													<c:when test="${!empty page.keyword and !empty page.order}">
-														<a
-															href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&order=${page.order}&currentPage=${i}">
-															<c:out value="${i}"></c:out>
-														</a>
-													</c:when>
-													<c:when test="${!empty page.order}">
-														<a
-															href="<%=request.getContextPath()%>/board?order=${page.order}&currentPage=${i}">
-															<c:out value="${i}"></c:out>
-														</a>
-													</c:when>
-													<c:when test="${!empty page.keyword}">
-														<a
-															href="<%=request.getContextPath()%>/board?search=${page.search}&keyword=${page.keyword}&currentPage=${i}">
-															<c:out value="${i}"></c:out>
-														</a>
-													</c:when>
-													<c:otherwise>
-														<a
-															href="<%=request.getContextPath()%>/board?currentPage=${i}">
-															<c:out value="${i}"></c:out>
-														</a>
-													</c:otherwise>
-												</c:choose>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="i" begin="${prevPage+1}" end="${nextPage-1}">
-										<c:choose>
-											<c:when test="${i eq page.currentPage}">
-												<b><c:out value="${i}"></c:out></b>
-											</c:when>
-											<c:otherwise>
-												<a href="#">${i}</a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						</c:if>
-
-						<c:choose>
-							<c:when test="${nextPage <= page.totalPage}">
-								<a href="${nextPage}">다음<i class="icon-arrow-right"></i></a>
-							</c:when>
-							<c:otherwise>
-								<a style="color: black;">끝<i class="icon-arrow-right"></i></a>
-							</c:otherwise>
-						</c:choose>
-					</div>
+					</fieldset>
 				</c:when>
 				<c:when test="${compare == 'HEC' }">
 					<fieldset>
-						<legend>임대양도</legend>
-						<table class="selection_hec" style="text-align:center;">
+						<legend>임대 양도</legend>
+						<table class="workManageHEC" style="text-align:center;">
 							<tr>
 								<td colspan="5" class="boardLine"
 									style="height: 4px !important;"></td>
@@ -238,7 +167,7 @@
 					<br>
 					<fieldset>
 						<legend>임대 직접 요청</legend>
-						<table class="selection_hec" style="text-align:center;">
+						<table class="workManageHEC" style="text-align:center;">
 							<tr>
 								<td colspan="5" class="boardLine"
 									style="height: 4px !important;"></td>
@@ -275,7 +204,10 @@
 									<td colspan="5"><b>${ErrorDirectCallMsg}</b></td>
 								</tr>
 							</c:if>
-							
+							<tr>
+								<td colspan="5" class="boardLine"
+									style="height: 4px !important;"></td>
+							</tr>
 						</table>
 						<!--페이지시작-->
 						<div class="boardPage" style="display: inline-block;">
@@ -340,6 +272,7 @@
 					</fieldset>
 				</c:when>
 			</c:choose>
+			<a href="<%=request.getContextPath()%>/myinfo" class="label label-success" style="margin-top: 15px; padding: 10px; float: left">이전으로</a>
 		</div>
 	</div>
 	<!--Bottom-->
@@ -423,6 +356,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<!--/row-fluid-->
 		</div>
 		<!--/container-->

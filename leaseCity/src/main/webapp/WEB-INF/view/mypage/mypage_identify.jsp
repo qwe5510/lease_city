@@ -348,8 +348,8 @@
 	             	<div class="checked"></div>
 	             	</fieldset>
 	            	<br>
-	            	<sform:button id="mypage_identify_confirm">확인</sform:button>
-	            	<sform:button id="mypage_identify_cancel">취소</sform:button>
+	            	<sform:button id="mypage_identify_confirm" class="label" style="font-size: 1.5em;">확인</sform:button>
+	            	<sform:button id="mypage_identify_cancel" class="label" style="font-size: 1.5em;">이전으로</sform:button>
 	         		</sform:form>
 			   		</c:when>
 			   </c:choose>

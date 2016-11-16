@@ -29,11 +29,20 @@ public class LeaseRequest implements Serializable {
 	/** 임대 요청 번호. */
 	private Integer leaseCallNo;
 	
+	/** 줃장비 차량 종류 */
+	private String equipmentCategory;
+	
 	/** 중장비. 차 번호 */
 	private String idNumber;
 
 	/** 회원. */
 	private String userId;
+	
+	/** 업체명 (DTO에서만 존재) */
+	private String companyName;
+	
+	/** 대표자명 (DTO에서만 존재) */
+	private String representName;
 
 	/** 시작날짜(~부터). */
 	private Date fromDate;
@@ -46,5 +55,20 @@ public class LeaseRequest implements Serializable {
 
 	/** 비용. */
 	private Integer price;
+
+	
+	public LeaseRequest(Integer leaseCallNo, 
+			String idNumber, String userId, 
+			Date fromDate, Date toDate,	Integer price) {
+		this.leaseCallNo = leaseCallNo;
+		this.idNumber = idNumber;
+		this.userId = userId;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.price = price;
+	}
+	
+	
+	
 
 }

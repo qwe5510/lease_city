@@ -74,6 +74,17 @@ public interface LeaseRequestRepo {
 	public int choiceLeaseRequest(LeaseRequest leaseRequest);
 	
 	
+	/**
+	 * 일괄삭제 전 임대시작일이 오늘보다 과거인 리스트들을 불러옴
+	 * @return
+	 */
+	public List<LeaseRequest> selectCleanRequest();
+	
+	/**
+	 * 오늘날짜보다 임대시작일이 과거인 임대신청 일괄삭제
+	 * @return
+	 */
+	public int cleanLeaseRequest();
 	
 	
 }

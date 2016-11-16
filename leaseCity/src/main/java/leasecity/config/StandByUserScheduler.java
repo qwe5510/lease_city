@@ -44,6 +44,7 @@ public class StandByUserScheduler implements SchedulingConfigurer{
 			@Override
 			public void run() {
 				SBUService.cleanStandByUser();
+				leaseService.autoRejectionLeaseRequest();
 				leaseService.reflashLeaseDirectCalls();
 			}
 		}, " 0 0 0 * * ?");

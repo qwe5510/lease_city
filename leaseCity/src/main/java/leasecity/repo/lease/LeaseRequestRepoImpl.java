@@ -85,7 +85,17 @@ public class LeaseRequestRepoImpl implements LeaseRequestRepo{
 		return session.update(stmt, leaseRequest);
 	}
 	
+	@Override
+	public List<LeaseRequest> selectCleanRequest() {
+		String stmt = LEASE_REQUEST_NS +"selectCleanRequest";
+		return session.selectList(stmt);
+	}
 	
+	@Override
+	public int cleanLeaseRequest() {
+		String stmt = LEASE_REQUEST_NS +"cleanLeaseRequest";
+		return session.delete(stmt);
+	}
 
 	
 }

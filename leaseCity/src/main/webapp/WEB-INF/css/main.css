@@ -1962,6 +1962,18 @@ button {
 	border: solid black 1px !important;
 }
 
+.viewBtn{
+	background: #00033c!important;
+	height: 50px !important;
+	margin: 0px !important;
+}
+
+#requestView{
+	padding-top: 20px;
+	height: 230px;
+	top: 25% !important;
+}
+
 .leaseCallBtn, .transferBtn{
 	display: inline;
 	margin : 20px;
@@ -2703,24 +2715,20 @@ button {
 	display: inline-block;
 	text-align: center;
 }
-.selection_hec{
+.workManageHEC{
 	width: 780px;
 }
-.selection_cc{
+
+.workManageCC{
 	width: 780px;
 }
-.selection_3_bottom button{
-	margin-top : 20px;
-	width: 80px;
-}
-.selection2_table{
+
+
+.leaseCallCheckTable{
 	width: 600px;
 }
 
 
-.selection_date{
-	width: 480px;
-}
 
 
 .today_lease{

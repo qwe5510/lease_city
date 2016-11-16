@@ -249,9 +249,13 @@ public class LeaseServiceImpl implements LeaseService {
 	
 	@Override
 	public LeaseRequest loadLeaseRequest(Integer leaseRequestNo, String userId) throws NotFoundDataException {		
+		if(leaseRequestNo == null || userId == null){
+			throw new NotFoundDataException("임대 신청 번호나 유저ID정보");
+		}
+		
 		LeaseRequest result = leaseRequestRepo.getLeaseRequest(leaseRequestNo, userId);
 		
-		if(result != null){
+		if(result == null){
 			throw new NotFoundDataException("임대 신청 정보");
 		}
 		
@@ -325,6 +329,21 @@ public class LeaseServiceImpl implements LeaseService {
 		if(result != 1){
 			throw new ChangeValueFailException("취소 대상 : 임대 신청 데이터");
 		}
+	}
+	
+	@Override
+	public void autoRejectionLeaseRequest() {
+		
+		List<LeaseRequest> leaseRequests = leaseRequestRepo.selectCleanRequest();
+		
+		for(LeaseRequest leaseRequest : leaseRequests){
+			HeavyEquipment HE = heavyEquipmentRepo.getHeavyEquipment(leaseRequest.getIdNumber());
+			heavyEquipmentRepo.heavyEquipmentUsedNo(HE);
+			
+			logger.trace("중장비 사용여부 N으로 갱신 : {}", HE);
+		}
+				
+		leaseRequestRepo.cleanLeaseRequest();
 	}
 	
 	//------------------------------------------------------------------------------------

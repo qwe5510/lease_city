@@ -155,6 +155,7 @@
 			<br>
 			<label for="price" style="float:left; margin-top: 10px;">희망 가격</label>
 			<input type="number" class="LDCInput" style="margin:0px; margin-left: 8px;" id="price" name="price" min="0">
+			만원 (단위)
 			<br>
 			<span class="LDRpriceCheck"></span>
 			<input type="hidden" name="callIdNumber" value="${leaseDirectCall.callIdNumber}" />

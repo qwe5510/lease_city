@@ -38,9 +38,9 @@
                   </tr>
                </table>
                <div class="inner1">
-                  <a data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#joinRequest">회원가입인증</a> <a
-                     data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#idSearch">아이디찾기</a> <a
-                     data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#passSearch">비밀번호찾기</a>
+                  <a data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#joinRequest">회원가입인증</a> 
+                  <a data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#idSearch">아이디찾기</a> 
+                  <a data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#passSearch">비밀번호찾기</a>
                </div>
             </fieldset>
          </form>
@@ -136,8 +136,8 @@
    <!--  가입요청 -->
    <div class="modal hide fade in" id="joinRequest" aria-hidden="false">
       <div class="modal-header">
-         <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> <img
-            class="modalImg"
+         <i class="icon-remove" data-dismiss="modal" aria-hidden="true"></i> 
+         <img class="modalImg"
             src="<%=request.getContextPath()%>/images/pop/join.png" />
       </div>
       <!--Modal Body-->

@@ -24,14 +24,21 @@
  	
  	<!-- 임대 신청 : 선발 되지 않은 중기업체의 리스트 출력 : 임대 요청 글 별로 조회. -->
  	<select id="getAllStandByLeaseRequests" parameterType="int" resultType="leaseRequest">
- 		SELECT * FROM lease_requests
- 		WHERE lease_call_no = #{leaseCallNo} AND reg_date IS NULL
+ 		SELECT lr.*, u.company_name, u.represent_name
+ 		FROM lease_requests lr 
+ 		JOIN users u 
+ 		ON lr.user_id = u.user_id
+ 		WHERE lease_call_no = #{leaseCallNo} AND lr.reg_date IS NULL
  	</select>
  	
  	<!-- 임대 신청 : 선발 된 중기업체 리스트 출력 : 임대 요청 글 별로 조회 -->
  	<select id="getAllChoiceLeaseRequests" parameterType="int" resultType="leaseRequest">
- 		SELECT * FROM lease_requests
- 		WHERE lease_call_no = #{leaseCallNo} AND reg_date IS NOT NULL
+ 		SELECT lr.*, u.company_name, 
+ 			u.represent_name, he.equipment_category
+ 		FROM lease_requests lr 
+ 		JOIN users u ON lr.user_id = u.user_id
+ 		JOIN heavy_equipment he ON lr.id_number = he.id_number 
+ 		WHERE lease_call_no = #{leaseCallNo} AND lr.reg_date IS NOT NULL
  	</select>
  	
  	<!-- 임대 신청 업체 정보 조회 : 임대 요청 글번호, 글번호 작성자로 조회 -->
@@ -93,6 +100,20 @@
  			   reg_date = SYSDATE
  		WHERE lease_request_no = #{leaseRequestNo}
  	</update>
+ 	
+ 	<select id="selectCleanRequest" resultType="leaseRequest">
+ 		SELECT * 
+ 		FROM lease_requests
+ 		WHERE SYSDATE > from_date
+ 		AND reg_date IS NULL
+ 	</select>
+ 	
+ 	<delete id="cleanLeaseRequest">
+ 		DELETE
+ 		FROM lease_requests
+ 		WHERE SYSDATE > from_date
+ 		AND reg_date IS NULL
+ 	</delete>
  	
 
  </mapper>

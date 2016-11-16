@@ -552,6 +552,7 @@
 					</fieldset>
 				</c:when>
 			</c:choose>
+			<a href="<%=request.getContextPath()%>/myinfo" class="label label-success" style="margin-top: 15px; padding: 10px; float: left">이전으로</a>
 		</div>
 
 	</div>

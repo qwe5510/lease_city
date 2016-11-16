@@ -42,6 +42,7 @@ public interface LeaseService {
 	 */
 	public LeaseCall loadLeaseCall(Integer leaseCallNo) throws NotFoundDataException;
 	
+	
 	/**
 	 * 임대 요청 보기
 	 * @param lease
@@ -133,6 +134,11 @@ public interface LeaseService {
 	 */
 	public void cancelLeaseRequest(LeaseRequest leaseRequest)
 											throws ChangeValueFailException;
+	
+	/**
+	 * 자동적으로 임대 신청에서 업무시작일이 오늘날보다 과거인 신청정보 삭제
+	 */
+	public void autoRejectionLeaseRequest();
 	
 	// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 	// 임대 직접 신청

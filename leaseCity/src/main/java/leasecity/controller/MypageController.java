@@ -473,19 +473,116 @@ public class MypageController {
 			
 			model.addAttribute("compare", "HEC");
 		}else if(user instanceof ConstructionCompany){
+			
+			try {
+				List<LeaseCall> leaseCalls = leaseService.loadConstructionUserLeaseCalls(user.getUserId());
+				model.addAttribute("leaseCalls", leaseCalls);
+			} catch (NotFoundDataException e) {
+				model.addAttribute("ErrorCallMsg", "작성한 요청글이 없습니다.");
+			}
+			
 			model.addAttribute("compare", "CC");
 		}
-		
 		
 		return "mypage/work_management";
 	}
 	
 	
+	@RequestMapping(value="/workManagement/leaseCall", method=RequestMethod.GET)
+	public String leaseCallCheck(Model model, RedirectAttributes redir,
+			HttpSession session, @RequestParam Integer leaseCallNo){
+		try {
+			LeaseCall leaseCall = leaseService.loadLeaseCall(leaseCallNo);
+			
+			
+			model.addAttribute("leaseCall", leaseCall);
+			
+			
+		} catch (NotFoundDataException e) {
+			redir.addFlashAttribute("wm_message", "존재하지 않는 임대 요청글입니다.");
+			return "redirect:/workManagement";
+		}
+		
+		List<LeaseRequest> choiceRequests;
+		try {
+			choiceRequests = leaseService.loadChoiceLeaseRequests(leaseCallNo);
+			model.addAttribute("choiceRequests", choiceRequests);
+		} catch (NotFoundDataException e) {
+			model.addAttribute("choiceErrorMsg", e.getMessage());
+		}
+		List<LeaseRequest> standByRequests;
+		try {
+			standByRequests = leaseService.loadStandByLeaseRequests(leaseCallNo);
+			model.addAttribute("standByRequests", standByRequests);
+		} catch (NotFoundDataException e) {
+			model.addAttribute("standByErrorMsg", e.getMessage());
+		}
+		
+		return "mypage/work_management_lease_call";
+	}
+	
+	//선발
+	@RequestMapping(value="/workManagement/leaseCall/choice", method=RequestMethod.POST)
+	public String leaseCallChoice(Model model, RedirectAttributes redir, HttpSession session, 
+			@RequestParam Integer leaseRequestNo, @RequestParam Integer leaseCallNo){
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		if(loginUser == null){
+			redir.addFlashAttribute("index_message", "로그인 세션이 만료되었습니다.");
+			return "redirect:/index";
+		}
+		
+		try {
+			LeaseRequest leaseRequest = leaseService.loadLeaseRequest(leaseRequestNo, loginUser.getUserId());
+			leaseService.permissionLeaseRequest(leaseRequest);
+
+			//@알림
+			redir.addFlashAttribute("leaseCall_message", "신청을 선발하였습니다.");
+		} catch (NotFoundDataException e) {
+			redir.addFlashAttribute("myinfo_message", "해당 임대신청에 대한 정보를 받아오지 못했습니다.");
+			return "redirect:/myinfo";
+		} catch (ChangeValueFailException e) {
+			redir.addFlashAttribute("myinfo_message", "선발과정에서 오류가 발생하였습니다.");
+			return "redirect:/myinfo";
+		}
+		
+		return "redirect:/workManagement/leaseCall?leaseCallNo="+leaseCallNo;
+	}
+	
+	//선발 거절
+	@RequestMapping(value="/workManagement/leaseCall/reject", method=RequestMethod.POST)
+	public String leaseCallReject(Model model, RedirectAttributes redir, HttpSession session, 
+			@RequestParam Integer leaseRequestNo, @RequestParam Integer leaseCallNo){
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		if(loginUser == null){
+			redir.addFlashAttribute("index_message", "로그인 세션이 만료되었습니다.");
+			return "redirect:/index";
+		}
+		
+		try {
+			LeaseRequest leaseRequest = leaseService.loadLeaseRequest(leaseRequestNo, loginUser.getUserId());
+			leaseService.rejectionLeaseRequest(leaseRequest);
+			
+			//@알림
+			redir.addFlashAttribute("leaseCall_message", "신청을 취소하였습니다.");
+		} catch (NotFoundDataException e) {
+			redir.addFlashAttribute("myinfo_message", "해당 임대신청에 대한 정보를 받아오지 못했습니다.");
+			return "redirect:/myinfo";
+		} catch (ChangeValueFailException e) {
+			redir.addFlashAttribute("myinfo_message", "선발과정에서 오류가 발생하였습니다.");
+			return "redirect:/myinfo";
+		}
+		
+		return "redirect:/workManagement/leaseCall?leaseCallNo="+leaseCallNo;
+	}
 	
 	
 	@RequestMapping(value="/workManagement/transfer",method=RequestMethod.GET)
 	public String leaseTransferCheck(Model model, RedirectAttributes redir, HttpSession session,
-			@RequestParam Integer leaseTransferNo){
+			@RequestParam(required=false) Integer leaseTransferNo){
 		
 		User loginUser = (User) session.getAttribute("loginUser");
 		if(loginUser == null){
@@ -590,7 +687,7 @@ public class MypageController {
 		LeaseDirectCall leaseDirectCall = null;
 		
 		try {
-			leaseRequest = new LeaseRequest(null, leaseCallNo, callIdNumber, loginUser.getUserId(), fromDt, toDt, null, price);
+			leaseRequest = new LeaseRequest(leaseCallNo, callIdNumber, loginUser.getUserId(), fromDt, toDt, price);
 			leaseDirectCall = leaseService.loadLeaseDirectCall(leaseDirectNo);
 			
 			leaseService.permissionLeaseDirectCall(leaseDirectCall, leaseRequest);
@@ -633,7 +730,7 @@ public class MypageController {
 		
 		return "redirect:/workManagement/leaseDirectCall";
 	}
-	
+
 	
 	@RequestMapping(value="/withdrawal_agree_01",method=RequestMethod.GET)
 	public String withdrawal_agree_01(Model model){
