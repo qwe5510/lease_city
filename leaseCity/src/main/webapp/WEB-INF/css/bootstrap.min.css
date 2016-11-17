@@ -997,6 +997,10 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 	background-color:#37903e;
 }
 
+.label-ctrl-page{
+	background-color:#b697d7;
+}
+
 .label-logout, .label-login{
 	background-color:#0082bf;
 }

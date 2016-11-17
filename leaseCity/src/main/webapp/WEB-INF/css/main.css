@@ -2560,6 +2560,39 @@ button {
 .license input[type="date"]{
 	width: 140px;
 }
+
+.admininfo{
+	background: url("../images/admin/admin_main.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-width: 1200px;
+	min-height: 800px;
+	text-align: center;
+	margin-top : 20px;
+	padding-top: 20px;
+	position: relative;
+	overflow: auto;
+	font-size: 18px;
+	text-align: center;
+}
+
+.admininfo_inner{
+	margin-top: 20px;
+	width: 600px;
+	min-height: 700px;
+	background: white;
+	display:inline-block;
+	opacity: 0.8;
+	border: solid black 5px;
+}
+
+#userPermission, #userRejection{
+	font-size: 15px;
+	padding: 5px;
+}
+
 .myinfo{
 	background: url("../images/mypage_main.png") no-repeat center center fixed;
 	-webkit-background-size: cover;

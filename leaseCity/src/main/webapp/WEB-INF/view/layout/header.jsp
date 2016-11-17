@@ -98,9 +98,14 @@
 						<c:url value="/login" var="login"></c:url>
 						<c:url value="/logout" var="logout"></c:url>
 						<c:url value="/mypage" var="mypage"></c:url>
+						<c:url value="/ctrlpage" var="ctrlpage"></c:url>
 						<%-- <c:url value="/mypage" var="mypage"></c:url> --%>
 						<c:choose>
-							<c:when test="${!empty loginUser or !empty admin}">
+							<c:when test="${!empty admin}">
+								<li id="con"><a href=${logout } title="로그아웃"><i class="icon-signout label label-logout"> Logout</i></a></li>
+								<li id="con"><a href=${ctrlpage } title="관리페이지" style="padding-left: 0px;"><i class="icon-info-sign label label-ctrl-page"> Control Page</i></a></li>
+							</c:when>
+							<c:when test="${!empty loginUser}">
 								<li id="con"><a href=${logout } title="로그아웃"><i class="icon-signout label label-logout"> Logout</i></a></li>
 								<li id="con"><a href=${mypage } title="마이페이지" style="padding-left: 0px;"><i class="icon-info-sign label label-my-page"> My Page</i></a></li>
 							</c:when>

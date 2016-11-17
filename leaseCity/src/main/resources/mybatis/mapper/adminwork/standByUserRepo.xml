@@ -6,7 +6,10 @@
  	
  	<!-- 대기유저 전체 조회-->
  	<select id="getAllSelectStandByUsers" resultType="standByUser">
- 		SELECT * FROM stand_by_user
+ 		SELECT * 
+ 		FROM stand_by_user
+ 		WHERE permission_no IS NULL
+ 		AND reg_date IS NULL
  	</select>
  	
  	<!-- 대기유저 업체명, 대표자명, 이메일로 조회 -->

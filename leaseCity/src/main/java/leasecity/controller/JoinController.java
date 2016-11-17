@@ -278,9 +278,6 @@ public class JoinController {
 		String representName = request.getParameter("representName");
 		String email = request.getParameter("email");
 
-		// 메일 유틸
-		SendMailUtil mUtil = new SendMailUtil();
-
 		// 폼에서 값 받기
 		StandByUser sbu = new StandByUser();
 		sbu.setCompanyName(companyName);
@@ -296,26 +293,11 @@ public class JoinController {
 				throw new DuplicateValueException();
 			}
 			SBUService.addStandByUser(sbu);
-			logger.trace("저장된 임시 유저 : {}", sbu);
-			redir.addFlashAttribute("index_message", "회원가입 요청 성공");
-
-			sbu = SBUService.providePermissionCode(sbu);
-			logger.trace("관리자의 승인을 받은 임시회원 : {}", sbu);
-			logger.trace("가입승인 승낙 성공");
-
-			// 3. 응답 메시지 후, 관리페이지
-
-			// 4. 메일 발송하기
-			String src = "http://localhost:9090/leaseCity/join_agree" + "?permissionNo=" + sbu.getPermissionNo();
-			mUtil.sendMail(sbu, src);
-
+			redir.addFlashAttribute("index_message", "회원가입 요청 성공\\n관리자 수락 후 이메일이 전송되니 이점 양의 바랍니다.");
 			return "redirect:/index";
 		} catch (DuplicateValueException e) {
 			redir.addFlashAttribute("login_message", "회원가입 요청 실패\\n동일한 업체명, 이메일로 된 유저 혹은 대기유저가 존재합니다.");
 			logger.error("회원가입 요청실패");
-			return "redirect:/login";
-		} catch (NotFoundDataException e) {
-			redir.addFlashAttribute("login_message", "회원가입 요청 실패");
 			return "redirect:/login";
 		}
 
